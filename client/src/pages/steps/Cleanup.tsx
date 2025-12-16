@@ -1,10 +1,11 @@
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
-import { Trash2, FileText, ShieldCheck, ShieldAlert, KeyRound } from "lucide-react";
+import { Trash2, FileText, ShieldCheck, ShieldAlert } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AlertBox } from "@/components/wizard/AlertBox";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +13,7 @@ import type { YesNo, YesNoUnsure, CleanupAction } from "@shared/schema";
 
 export default function Cleanup() {
   const { data, updateResults, completeAudit, isFictional, tryLiveTools } = useWizard();
+  const { t } = useI18n();
   const results = data.results.cleanup;
   const browser = data.device.browser;
   const showExternalLinks = !isFictional || tryLiveTools;
@@ -62,25 +64,19 @@ export default function Cleanup() {
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
       <StepCard
         stepNumber={5}
-        title="Cleanup Sprint"
-        concept="Now it's time to take action. Clear tracking data and optionally enable privacy protections."
-        whyItMatters="Clearing cookies and site data removes existing trackers. Blocking third-party cookies prevents many future tracking attempts. These are quick wins that immediately improve your privacy."
-        pitfalls={[
-          "Clearing cookies will log you out of most websites.",
-          "Some sites may not work properly with third-party cookies blocked.",
-          "Consider using a password manager so you don't lose access to accounts.",
-        ]}
+        title={t.cleanup.title}
+        concept={t.cleanup.concept}
+        whyItMatters={t.cleanup.whyItMatters}
       >
         <AlertBox severity="warning" className="mb-6">
-          <strong>Heads up:</strong> Clearing cookies will log you out of websites. Make sure you
-          know your passwords or have a password manager before proceeding.
+          {t.cleanup.cookiesWarning}
         </AlertBox>
 
         {showExternalLinks && (
           <>
             <div className="space-y-4">
               <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-                Browser Instructions for {browserInfo.name}
+                {t.cleanup.browserInstructions} {browserInfo.name}
               </h3>
               <div className="space-y-4">
                 <ExternalLinkCard
@@ -106,12 +102,12 @@ export default function Cleanup() {
             <div className="space-y-4">
               <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-                  Breach Exposure Check
+                  {t.cleanup.breachExposure}
                 </h3>
                 <Badge variant="outline" className="text-xs">Optional</Badge>
               </div>
               <p className="text-sm text-muted-foreground">
-                Check if your email addresses have appeared in known data breaches. This only takes 2 minutes.
+                {t.cleanup.breachExposureDesc}
               </p>
               <ExternalLinkCard
                 title="Have I Been Pwned"
@@ -120,10 +116,6 @@ export default function Cleanup() {
                 icon={<ShieldAlert className="w-5 h-5" />}
                 testId="link-hibp"
               />
-              <AlertBox severity="info">
-                <strong>Important:</strong> Enter your email directly on the Have I Been Pwned website, never into this wizard. 
-                The wizard never asks for personal information.
-              </AlertBox>
             </div>
           </>
         )}
@@ -133,17 +125,17 @@ export default function Cleanup() {
         <div className="space-y-6">
           <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
             <FileText className="w-4 h-4" />
-            Record Your Actions
+            {t.cleanup.recordActions}
           </h3>
 
           <RadioPills
             value={results.cookiesCleared}
             onChange={(v: YesNo) => updateResults("cleanup", { cookiesCleared: v })}
             options={[
-              { value: "yes", label: "Yes, cleared" },
-              { value: "no", label: "No, skipped" },
+              { value: "yes", label: t.cleanupActions.yes },
+              { value: "no", label: t.cleanupActions.no },
             ]}
-            label="Did you clear your cookies and site data?"
+            label={t.cleanup.cookiesClearedQuestion}
             testId="input-cookies-cleared"
           />
 
@@ -153,11 +145,11 @@ export default function Cleanup() {
               updateResults("cleanup", { thirdPartyCookiesBlockedOrLimited: v })
             }
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "unsure", label: "Already blocked" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "unsure", label: t.cleanupActions.alreadyBlocked },
             ]}
-            label="Did you enable blocking of third-party cookies?"
+            label={t.cleanup.cookiesBlockedQuestion}
             testId="input-cookies-blocked"
           />
 
@@ -167,12 +159,12 @@ export default function Cleanup() {
               updateResults("cleanup", { passwordHygieneActionTaken: v })
             }
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "later", label: "Will do later" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "later", label: t.cleanupActions.later },
             ]}
-            label="Did you take any password hygiene action?"
-            helperText="Examples: checked Have I Been Pwned, enabled MFA, updated a password, or reviewed your password manager"
+            label={t.cleanup.passwordHygieneQuestion}
+            helperText={t.cleanup.passwordHygieneHelper}
             testId="input-password-hygiene"
           />
         </div>

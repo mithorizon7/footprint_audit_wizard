@@ -1,4 +1,5 @@
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { NumberStepper } from "@/components/wizard/NumberStepper";
@@ -11,6 +12,7 @@ import type { YesNo, YesNoUnsure, SiteCategory } from "@shared/schema";
 
 export default function Trackers() {
   const { data, updateResults, isFictional, tryLiveTools } = useWizard();
+  const { t } = useI18n();
   const results = data.results.trackers;
   const showExternalLinks = !isFictional || tryLiveTools;
 
@@ -18,19 +20,14 @@ export default function Trackers() {
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
       <StepCard
         stepNumber={2}
-        title="Tracker Visibility"
-        concept="One normal webpage can load dozens of third parties. Tracking isn't just 'cookies' — it includes session recording, fingerprinting, and more."
-        whyItMatters="When you visit a website, invisible scripts often record your behavior, share data with advertisers, and build a profile of your interests — often without your knowledge."
-        pitfalls={[
-          "Some sites block automated scanning; if Blacklight fails, try another site.",
-          "Results are a snapshot; they can change day to day.",
-          "Avoid scanning health portals or internal company systems.",
-        ]}
+        title={t.trackers.title}
+        concept={t.trackers.concept}
+        whyItMatters={t.trackers.whyItMatters}
       >
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-              External Tool
+              {t.trackers.externalTool}
             </h3>
             <ExternalLinkCard
               title="Blacklight by The Markup"
@@ -40,8 +37,7 @@ export default function Trackers() {
               testId="link-blacklight"
             />
             <p className="text-sm text-muted-foreground">
-              Tip: Try scanning a news site or shopping site you frequently visit. Avoid
-              sensitive sites like health portals or banking.
+              {t.trackers.blacklightTip}
             </p>
             <ToolFallbackBlock />
           </div>
@@ -52,17 +48,17 @@ export default function Trackers() {
         <div className="space-y-6">
           <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
             <FileText className="w-4 h-4" />
-            Record Your Findings
+            {t.trackers.recordFindings}
           </h3>
 
           <RadioPills
             value={results.blacklightRun}
             onChange={(v: YesNo) => updateResults("trackers", { blacklightRun: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
             ]}
-            label="Did you run the Blacklight scan?"
+            label={t.trackers.blacklightRunQuestion}
             testId="input-blacklight-run"
           />
 
@@ -70,13 +66,13 @@ export default function Trackers() {
             value={results.siteCategoryScanned}
             onChange={(v: SiteCategory) => updateResults("trackers", { siteCategoryScanned: v })}
             options={[
-              { value: "news", label: "News" },
-              { value: "shopping", label: "Shopping" },
-              { value: "social", label: "Social" },
-              { value: "health", label: "Health" },
-              { value: "other", label: "Other" },
+              { value: "news", label: t.siteCategories.news },
+              { value: "shopping", label: t.siteCategories.shopping },
+              { value: "social", label: t.siteCategories.social },
+              { value: "health", label: t.siteCategories.health },
+              { value: "other", label: t.siteCategories.other },
             ]}
-            label="What type of site did you scan?"
+            label={t.trackers.siteCategoryQuestion}
             testId="input-site-category"
           />
 
@@ -85,8 +81,8 @@ export default function Trackers() {
             onChange={(v) => updateResults("trackers", { trackerCount: v })}
             min={0}
             max={100}
-            label="How many trackers were detected?"
-            helperText="Enter the number shown in Blacklight's summary"
+            label={t.trackers.trackerCountQuestion}
+            helperText={t.trackers.trackerCountHelper}
             testId="input-tracker-count"
           />
 
@@ -94,11 +90,11 @@ export default function Trackers() {
             value={results.thirdPartyCookiesFlagged}
             onChange={(v: YesNoUnsure) => updateResults("trackers", { thirdPartyCookiesFlagged: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "unsure", label: "Unsure" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "unsure", label: t.common.unsure },
             ]}
-            label="Were third-party cookies flagged?"
+            label={t.trackers.cookiesFlaggedQuestion}
             testId="input-cookies-flagged"
           />
 
@@ -106,12 +102,12 @@ export default function Trackers() {
             value={results.sessionRecordingFlagged}
             onChange={(v: YesNoUnsure) => updateResults("trackers", { sessionRecordingFlagged: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "unsure", label: "Unsure" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "unsure", label: t.common.unsure },
             ]}
-            label="Was session recording detected?"
-            helperText="Session recording captures mouse movements, clicks, and keystrokes"
+            label={t.trackers.sessionRecordingQuestion}
+            helperText={t.trackers.sessionRecordingHelper}
             testId="input-session-recording"
           />
 
@@ -119,12 +115,12 @@ export default function Trackers() {
             value={results.keyLoggingFlagged}
             onChange={(v: YesNoUnsure) => updateResults("trackers", { keyLoggingFlagged: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "unsure", label: "Unsure" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "unsure", label: t.common.unsure },
             ]}
-            label="Was key logging detected?"
-            helperText="Key logging captures what you type into forms"
+            label={t.trackers.keyLoggingQuestion}
+            helperText={t.trackers.keyLoggingHelper}
             testId="input-keylogging"
           />
 
@@ -132,12 +128,12 @@ export default function Trackers() {
             value={results.fingerprintingFlagged}
             onChange={(v: YesNoUnsure) => updateResults("trackers", { fingerprintingFlagged: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "unsure", label: "Unsure" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "unsure", label: t.common.unsure },
             ]}
-            label="Was fingerprinting detected?"
-            helperText="Fingerprinting identifies your browser without cookies"
+            label={t.trackers.fingerprintingQuestion}
+            helperText={t.trackers.fingerprintingHelper}
             testId="input-fingerprinting"
           />
         </div>

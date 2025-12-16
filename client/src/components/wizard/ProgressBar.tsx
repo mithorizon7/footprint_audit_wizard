@@ -7,14 +7,14 @@ import { Badge } from "@/components/ui/badge";
 
 export function ProgressBar() {
   const { currentStep, timeRemaining, elapsedSeconds, currentStepTargetMinutes, data, isStepSkipped } = useWizard();
-  const { t } = useI18n();
+  const { t, plural } = useI18n();
   const isStarted = !!data.startedAt;
   const isCompleted = !!data.completedAt;
 
-  const formatTime = (totalSeconds: number) => {
+  const formatTimeDisplay = (totalSeconds: number) => {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    return { minutes, seconds: seconds.toString().padStart(2, "0") };
   };
 
   const getStepName = (stepKey: string): string => {
@@ -39,7 +39,7 @@ export function ProgressBar() {
         <div className="flex items-center justify-between gap-4 mb-2">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-foreground" data-testid="step-progress">
-              {t.progress.stepOf.replace("{current}", String(currentStep + 1)).replace("{total}", String(STEP_INFO.length))}
+              {plural("stepOf", { current: currentStep + 1, total: STEP_INFO.length })}
             </span>
             <Badge variant="secondary" className="text-xs">
               {Math.round(progressPercent)}%
@@ -50,11 +50,16 @@ export function ProgressBar() {
             <div className="flex items-center gap-4 text-sm shrink-0">
               <div className="hidden sm:flex items-center gap-1.5 text-muted-foreground">
                 <Target className="w-3.5 h-3.5" />
-                <span data-testid="step-target">{t.progress.target.replace("{minutes}", String(currentStepTargetMinutes))}</span>
+                <span data-testid="step-target">{plural("targetMinutes", { count: currentStepTargetMinutes })}</span>
               </div>
               <div className="flex items-center gap-1.5 text-foreground font-medium">
                 <Clock className="w-3.5 h-3.5" />
-                <span data-testid="time-remaining">{t.progress.left.replace("{time}", formatTime(remainingSeconds))}</span>
+                <span data-testid="time-remaining">
+                  {(() => {
+                    const { minutes, seconds } = formatTimeDisplay(remainingSeconds);
+                    return plural("timeLeft", { minutes, seconds });
+                  })()}
+                </span>
               </div>
             </div>
           )}
@@ -127,7 +132,7 @@ export function ProgressBar() {
           </p>
           {isStarted && !isCompleted && (
             <p className="text-xs text-muted-foreground sm:hidden">
-              {t.progress.target.replace("{minutes}", String(currentStepTargetMinutes))}
+              {plural("targetMinutes", { count: currentStepTargetMinutes })}
             </p>
           )}
         </div>

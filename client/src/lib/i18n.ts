@@ -20,6 +20,12 @@ export interface Translations {
     no: string;
     unsure: string;
   };
+  accessibility: {
+    languageSelector: string;
+    switchTheme: string;
+    darkMode: string;
+    lightMode: string;
+  };
   welcome: {
     title: string;
     subtitle: string;
@@ -106,6 +112,7 @@ export interface Translations {
     concept: string;
     whyItMatters: string;
     externalTool: string;
+    blacklightTip: string;
     recordFindings: string;
     blacklightRunQuestion: string;
     siteCategoryQuestion: string;
@@ -113,8 +120,11 @@ export interface Translations {
     trackerCountHelper: string;
     cookiesFlaggedQuestion: string;
     sessionRecordingQuestion: string;
+    sessionRecordingHelper: string;
     keyLoggingQuestion: string;
+    keyLoggingHelper: string;
     fingerprintingQuestion: string;
+    fingerprintingHelper: string;
   };
   fingerprinting: {
     title: string;
@@ -187,6 +197,35 @@ export interface Translations {
     later: string;
     alreadyBlocked: string;
   };
+  externalTools: {
+    googleResultsTitle: string;
+    googleResultsDesc: string;
+    findContactTitle: string;
+    findContactDesc: string;
+    requestRemovalTitle: string;
+    requestRemovalDesc: string;
+    blacklightTitle: string;
+    blacklightDesc: string;
+    effCoverTracksTitle: string;
+    effCoverTracksDesc: string;
+    googleAdSettingsTitle: string;
+    googleAdSettingsDesc: string;
+    appleAdsTitle: string;
+    appleAdsDesc: string;
+    androidAdIdTitle: string;
+    androidAdIdDesc: string;
+    iosAttTitle: string;
+    iosAttDesc: string;
+    clearCookiesTitle: string;
+    clearCookiesDesc: string;
+    blockCookiesTitle: string;
+    blockCookiesDesc: string;
+    hibpTitle: string;
+    hibpDesc: string;
+  };
+  badges: {
+    optional: string;
+  };
 }
 
 const en: Translations = {
@@ -208,6 +247,12 @@ const en: Translations = {
     yes: "Yes",
     no: "No",
     unsure: "Unsure",
+  },
+  accessibility: {
+    languageSelector: "Language selector",
+    switchTheme: "Switch theme",
+    darkMode: "Dark mode",
+    lightMode: "Light mode",
   },
   welcome: {
     title: "Footprint Audit Wizard",
@@ -301,6 +346,7 @@ const en: Translations = {
     concept: "One normal webpage can load dozens of third parties. Tracking isn't just 'cookies' — it includes session recording, fingerprinting, and more.",
     whyItMatters: "When you visit a website, invisible scripts often record your behavior, share data with advertisers, and build a profile of your interests — often without your knowledge.",
     externalTool: "External Tool",
+    blacklightTip: "Tip: Try scanning a news site or shopping site you frequently visit. Avoid sensitive sites like health portals or banking.",
     recordFindings: "Record Your Findings",
     blacklightRunQuestion: "Did you run the Blacklight scan?",
     siteCategoryQuestion: "What type of site did you scan?",
@@ -308,8 +354,11 @@ const en: Translations = {
     trackerCountHelper: "Enter the number shown in Blacklight's summary",
     cookiesFlaggedQuestion: "Were third-party cookies flagged?",
     sessionRecordingQuestion: "Was session recording detected?",
+    sessionRecordingHelper: "Session recording captures mouse movements, clicks, and keystrokes",
     keyLoggingQuestion: "Was key logging detected?",
+    keyLoggingHelper: "Key logging captures what you type into forms",
     fingerprintingQuestion: "Was fingerprinting detected?",
+    fingerprintingHelper: "Fingerprinting identifies your browser without cookies",
   },
   fingerprinting: {
     title: "Fingerprinting",
@@ -404,6 +453,12 @@ const lv: Translations = {
     no: "Nē",
     unsure: "Nezinu",
   },
+  accessibility: {
+    languageSelector: "Valodas izvēle",
+    switchTheme: "Mainīt motīvu",
+    darkMode: "Tumšais režīms",
+    lightMode: "Gaišais režīms",
+  },
   welcome: {
     title: "Digitālās pēdas audita vednis",
     subtitle:
@@ -496,6 +551,7 @@ const lv: Translations = {
     concept: "Viena parasta tīmekļa lapa var ielādēt desmitiem trešo pušu. Izsekošana nav tikai 'sīkdatnes' — tā ietver sesiju ierakstīšanu, pirkstu nospiedumus un daudz ko citu.",
     whyItMatters: "Apmeklējot vietni, neredzami skripti bieži ieraksta jūsu uzvedību, kopīgo datus ar reklāmdevējiem un veido jūsu interešu profilu — bieži vien bez jūsu ziņas.",
     externalTool: "Ārējais rīks",
+    blacklightTip: "Padoms: Mēģiniet skenēt ziņu vai iepirkšanās vietni, ko bieži apmeklējat. Izvairieties no sensitīvām vietnēm, piemēram, veselības portāliem vai bankām.",
     recordFindings: "Ierakstiet savus atklājumus",
     blacklightRunQuestion: "Vai palaidāt Blacklight skenēšanu?",
     siteCategoryQuestion: "Kāda veida vietni jūs skenējāt?",
@@ -503,8 +559,11 @@ const lv: Translations = {
     trackerCountHelper: "Ievadiet skaitli, kas parādīts Blacklight kopsavilkumā",
     cookiesFlaggedQuestion: "Vai tika atzīmētas trešo pušu sīkdatnes?",
     sessionRecordingQuestion: "Vai tika atklāta sesiju ierakstīšana?",
+    sessionRecordingHelper: "Sesiju ierakstīšana tver peles kustības, klikšķus un taustiņu nospiešanas",
     keyLoggingQuestion: "Vai tika atklāta taustiņu reģistrēšana?",
+    keyLoggingHelper: "Taustiņu reģistrēšana tver to, ko jūs rakstāt formās",
     fingerprintingQuestion: "Vai tika atklāta pirkstu nospiedumu vākšana?",
+    fingerprintingHelper: "Pirkstu nospiedumu vākšana identificē jūsu pārlūkprogrammu bez sīkdatnēm",
   },
   fingerprinting: {
     title: "Pirkstu nospiedumi",
@@ -599,6 +658,12 @@ const ru: Translations = {
     no: "Нет",
     unsure: "Не уверен",
   },
+  accessibility: {
+    languageSelector: "Выбор языка",
+    switchTheme: "Сменить тему",
+    darkMode: "Тёмный режим",
+    lightMode: "Светлый режим",
+  },
   welcome: {
     title: "Мастер аудита цифрового следа",
     subtitle:
@@ -691,6 +756,7 @@ const ru: Translations = {
     concept: "Одна обычная веб-страница может загружать десятки сторонних скриптов. Отслеживание — это не только 'куки', оно включает запись сессий, снятие отпечатков и многое другое.",
     whyItMatters: "Когда вы посещаете сайт, невидимые скрипты часто записывают ваше поведение, делятся данными с рекламодателями и создают профиль ваших интересов — часто без вашего ведома.",
     externalTool: "Внешний инструмент",
+    blacklightTip: "Совет: Попробуйте сканировать новостной или интернет-магазин, который вы часто посещаете. Избегайте чувствительных сайтов, таких как медицинские порталы или банки.",
     recordFindings: "Запишите свои находки",
     blacklightRunQuestion: "Запускали ли вы сканирование Blacklight?",
     siteCategoryQuestion: "Какой тип сайта вы сканировали?",
@@ -698,8 +764,11 @@ const ru: Translations = {
     trackerCountHelper: "Введите число, показанное в сводке Blacklight",
     cookiesFlaggedQuestion: "Были ли отмечены сторонние куки?",
     sessionRecordingQuestion: "Была ли обнаружена запись сессий?",
+    sessionRecordingHelper: "Запись сессий фиксирует движения мыши, клики и нажатия клавиш",
     keyLoggingQuestion: "Была ли обнаружена запись нажатий клавиш?",
+    keyLoggingHelper: "Запись клавиш фиксирует то, что вы вводите в формы",
     fingerprintingQuestion: "Был ли обнаружен сбор отпечатков браузера?",
+    fingerprintingHelper: "Снятие отпечатков идентифицирует ваш браузер без куки",
   },
   fingerprinting: {
     title: "Отпечатки браузера",
@@ -774,23 +843,23 @@ const ru: Translations = {
   },
 };
 
-const translations: Record<Locale, Translations> = {
+export const allTranslations: Record<Locale, Translations> = {
   en,
   lv,
   ru,
 };
 
 export function getTranslations(locale: Locale): Translations {
-  return translations[locale] || translations.en;
+  return allTranslations[locale] || allTranslations.en;
 }
 
 export function getLocaleFromStorage(): Locale {
   const stored = localStorage.getItem("footprintWizard:locale");
-  if (stored && stored in translations) {
+  if (stored && stored in allTranslations) {
     return stored as Locale;
   }
   const browserLang = navigator.language.slice(0, 2);
-  if (browserLang in translations) {
+  if (browserLang in allTranslations) {
     return browserLang as Locale;
   }
   return "en";

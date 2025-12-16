@@ -10,10 +10,7 @@ import { useI18n } from "@/context/I18nContext";
 import { SUPPORTED_LOCALES, type Locale } from "@/lib/i18n";
 
 export function LanguageSelector() {
-  const { locale, setLocale } = useI18n();
-
-  const currentLocale = SUPPORTED_LOCALES.find((l) => l.code === locale);
-  const currentLocaleName = currentLocale?.nativeName || currentLocale?.name || "English";
+  const { locale, setLocale, t } = useI18n();
 
   return (
     <DropdownMenu>
@@ -21,7 +18,7 @@ export function LanguageSelector() {
         <Button
           variant="outline"
           size="icon"
-          aria-label={`Language: ${currentLocaleName}`}
+          aria-label={t.accessibility.languageSelector}
           data-testid="button-language-selector"
         >
           <Globe className="w-4 h-4" />

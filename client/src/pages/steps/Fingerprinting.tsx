@@ -1,4 +1,5 @@
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { RadioPills } from "@/components/wizard/RadioPills";
@@ -6,11 +7,11 @@ import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
 import { Fingerprint, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { AlertBox } from "@/components/wizard/AlertBox";
 import type { YesNo, YesNoUnsure, TrackingProtection } from "@shared/schema";
 
 export default function FingerprintingStep() {
   const { data, updateResults, isFictional, tryLiveTools } = useWizard();
+  const { t } = useI18n();
   const results = data.results.fingerprinting;
   const showExternalLinks = !isFictional || tryLiveTools;
 
@@ -18,19 +19,14 @@ export default function FingerprintingStep() {
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
       <StepCard
         stepNumber={3}
-        title="Fingerprinting"
-        concept="Clearing cookies doesn't make you invisible. Browser fingerprinting can still identify your device through unique combinations of settings, fonts, and hardware."
-        whyItMatters="Even in 'private browsing' mode, your browser's unique characteristics (screen size, installed fonts, timezone, WebGL settings) can create a fingerprint that identifies you across websites."
-        pitfalls={[
-          "Uniqueness can change depending on browser extensions and settings.",
-          "Private browsing often does not make your browser non-unique.",
-          "Some privacy tools can actually make you MORE unique (ironic but true).",
-        ]}
+        title={t.fingerprinting.title}
+        concept={t.fingerprinting.concept}
+        whyItMatters={t.fingerprinting.whyItMatters}
       >
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-              External Tools
+              {t.fingerprinting.externalTools}
             </h3>
             <div className="space-y-4">
               <ExternalLinkCard
@@ -51,20 +47,6 @@ export default function FingerprintingStep() {
           </div>
         )}
 
-        <AlertBox severity="info" className="mt-6">
-          <strong>What to look for:</strong>
-          <ul className="list-disc list-inside mt-2 space-y-1">
-            <li>
-              <strong>"Your browser fingerprint appears to be unique"</strong> — means you're easily
-              identifiable
-            </li>
-            <li>
-              <strong>Tracking Protection</strong> — "Strong protection" is good, "Some protection"
-              is okay, "No protection" means trackers can follow you
-            </li>
-          </ul>
-        </AlertBox>
-
         <ToolFallbackBlock />
 
         <Separator className="my-8" />
@@ -72,17 +54,17 @@ export default function FingerprintingStep() {
         <div className="space-y-6">
           <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
             <FileText className="w-4 h-4" />
-            Record Your Findings
+            {t.fingerprinting.whatToLookFor}
           </h3>
 
           <RadioPills
             value={results.effTestRun}
             onChange={(v: YesNo) => updateResults("fingerprinting", { effTestRun: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
             ]}
-            label="Did you run the EFF Cover Your Tracks test?"
+            label={t.fingerprinting.effRunQuestion}
             testId="input-eff-run"
           />
 
@@ -90,12 +72,12 @@ export default function FingerprintingStep() {
             value={results.browserUnique}
             onChange={(v: YesNoUnsure) => updateResults("fingerprinting", { browserUnique: v })}
             options={[
-              { value: "yes", label: "Yes, unique" },
-              { value: "no", label: "No, not unique" },
-              { value: "unsure", label: "Unsure" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "unsure", label: t.common.unsure },
             ]}
-            label="Does the test say your browser fingerprint is unique?"
-            helperText="Look for 'Your browser fingerprint appears to be unique' or similar wording"
+            label={t.fingerprinting.browserUniqueQuestion}
+            helperText={t.fingerprinting.browserUniqueHelper}
             testId="input-browser-unique"
           />
 
@@ -105,13 +87,13 @@ export default function FingerprintingStep() {
               updateResults("fingerprinting", { trackingProtection: v })
             }
             options={[
-              { value: "strong", label: "Strong" },
-              { value: "partial", label: "Partial" },
-              { value: "weak", label: "Weak/None" },
-              { value: "unsure", label: "Unsure" },
+              { value: "strong", label: t.trackingProtection.strong },
+              { value: "partial", label: t.trackingProtection.partial },
+              { value: "weak", label: t.trackingProtection.weak },
+              { value: "unsure", label: t.common.unsure },
             ]}
-            label="What level of tracking protection did the test report?"
-            helperText="This indicates how well your browser blocks known trackers"
+            label={t.fingerprinting.trackingProtectionQuestion}
+            helperText={t.fingerprinting.trackingProtectionHelper}
             testId="input-tracking-protection"
           />
         </div>

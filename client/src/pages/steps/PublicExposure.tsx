@@ -1,4 +1,5 @@
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { NumberStepper } from "@/components/wizard/NumberStepper";
@@ -11,6 +12,7 @@ import type { YesNoUnsure, YesNo } from "@shared/schema";
 
 export default function PublicExposure() {
   const { data, updateResults, isFictional, tryLiveTools } = useWizard();
+  const { t } = useI18n();
   const results = data.results.publicExposure;
   const showExternalLinks = !isFictional || tryLiveTools;
 
@@ -18,24 +20,14 @@ export default function PublicExposure() {
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
       <StepCard
         stepNumber={1}
-        title="Public Exposure"
-        concept="Some personal info is publicly discoverable via search. 'Privacy' isn't only about what you post yourself."
-        whyItMatters="Data brokers and people-search sites aggregate public records, social media, and other sources. Even without your knowledge, your contact info may be visible to anyone with a search engine."
-        pitfalls={[
-          "Search results vary by country/language.",
-          "If you're on a work computer, you may be logged into corporate Google accounts.",
-          "Incognito mode shows more 'public' results since it's not personalized to you.",
-        ]}
+        title={t.publicExposure.title}
+        concept={t.publicExposure.concept}
+        whyItMatters={t.publicExposure.whyItMatters}
       >
-        <AlertBox severity="critical" className="mb-6">
-          <strong>Don't paste sensitive info into this wizard.</strong> Only enter information
-          directly into your own browser's search engine.
-        </AlertBox>
-
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-              External Tools
+              {t.publicExposure.externalTools}
             </h3>
             <div className="space-y-4">
               <ExternalLinkCard
@@ -63,23 +55,12 @@ export default function PublicExposure() {
           </div>
         )}
 
-        {!isFictional && (
-          <AlertBox severity="info" className="mt-6">
-            <strong>Self-search prompts:</strong>
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>Search your name + city</li>
-              <li>Search your email address (in quotes)</li>
-              <li>Search your phone number</li>
-            </ul>
-          </AlertBox>
-        )}
-
         <Separator className="my-8" />
 
         <div className="space-y-6">
           <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
             <FileText className="w-4 h-4" />
-            Record Your Findings
+            {t.publicExposure.recordFindings}
           </h3>
 
           <NumberStepper
@@ -87,8 +68,8 @@ export default function PublicExposure() {
             onChange={(v) => updateResults("publicExposure", { searchResultPagesWithPersonalInfo: v })}
             min={0}
             max={5}
-            label="How many search result pages contained personal info (address, phone, relatives)?"
-            helperText="Count unique pages, not total mentions. Use 5+ if more than 5."
+            label={t.publicExposure.searchPagesQuestion}
+            helperText={t.publicExposure.searchPagesHelper}
             testId="input-search-pages"
           />
 
@@ -96,11 +77,11 @@ export default function PublicExposure() {
             value={results.peopleSearchSitesFound}
             onChange={(v: YesNoUnsure) => updateResults("publicExposure", { peopleSearchSitesFound: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "unsure", label: "Unsure" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "unsure", label: t.common.unsure },
             ]}
-            label="Did you find yourself on people-search sites (e.g., Whitepages, Spokeo, BeenVerified)?"
+            label={t.publicExposure.peopleSearchQuestion}
             testId="input-people-search"
           />
 
@@ -108,10 +89,10 @@ export default function PublicExposure() {
             value={results.googleResultsAboutYouVisited}
             onChange={(v: YesNo) => updateResults("publicExposure", { googleResultsAboutYouVisited: v })}
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
             ]}
-            label="Did you visit Google's 'Results about you' dashboard?"
+            label={t.publicExposure.googleVisitedQuestion}
             testId="input-google-visited"
           />
 
@@ -123,11 +104,11 @@ export default function PublicExposure() {
               })
             }
             options={[
-              { value: "yes", label: "Yes" },
-              { value: "no", label: "No" },
-              { value: "not_applicable", label: "N/A" },
+              { value: "yes", label: t.common.yes },
+              { value: "no", label: t.common.no },
+              { value: "not_applicable", label: t.adSettings.notApplicable },
             ]}
-            label="Did you request removal of any search results from Google?"
+            label={t.publicExposure.removalRequestedQuestion}
             testId="input-removal-requested"
           />
         </div>

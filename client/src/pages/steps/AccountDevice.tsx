@@ -1,4 +1,5 @@
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { RadioPills } from "@/components/wizard/RadioPills";
@@ -10,6 +11,7 @@ import type { AdSetting, AndroidAdIdAction, IosATT } from "@shared/schema";
 
 export default function AccountDevice() {
   const { data, updateResults, isFictional, tryLiveTools } = useWizard();
+  const { t } = useI18n();
   const results = data.results.accountDevice;
   const os = data.device.os;
 
@@ -21,21 +23,14 @@ export default function AccountDevice() {
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
       <StepCard
         stepNumber={4}
-        title="Account & Device Identifiers"
-        concept="Tracking also happens at the account/device level through ad personalization settings, device IDs, and app tracking permissions."
-        whyItMatters="Even if you block website trackers, your accounts and devices may still share data with advertisers through built-in identifiers that follow you across apps and services."
-        pitfalls={[
-          "Settings locations vary by OS version — the links below will guide you.",
-          "Resetting an advertising ID creates a new one; it doesn't disable tracking entirely.",
-          "Turning off personalized ads may not reduce the number of ads; it changes targeting.",
-          "On managed devices, you may not be able to change some settings.",
-          "Some settings require being logged into your account on the device.",
-        ]}
+        title={t.accountDevice.title}
+        concept={t.accountDevice.concept}
+        whyItMatters={t.accountDevice.whyItMatters}
       >
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-              External Tools
+              {t.accountDevice.externalTools}
             </h3>
             <div className="space-y-4">
               <ExternalLinkCard
@@ -84,19 +79,19 @@ export default function AccountDevice() {
         <div className="space-y-6">
           <h3 className="text-sm font-medium text-foreground uppercase tracking-wide flex items-center gap-2">
             <FileText className="w-4 h-4" />
-            Record Your Settings
+            {t.accountDevice.recordSettings}
           </h3>
 
           <RadioPills
             value={results.googlePersonalizedAds}
             onChange={(v: AdSetting) => updateResults("accountDevice", { googlePersonalizedAds: v })}
             options={[
-              { value: "on", label: "On" },
-              { value: "off", label: "Off" },
-              { value: "unsure", label: "Unsure" },
-              { value: "not_used", label: "Don't use Google" },
+              { value: "on", label: t.adSettings.on },
+              { value: "off", label: t.adSettings.off },
+              { value: "unsure", label: t.common.unsure },
+              { value: "not_used", label: t.adSettings.notUsed },
             ]}
-            label="Is Google personalized ads turned on or off?"
+            label={t.accountDevice.googleAdsQuestion}
             testId="input-google-ads"
           />
 
@@ -107,12 +102,12 @@ export default function AccountDevice() {
                 updateResults("accountDevice", { applePersonalizedAds: v })
               }
               options={[
-                { value: "on", label: "On" },
-                { value: "off", label: "Off" },
-                { value: "unsure", label: "Unsure" },
-                { value: "not_applicable", label: "N/A" },
+                { value: "on", label: t.adSettings.on },
+                { value: "off", label: t.adSettings.off },
+                { value: "unsure", label: t.common.unsure },
+                { value: "not_applicable", label: t.adSettings.notApplicable },
               ]}
-              label="Is Apple personalized ads turned on or off?"
+              label={t.accountDevice.appleAdsQuestion}
               testId="input-apple-ads"
             />
           )}
@@ -124,12 +119,12 @@ export default function AccountDevice() {
                 updateResults("accountDevice", { androidAdvertisingIdAction: v })
               }
               options={[
-                { value: "reset", label: "Reset" },
-                { value: "deleted", label: "Deleted" },
-                { value: "none", label: "No change" },
-                { value: "not_applicable", label: "N/A" },
+                { value: "reset", label: t.androidActions.reset },
+                { value: "deleted", label: t.androidActions.deleted },
+                { value: "none", label: t.androidActions.none },
+                { value: "not_applicable", label: t.adSettings.notApplicable },
               ]}
-              label="What action did you take on your Android advertising ID?"
+              label={t.accountDevice.androidIdQuestion}
               testId="input-android-ad-id"
             />
           )}
@@ -139,13 +134,13 @@ export default function AccountDevice() {
               value={results.iosATTSetting}
               onChange={(v: IosATT) => updateResults("accountDevice", { iosATTSetting: v })}
               options={[
-                { value: "allow_apps_to_request", label: "Apps can request" },
-                { value: "blocked", label: "Blocked" },
-                { value: "unsure", label: "Unsure" },
-                { value: "not_applicable", label: "N/A" },
+                { value: "allow_apps_to_request", label: t.iosAtt.allowApps },
+                { value: "blocked", label: t.iosAtt.blocked },
+                { value: "unsure", label: t.common.unsure },
+                { value: "not_applicable", label: t.adSettings.notApplicable },
               ]}
-              label="What is your iOS App Tracking Transparency setting?"
-              helperText="Settings > Privacy & Security > Tracking"
+              label={t.accountDevice.iosAttQuestion}
+              helperText={t.accountDevice.iosAttHelper}
               testId="input-ios-att"
             />
           )}
