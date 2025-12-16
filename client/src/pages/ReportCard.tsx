@@ -24,8 +24,11 @@ import {
   XCircle,
   HelpCircle,
   RefreshCw,
+  SkipForward,
+  ExternalLink,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { STEP_INFO } from "@shared/schema";
 import {
   RadarChart,
   PolarGrid,
@@ -51,8 +54,27 @@ interface MetricTile {
   explanation: string;
 }
 
+const STEP_LINKS: Record<number, { name: string; url: string; description: string }[]> = {
+  1: [
+    { name: "Google Results About You", url: "https://myactivity.google.com/results-about-you", description: "Review what Google found about you" },
+    { name: "Request Removal", url: "https://support.google.com/websearch/answer/9673730", description: "Remove personal info from Google search" },
+  ],
+  2: [
+    { name: "Blacklight", url: "https://themarkup.org/blacklight", description: "Scan websites for trackers" },
+  ],
+  3: [
+    { name: "EFF Cover Your Tracks", url: "https://coveryourtracks.eff.org/", description: "Test your browser fingerprint" },
+  ],
+  4: [
+    { name: "Google Ad Settings", url: "https://myadcenter.google.com/", description: "Control Google ad personalization" },
+  ],
+  5: [
+    { name: "Have I Been Pwned", url: "https://haveibeenpwned.com/", description: "Check if your email was in data breaches" },
+  ],
+};
+
 export default function ReportCard() {
-  const { data, resetWizard } = useWizard();
+  const { data, resetWizard, skippedSteps } = useWizard();
   const reportRef = useRef<HTMLDivElement>(null);
   const results = data.results;
 
@@ -153,10 +175,25 @@ export default function ReportCard() {
     },
   ];
 
+  const getSkippedStepInfo = () => {
+    return skippedSteps
+      .filter((step) => step >= 1 && step <= 5)
+      .map((step) => ({
+        step,
+        name: STEP_INFO[step]?.name ?? `Step ${step}`,
+        links: STEP_LINKS[step] ?? [],
+      }));
+  };
+
   const getNextActions = () => {
     const actions: string[] = [];
 
-    if (getPublicExposureLevel() !== "good") {
+    const skippedInfo = getSkippedStepInfo();
+    skippedInfo.forEach(({ name }) => {
+      actions.push(`You skipped "${name}". Complete this section when you have time.`);
+    });
+
+    if (getPublicExposureLevel() !== "good" && !skippedSteps.includes(1)) {
       actions.push(
         "Request removal of your personal info from Google search results using the 'Results about you' tool."
       );
@@ -164,31 +201,31 @@ export default function ReportCard() {
 
     if (results.publicExposure.peopleSearchSitesFound === "yes") {
       actions.push(
-        "Opt out from people-search sites like Whitepages, Spokeo, and BeenVerified individually."
+        "Opt out from people-search sites. Visit the FTC guide at consumer.ftc.gov/articles/what-know-about-people-search-sites"
       );
     }
 
-    if (getTrackerLevel() === "critical" || getTrackerLevel() === "warning") {
+    if ((getTrackerLevel() === "critical" || getTrackerLevel() === "warning") && !skippedSteps.includes(2)) {
       actions.push(
         "Install a reputable content blocker like uBlock Origin to reduce tracker exposure."
       );
     }
 
-    if (getFingerprintLevel() === "critical") {
+    if (getFingerprintLevel() === "critical" && !skippedSteps.includes(3)) {
       actions.push(
         "Try Firefox with Enhanced Tracking Protection set to 'Strict' to reduce fingerprinting."
       );
     }
 
-    if (results.accountDevice.googlePersonalizedAds === "on") {
+    if (results.accountDevice.googlePersonalizedAds === "on" && !skippedSteps.includes(4)) {
       actions.push("Turn off personalized ads in your Google Ad Center settings.");
     }
 
-    if (results.cleanup.cookiesCleared === "no") {
+    if (results.cleanup.cookiesCleared === "no" && !skippedSteps.includes(5)) {
       actions.push("Clear your browser cookies and site data to remove existing trackers.");
     }
 
-    if (results.cleanup.thirdPartyCookiesBlockedOrLimited === "no") {
+    if (results.cleanup.thirdPartyCookiesBlockedOrLimited === "no" && !skippedSteps.includes(5)) {
       actions.push("Enable blocking of third-party cookies in your browser settings.");
     }
 
@@ -204,7 +241,7 @@ export default function ReportCard() {
       );
     }
 
-    return actions.slice(0, 5);
+    return actions.slice(0, 7);
   };
 
   const levelToScore = (level: ScoreLevel): number => {
@@ -330,10 +367,26 @@ export default function ReportCard() {
             <Sparkles className="w-3 h-3 mr-1" />
             Audit Complete
           </Badge>
-          <h1 className="text-4xl font-bold font-serif text-foreground">Your Footprint Report</h1>
+          <h1 className="text-4xl font-bold font-serif text-foreground print:text-2xl">Your Footprint Report</h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
             Here's a summary of what you discovered about your digital footprint and recommended
             next steps.
+          </p>
+          <p className="text-xs text-muted-foreground hidden print:block">
+            Generated: {new Date().toLocaleDateString()} | All data stored locally only
+          </p>
+        </div>
+
+        <div className="rounded-md bg-muted/50 p-4 text-sm text-muted-foreground space-y-2 print:bg-transparent print:border print:border-border" data-testid="report-disclaimer">
+          <p className="font-medium text-foreground">Reality Check</p>
+          <ul className="list-disc list-inside space-y-1 text-xs">
+            <li>This is a snapshot, not a complete census of your digital footprint.</li>
+            <li>Results vary by country, language, and network you're connected to.</li>
+            <li>Search personalization means others may see different results for you.</li>
+            <li>Your footprint changes over time as new data is collected and shared.</li>
+          </ul>
+          <p className="text-xs mt-2 pt-2 border-t border-border/50">
+            All data remains on your device. This wizard never collects, stores, or transmits personal information.
           </p>
         </div>
 
@@ -520,6 +573,46 @@ export default function ReportCard() {
             </Accordion>
           </CardContent>
         </Card>
+
+        {skippedSteps.length > 0 && (
+          <Card className="border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20" data-testid="card-skipped-items">
+            <CardHeader>
+              <CardTitle className="text-xl font-serif flex items-center gap-2">
+                <SkipForward className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                Skipped Items
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                You skipped the following sections. Complete them later to get a more accurate picture of your digital footprint.
+              </p>
+              <div className="space-y-4">
+                {getSkippedStepInfo().map(({ step, name, links }) => (
+                  <div key={step} className="border-b border-amber-200/50 dark:border-amber-800/50 pb-3 last:border-0 last:pb-0">
+                    <p className="font-medium text-foreground mb-2">{name}</p>
+                    {links.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {links.map((link) => (
+                          <a
+                            key={link.url}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+                            data-testid={`link-skipped-${step}-${link.name.toLowerCase().replace(/\s+/g, "-")}`}
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            {link.name}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <Card>
           <CardHeader>

@@ -1,0 +1,81 @@
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { AlertTriangle, ChevronDown, Smartphone, FlaskConical, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useWizard } from "@/context/WizardContext";
+import { useState } from "react";
+
+interface ToolFallbackBlockProps {
+  suggestions?: string[];
+}
+
+export function ToolFallbackBlock({ suggestions }: ToolFallbackBlockProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const { setMode, isFictional } = useWizard();
+
+  const defaultSuggestions = [
+    "Try a different website or tool category",
+    "Try using your mobile phone with cellular data (bypasses corporate network)",
+    "Continue with Fictional mode to learn the concepts without live tools",
+  ];
+
+  const items = suggestions || defaultSuggestions;
+
+  const handleSwitchToFictional = () => {
+    if (window.confirm("Switch to Fictional Persona mode? This will use demo data instead.")) {
+      setMode("fictional");
+    }
+  };
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mt-4">
+      <CollapsibleTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-between text-muted-foreground hover:text-foreground p-2"
+          data-testid="button-tool-fallback"
+        >
+          <span className="flex items-center gap-2 text-sm">
+            <AlertTriangle className="w-4 h-4" />
+            Tool not loading?
+          </span>
+          <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        </Button>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="mt-2">
+        <div className="rounded-md bg-muted/50 p-4 space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Some networks or privacy tools may block these external tools. Try:
+          </p>
+          <ul className="space-y-2">
+            {items.map((item, index) => (
+              <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                {index === 0 && <RefreshCw className="w-4 h-4 mt-0.5 flex-shrink-0" />}
+                {index === 1 && <Smartphone className="w-4 h-4 mt-0.5 flex-shrink-0" />}
+                {index === 2 && <FlaskConical className="w-4 h-4 mt-0.5 flex-shrink-0" />}
+                {index > 2 && <span className="w-4 h-4 mt-0.5 flex-shrink-0 text-center">{index + 1}.</span>}
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          {!isFictional && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSwitchToFictional}
+              className="mt-2"
+              data-testid="button-switch-fictional"
+            >
+              <FlaskConical className="w-4 h-4 mr-2" />
+              Use Fictional Mode
+            </Button>
+          )}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}

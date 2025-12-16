@@ -3,6 +3,7 @@ import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
+import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
 import { Fingerprint, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AlertBox } from "@/components/wizard/AlertBox";
@@ -51,6 +52,8 @@ export default function FingerprintingStep() {
             </li>
           </ul>
         </AlertBox>
+
+        <ToolFallbackBlock />
 
         <Separator className="my-8" />
 

@@ -1,6 +1,7 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useWizard } from "@/context/WizardContext";
 
 interface ExternalLinkCardProps {
   title: string;
@@ -11,6 +12,42 @@ interface ExternalLinkCardProps {
 }
 
 export function ExternalLinkCard({ title, description, url, icon, testId }: ExternalLinkCardProps) {
+  const { isFictional, tryLiveTools } = useWizard();
+  const isCollapsed = isFictional && !tryLiveTools;
+
+  if (isCollapsed) {
+    return (
+      <Card className="p-4 border-2 border-dashed bg-muted/30">
+        <div className="flex items-start gap-4">
+          {icon && (
+            <div className="flex-shrink-0 w-10 h-10 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
+              {icon}
+            </div>
+          )}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <h4 className="font-medium text-muted-foreground">{title}</h4>
+              <Lock className="w-3 h-3 text-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground/70 mt-1 line-clamp-2">
+              Using demo data. Enable "Try live tools" to open this.
+            </p>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled
+            className="shrink-0 opacity-50"
+            data-testid={testId || `link-${title.toLowerCase().replace(/\s+/g, "-")}`}
+          >
+            <span className="hidden sm:inline mr-2">Demo</span>
+            <ExternalLink className="w-4 h-4" />
+          </Button>
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card className="p-4 border-2 border-dashed bg-transparent">
       <div className="flex items-start gap-4">

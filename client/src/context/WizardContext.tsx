@@ -22,6 +22,10 @@ interface WizardContextType {
   currentStep: number;
   isFictional: boolean;
   timeRemaining: number;
+  elapsedSeconds: number;
+  currentStepTargetMinutes: number;
+  skippedSteps: number[];
+  tryLiveTools: boolean;
   setMode: (mode: Mode) => void;
   setDevice: (device: Partial<DeviceInfo>) => void;
   updateResults: <K extends keyof WizardResults>(
@@ -35,6 +39,8 @@ interface WizardContextType {
   resetWizard: () => void;
   startAudit: () => void;
   completeAudit: () => void;
+  setTryLiveTools: (value: boolean) => void;
+  isStepSkipped: (step: number) => boolean;
 }
 
 const WizardContext = createContext<WizardContextType | null>(null);
@@ -42,28 +48,43 @@ const WizardContext = createContext<WizardContextType | null>(null);
 export function WizardProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<WizardData>(() => {
     const stored = getWizardData();
-    if (stored) return stored;
+    if (stored) {
+      return {
+        ...stored,
+        skippedSteps: stored.skippedSteps ?? [],
+        elapsedSeconds: stored.elapsedSeconds ?? 0,
+        tryLiveToolsInFictional: stored.tryLiveToolsInFictional ?? false,
+      };
+    }
     return createInitialWizardData();
   });
 
+  const [elapsedSeconds, setElapsedSeconds] = useState(() => data.elapsedSeconds ?? 0);
   const [timeRemaining, setTimeRemaining] = useState(TOTAL_DURATION_MINUTES);
 
   useEffect(() => {
-    saveWizardData(data);
-  }, [data]);
+    saveWizardData({ ...data, elapsedSeconds });
+  }, [data, elapsedSeconds]);
 
   useEffect(() => {
     if (!data.startedAt || data.completedAt) return;
 
     const interval = setInterval(() => {
-      const startTime = new Date(data.startedAt!).getTime();
-      const elapsed = Math.floor((Date.now() - startTime) / 60000);
-      const remaining = Math.max(0, TOTAL_DURATION_MINUTES - elapsed);
-      setTimeRemaining(remaining);
+      setElapsedSeconds((prev) => {
+        const newElapsed = prev + 1;
+        const remainingMinutes = Math.max(0, TOTAL_DURATION_MINUTES - Math.floor(newElapsed / 60));
+        setTimeRemaining(remainingMinutes);
+        return newElapsed;
+      });
     }, 1000);
 
     return () => clearInterval(interval);
   }, [data.startedAt, data.completedAt]);
+
+  useEffect(() => {
+    const remainingMinutes = Math.max(0, TOTAL_DURATION_MINUTES - Math.floor(elapsedSeconds / 60));
+    setTimeRemaining(remainingMinutes);
+  }, [elapsedSeconds]);
 
   const setMode = useCallback((mode: Mode) => {
     if (mode === "fictional") {
@@ -118,12 +139,33 @@ export function WizardProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const skipStep = useCallback(() => {
-    nextStep();
-  }, [nextStep]);
+    setData((prev) => {
+      const newSkippedSteps = prev.skippedSteps.includes(prev.currentStep)
+        ? prev.skippedSteps
+        : [...prev.skippedSteps, prev.currentStep];
+      return {
+        ...prev,
+        skippedSteps: newSkippedSteps,
+        currentStep: Math.min(prev.currentStep + 1, STEP_INFO.length - 1),
+      };
+    });
+  }, []);
+
+  const setTryLiveTools = useCallback((value: boolean) => {
+    setData((prev) => ({ ...prev, tryLiveToolsInFictional: value }));
+  }, []);
+
+  const isStepSkipped = useCallback(
+    (step: number) => data.skippedSteps.includes(step),
+    [data.skippedSteps]
+  );
+
+  const currentStepTargetMinutes = STEP_INFO[data.currentStep]?.duration ?? 10;
 
   const resetWizard = useCallback(() => {
     clearWizardData();
     setData(createInitialWizardData());
+    setElapsedSeconds(0);
     setTimeRemaining(TOTAL_DURATION_MINUTES);
   }, []);
 
@@ -157,6 +199,10 @@ export function WizardProvider({ children }: { children: ReactNode }) {
         currentStep: data.currentStep,
         isFictional: data.mode === "fictional",
         timeRemaining,
+        elapsedSeconds,
+        currentStepTargetMinutes,
+        skippedSteps: data.skippedSteps,
+        tryLiveTools: data.tryLiveToolsInFictional,
         setMode,
         setDevice,
         updateResults,
@@ -167,6 +213,8 @@ export function WizardProvider({ children }: { children: ReactNode }) {
         resetWizard,
         startAudit,
         completeAudit,
+        setTryLiveTools,
+        isStepSkipped,
       }}
     >
       {children}

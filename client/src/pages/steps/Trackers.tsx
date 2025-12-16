@@ -4,6 +4,7 @@ import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { NumberStepper } from "@/components/wizard/NumberStepper";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
+import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
 import { Eye, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import type { YesNo, YesNoUnsure, SiteCategory } from "@shared/schema";
@@ -40,6 +41,7 @@ export default function Trackers() {
             Tip: Try scanning a news site or shopping site you frequently visit. Avoid
             sensitive sites like health portals or banking.
           </p>
+          <ToolFallbackBlock />
         </div>
 
         <Separator className="my-8" />

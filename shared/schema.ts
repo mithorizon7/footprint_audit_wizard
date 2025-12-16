@@ -98,6 +98,9 @@ export const wizardDataSchema = z.object({
   currentStep: z.number().min(0).max(6).default(0),
   startedAt: z.string().nullable().default(null),
   completedAt: z.string().nullable().default(null),
+  skippedSteps: z.array(z.number()).default([]),
+  elapsedSeconds: z.number().default(0),
+  tryLiveToolsInFictional: z.boolean().default(false),
 });
 
 export type DeviceType = z.infer<typeof deviceTypeSchema>;
@@ -128,6 +131,9 @@ export const FICTIONAL_DATA: WizardData = {
   currentStep: 0,
   startedAt: null,
   completedAt: null,
+  skippedSteps: [],
+  elapsedSeconds: 0,
+  tryLiveToolsInFictional: false,
   results: {
     publicExposure: {
       searchResultPagesWithPersonalInfo: 3,

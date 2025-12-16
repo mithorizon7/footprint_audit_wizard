@@ -3,9 +3,11 @@ import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
-import { Trash2, FileText, ShieldCheck } from "lucide-react";
+import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
+import { Trash2, FileText, ShieldCheck, ShieldAlert, KeyRound } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AlertBox } from "@/components/wizard/AlertBox";
+import { Badge } from "@/components/ui/badge";
 import type { YesNo, YesNoUnsure, CleanupAction } from "@shared/schema";
 
 export default function Cleanup() {
@@ -13,20 +15,43 @@ export default function Cleanup() {
   const results = data.results.cleanup;
   const browser = data.device.browser;
 
-  const getBrowserClearUrl = () => {
-    switch (browser) {
-      case "chrome":
-        return "https://support.google.com/chrome/answer/95647";
-      case "edge":
-        return "https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09";
-      case "firefox":
-        return "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox";
-      case "safari":
-        return "https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac";
-      default:
-        return "https://support.google.com/chrome/answer/95647";
-    }
+  const getBrowserInfo = () => {
+    const browsers = {
+      chrome: {
+        name: "Chrome",
+        clearUrl: "https://support.google.com/chrome/answer/95647",
+        blockUrl: "https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cblock-third-party-cookies",
+      },
+      edge: {
+        name: "Edge",
+        clearUrl: "https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09",
+        blockUrl: "https://support.microsoft.com/en-us/microsoft-edge/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
+      },
+      firefox: {
+        name: "Firefox",
+        clearUrl: "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+        blockUrl: "https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop",
+      },
+      safari: {
+        name: "Safari",
+        clearUrl: "https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac",
+        blockUrl: "https://support.apple.com/guide/safari/prevent-cross-site-tracking-sfri40732/mac",
+      },
+      other: {
+        name: "your browser",
+        clearUrl: "https://support.google.com/chrome/answer/95647",
+        blockUrl: "https://support.google.com/chrome/answer/95647",
+      },
+      unknown: {
+        name: "your browser",
+        clearUrl: "https://support.google.com/chrome/answer/95647",
+        blockUrl: "https://support.google.com/chrome/answer/95647",
+      },
+    };
+    return browsers[browser] || browsers.unknown;
   };
+
+  const browserInfo = getBrowserInfo();
 
   const handleNext = () => {
     completeAudit();
@@ -52,24 +77,50 @@ export default function Cleanup() {
 
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-            Browser Instructions
+            Browser Instructions for {browserInfo.name}
           </h3>
           <div className="space-y-4">
             <ExternalLinkCard
               title="Clear Cookies & Site Data"
-              description={`Instructions for ${browser === "unknown" ? "your browser" : browser}`}
-              url={getBrowserClearUrl()}
+              description={`Step-by-step instructions for ${browserInfo.name}`}
+              url={browserInfo.clearUrl}
               icon={<Trash2 className="w-5 h-5" />}
               testId="link-clear-cookies"
             />
             <ExternalLinkCard
               title="Block Third-Party Cookies"
-              description="Enhanced privacy by limiting cross-site tracking"
-              url="https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cblock-third-party-cookies"
+              description={`Enhanced tracking protection for ${browserInfo.name}`}
+              url={browserInfo.blockUrl}
               icon={<ShieldCheck className="w-5 h-5" />}
               testId="link-block-cookies"
             />
           </div>
+          <ToolFallbackBlock />
+        </div>
+
+        <Separator className="my-8" />
+
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
+              Breach Exposure Check
+            </h3>
+            <Badge variant="outline" className="text-xs">Optional</Badge>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Check if your email addresses have appeared in known data breaches. This only takes 2 minutes.
+          </p>
+          <ExternalLinkCard
+            title="Have I Been Pwned"
+            description="Enter your email on their site (not here) to see if it appeared in data breaches"
+            url="https://haveibeenpwned.com/"
+            icon={<ShieldAlert className="w-5 h-5" />}
+            testId="link-hibp"
+          />
+          <AlertBox severity="info">
+            <strong>Important:</strong> Enter your email directly on the Have I Been Pwned website, never into this wizard. 
+            The wizard never asks for personal information.
+          </AlertBox>
         </div>
 
         <Separator className="my-8" />
@@ -115,8 +166,8 @@ export default function Cleanup() {
               { value: "no", label: "No" },
               { value: "later", label: "Will do later" },
             ]}
-            label="Did you take any password hygiene actions (e.g., check for breached passwords)?"
-            helperText="Consider using a service like Have I Been Pwned to check if your accounts were in data breaches"
+            label="Did you check for breached accounts on Have I Been Pwned?"
+            helperText="Even if you just checked, you can revisit later with other email addresses"
             testId="input-password-hygiene"
           />
         </div>

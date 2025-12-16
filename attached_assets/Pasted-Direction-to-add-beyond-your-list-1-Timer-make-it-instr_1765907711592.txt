@@ -1,0 +1,180 @@
+Direction to add (beyond your list)
+1) Timer: make it instructional, not just decorative
+
+What you want is a pacing tool that gently keeps the room together.
+
+Add these behaviors:
+
+Global countdown to 60:00 (or whatever facilitator sets).
+
+Per-step target time (e.g., “Target: 10 min”) + “Time remaining in lab”.
+
+Persist the timer state in localStorage so refresh doesn’t reset (you already have session recovery—tie into that).
+
+Provide a “Pause” toggle (optional) only in facilitator mode; otherwise it becomes fiddly for learners.
+
+Acceptance criteria
+
+On any step, users see:
+
+Step X of Y
+
+% progress
+
+Time remaining in lab: mm:ss
+
+Target time for this step: N min
+
+Refresh restores within ±2s.
+
+No PII stored to support this (just timestamps/elapsed seconds).
+
+2) “Skip” needs semantics and report consequences
+
+A skip button isn’t just navigation—your report and next actions must reflect it.
+
+Spec the behavior:
+
+Clicking Skip marks the step as skipped=true and advances.
+
+Report card shows Skipped clearly per section.
+
+Next Actions includes “You skipped X; do this later” with the relevant link list.
+
+Acceptance criteria
+
+Skip exists on every step except Welcome (and possibly Report).
+
+Report includes a “Skipped items” section if any step skipped.
+
+3) Fictional mode should be a complete alternate experience
+
+Right now you’ve got a banner. The goal is: participants can complete the whole lab without doing any real searching.
+
+Do this:
+
+When Fictional mode is enabled:
+
+Prefill every step’s form fields with believable sample values.
+
+Default external links to “Optional” and collapse them behind Try live tools anyway.
+
+Provide a one-click “Reset demo values” and “Switch to My Footprint”.
+
+Acceptance criteria
+
+In Fictional mode, a participant can click Next through every step and generate a report without typing anything.
+
+There is a clearly labeled toggle: Try live tools anyway (off by default).
+
+Switching modes prompts: “This will clear current entries—continue?”
+
+4) Add a reliability fallback when external tools are blocked
+
+Corporate networks and privacy tools will break some links (Blacklight may fail; EFF may be blocked).
+
+Add a “If the tool doesn’t load” fallback block on each tool step:
+
+“Try a different site category”
+
+“Try on your phone (mobile hotspot)”
+
+“Use Fictional mode to continue the learning”
+
+Acceptance criteria
+
+Every external-tool step contains a short fallback section (collapsible is fine).
+
+5) Data minimization: add a “PII guardrail” UX pattern
+
+Even if you tell users not to enter personal info, some will.
+
+Add:
+
+Form labels that explicitly say “Do not enter names/emails/phones here.”
+
+For any free-text fields (ideally none), add a warning and validation (“Looks like an email/phone—please don’t enter that.”)
+
+Acceptance criteria
+
+No fields accept or encourage raw identifiers.
+
+If you have any free-text input, it blocks common PII patterns or at least warns.
+
+6) Move HIBP into the flow as a 2-minute micro-step (not buried)
+
+I’d add one tiny “Breach exposure check” card either:
+
+at the end of Cleanup, or
+
+as a mini-panel in Report Card (“Optional: check breach exposure”).
+
+Why: it’s conceptually its own layer (breach footprint), and many people will skip if it feels like “more cleanup.”
+
+Acceptance criteria
+
+HIBP link appears with a short explanation + explicit “optional” label.
+
+The wizard never asks users to enter their email into the wizard.
+
+7) Print stylesheet: treat it as a deliverable, not a button
+
+You already have window.print(). That’s not “PDF-ready” until the print CSS is correct.
+
+Print CSS should:
+
+Hide nav/buttons/inputs; show answers as plain text.
+
+Add page breaks between major sections.
+
+Include timestamp + “local-only” disclaimer.
+
+Avoid color-dependent meaning.
+
+Acceptance criteria
+
+Print preview shows a clean 1–2 page report (no UI chrome).
+
+Works on Chrome + Edge + Safari.
+
+8) i18n: be intentional about scope
+
+Given “global workforce adults,” full i18n is valuable—but it’s also a rabbit hole.
+
+My direction:
+
+Do not partially translate the core flow long-term. Either:
+
+(A) commit to i18n for all user-facing strings in steps + report, or
+
+(B) keep everything English-only for MVP and remove “half-i18n” to avoid false expectations.
+
+Acceptance criteria
+
+Chosen option is consistent across the entire wizard.
+
+Your priority order is correct — here’s the “do this next” sequence
+
+If you want maximum impact per unit effort:
+
+Timer + time remaining (core pacing + spec compliance)
+
+Skip (with report semantics)
+
+Fictional mode prefill + “try live tools anyway” (reliability + corporate network proofing)
+
+Collapsible pitfalls + external-tool fallback blocks
+
+Cleanup links (browser-specific) + HIBP + FTC link rules in Next Actions
+
+Report disclaimers + print stylesheet
+
+i18n decision + implementation
+
+So yes: start working through Priority 1 first, exactly as your note suggests—but implement timer + skip + fictional prefill in a way that also sets you up for the rest (especially report semantics and session recovery).
+
+Two small additions I’d explicitly ask your dev to include
+
+A “Clear my lab data” action that wipes localStorage and returns to Welcome (sounds like you have PanicButton—make sure it also clears timer state and step completion state).
+
+A lightweight QA checklist: Chrome/Edge/Firefox/Safari + mobile responsiveness + “tool blocked” scenario.
