@@ -4,7 +4,7 @@ import { Switch, Route } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { WizardProvider, useWizard } from "@/context/WizardContext";
-import { I18nProvider } from "@/context/I18nContext";
+import { I18nProvider, useI18n } from "@/context/I18nContext";
 import { ProgressBar } from "@/components/wizard/ProgressBar";
 import { FictionalBanner } from "@/components/wizard/FictionalBanner";
 import { PanicButton } from "@/components/wizard/PanicButton";
@@ -22,6 +22,7 @@ import FacilitatorDashboard from "@/pages/FacilitatorDashboard";
 
 function WizardContent() {
   const { currentStep } = useWizard();
+  const { t } = useI18n();
 
   const renderStep = () => {
     switch (currentStep) {
@@ -67,7 +68,7 @@ function WizardContent() {
       <footer className="py-4 px-6 border-t border-border bg-background no-print">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-4 flex-wrap">
           <p className="text-xs text-muted-foreground">
-            Your data stays on this device. We never collect or transmit personal information.
+            {t.footer.privacyNotice}
           </p>
           <PanicButton />
         </div>

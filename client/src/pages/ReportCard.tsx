@@ -394,28 +394,27 @@ export default function ReportCard() {
         <div className="text-center space-y-4">
           <Badge variant="secondary" className="mb-2">
             <Sparkles className="w-3 h-3 mr-1" />
-            Audit Complete
+            {t.report.auditComplete}
           </Badge>
-          <h1 className="text-4xl font-bold font-serif text-foreground print:text-2xl">Your Footprint Report</h1>
+          <h1 className="text-4xl font-bold font-serif text-foreground print:text-2xl">{t.report.title}</h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            Here's a summary of what you discovered about your digital footprint and recommended
-            next steps.
+            {t.report.subtitle}
           </p>
           <p className="text-xs text-muted-foreground hidden print:block">
-            Generated: {new Date().toLocaleDateString()} | All data stored locally only
+            {t.printInfo.generated}: {new Date().toLocaleDateString()} | {t.printInfo.dataStoredLocally}
           </p>
         </div>
 
         <div className="rounded-md bg-muted/50 p-4 text-sm text-muted-foreground space-y-2 print:bg-transparent print:border print:border-border" data-testid="report-disclaimer">
-          <p className="font-medium text-foreground">Reality Check</p>
+          <p className="font-medium text-foreground">{t.report.realityCheck}</p>
           <ul className="list-disc list-inside space-y-1 text-xs">
-            <li>This is a snapshot, not a complete census of your digital footprint.</li>
-            <li>Results vary by country, language, and network you're connected to.</li>
-            <li>Search personalization means others may see different results for you.</li>
-            <li>Your footprint changes over time as new data is collected and shared.</li>
+            <li>{t.realityCheckItems.snapshot}</li>
+            <li>{t.realityCheckItems.variesByLocation}</li>
+            <li>{t.realityCheckItems.personalization}</li>
+            <li>{t.realityCheckItems.changesOverTime}</li>
           </ul>
           <p className="text-xs mt-2 pt-2 border-t border-border/50">
-            All data remains on your device. This wizard never collects, stores, or transmits personal information.
+            {t.realityCheckItems.dataOnDevice}
           </p>
         </div>
 
@@ -442,12 +441,12 @@ export default function ReportCard() {
 
         <Card data-testid="chart-privacy-score">
           <CardHeader>
-            <CardTitle className="text-xl font-serif">Privacy Score Overview</CardTitle>
+            <CardTitle className="text-xl font-serif">{t.report.privacyScoreOverview}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="h-64">
-                <p className="text-sm text-muted-foreground mb-2 text-center">Radar View</p>
+                <p className="text-sm text-muted-foreground mb-2 text-center">{t.charts.radarView}</p>
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>
                     <PolarGrid stroke="hsl(var(--border))" />
@@ -461,7 +460,7 @@ export default function ReportCard() {
                       tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
                     />
                     <Radar
-                      name="Privacy Score"
+                      name={t.charts.privacyScore}
                       dataKey="score"
                       stroke="hsl(var(--primary))"
                       fill="hsl(var(--primary))"
@@ -471,7 +470,7 @@ export default function ReportCard() {
                 </ResponsiveContainer>
               </div>
               <div className="h-64">
-                <p className="text-sm text-muted-foreground mb-2 text-center">Score Comparison</p>
+                <p className="text-sm text-muted-foreground mb-2 text-center">{t.charts.scoreComparison}</p>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={barChartData} layout="vertical">
                     <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10 }} />
@@ -522,7 +521,7 @@ export default function ReportCard() {
           <CardContent>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="public">
-                <AccordionTrigger>Public Exposure Details</AccordionTrigger>
+                <AccordionTrigger>{t.report.publicExposureDetails}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
                   <p>
                     You found <strong>{results.publicExposure.searchResultPagesWithPersonalInfo}</strong>{" "}
@@ -544,7 +543,7 @@ export default function ReportCard() {
               </AccordionItem>
 
               <AccordionItem value="trackers">
-                <AccordionTrigger>Tracker Analysis</AccordionTrigger>
+                <AccordionTrigger>{t.report.trackerAnalysis}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
                   <p>
                     Blacklight scan run: <strong>{results.trackers.blacklightRun}</strong>
@@ -568,7 +567,7 @@ export default function ReportCard() {
               </AccordionItem>
 
               <AccordionItem value="fingerprint">
-                <AccordionTrigger>Fingerprinting Results</AccordionTrigger>
+                <AccordionTrigger>{t.report.fingerprintDetails}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
                   <p>
                     EFF test completed: <strong>{results.fingerprinting.effTestRun}</strong>
@@ -584,7 +583,7 @@ export default function ReportCard() {
               </AccordionItem>
 
               <AccordionItem value="account">
-                <AccordionTrigger>Account & Device Settings</AccordionTrigger>
+                <AccordionTrigger>{t.report.accountSettings}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
                   <p>
                     Google personalized ads:{" "}
@@ -606,7 +605,7 @@ export default function ReportCard() {
               </AccordionItem>
 
               <AccordionItem value="cleanup">
-                <AccordionTrigger>Cleanup Actions Taken</AccordionTrigger>
+                <AccordionTrigger>{t.report.cleanupActions}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
                   <p>
                     Cookies cleared: <strong>{results.cleanup.cookiesCleared}</strong>
@@ -630,12 +629,12 @@ export default function ReportCard() {
             <CardHeader>
               <CardTitle className="text-xl font-serif flex items-center gap-2">
                 <SkipForward className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                Skipped Items
+                {t.skippedSections.title}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                You skipped the following sections. Complete them later to get a more accurate picture of your digital footprint.
+                {t.skippedSections.description}
               </p>
               <div className="space-y-4">
                 {getSkippedStepInfo().map(({ step, name, links }) => (
@@ -667,7 +666,7 @@ export default function ReportCard() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl font-serif">Your Next Actions</CardTitle>
+            <CardTitle className="text-xl font-serif">{t.report.nextActions}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -691,11 +690,11 @@ export default function ReportCard() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button variant="outline" onClick={handlePrint} data-testid="button-print">
             <Printer className="w-4 h-4 mr-2" />
-            Print / Save PDF
+            {t.common.print}
           </Button>
           <Button variant="outline" onClick={handleDownload} data-testid="button-download-json">
             <Download className="w-4 h-4 mr-2" />
-            Download JSON
+            {t.common.download}
           </Button>
         </div>
 
@@ -707,7 +706,7 @@ export default function ReportCard() {
             data-testid="button-start-over"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
-            Start New Audit
+            {t.common.startOver}
           </Button>
         </div>
       </div>

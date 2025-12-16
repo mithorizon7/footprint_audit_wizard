@@ -241,6 +241,29 @@ export interface Translations {
     checkHibp: string;
     allDone: string;
   };
+  footer: {
+    privacyNotice: string;
+  };
+  realityCheckItems: {
+    snapshot: string;
+    variesByLocation: string;
+    personalization: string;
+    changesOverTime: string;
+    dataOnDevice: string;
+  };
+  skippedSections: {
+    title: string;
+    description: string;
+  };
+  printInfo: {
+    generated: string;
+    dataStoredLocally: string;
+  };
+  charts: {
+    radarView: string;
+    scoreComparison: string;
+    privacyScore: string;
+  };
 }
 
 const en: Translations = {
@@ -489,6 +512,29 @@ const en: Translations = {
     enableCookieBlocking: "Enable blocking of third-party cookies in your browser settings.",
     checkHibp: "Check Have I Been Pwned (haveibeenpwned.com) to see if your email was in data breaches, and sign up for notifications at haveibeenpwned.com/NotifyMe.",
     allDone: "Great job! Consider running this audit again in a few months to stay on top of your digital footprint.",
+  },
+  footer: {
+    privacyNotice: "Your data stays on this device. We never collect or transmit personal information.",
+  },
+  realityCheckItems: {
+    snapshot: "This is a snapshot, not a complete census of your digital footprint.",
+    variesByLocation: "Results vary by country, language, and network you're connected to.",
+    personalization: "Search personalization means others may see different results for you.",
+    changesOverTime: "Your footprint changes over time as new data is collected and shared.",
+    dataOnDevice: "All data remains on your device. This wizard never collects, stores, or transmits personal information.",
+  },
+  skippedSections: {
+    title: "Skipped Sections",
+    description: "You skipped the following sections. Complete them later to get a more accurate picture of your digital footprint.",
+  },
+  printInfo: {
+    generated: "Generated",
+    dataStoredLocally: "All data stored locally only",
+  },
+  charts: {
+    radarView: "Radar View",
+    scoreComparison: "Score Comparison",
+    privacyScore: "Privacy Score",
   },
 };
 
@@ -739,6 +785,29 @@ const lv: Translations = {
     checkHibp: "Pārbaudiet Have I Been Pwned (haveibeenpwned.com), lai redzētu, vai jūsu e-pasts ir bijis datu noplūdēs, un pierakstieties paziņojumiem haveibeenpwned.com/NotifyMe.",
     allDone: "Lieliski padarīts! Apsveriet iespēju veikt šo auditu vēlreiz pēc dažiem mēnešiem, lai sekotu līdzi savai digitālajai pēdai.",
   },
+  footer: {
+    privacyNotice: "Jūsu dati paliek šajā ierīcē. Mēs nekad neapkopojam un nepārsūtām personisko informāciju.",
+  },
+  realityCheckItems: {
+    snapshot: "Šis ir momentuzņēmums, nevis pilnīgs jūsu digitālās pēdas apskats.",
+    variesByLocation: "Rezultāti atšķiras atkarībā no valsts, valodas un tīkla, kuram esat pieslēdzies.",
+    personalization: "Meklēšanas personalizācija nozīmē, ka citi var redzēt atšķirīgus rezultātus par jums.",
+    changesOverTime: "Jūsu digitālā pēda mainās laika gaitā, jo tiek apkopoti un kopīgoti jauni dati.",
+    dataOnDevice: "Visi dati paliek jūsu ierīcē. Šis vednis nekad neapkopo, neuzglabā un nepārsūta personisko informāciju.",
+  },
+  skippedSections: {
+    title: "Izlaistās sadaļas",
+    description: "Jūs izlaidāt šīs sadaļas. Aizpildiet tās vēlāk, lai iegūtu precīzāku priekšstatu par savu digitālo pēdu.",
+  },
+  printInfo: {
+    generated: "Izveidots",
+    dataStoredLocally: "Visi dati glabājas tikai lokāli",
+  },
+  charts: {
+    radarView: "Radara skats",
+    scoreComparison: "Punktu salīdzinājums",
+    privacyScore: "Privātuma rezultāts",
+  },
 };
 
 const ru: Translations = {
@@ -987,6 +1056,29 @@ const ru: Translations = {
     enableCookieBlocking: "Включите блокировку сторонних куки в настройках браузера.",
     checkHibp: "Проверьте Have I Been Pwned (haveibeenpwned.com), чтобы узнать, был ли ваш email в утечках данных, и подпишитесь на уведомления на haveibeenpwned.com/NotifyMe.",
     allDone: "Отличная работа! Рекомендуем провести этот аудит снова через несколько месяцев, чтобы следить за своим цифровым следом.",
+  },
+  footer: {
+    privacyNotice: "Ваши данные остаются на этом устройстве. Мы никогда не собираем и не передаём личную информацию.",
+  },
+  realityCheckItems: {
+    snapshot: "Это снимок, а не полная перепись вашего цифрового следа.",
+    variesByLocation: "Результаты зависят от страны, языка и сети, к которой вы подключены.",
+    personalization: "Персонализация поиска означает, что другие могут видеть другие результаты о вас.",
+    changesOverTime: "Ваш цифровой след меняется со временем по мере сбора и обмена новыми данными.",
+    dataOnDevice: "Все данные остаются на вашем устройстве. Этот мастер никогда не собирает, не хранит и не передаёт личную информацию.",
+  },
+  skippedSections: {
+    title: "Пропущенные разделы",
+    description: "Вы пропустили следующие разделы. Заполните их позже, чтобы получить более точную картину вашего цифрового следа.",
+  },
+  printInfo: {
+    generated: "Создано",
+    dataStoredLocally: "Все данные хранятся только локально",
+  },
+  charts: {
+    radarView: "Радарный вид",
+    scoreComparison: "Сравнение баллов",
+    privacyScore: "Оценка приватности",
   },
 };
 
