@@ -1,4 +1,5 @@
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,7 @@ import type { Mode, DeviceType, OS, Browser } from "@shared/schema";
 
 export default function Welcome() {
   const { data, setMode, setDevice, startAudit, mode } = useWizard();
+  const { t } = useI18n();
 
   const handleModeChange = (newMode: Mode) => {
     setMode(newMode);
@@ -28,23 +30,20 @@ export default function Welcome() {
             <Shield className="w-10 h-10 text-primary" />
           </div>
           <h1 className="text-4xl font-bold font-serif text-foreground">
-            Footprint Audit Wizard
+            {t.welcome.title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            This 60-minute lab helps you see what parts of your digital footprint are visible and
-            trackable. You'll use a few trusted public tools to explore your online presence.
+            {t.welcome.subtitle}
           </p>
         </div>
 
         <AlertBox severity="warning" className="max-w-xl mx-auto">
-          <strong>Self-audit only:</strong> Search only your own identifiers or use Fictional
-          Persona Mode. We never ask for your name, email, or phone. You'll only record counts and
-          yes/no answers. Everything stays on your device.
+          {t.welcome.safetyNote}
         </AlertBox>
 
         <div className="space-y-4">
           <p className="text-sm font-medium text-center text-muted-foreground">
-            Choose how you'd like to proceed:
+            {t.welcome.chooseMode}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -67,9 +66,9 @@ export default function Welcome() {
                     <User className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">My Footprint</h3>
+                    <h3 className="font-semibold text-foreground">{t.welcome.myFootprint}</h3>
                     <p className="text-sm text-muted-foreground mt-1">
-                      Search your own name and record real findings
+                      {t.welcome.myFootprintDesc}
                     </p>
                   </div>
                 </div>
@@ -95,9 +94,9 @@ export default function Welcome() {
                     <FlaskConical className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Fictional Persona Demo</h3>
+                    <h3 className="font-semibold text-foreground">{t.welcome.fictionalPersona}</h3>
                     <p className="text-sm text-muted-foreground mt-1">
-                      View prefilled example data without real searches
+                      {t.welcome.fictionalPersonaDesc}
                     </p>
                   </div>
                 </div>
@@ -113,7 +112,7 @@ export default function Welcome() {
 
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
-              <label className="text-xs text-muted-foreground">Device</label>
+              <label className="text-xs text-muted-foreground">{t.welcome.deviceLabel}</label>
               <Select
                 value={data.device.type}
                 onValueChange={(v) => setDevice({ type: v as DeviceType })}
@@ -142,7 +141,7 @@ export default function Welcome() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs text-muted-foreground">OS</label>
+              <label className="text-xs text-muted-foreground">{t.welcome.osLabel}</label>
               <Select value={data.device.os} onValueChange={(v) => setDevice({ os: v as OS })}>
                 <SelectTrigger data-testid="select-os">
                   <SelectValue />
@@ -159,7 +158,7 @@ export default function Welcome() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs text-muted-foreground">Browser</label>
+              <label className="text-xs text-muted-foreground">{t.welcome.browserLabel}</label>
               <Select
                 value={data.device.browser}
                 onValueChange={(v) => setDevice({ browser: v as Browser })}
@@ -182,14 +181,23 @@ export default function Welcome() {
 
         <div className="text-center pt-4">
           <Button size="lg" onClick={startAudit} data-testid="button-begin-audit">
-            Begin Audit
+            {t.common.startAudit}
           </Button>
         </div>
 
         <p className="text-xs text-center text-muted-foreground max-w-md mx-auto">
-          By continuing, you acknowledge this is a self-audit tool. We do not collect or transmit
-          any personal identifiers. All data stays on your device.
+          {t.welcome.consent}
         </p>
+
+        <div className="text-center pt-4">
+          <a
+            href="/facilitator"
+            className="text-xs text-muted-foreground underline hover:text-foreground transition-colors"
+            data-testid="link-facilitator-dashboard"
+          >
+            Facilitator Dashboard
+          </a>
+        </div>
       </div>
     </div>
   );

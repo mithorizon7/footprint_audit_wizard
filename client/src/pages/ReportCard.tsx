@@ -26,6 +26,20 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Cell,
+  Tooltip,
+} from "recharts";
 
 type ScoreLevel = "good" | "warning" | "critical" | "unknown";
 
@@ -193,6 +207,78 @@ export default function ReportCard() {
     return actions.slice(0, 5);
   };
 
+  const levelToScore = (level: ScoreLevel): number => {
+    switch (level) {
+      case "good":
+        return 100;
+      case "warning":
+        return 60;
+      case "critical":
+        return 25;
+      default:
+        return 50;
+    }
+  };
+
+  const chartData = [
+    {
+      category: "Public Exposure",
+      score: levelToScore(getPublicExposureLevel()),
+      fullMark: 100,
+    },
+    {
+      category: "Trackers",
+      score: levelToScore(getTrackerLevel()),
+      fullMark: 100,
+    },
+    {
+      category: "Fingerprinting",
+      score: levelToScore(getFingerprintLevel()),
+      fullMark: 100,
+    },
+    {
+      category: "Ad Settings",
+      score: levelToScore(getAdSettingsLevel()),
+      fullMark: 100,
+    },
+  ];
+
+  const barChartData = [
+    {
+      name: "Public",
+      score: levelToScore(getPublicExposureLevel()),
+      level: getPublicExposureLevel(),
+    },
+    {
+      name: "Trackers",
+      score: levelToScore(getTrackerLevel()),
+      level: getTrackerLevel(),
+    },
+    {
+      name: "Fingerprint",
+      score: levelToScore(getFingerprintLevel()),
+      level: getFingerprintLevel(),
+    },
+    {
+      name: "Ads",
+      score: levelToScore(getAdSettingsLevel()),
+      level: getAdSettingsLevel(),
+    },
+  ];
+
+  const getBarColor = (level: ScoreLevel) => {
+    switch (level) {
+      case "good":
+        return "hsl(142, 71%, 45%)";
+      case "warning":
+        return "hsl(38, 92%, 50%)";
+      case "critical":
+        return "hsl(0, 84%, 60%)";
+      default:
+        return "hsl(215, 14%, 65%)";
+    }
+  };
+
   const handlePrint = () => {
     window.print();
   };
@@ -271,6 +357,81 @@ export default function ReportCard() {
             </Card>
           ))}
         </div>
+
+        <Card data-testid="chart-privacy-score">
+          <CardHeader>
+            <CardTitle className="text-xl font-serif">Privacy Score Overview</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="h-64">
+                <p className="text-sm text-muted-foreground mb-2 text-center">Radar View</p>
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>
+                    <PolarGrid stroke="hsl(var(--border))" />
+                    <PolarAngleAxis
+                      dataKey="category"
+                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+                    />
+                    <PolarRadiusAxis
+                      angle={30}
+                      domain={[0, 100]}
+                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                    />
+                    <Radar
+                      name="Privacy Score"
+                      dataKey="score"
+                      stroke="hsl(var(--primary))"
+                      fill="hsl(var(--primary))"
+                      fillOpacity={0.4}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="h-64">
+                <p className="text-sm text-muted-foreground mb-2 text-center">Score Comparison</p>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={barChartData} layout="vertical">
+                    <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10 }} />
+                    <YAxis
+                      type="category"
+                      dataKey="name"
+                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+                      width={70}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "hsl(var(--card))",
+                        border: "1px solid hsl(var(--border))",
+                        borderRadius: "6px",
+                      }}
+                      labelStyle={{ color: "hsl(var(--foreground))" }}
+                    />
+                    <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                      {barChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={getBarColor(entry.level)} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <div className="flex items-center justify-center gap-6 mt-4 text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+                <span className="text-muted-foreground">Good (100)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-amber-500" />
+                <span className="text-muted-foreground">Warning (60)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <span className="text-muted-foreground">Critical (25)</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         <Card>
           <CardHeader>

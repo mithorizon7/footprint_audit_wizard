@@ -1,4 +1,31 @@
 import { z } from "zod";
+import { pgTable, serial, varchar, integer, timestamp, text } from "drizzle-orm/pg-core";
+import { createInsertSchema } from "drizzle-zod";
+
+export const auditSessions = pgTable("audit_sessions", {
+  id: serial("id").primaryKey(),
+  sessionId: varchar("session_id", { length: 64 }).notNull().unique(),
+  mode: varchar("mode", { length: 20 }).notNull(),
+  deviceType: varchar("device_type", { length: 20 }),
+  os: varchar("os", { length: 20 }),
+  browser: varchar("browser", { length: 20 }),
+  publicExposureScore: integer("public_exposure_score"),
+  trackerScore: integer("tracker_score"),
+  fingerprintScore: integer("fingerprint_score"),
+  adSettingsScore: integer("ad_settings_score"),
+  trackerCount: integer("tracker_count"),
+  completed: integer("completed").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  completedAt: timestamp("completed_at"),
+});
+
+export const insertAuditSessionSchema = createInsertSchema(auditSessions).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertAuditSession = z.infer<typeof insertAuditSessionSchema>;
+export type AuditSession = typeof auditSessions.$inferSelect;
 
 export const deviceTypeSchema = z.enum(["desktop", "mobile", "unknown"]);
 export const osSchema = z.enum(["windows", "mac", "linux", "ios", "android", "unknown"]);

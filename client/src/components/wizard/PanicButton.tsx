@@ -13,10 +13,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { useToast } from "@/hooks/use-toast";
 
 export function PanicButton() {
   const { resetWizard } = useWizard();
+  const { t } = useI18n();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
 
@@ -38,25 +40,24 @@ export function PanicButton() {
           data-testid="button-panic"
         >
           <Trash2 className="w-4 h-4 mr-2" />
-          Clear my lab data
+          {t.panic.buttonLabel}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Clear all lab data?</AlertDialogTitle>
+          <AlertDialogTitle>{t.panic.title}</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete all your audit progress and recorded data from this
-            device. You'll start fresh with a new audit. This action cannot be undone.
+            {t.panic.description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel data-testid="button-panic-cancel">Cancel</AlertDialogCancel>
+          <AlertDialogCancel data-testid="button-panic-cancel">{t.common.cancel}</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleClear}
             className="bg-destructive text-destructive-foreground"
             data-testid="button-panic-confirm"
           >
-            Yes, clear everything
+            {t.panic.confirmButton}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
