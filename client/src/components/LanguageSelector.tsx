@@ -12,7 +12,8 @@ import { SUPPORTED_LOCALES, type Locale } from "@/lib/i18n";
 export function LanguageSelector() {
   const { locale, setLocale } = useI18n();
 
-  const currentLocaleName = SUPPORTED_LOCALES.find((l) => l.code === locale)?.name || "English";
+  const currentLocale = SUPPORTED_LOCALES.find((l) => l.code === locale);
+  const currentLocaleName = currentLocale?.nativeName || currentLocale?.name || "English";
 
   return (
     <DropdownMenu>
@@ -34,7 +35,10 @@ export function LanguageSelector() {
             className={locale === lang.code ? "bg-accent" : ""}
             data-testid={`language-${lang.code}`}
           >
-            {lang.name}
+            <span>{lang.nativeName}</span>
+            {lang.nativeName !== lang.name && (
+              <span className="ml-2 text-muted-foreground text-xs">({lang.name})</span>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
