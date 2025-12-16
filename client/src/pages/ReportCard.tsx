@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
+import type { Translations } from "@/lib/i18n";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -56,31 +57,36 @@ interface MetricTile {
   explanation: string;
 }
 
-const STEP_LINKS: Record<number, { name: string; url: string; description: string }[]> = {
+interface StepLinkDef {
+  titleKey: keyof Translations["externalTools"];
+  descKey: keyof Translations["externalTools"];
+  url: string;
+}
+
+const STEP_LINK_DEFS: Record<number, StepLinkDef[]> = {
   1: [
-    { name: "Google Results About You", url: "https://myactivity.google.com/results-about-you", description: "Review what Google found about you" },
-    { name: "Find Contact Info", url: "https://support.google.com/websearch/answer/12719076?hl=en", description: "Find your personal contact info in search" },
-    { name: "Request Removal", url: "https://support.google.com/websearch/answer/9673730?hl=en", description: "Remove personal info from Google search" },
+    { titleKey: "googleResultsTitle", descKey: "googleResultsDesc", url: "https://myactivity.google.com/results-about-you" },
+    { titleKey: "findContactTitle", descKey: "findContactDesc", url: "https://support.google.com/websearch/answer/12719076?hl=en" },
+    { titleKey: "requestRemovalTitle", descKey: "requestRemovalDesc", url: "https://support.google.com/websearch/answer/9673730?hl=en" },
   ],
   2: [
-    { name: "Blacklight", url: "https://themarkup.org/blacklight", description: "Scan websites for trackers" },
+    { titleKey: "blacklightTitle", descKey: "blacklightDesc", url: "https://themarkup.org/blacklight" },
   ],
   3: [
-    { name: "EFF Cover Your Tracks", url: "https://coveryourtracks.eff.org/", description: "Test your browser fingerprint" },
-    { name: "EFF Explainer", url: "https://www.eff.org/pages/cover-your-tracks", description: "Learn about fingerprinting" },
+    { titleKey: "effCoverTracksTitle", descKey: "effCoverTracksDesc", url: "https://coveryourtracks.eff.org/" },
+    { titleKey: "effExplainerTitle", descKey: "effExplainerDesc", url: "https://www.eff.org/pages/cover-your-tracks" },
   ],
   4: [
-    { name: "Google Ad Settings", url: "https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en", description: "Control Google ad personalization" },
+    { titleKey: "googleAdSettingsTitle", descKey: "googleAdSettingsDesc", url: "https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en" },
   ],
   5: [
-    { name: "Have I Been Pwned", url: "https://haveibeenpwned.com/", description: "Check if your email was in data breaches" },
-    { name: "HIBP Notifications", url: "https://haveibeenpwned.com/NotifyMe", description: "Get notified of future breaches" },
+    { titleKey: "hibpTitle", descKey: "hibpDesc", url: "https://haveibeenpwned.com/" },
   ],
 };
 
 export default function ReportCard() {
   const { data, resetWizard, skippedSteps } = useWizard();
-  const { t, format } = useI18n();
+  const { t, format, formatDateLocale, formatNum } = useI18n();
   const reportRef = useRef<HTMLDivElement>(null);
   const results = data.results;
 
@@ -123,97 +129,136 @@ export default function ReportCard() {
     return "critical";
   };
 
+  const getExposureValue = () => {
+    const pages = results.publicExposure.searchResultPagesWithPersonalInfo;
+    if (pages === 0) return t.metrics.valueLow;
+    return format(t.metrics.valuePages, { count: pages });
+  };
+
+  const getTrackerValue = () => {
+    const count = results.trackers.trackerCount;
+    if (count === null || count === undefined) return t.metrics.valueNA;
+    return formatNum(count);
+  };
+
+  const getFingerprintValue = () => {
+    if (results.fingerprinting.browserUnique === "yes") return t.metrics.valueUnique;
+    if (results.fingerprinting.browserUnique === "no") return t.metrics.valueNotUnique;
+    return t.metrics.valueUnknown;
+  };
+
+  const getAdSettingsValue = () => {
+    if (results.accountDevice.googlePersonalizedAds === "off") return t.metrics.valueLimited;
+    if (results.accountDevice.googlePersonalizedAds === "on") return t.metrics.valueActive;
+    return t.metrics.valueCheckSettings;
+  };
+
+  const getCleanupValue = () => {
+    const cookiesCleared = results.cleanup.cookiesCleared === "yes";
+    const cookiesBlocked = results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes";
+    if (cookiesCleared && cookiesBlocked) return t.metrics.valueDone;
+    if (cookiesCleared || cookiesBlocked) return t.metrics.valuePartial;
+    return t.metrics.valueNotYet;
+  };
+
+  const getExposureExplanation = () => {
+    const level = getPublicExposureLevel();
+    if (level === "good") return t.metrics.exposureGood;
+    if (level === "warning") return t.metrics.exposureWarning;
+    return t.metrics.exposureCritical;
+  };
+
+  const getTrackerExplanation = () => {
+    const level = getTrackerLevel();
+    if (level === "good") return t.metrics.trackingGood;
+    if (level === "warning") return t.metrics.trackingWarning;
+    if (level === "critical") return t.metrics.trackingCritical;
+    return t.metrics.trackingUnknown;
+  };
+
+  const getFingerprintExplanation = () => {
+    const level = getFingerprintLevel();
+    if (level === "good") return t.metrics.fingerprintGood;
+    if (level === "critical") return t.metrics.fingerprintCritical;
+    return t.metrics.fingerprintUnknown;
+  };
+
+  const getAdSettingsExplanation = () => {
+    const level = getAdSettingsLevel();
+    if (level === "good") return t.metrics.adsGood;
+    if (level === "warning") return t.metrics.adsWarning;
+    return t.metrics.adsCritical;
+  };
+
+  const getCleanupExplanation = () => {
+    const level = getCleanupLevel();
+    if (level === "good") return t.metrics.cleanupGood;
+    if (level === "warning") return t.metrics.cleanupWarning;
+    return t.metrics.cleanupCritical;
+  };
+
   const metrics: MetricTile[] = [
     {
       icon: Shield,
-      label: "Public Exposure Signals",
-      value:
-        results.publicExposure.searchResultPagesWithPersonalInfo === 0
-          ? "Low"
-          : `${results.publicExposure.searchResultPagesWithPersonalInfo} pages`,
+      label: t.metrics.publicExposureLabel,
+      value: getExposureValue(),
       level: getPublicExposureLevel(),
-      explanation:
-        getPublicExposureLevel() === "good"
-          ? "Great! Your personal info wasn't easily found in search results."
-          : getPublicExposureLevel() === "warning"
-            ? "Some personal info is visible. Consider requesting removal from search engines."
-            : "Your personal info is exposed. Take action to remove it from data brokers and search results.",
+      explanation: getExposureExplanation(),
     },
     {
       icon: Eye,
-      label: "Tracking Intensity",
-      value: results.trackers.trackerCount ?? "N/A",
+      label: t.metrics.trackingIntensityLabel,
+      value: getTrackerValue(),
       level: getTrackerLevel(),
-      explanation:
-        getTrackerLevel() === "good"
-          ? "The site you scanned has few trackers. This is better than average."
-          : getTrackerLevel() === "warning"
-            ? "Moderate tracking detected. Consider using a content blocker."
-            : getTrackerLevel() === "critical"
-              ? "High tracker count. This site is heavily monetizing your attention."
-              : "Run the Blacklight scan to see tracker counts.",
+      explanation: getTrackerExplanation(),
     },
     {
       icon: Fingerprint,
-      label: "Fingerprint Uniqueness",
-      value:
-        results.fingerprinting.browserUnique === "yes"
-          ? "Unique"
-          : results.fingerprinting.browserUnique === "no"
-            ? "Not Unique"
-            : "Unknown",
+      label: t.metrics.fingerprintLabel,
+      value: getFingerprintValue(),
       level: getFingerprintLevel(),
-      explanation:
-        getFingerprintLevel() === "good"
-          ? "Your browser blends in with others, making fingerprinting harder."
-          : getFingerprintLevel() === "critical"
-            ? "Your browser is uniquely identifiable. Consider using Firefox with enhanced tracking protection."
-            : "Run the EFF test to check your browser's fingerprint.",
+      explanation: getFingerprintExplanation(),
     },
     {
       icon: Settings,
-      label: "Account/Device Ads",
-      value:
-        results.accountDevice.googlePersonalizedAds === "off"
-          ? "Limited"
-          : results.accountDevice.googlePersonalizedAds === "on"
-            ? "Active"
-            : "Check Settings",
+      label: t.metrics.adSettingsLabel,
+      value: getAdSettingsValue(),
       level: getAdSettingsLevel(),
-      explanation:
-        getAdSettingsLevel() === "good"
-          ? "You've disabled ad personalization on your accounts."
-          : getAdSettingsLevel() === "warning"
-            ? "Some ad personalization is still active. Consider disabling in your account settings."
-            : "Ad personalization is active. Your activity is being used to target ads.",
+      explanation: getAdSettingsExplanation(),
     },
     {
       icon: Trash2,
-      label: "Cleanup Completed",
-      value:
-        results.cleanup.cookiesCleared === "yes" && results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes"
-          ? "Done"
-          : results.cleanup.cookiesCleared === "yes" || results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes"
-            ? "Partial"
-            : "Not Yet",
+      label: t.metrics.cleanupLabel,
+      value: getCleanupValue(),
       level: getCleanupLevel(),
-      explanation:
-        getCleanupLevel() === "good"
-          ? "You've cleared cookies and enabled third-party cookie blocking. This suggests reduced tracking persistence."
-          : getCleanupLevel() === "warning"
-            ? "You've taken some cleanup actions. Consider completing both cookie clearing and blocking for better protection."
-            : "Hygiene actions like clearing cookies and blocking third-party cookies help reduce tracking persistence.",
+      explanation: getCleanupExplanation(),
     },
   ];
+
+  const getLocalizedStepName = (step: number): string => {
+    const stepKey = STEP_INFO[step]?.key as keyof typeof t.steps | undefined;
+    if (stepKey && t.steps[stepKey]) {
+      return t.steps[stepKey];
+    }
+    return STEP_INFO[step]?.name ?? `Step ${step}`;
+  };
 
   const getSkippedStepInfo = () => {
     return skippedSteps
       .filter((step) => step >= 1 && step <= 5)
-      .map((step) => ({
-        step,
-        name: STEP_INFO[step]?.name ?? `Step ${step}`,
-        links: STEP_LINKS[step] ?? [],
-      }));
+      .map((step) => {
+        const defs = STEP_LINK_DEFS[step] ?? [];
+        const links = defs.map((def) => ({
+          name: t.externalTools[def.titleKey],
+          url: def.url,
+          description: t.externalTools[def.descKey],
+        }));
+        return {
+          step,
+          name: getLocalizedStepName(step),
+          links,
+        };
+      });
   };
 
   const getNextActions = () => {
@@ -278,27 +323,27 @@ export default function ReportCard() {
 
   const chartData = [
     {
-      category: "Public Exposure",
+      category: t.chartCategories.publicExposure,
       score: levelToScore(getPublicExposureLevel()),
       fullMark: 100,
     },
     {
-      category: "Trackers",
+      category: t.chartCategories.trackers,
       score: levelToScore(getTrackerLevel()),
       fullMark: 100,
     },
     {
-      category: "Fingerprinting",
+      category: t.chartCategories.fingerprint,
       score: levelToScore(getFingerprintLevel()),
       fullMark: 100,
     },
     {
-      category: "Ad Settings",
+      category: t.chartCategories.adSettings,
       score: levelToScore(getAdSettingsLevel()),
       fullMark: 100,
     },
     {
-      category: "Cleanup",
+      category: t.chartCategories.cleanup,
       score: levelToScore(getCleanupLevel()),
       fullMark: 100,
     },
@@ -306,27 +351,27 @@ export default function ReportCard() {
 
   const barChartData = [
     {
-      name: "Public",
+      name: t.chartCategories.publicExposure,
       score: levelToScore(getPublicExposureLevel()),
       level: getPublicExposureLevel(),
     },
     {
-      name: "Trackers",
+      name: t.chartCategories.trackers,
       score: levelToScore(getTrackerLevel()),
       level: getTrackerLevel(),
     },
     {
-      name: "Fingerprint",
+      name: t.chartCategories.fingerprint,
       score: levelToScore(getFingerprintLevel()),
       level: getFingerprintLevel(),
     },
     {
-      name: "Ads",
+      name: t.chartCategories.adSettings,
       score: levelToScore(getAdSettingsLevel()),
       level: getAdSettingsLevel(),
     },
     {
-      name: "Cleanup",
+      name: t.chartCategories.cleanup,
       score: levelToScore(getCleanupLevel()),
       level: getCleanupLevel(),
     },
@@ -401,7 +446,7 @@ export default function ReportCard() {
             {t.report.subtitle}
           </p>
           <p className="text-xs text-muted-foreground hidden print:block">
-            {t.printInfo.generated}: {new Date().toLocaleDateString()} | {t.printInfo.dataStoredLocally}
+            {t.printInfo.generated}: {formatDateLocale(new Date())} | {t.printInfo.dataStoredLocally}
           </p>
         </div>
 

@@ -264,6 +264,48 @@ export interface Translations {
     scoreComparison: string;
     privacyScore: string;
   };
+  metrics: {
+    publicExposureLabel: string;
+    trackingIntensityLabel: string;
+    fingerprintLabel: string;
+    adSettingsLabel: string;
+    cleanupLabel: string;
+    valueLow: string;
+    valuePages: string;
+    valueUnique: string;
+    valueNotUnique: string;
+    valueUnknown: string;
+    valueLimited: string;
+    valueActive: string;
+    valueCheckSettings: string;
+    valueDone: string;
+    valuePartial: string;
+    valueNotYet: string;
+    valueNA: string;
+    exposureGood: string;
+    exposureWarning: string;
+    exposureCritical: string;
+    trackingGood: string;
+    trackingWarning: string;
+    trackingCritical: string;
+    trackingUnknown: string;
+    fingerprintGood: string;
+    fingerprintCritical: string;
+    fingerprintUnknown: string;
+    adsGood: string;
+    adsWarning: string;
+    adsCritical: string;
+    cleanupGood: string;
+    cleanupWarning: string;
+    cleanupCritical: string;
+  };
+  chartCategories: {
+    publicExposure: string;
+    trackers: string;
+    fingerprint: string;
+    adSettings: string;
+    cleanup: string;
+  };
 }
 
 const en: Translations = {
@@ -535,6 +577,48 @@ const en: Translations = {
     radarView: "Radar View",
     scoreComparison: "Score Comparison",
     privacyScore: "Privacy Score",
+  },
+  metrics: {
+    publicExposureLabel: "Public Exposure Signals",
+    trackingIntensityLabel: "Tracking Intensity",
+    fingerprintLabel: "Fingerprint Uniqueness",
+    adSettingsLabel: "Account/Device Ads",
+    cleanupLabel: "Cleanup Completed",
+    valueLow: "Low",
+    valuePages: "{count, plural, one {# page} other {# pages}}",
+    valueUnique: "Unique",
+    valueNotUnique: "Not Unique",
+    valueUnknown: "Unknown",
+    valueLimited: "Limited",
+    valueActive: "Active",
+    valueCheckSettings: "Check Settings",
+    valueDone: "Done",
+    valuePartial: "Partial",
+    valueNotYet: "Not Yet",
+    valueNA: "N/A",
+    exposureGood: "Great! Your personal info wasn't easily found in search results.",
+    exposureWarning: "Some personal info is visible. Consider requesting removal from search engines.",
+    exposureCritical: "Your personal info is exposed. Take action to remove it from data brokers and search results.",
+    trackingGood: "The site you scanned has few trackers. This is better than average.",
+    trackingWarning: "Moderate tracking detected. Consider using a content blocker.",
+    trackingCritical: "High tracker count. This site is heavily monetizing your attention.",
+    trackingUnknown: "Run the Blacklight scan to see tracker counts.",
+    fingerprintGood: "Your browser blends in with others, making fingerprinting harder.",
+    fingerprintCritical: "Your browser is uniquely identifiable. Consider using Firefox with enhanced tracking protection.",
+    fingerprintUnknown: "Run the EFF test to check your browser's fingerprint.",
+    adsGood: "You've disabled ad personalization on your accounts.",
+    adsWarning: "Some ad personalization is still active. Consider disabling in your account settings.",
+    adsCritical: "Ad personalization is active. Your activity is being used to target ads.",
+    cleanupGood: "You've cleared cookies and enabled third-party cookie blocking. This suggests reduced tracking persistence.",
+    cleanupWarning: "You've taken some cleanup actions. Consider completing both cookie clearing and blocking for better protection.",
+    cleanupCritical: "Hygiene actions like clearing cookies and blocking third-party cookies help reduce tracking persistence.",
+  },
+  chartCategories: {
+    publicExposure: "Public Exposure",
+    trackers: "Trackers",
+    fingerprint: "Fingerprint",
+    adSettings: "Ad Settings",
+    cleanup: "Cleanup",
   },
 };
 
@@ -808,6 +892,48 @@ const lv: Translations = {
     scoreComparison: "Punktu salīdzinājums",
     privacyScore: "Privātuma rezultāts",
   },
+  metrics: {
+    publicExposureLabel: "Publiskā atpazīstamība",
+    trackingIntensityLabel: "Izsekošanas intensitāte",
+    fingerprintLabel: "Pārlūka pirkstu nospiedums",
+    adSettingsLabel: "Kontu/ierīču reklāmas",
+    cleanupLabel: "Tīrīšana pabeigta",
+    valueLow: "Zema",
+    valuePages: "{count, plural, one {# lapa} few {# lapas} other {# lapas}}",
+    valueUnique: "Unikāls",
+    valueNotUnique: "Nav unikāls",
+    valueUnknown: "Nezināms",
+    valueLimited: "Ierobežotas",
+    valueActive: "Aktīvas",
+    valueCheckSettings: "Pārbaudīt iestatījumus",
+    valueDone: "Pabeigts",
+    valuePartial: "Daļēji",
+    valueNotYet: "Vēl nav",
+    valueNA: "Nav pieejams",
+    exposureGood: "Lieliski! Jūsu personīgā informācija netika viegli atrasta meklēšanas rezultātos.",
+    exposureWarning: "Daļa personīgās informācijas ir redzama. Apsveriet iespēju pieprasīt noņemšanu no meklētājprogrammām.",
+    exposureCritical: "Jūsu personīgā informācija ir atklāta. Rīkojieties, lai to noņemtu no datu brokeriem un meklēšanas rezultātiem.",
+    trackingGood: "Skenētajā vietnē ir maz izsekotāju. Tas ir labāk nekā vidēji.",
+    trackingWarning: "Konstatēta mērena izsekošana. Apsveriet satura bloķētāja izmantošanu.",
+    trackingCritical: "Augsts izsekotāju skaits. Šī vietne intensīvi monetizē jūsu uzmanību.",
+    trackingUnknown: "Palaidiet Blacklight skenēšanu, lai redzētu izsekotāju skaitu.",
+    fingerprintGood: "Jūsu pārlūks saplūst ar citiem, padarot pirkstu nospiedumu noteikšanu grūtāku.",
+    fingerprintCritical: "Jūsu pārlūks ir unikāli identificējams. Apsveriet Firefox ar uzlabotu izsekošanas aizsardzību.",
+    fingerprintUnknown: "Palaidiet EFF testu, lai pārbaudītu sava pārlūka pirkstu nospiedumu.",
+    adsGood: "Esat atspējojis reklāmu personalizāciju savos kontos.",
+    adsWarning: "Daļa reklāmu personalizācijas joprojām ir aktīva. Apsveriet atspējošanu konta iestatījumos.",
+    adsCritical: "Reklāmu personalizācija ir aktīva. Jūsu aktivitāte tiek izmantota reklāmu mērķēšanai.",
+    cleanupGood: "Esat notīrījis sīkfailus un iespējojis trešo pušu sīkfailu bloķēšanu. Tas liecina par samazinātu izsekošanas noturību.",
+    cleanupWarning: "Esat veicis dažas tīrīšanas darbības. Apsveriet gan sīkfailu dzēšanu, gan bloķēšanu labākai aizsardzībai.",
+    cleanupCritical: "Higiēnas darbības, piemēram, sīkfailu dzēšana un trešo pušu sīkfailu bloķēšana, palīdz samazināt izsekošanas noturību.",
+  },
+  chartCategories: {
+    publicExposure: "Publiskā atpazīstamība",
+    trackers: "Izsekotāji",
+    fingerprint: "Pirkstu nospiedums",
+    adSettings: "Reklāmu iestatījumi",
+    cleanup: "Tīrīšana",
+  },
 };
 
 const ru: Translations = {
@@ -1079,6 +1205,48 @@ const ru: Translations = {
     radarView: "Радарный вид",
     scoreComparison: "Сравнение баллов",
     privacyScore: "Оценка приватности",
+  },
+  metrics: {
+    publicExposureLabel: "Публичная видимость",
+    trackingIntensityLabel: "Интенсивность отслеживания",
+    fingerprintLabel: "Уникальность отпечатка",
+    adSettingsLabel: "Реклама в аккаунтах/устройствах",
+    cleanupLabel: "Очистка завершена",
+    valueLow: "Низкая",
+    valuePages: "{count, plural, one {# страница} few {# страницы} many {# страниц} other {# страниц}}",
+    valueUnique: "Уникален",
+    valueNotUnique: "Не уникален",
+    valueUnknown: "Неизвестно",
+    valueLimited: "Ограничена",
+    valueActive: "Активна",
+    valueCheckSettings: "Проверить настройки",
+    valueDone: "Выполнено",
+    valuePartial: "Частично",
+    valueNotYet: "Ещё нет",
+    valueNA: "Н/Д",
+    exposureGood: "Отлично! Ваша личная информация не была легко найдена в результатах поиска.",
+    exposureWarning: "Часть личной информации видна. Рассмотрите возможность запроса на удаление из поисковых систем.",
+    exposureCritical: "Ваша личная информация открыта. Примите меры для удаления её из баз данных и результатов поиска.",
+    trackingGood: "На просканированном сайте мало трекеров. Это лучше среднего.",
+    trackingWarning: "Обнаружено умеренное отслеживание. Рассмотрите использование блокировщика контента.",
+    trackingCritical: "Высокое количество трекеров. Этот сайт активно монетизирует ваше внимание.",
+    trackingUnknown: "Запустите сканирование Blacklight, чтобы увидеть количество трекеров.",
+    fingerprintGood: "Ваш браузер сливается с другими, что затрудняет снятие отпечатка.",
+    fingerprintCritical: "Ваш браузер уникально идентифицируем. Рассмотрите использование Firefox с улучшенной защитой от отслеживания.",
+    fingerprintUnknown: "Запустите тест EFF, чтобы проверить отпечаток вашего браузера.",
+    adsGood: "Вы отключили персонализацию рекламы в своих аккаунтах.",
+    adsWarning: "Часть персонализации рекламы всё ещё активна. Рассмотрите отключение в настройках аккаунта.",
+    adsCritical: "Персонализация рекламы активна. Ваша активность используется для таргетирования рекламы.",
+    cleanupGood: "Вы очистили cookies и включили блокировку сторонних cookies. Это говорит о сниженной устойчивости отслеживания.",
+    cleanupWarning: "Вы выполнили некоторые действия по очистке. Рассмотрите и очистку cookies, и блокировку для лучшей защиты.",
+    cleanupCritical: "Гигиенические действия, такие как очистка cookies и блокировка сторонних cookies, помогают снизить устойчивость отслеживания.",
+  },
+  chartCategories: {
+    publicExposure: "Публичная видимость",
+    trackers: "Трекеры",
+    fingerprint: "Отпечаток",
+    adSettings: "Настройки рекламы",
+    cleanup: "Очистка",
   },
 };
 
