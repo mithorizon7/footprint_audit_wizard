@@ -1,0 +1,579 @@
+Below is a **developer handoff document** you can paste into an issue tracker or PRD. It includes context, goals, the full 60‑minute lab flow, and detailed build instructions for the **Footprint Audit Wizard** web app (linking out to existing tools like Blacklight instead of rebuilding them).
+
+---
+
+# Developer Brief: Footprint Audit Wizard (60‑Minute Workforce Digital Footprint Lab)
+
+## 1) Context and purpose
+
+We are building a **single-session (≈60 minutes) digital literacy lab** for **workforce adults**, using **mixed browsers and machines** (Windows/macOS, Chrome/Edge/Firefox/Safari; some participants on mobile). Participants may be **anywhere in the world** and may be on **corporate-managed devices** with restrictions.
+
+The lab’s purpose is to **surprise and educate** participants by making the “invisible” parts of digital tracking visible and measurable, while giving them a practical foundation for **digital hygiene**.
+
+### What we want participants to experience
+
+They should leave with:
+
+1. A concrete, memorable understanding that digital footprint has layers:
+
+   * **Public exposure** (what’s searchable)
+   * **Data broker exposure** (people-search listings)
+   * **Behavioral tracking** (third-party trackers)
+   * **Identifier tracking** (cookies + fingerprints + device IDs)
+   * **Breach exposure** (accounts leaked in incidents)
+2. A “before/after” sense of impact for a few simple hygiene actions (e.g., clearing cookies, changing ad settings).
+3. A personal **Footprint Report Card** they can save (PDF/HTML) with next steps.
+
+### Critical boundaries (privacy + safety)
+
+This lab is **self-audit only**:
+
+* The tool must **not** facilitate searching for other people.
+* The tool must **not** collect or transmit participants’ personal identifiers (name, email, phone, address, employer, etc.).
+* The tool should not encourage participants to paste sensitive data anywhere (especially passwords).
+
+We will **link to existing services** for measurement:
+
+* **Blacklight** (web privacy inspector by The Markup) ([themarkup.org][1])
+* **EFF Cover Your Tracks** (fingerprinting/tracking exposure test) ([coveryourtracks.eff.org][2])
+* **Google “Results about you” / removal flow** (for personal info in Google Search) ([My Activity][3])
+* **Have I Been Pwned** (breach exposure check / notifications) ([Have I Been Pwned][4])
+* **Browser cookie clearing instructions** (official support pages) ([Google Help][5])
+* **Ad personalization controls** (Google, Apple, Android) ([Google Help][6])
+* Optional: **DuckDuckGo Email Protection** (email tracker removal concept demo) ([DuckDuckGo][7])
+* Optional concept: **Global Privacy Control** (policy+tech “signal” idea) ([Global Privacy Control][8])
+* Data brokers concept explainer: FTC people-search sites overview ([Consumer Advice][9])
+
+---
+
+## 2) Product deliverable
+
+A lightweight web app called **Footprint Audit Wizard** that:
+
+* Guides participants through the lab in a structured sequence
+* Opens the relevant external tools/instructions in new tabs
+* Prompts participants to record only **non-sensitive metrics** (counts, yes/no toggles, coarse categories)
+* Produces a **downloadable report** (PDF and/or print-to-PDF friendly HTML)
+* Stores progress **locally on the user’s device** (no sign-in; no backend required)
+
+### Non-goals (explicit)
+
+* Do **not** crawl websites or run headless scans ourselves (we will link to Blacklight, not reproduce it).
+* Do **not** scrape or store the participant’s personal information.
+* Do **not** build a data broker opt-out automation service.
+* Do **not** provide “stealth” or evasion tooling; this is an education lab, not an operational privacy product.
+
+---
+
+## 3) Lab design: the 60-minute flow (what the wizard should enforce)
+
+This should be a **single guided path** with a visible timer/progress bar and a “skip” option.
+
+### Agenda (minute-by-minute)
+
+**0–3 min — Welcome + safety**
+
+* Explain self-audit rule
+* Explain what data we store (counts only, local only)
+* “Use Fictional Persona Mode” option for anyone uncomfortable
+
+**3–13 min — Shock #1: Public exposure**
+
+* Guided search prompts (self only) + Google removal tools
+* Record: how many results looked like they contained personal contact info / address / relatives
+
+**13–28 min — Shock #2: Tracker visibility**
+
+* Run Blacklight on 1–2 familiar sites
+* Record: # trackers, session recording present, keylogging present, fingerprinting flags, third-party cookies flags (as reported)
+
+**28–38 min — Shock #3: Fingerprinting isn’t cookies**
+
+* Run EFF Cover Your Tracks
+* Record: “unique?” “tracking protection strong/weak?” (whatever summary the tool shows)
+
+**38–48 min — Shock #4: Account & device identifiers**
+
+* Check toggles for Google ad personalization, Apple personalized ads, Android advertising ID options, and iOS App Tracking Transparency (as applicable)
+* Record: whether personalized ads are on/off; whether ad ID reset/deleted (if Android)
+
+**48–57 min — Cleanup sprint**
+
+* Clear cookies/site data using browser-specific official instructions
+* OPTIONAL: enable a privacy-protective setting (e.g., block third-party cookies) if participant is comfortable
+* Record: done/not done
+
+**57–60 min — Report card + next steps**
+
+* Generate downloadable report
+* Show “Top 5 next actions” personalized from their responses
+
+---
+
+## 4) UX requirements
+
+### Core screens
+
+1. **Landing / consent & safety**
+
+   * Short purpose statement
+   * “Self-audit only”
+   * “We don’t collect/store personal data; all results stay on your device.”
+   * Mode toggle:
+
+     * **My footprint**
+     * **Fictional persona demo** (uses prefilled example inputs; no real searches required)
+
+2. **Wizard steps (6 steps)**
+
+   * Each step includes:
+
+     * A 1–2 sentence explanation (plain language)
+     * 1–3 external links (open in new tab)
+     * “What to record” input section (counts and toggles only)
+     * “Common pitfalls” collapsible (e.g., “this will log you out”)
+     * “Next” button + “Skip” button
+
+3. **Report Card**
+
+   * Summary scores/tiles
+   * “What this means” explanations
+   * Personalized “Next Actions”
+   * Download buttons: **Print/PDF**, **Download JSON** (optional)
+
+### Interaction details
+
+* External links must open with `target="_blank"` and `rel="noopener noreferrer"`.
+* Provide a persistent “panic/clear” option: **“Clear my lab data from this device”** (wipes local storage).
+
+### Accessibility & usability
+
+* WCAG-friendly (semantic headings, keyboard navigable, high contrast, no essential color-only meaning).
+* Mobile responsive (participants might use phones for settings).
+
+---
+
+## 5) Data minimization: what we store
+
+We store **only**:
+
+* coarse counts (integers)
+* yes/no/unknown toggles
+* which device/browser they used (optional, from a small list)
+* timestamp (optional)
+
+We do **not** store:
+
+* names, emails, phone numbers, addresses
+* URLs they searched
+* specific people-search sites where they found themselves
+* screenshots
+* anything pulled from external tools
+
+### Suggested local JSON schema
+
+(Developer can implement as TypeScript interface + localStorage key `footprintWizard:v1`.)
+
+```json
+{
+  "version": "1.0",
+  "mode": "self|fictional",
+  "device": {
+    "type": "desktop|mobile|unknown",
+    "os": "windows|mac|linux|ios|android|unknown",
+    "browser": "chrome|edge|firefox|safari|other|unknown"
+  },
+  "results": {
+    "publicExposure": {
+      "searchResultPagesWithPersonalInfo": 0,
+      "peopleSearchSitesFound": "yes|no|unsure",
+      "googleResultsAboutYouVisited": "yes|no",
+      "googleRemovalRequested": "yes|no|not_applicable"
+    },
+    "trackers": {
+      "blacklightRun": "yes|no",
+      "siteCategoryScanned": "news|shopping|health|social|other|unknown",
+      "trackerCount": null,
+      "thirdPartyCookiesFlagged": "yes|no|unsure",
+      "sessionRecordingFlagged": "yes|no|unsure",
+      "keyLoggingFlagged": "yes|no|unsure",
+      "fingerprintingFlagged": "yes|no|unsure"
+    },
+    "fingerprinting": {
+      "effTestRun": "yes|no",
+      "browserUnique": "yes|no|unsure",
+      "trackingProtection": "strong|partial|weak|unsure"
+    },
+    "accountDevice": {
+      "googlePersonalizedAds": "on|off|unsure|not_used",
+      "applePersonalizedAds": "on|off|unsure|not_applicable",
+      "androidAdvertisingIdAction": "reset|deleted|none|not_applicable|unsure",
+      "iosATTSetting": "allow_apps_to_request|blocked|unsure|not_applicable"
+    },
+    "cleanup": {
+      "cookiesCleared": "yes|no",
+      "thirdPartyCookiesBlockedOrLimited": "yes|no|unsure",
+      "passwordHygieneActionTaken": "yes|no|later"
+    }
+  }
+}
+```
+
+---
+
+## 6) Wizard step content (what the developer should implement)
+
+### Step 0 — Welcome & safety (3 minutes)
+
+**Copy intent (suggested):**
+
+* “This lab helps you see what parts of your digital footprint are visible and trackable. You’ll use a few trusted public tools.”
+* “Self-audit only: search your own identifiers or use Fictional Persona Mode.”
+* “We never ask for your name/email/phone. You’ll only record counts and yes/no answers. Everything stays on your device.”
+
+**UI elements:**
+
+* Mode toggle: My footprint / Fictional persona
+* Dropdown: device OS/browser (optional)
+* Continue
+
+---
+
+### Step 1 — Public exposure (≈10 minutes)
+
+**Concept to teach:** Some personal info is publicly discoverable via search; “privacy” isn’t only what you post.
+
+**External links (open new tabs):**
+
+* Google “Results about you” dashboard ([My Activity][3])
+* Google help: find/remove personal contact info ([Google Help][10])
+
+**In-wizard instructions:**
+
+* Provide safe prompts like:
+
+  * “Search your name + city”
+  * “Search your email address”
+  * “Search your phone number”
+* Important: show warning text: “Don’t paste sensitive info into the wizard—only into your own browser/search engine.”
+
+**Inputs to record:**
+
+* `searchResultPagesWithPersonalInfo` (0,1,2,3,4,5+)
+* `peopleSearchSitesFound` (yes/no/unsure)
+* `googleResultsAboutYouVisited` (yes/no)
+* `googleRemovalRequested` (yes/no/not applicable)
+
+**Pitfall callouts:**
+
+* “Search results vary by country/language.”
+* “If you’re on a work computer, you may be logged into corporate Google accounts.”
+
+---
+
+### Step 2 — Tracker visibility with Blacklight (≈15 minutes)
+
+**Concept to teach:** One normal webpage can load dozens of third parties; tracking isn’t just “cookies.”
+
+**External link:**
+
+* Blacklight tool landing page ([themarkup.org][1])
+
+**In-wizard instructions:**
+
+* Ask participants to run Blacklight on a **non-sensitive** site category:
+
+  * “News” or “Shopping” recommended
+  * Avoid health portals or internal company systems
+* In Fictional Persona mode, provide an example site category and prefilled sample outputs (see Demo Mode section).
+
+**Inputs to record (from Blacklight output screen):**
+
+* `trackerCount` (number)
+* `thirdPartyCookiesFlagged` (yes/no/unsure)
+* `sessionRecordingFlagged` (yes/no/unsure)
+* `keyLoggingFlagged` (yes/no/unsure)
+* `fingerprintingFlagged` (yes/no/unsure)
+
+**Pitfall callouts:**
+
+* “Some sites block automated scanning; if it fails, try another site.”
+* “Results are a snapshot; they can change day to day.”
+
+---
+
+### Step 3 — Fingerprinting (≈10 minutes)
+
+**Concept to teach:** Clearing cookies ≠ not being identifiable. Fingerprinting can still make a browser unique.
+
+**External links:**
+
+* EFF Cover Your Tracks test ([coveryourtracks.eff.org][2])
+
+**Inputs to record (based on the tool’s summary):**
+
+* `browserUnique` (yes/no/unsure)
+* `trackingProtection` (strong/partial/weak/unsure)
+
+**Pitfall callouts:**
+
+* “Uniqueness can change depending on extensions and settings.”
+* “Private browsing often does not make your browser non-unique.”
+
+---
+
+### Step 4 — Account & device identifiers (≈10 minutes)
+
+**Concept to teach:** Tracking also happens at the account/device level (ad personalization, device IDs, app tracking permissions).
+
+**External links (show contextually depending on OS selection):**
+
+* Google My Ad Center: personalized ads controls ([Google Help][6])
+* Apple: control personalized ads ([Apple Support][11])
+* Android: reset/delete advertising ID (official steps vary by version; provide link that describes reset/delete) ([Google Help][12])
+* iOS App Tracking Transparency explainer (what the prompt means) ([Apple Support][13])
+
+**Inputs to record:**
+
+* `googlePersonalizedAds`: on/off/unsure/not used
+* `applePersonalizedAds`: on/off/unsure/not applicable
+* `androidAdvertisingIdAction`: reset/deleted/none/not applicable/unsure
+* `iosATTSetting`: allow_apps_to_request / blocked / unsure / not applicable
+
+**Pitfall callouts:**
+
+* “Turning off personalized ads may not reduce the number of ads; it changes targeting.”
+* “On managed devices, you may not be able to change some settings.”
+
+---
+
+### Step 5 — Cleanup sprint (≈9 minutes)
+
+**Concept to teach:** Hygiene actions reduce persistence but don’t erase everything; still worthwhile.
+
+**External links (browser-specific):**
+
+* Chrome: clear cache/cookies ([Google Help][5])
+* Firefox: clear cookies & site data ([Mozilla Support][14])
+* Safari (iPhone): delete history/cache/cookies ([Apple Support][15])
+* Microsoft Edge: manage/delete cookies ([Microsoft Support][16])
+
+**Inputs to record:**
+
+* `cookiesCleared` yes/no
+* `thirdPartyCookiesBlockedOrLimited` yes/no/unsure
+* `passwordHygieneActionTaken` yes/no/later
+  (This is intentionally vague: e.g., “enabled MFA” / “updated a password” / “checked password manager”—do not capture details.)
+
+**Pitfall callouts:**
+
+* “Clearing cookies logs you out of sites.”
+* “If you’re on a shared computer, clearing cookies is usually a good idea.”
+
+---
+
+### Step 6 — Report Card (≈3 minutes)
+
+**Outputs:**
+
+* A 1–2 page summary with:
+
+  * The five footprint layers
+  * Their recorded metrics
+  * A short interpretation (“What your results suggest”)
+  * A prioritized “Next Actions” list
+
+**Download options:**
+
+* “Print / Save as PDF”
+* Optional: “Download JSON (my local lab data)”
+
+---
+
+## 7) Report Card logic (how to turn inputs into “wow”)
+
+### Suggested visual structure
+
+* **Tile row (4–6 tiles):**
+
+  * “Public exposure signals”
+  * “Tracking intensity”
+  * “Fingerprint uniqueness”
+  * “Account/device ads”
+  * “Cleanup completed”
+* **Interpretation section** (careful with claims):
+
+  * Use probabilistic language: “This suggests…” not “This proves…”
+
+### Suggested simple scoring (transparent, not gamed)
+
+Do **not** present it as a precise privacy score. Present as **“signals”**.
+
+Example:
+
+* Public exposure signal: based on `searchResultPagesWithPersonalInfo` and `peopleSearchSitesFound`
+* Tracking intensity: based on Blacklight `trackerCount` + flags
+* Fingerprinting: if `browserUnique=yes`, show “Likely uniquely identifiable”
+* Account/device: if personalized ads on, show “More profile-based targeting likely”
+* Hygiene: if cookies cleared + third-party cookie settings changed, show “Reduced persistence”
+
+### “Next Actions” personalization
+
+Rules-based recommendations (examples):
+
+* If `peopleSearchSitesFound=yes`: recommend FTC guidance on people-search sites and opt-outs ([Consumer Advice][9])
+* If `browserUnique=yes`: recommend privacy-protective browsing habits and understanding fingerprinting (link back to EFF page) ([Electronic Frontier Foundation][17])
+* If cookies not cleared: recommend doing it later with the browser link list ([Google Help][5])
+* If breach check not done: recommend HIBP + notifications (without collecting email) ([Have I Been Pwned][4])
+
+---
+
+## 8) Demo mode (highly recommended)
+
+Because corporate networks can block tools or slow scans, implement **Fictional Persona Mode** that:
+
+* Never asks users to run real searches
+* Provides **pre-filled example outputs** for each step (with “Try live tools anyway” as optional)
+
+### Demo content
+
+* Example Blacklight result: tracker count like 70; session recording “yes”; keylogging “no”; fingerprinting “yes” (purely illustrative)
+* Example Cover Your Tracks: unique “yes”
+* Example public exposure: 2 pages of results; people-search sites found “yes”
+
+This ensures the lab still works even in restricted environments.
+
+---
+
+## 9) Technical architecture (keep it simple)
+
+### Recommended implementation: Static SPA (no backend)
+
+* Host as a static site (Netlify/Vercel/S3 or internal LMS)
+* All state stored in `localStorage` (or `IndexedDB` if you prefer)
+* Report generated client-side as HTML print view (and optionally PDF export)
+
+Why:
+
+* Global participants, mixed devices
+* Minimizes privacy/security risk
+* Avoids operational burden
+
+### PDF generation
+
+Option A (simplest): Create a print stylesheet and instruct users to “Print → Save as PDF”.
+Option B: client-side PDF library (jsPDF / html2pdf). Either works; print-to-PDF is the least brittle.
+
+### Security headers (if hosting yourselves)
+
+* Strict Content Security Policy (CSP) that disallows third-party scripts by default.
+* No analytics scripts unless explicitly approved; if used, ensure they collect no PII.
+
+### QA requirements
+
+Test on:
+
+* Chrome (Win/Mac)
+* Edge (Win)
+* Firefox (Win/Mac)
+* Safari (macOS + iOS if possible)
+
+---
+
+## 10) Link registry (copy/paste for implementation)
+
+Put raw URLs in code per policy; these are the pages to link out to.
+
+```text
+Blacklight (The Markup): https://themarkup.org/blacklight
+
+EFF Cover Your Tracks: https://coveryourtracks.eff.org/
+EFF explainer page: https://www.eff.org/pages/cover-your-tracks
+
+Google Results about you: https://myactivity.google.com/results-about-you
+Google help (find contact info / remove): https://support.google.com/websearch/answer/12719076?hl=en
+Google help (remove private info): https://support.google.com/websearch/answer/9673730?hl=en
+
+Have I Been Pwned: https://haveibeenpwned.com/
+HIBP FAQs: https://haveibeenpwned.com/FAQs
+HIBP Notifications: https://haveibeenpwned.com/NotifyMe
+
+Chrome clear cookies/cache (Google): https://support.google.com/accounts/answer/32050?hl=en
+Firefox clear cookies/site data (Mozilla): https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox
+Safari iPhone delete history/cache/cookies (Apple): https://support.apple.com/en-us/105082
+Edge manage/delete cookies (Microsoft): https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d
+
+Google My Ad Center (help): https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en
+Apple personalized ads (Apple support): https://support.apple.com/en-us/105131
+Android Advertising ID reset/delete (Google): https://support.google.com/googleplay/android-developer/answer/6048248?hl=en
+Apple App Tracking Transparency explainer: https://support.apple.com/en-us/102420
+
+FTC people-search sites explainer: https://consumer.ftc.gov/articles/what-know-about-people-search-sites-sell-your-information
+FTC privacy guide: https://consumer.ftc.gov/consumer-alerts/2021/06/your-guide-protecting-your-privacy-online
+
+DuckDuckGo Email Protection: https://duckduckgo.com/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/
+
+Global Privacy Control: https://globalprivacycontrol.org/
+GPC FAQ: https://globalprivacycontrol.org/faq
+```
+
+(These correspond to the cited sources above.) ([themarkup.org][1])
+
+---
+
+## 11) Implementation milestones (pragmatic)
+
+**Milestone 1 (MVP, 1–2 sprints)**
+
+* Landing + safety + mode toggle
+* 6-step wizard with external links
+* Local storage persistence
+* Report view + print stylesheet
+* Clear-my-data button
+
+**Milestone 2**
+
+* Demo mode with prefilled sample results
+* Simple rules-based “Next Actions”
+* Optional JSON export
+
+**Milestone 3 (optional, if you want class-level aggregation)**
+
+* “Facilitator code” that lets participants optionally submit *only* their anonymized counts to an instructor endpoint
+* This is optional and should default off.
+
+---
+
+## 12) Copy requirements (tone + pedagogy)
+
+* Plain language, non-judgmental
+* Avoid “you are being watched” melodrama; instead: “Here are the mechanisms; here’s what you can control.”
+* Every “wow” moment must include a reality check:
+
+  * “Snapshot, not a full census”
+  * “Different laws/countries change what’s visible”
+  * “Some tracking persists beyond cookies”
+
+---
+
+### Confidence
+
+**High confidence** that this spec is buildable quickly as a static wizard and will deliver the “wow + hygiene foundation” learning outcomes for workforce adults. **Medium confidence** on how consistently external tools will behave across corporate networks—hence the strong recommendation for **Demo mode** as a reliability backstop.
+
+[1]: https://themarkup.org/blacklight?utm_source=chatgpt.com "Blacklight"
+[2]: https://coveryourtracks.eff.org/?utm_source=chatgpt.com "Cover Your Tracks"
+[3]: https://myactivity.google.com/results-about-you?utm_source=chatgpt.com "Results about you - My Activity - Google"
+[4]: https://haveibeenpwned.com/?utm_source=chatgpt.com "Have I Been Pwned: Check if your email address has been ..."
+[5]: https://support.google.com/accounts/answer/32050?co=GENIE.Platform%3DDesktop&hl=en&utm_source=chatgpt.com "Clear cache & cookies - Computer"
+[6]: https://support.google.com/My-Ad-Center-Help/answer/12155656?co=GENIE.Platform%3DAndroid&hl=en&utm_source=chatgpt.com "How personalized ads work - Android - My Ad Center Help"
+[7]: https://duckduckgo.com/duckduckgo-help-pages/email-protection/what-is-duckduckgo-email-protection/?utm_source=chatgpt.com "What is DuckDuckGo Email Protection?"
+[8]: https://globalprivacycontrol.org/?utm_source=chatgpt.com "Global Privacy Control — Take Control Of Your Privacy"
+[9]: https://consumer.ftc.gov/articles/what-know-about-people-search-sites-sell-your-information?utm_source=chatgpt.com "What To Know About People Search Sites That Sell Your ..."
+[10]: https://support.google.com/websearch/answer/12719076?hl=en&utm_source=chatgpt.com "Find your personal contact info in Google Search results"
+[11]: https://support.apple.com/en-us/105131?utm_source=chatgpt.com "Control personalized ads on the App Store, Apple News, ..."
+[12]: https://support.google.com/googleplay/android-developer/answer/6048248?hl=en&utm_source=chatgpt.com "Advertising ID - Play Console Help"
+[13]: https://support.apple.com/en-us/102420?utm_source=chatgpt.com "If an app asks to track your activity"
+[14]: https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox?utm_source=chatgpt.com "Clear cookies and site data in Firefox - Mozilla Support"
+[15]: https://support.apple.com/en-us/105082?utm_source=chatgpt.com "Delete your Safari history, cache, and cookies on iPhone"
+[16]: https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d?utm_source=chatgpt.com "Manage cookies in Microsoft Edge: View, allow, block, ..."
+[17]: https://www.eff.org/pages/cover-your-tracks?utm_source=chatgpt.com "Cover Your Tracks"
