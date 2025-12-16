@@ -213,7 +213,7 @@ export default function ReportCard() {
 
     if (getFingerprintLevel() === "critical" && !skippedSteps.includes(3)) {
       actions.push(
-        "Try Firefox with Enhanced Tracking Protection set to 'Strict' to reduce fingerprinting."
+        "Your browser is uniquely identifiable. Learn more about fingerprinting at eff.org/pages/cover-your-tracks and try Firefox with Enhanced Tracking Protection set to 'Strict'."
       );
     }
 
@@ -229,9 +229,9 @@ export default function ReportCard() {
       actions.push("Enable blocking of third-party cookies in your browser settings.");
     }
 
-    if (results.cleanup.passwordHygieneActionTaken === "later") {
+    if (results.cleanup.passwordHygieneActionTaken === "later" || results.cleanup.passwordHygieneActionTaken === "no") {
       actions.push(
-        "Check Have I Been Pwned (haveibeenpwned.com) to see if your email was in data breaches."
+        "Check Have I Been Pwned (haveibeenpwned.com) to see if your email was in data breaches, and sign up for notifications at haveibeenpwned.com/NotifyMe."
       );
     }
 
@@ -642,9 +642,9 @@ export default function ReportCard() {
             <Printer className="w-4 h-4 mr-2" />
             Print / Save PDF
           </Button>
-          <Button onClick={handleDownload} data-testid="button-download">
+          <Button variant="outline" onClick={handleDownload} data-testid="button-download-json">
             <Download className="w-4 h-4 mr-2" />
-            Download Report
+            Download JSON
           </Button>
         </div>
 
