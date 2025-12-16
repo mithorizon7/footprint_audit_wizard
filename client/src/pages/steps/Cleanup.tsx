@@ -166,8 +166,8 @@ export default function Cleanup() {
               { value: "no", label: "No" },
               { value: "later", label: "Will do later" },
             ]}
-            label="Did you check for breached accounts on Have I Been Pwned?"
-            helperText="Even if you just checked, you can revisit later with other email addresses"
+            label="Did you take any password hygiene action?"
+            helperText="Examples: checked Have I Been Pwned, enabled MFA, updated a password, or reviewed your password manager"
             testId="input-password-hygiene"
           />
         </div>

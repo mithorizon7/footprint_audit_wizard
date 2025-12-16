@@ -26,6 +26,8 @@ export default function AccountDevice() {
         pitfalls={[
           "Settings locations vary by OS version — the links below will guide you.",
           "Resetting an advertising ID creates a new one; it doesn't disable tracking entirely.",
+          "Turning off personalized ads may not reduce the number of ads; it changes targeting.",
+          "On managed devices, you may not be able to change some settings.",
           "Some settings require being logged into your account on the device.",
         ]}
       >

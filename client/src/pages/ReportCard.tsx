@@ -124,7 +124,7 @@ export default function ReportCard() {
   const metrics: MetricTile[] = [
     {
       icon: Shield,
-      label: "Public Exposure",
+      label: "Public Exposure Signals",
       value:
         results.publicExposure.searchResultPagesWithPersonalInfo === 0
           ? "Low"
@@ -139,7 +139,7 @@ export default function ReportCard() {
     },
     {
       icon: Eye,
-      label: "Trackers Found",
+      label: "Tracking Intensity",
       value: results.trackers.trackerCount ?? "N/A",
       level: getTrackerLevel(),
       explanation:
@@ -153,7 +153,7 @@ export default function ReportCard() {
     },
     {
       icon: Fingerprint,
-      label: "Browser Uniqueness",
+      label: "Fingerprint Uniqueness",
       value:
         results.fingerprinting.browserUnique === "yes"
           ? "Unique"
@@ -170,7 +170,7 @@ export default function ReportCard() {
     },
     {
       icon: Settings,
-      label: "Ad Personalization",
+      label: "Account/Device Ads",
       value:
         results.accountDevice.googlePersonalizedAds === "off"
           ? "Limited"
@@ -230,7 +230,7 @@ export default function ReportCard() {
 
     if (results.publicExposure.peopleSearchSitesFound === "yes") {
       actions.push(
-        "Opt out from people-search sites. Visit the FTC guide at consumer.ftc.gov/articles/what-know-about-people-search-sites"
+        "Opt out from people-search sites. Visit the FTC guide at consumer.ftc.gov/articles/what-know-about-people-search-sites-sell-your-information"
       );
     }
 
@@ -589,6 +589,28 @@ export default function ReportCard() {
                   <p>
                     Tracking protection:{" "}
                     <strong>{results.fingerprinting.trackingProtection}</strong>
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="account">
+                <AccordionTrigger>Account & Device Settings</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-2">
+                  <p>
+                    Google personalized ads:{" "}
+                    <strong>{results.accountDevice.googlePersonalizedAds}</strong>
+                  </p>
+                  <p>
+                    Apple personalized ads:{" "}
+                    <strong>{results.accountDevice.applePersonalizedAds}</strong>
+                  </p>
+                  <p>
+                    Android advertising ID action:{" "}
+                    <strong>{results.accountDevice.androidAdvertisingIdAction}</strong>
+                  </p>
+                  <p>
+                    iOS App Tracking Transparency:{" "}
+                    <strong>{results.accountDevice.iosATTSetting}</strong>
                   </p>
                 </AccordionContent>
               </AccordionItem>

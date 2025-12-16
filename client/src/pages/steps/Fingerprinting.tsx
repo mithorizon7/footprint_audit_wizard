@@ -28,15 +28,24 @@ export default function FingerprintingStep() {
       >
         <div className="space-y-4">
           <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-            External Tool
+            External Tools
           </h3>
-          <ExternalLinkCard
-            title="EFF Cover Your Tracks"
-            description="Test how well your browser protects you from tracking and fingerprinting"
-            url="https://coveryourtracks.eff.org/"
-            icon={<Fingerprint className="w-5 h-5" />}
-            testId="link-eff-coveryourtracks"
-          />
+          <div className="space-y-4">
+            <ExternalLinkCard
+              title="EFF Cover Your Tracks"
+              description="Test how well your browser protects you from tracking and fingerprinting"
+              url="https://coveryourtracks.eff.org/"
+              icon={<Fingerprint className="w-5 h-5" />}
+              testId="link-eff-coveryourtracks"
+            />
+            <ExternalLinkCard
+              title="Understanding Fingerprinting"
+              description="Learn more about how browser fingerprinting works and why it matters"
+              url="https://www.eff.org/pages/cover-your-tracks"
+              icon={<Fingerprint className="w-5 h-5" />}
+              testId="link-eff-explainer"
+            />
+          </div>
         </div>
 
         <AlertBox severity="info" className="mt-6">
