@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -79,6 +80,7 @@ const STEP_LINKS: Record<number, { name: string; url: string; description: strin
 
 export default function ReportCard() {
   const { data, resetWizard, skippedSteps } = useWizard();
+  const { t, format } = useI18n();
   const reportRef = useRef<HTMLDivElement>(null);
   const results = data.results;
 
@@ -219,55 +221,43 @@ export default function ReportCard() {
 
     const skippedInfo = getSkippedStepInfo();
     skippedInfo.forEach(({ name }) => {
-      actions.push(`You skipped "${name}". Complete this section when you have time.`);
+      actions.push(format(t.nextActions.skippedStep, { stepName: name }));
     });
 
     if (getPublicExposureLevel() !== "good" && !skippedSteps.includes(1)) {
-      actions.push(
-        "Request removal of your personal info from Google search results using the 'Results about you' tool."
-      );
+      actions.push(t.nextActions.requestGoogleRemoval);
     }
 
     if (results.publicExposure.peopleSearchSitesFound === "yes") {
-      actions.push(
-        "Opt out from people-search sites. Visit the FTC guide at consumer.ftc.gov/articles/what-know-about-people-search-sites-sell-your-information"
-      );
+      actions.push(t.nextActions.optOutPeopleSearch);
     }
 
     if ((getTrackerLevel() === "critical" || getTrackerLevel() === "warning") && !skippedSteps.includes(2)) {
-      actions.push(
-        "Install a reputable content blocker like uBlock Origin to reduce tracker exposure."
-      );
+      actions.push(t.nextActions.installContentBlocker);
     }
 
     if (getFingerprintLevel() === "critical" && !skippedSteps.includes(3)) {
-      actions.push(
-        "Your browser is uniquely identifiable. Learn more about fingerprinting at eff.org/pages/cover-your-tracks and try Firefox with Enhanced Tracking Protection set to 'Strict'."
-      );
+      actions.push(t.nextActions.fingerprintingRisk);
     }
 
     if (results.accountDevice.googlePersonalizedAds === "on" && !skippedSteps.includes(4)) {
-      actions.push("Turn off personalized ads in your Google Ad Center settings.");
+      actions.push(t.nextActions.turnOffGoogleAds);
     }
 
     if (results.cleanup.cookiesCleared === "no" && !skippedSteps.includes(5)) {
-      actions.push("Clear your browser cookies and site data to remove existing trackers.");
+      actions.push(t.nextActions.clearCookies);
     }
 
     if (results.cleanup.thirdPartyCookiesBlockedOrLimited === "no" && !skippedSteps.includes(5)) {
-      actions.push("Enable blocking of third-party cookies in your browser settings.");
+      actions.push(t.nextActions.enableCookieBlocking);
     }
 
     if (results.cleanup.passwordHygieneActionTaken === "later" || results.cleanup.passwordHygieneActionTaken === "no") {
-      actions.push(
-        "Check Have I Been Pwned (haveibeenpwned.com) to see if your email was in data breaches, and sign up for notifications at haveibeenpwned.com/NotifyMe."
-      );
+      actions.push(t.nextActions.checkHibp);
     }
 
     if (actions.length === 0) {
-      actions.push(
-        "Great job! Consider running this audit again in a few months to stay on top of your digital footprint."
-      );
+      actions.push(t.nextActions.allDone);
     }
 
     return actions.slice(0, 7);

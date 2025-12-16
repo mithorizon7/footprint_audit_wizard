@@ -30,8 +30,8 @@ export default function Trackers() {
               {t.trackers.externalTool}
             </h3>
             <ExternalLinkCard
-              title="Blacklight by The Markup"
-              description="Real-time privacy inspector that reveals trackers, cookies, and surveillance tech on any website"
+              title={t.externalTools.blacklightTitle}
+              description={t.externalTools.blacklightDesc}
               url="https://themarkup.org/blacklight"
               icon={<Eye className="w-5 h-5" />}
               testId="link-blacklight"

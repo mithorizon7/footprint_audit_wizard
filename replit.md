@@ -101,6 +101,53 @@ interface WizardData {
 - **WCAG Accessible**: Semantic HTML, keyboard navigation, high contrast
 - **Multi-language Support**: Full i18n with English (en), Latvian (lv), and Russian (ru) translations via I18nContext
 
+## Internationalization (i18n)
+
+### Architecture
+- **ICU MessageFormat**: Uses `intl-messageformat` for pluralization and complex messages
+- **Bundled Locales**: All translations bundled in `client/src/lib/i18n.ts`
+- **Fallback Chain**: User preference → Browser locale → Latvian (lv) → English (en)
+- **Dev Mode**: Missing keys display as `[MISSING: key.path]` in red
+
+### Key Naming Conventions
+Follow the pattern: `namespace.screen.element.state`
+
+Examples:
+- `common.next` - Common UI elements
+- `welcome.title` - Welcome page title
+- `publicExposure.searchPagesQuestion` - Step-specific question
+- `externalTools.blacklightTitle` - External tool name
+- `badges.optional` - UI badge text
+- `cleanupActions.yes` - Cleanup action option
+
+### Namespaces
+- `common` - Shared UI elements (buttons, actions)
+- `accessibility` - Aria labels, screen reader text
+- `welcome`, `steps`, `report`, `panic` - Page/section content
+- `publicExposure`, `trackers`, `fingerprinting`, `accountDevice`, `cleanup` - Wizard step content
+- `externalTools` - External tool names and descriptions
+- `badges` - UI badge labels
+- `siteCategories`, `trackingProtection`, `adSettings`, `androidActions`, `iosAtt`, `cleanupActions` - Option labels
+
+### Validation Scripts
+```bash
+# Validate ICU syntax and check for missing keys
+npx tsx scripts/i18n-validate.ts
+
+# Scan for hardcoded strings
+npx tsx scripts/i18n-scan.ts
+
+# Render sweep test (checks all locales for missing translations)
+npx tsx scripts/i18n-render-sweep.ts
+```
+
+### Adding New Translations
+1. Add key to `Translations` interface in `client/src/lib/i18n.ts`
+2. Add English translation to `const en`
+3. Add Latvian translation to `const lv`
+4. Add Russian translation to `const ru`
+5. Run validation: `npx tsx scripts/i18n-validate.ts`
+
 ## External Tools Referenced
 
 - [Blacklight](https://themarkup.org/blacklight) - Website privacy inspector

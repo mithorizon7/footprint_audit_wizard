@@ -208,6 +208,8 @@ export interface Translations {
     blacklightDesc: string;
     effCoverTracksTitle: string;
     effCoverTracksDesc: string;
+    effExplainerTitle: string;
+    effExplainerDesc: string;
     googleAdSettingsTitle: string;
     googleAdSettingsDesc: string;
     appleAdsTitle: string;
@@ -222,9 +224,22 @@ export interface Translations {
     blockCookiesDesc: string;
     hibpTitle: string;
     hibpDesc: string;
+    stepsForBrowser: string;
   };
   badges: {
     optional: string;
+  };
+  nextActions: {
+    skippedStep: string;
+    requestGoogleRemoval: string;
+    optOutPeopleSearch: string;
+    installContentBlocker: string;
+    fingerprintingRisk: string;
+    turnOffGoogleAds: string;
+    clearCookies: string;
+    enableCookieBlocking: string;
+    checkHibp: string;
+    allDone: string;
   };
 }
 
@@ -431,6 +446,50 @@ const en: Translations = {
     later: "Will do later",
     alreadyBlocked: "Already blocked",
   },
+  externalTools: {
+    googleResultsTitle: "Google 'Results about you'",
+    googleResultsDesc: "See what personal information Google has found about you in search results",
+    findContactTitle: "Find Contact Info Sites",
+    findContactDesc: "Search your name in quotes plus city/state to find people-search listings",
+    requestRemovalTitle: "Request Removal",
+    requestRemovalDesc: "Most people-search sites have opt-out pages. Search '[site name] opt out' to find them",
+    blacklightTitle: "Blacklight by The Markup",
+    blacklightDesc: "Enter any website URL to see what trackers, cookies, and session recorders it uses",
+    effCoverTracksTitle: "EFF Cover Your Tracks",
+    effCoverTracksDesc: "Test how unique your browser fingerprint is and how well you're protected from tracking",
+    effExplainerTitle: "Understanding Fingerprinting",
+    effExplainerDesc: "Learn more about how browser fingerprinting works and why it matters",
+    googleAdSettingsTitle: "Google Ad Settings",
+    googleAdSettingsDesc: "View and control how Google personalizes ads based on your activity",
+    appleAdsTitle: "Apple Advertising Settings",
+    appleAdsDesc: "Settings > Privacy & Security > Apple Advertising",
+    androidAdIdTitle: "Android Advertising ID",
+    androidAdIdDesc: "Settings > Privacy > Ads > Reset or Delete advertising ID",
+    iosAttTitle: "iOS App Tracking Transparency",
+    iosAttDesc: "Settings > Privacy & Security > Tracking",
+    clearCookiesTitle: "Clear Cookies & Site Data",
+    clearCookiesDesc: "Remove stored tracking data from your browser",
+    blockCookiesTitle: "Block Third-Party Cookies",
+    blockCookiesDesc: "Prevent cross-site tracking cookies from being stored",
+    hibpTitle: "Have I Been Pwned",
+    hibpDesc: "Check if your email has appeared in known data breaches",
+    stepsForBrowser: "Step-by-step instructions for {browser}",
+  },
+  badges: {
+    optional: "Optional",
+  },
+  nextActions: {
+    skippedStep: "You skipped \"{stepName}\". Complete this section when you have time.",
+    requestGoogleRemoval: "Request removal of your personal info from Google search results using the 'Results about you' tool.",
+    optOutPeopleSearch: "Remove your info from people-search sites. Visit the FTC guide at consumer.ftc.gov/articles/what-know-about-people-search-sites-sell-your-information",
+    installContentBlocker: "Install a reputable content blocker like uBlock Origin to reduce tracker exposure.",
+    fingerprintingRisk: "Your browser is uniquely identifiable. Learn more about fingerprinting at eff.org/pages/cover-your-tracks and try Firefox with Enhanced Tracking Protection set to 'Strict'.",
+    turnOffGoogleAds: "Turn off personalized ads in your Google Ad Center settings.",
+    clearCookies: "Clear your browser cookies and site data to remove existing trackers.",
+    enableCookieBlocking: "Enable blocking of third-party cookies in your browser settings.",
+    checkHibp: "Check Have I Been Pwned (haveibeenpwned.com) to see if your email was in data breaches, and sign up for notifications at haveibeenpwned.com/NotifyMe.",
+    allDone: "Great job! Consider running this audit again in a few months to stay on top of your digital footprint.",
+  },
 };
 
 const lv: Translations = {
@@ -635,6 +694,50 @@ const lv: Translations = {
     no: "Nē, izlaists",
     later: "Izdarīšu vēlāk",
     alreadyBlocked: "Jau bloķēts",
+  },
+  externalTools: {
+    googleResultsTitle: "Google 'Rezultāti par jums'",
+    googleResultsDesc: "Skatiet, kādu personīgo informāciju Google ir atradis par jums meklēšanas rezultātos",
+    findContactTitle: "Atrast kontaktinformācijas vietnes",
+    findContactDesc: "Meklējiet savu vārdu pēdiņās plus pilsētu/valsti, lai atrastu personu meklēšanas sarakstus",
+    requestRemovalTitle: "Pieprasīt dzēšanu",
+    requestRemovalDesc: "Lielākajai daļai personu meklēšanas vietņu ir datu dzēšanas lapas. Meklējiet '[vietnes nosaukums] atteikties' vai 'dzēst datus', lai tās atrastu",
+    blacklightTitle: "Blacklight no The Markup",
+    blacklightDesc: "Ievadiet jebkuru vietnes URL, lai redzētu, kādus izsekotājus, sīkdatnes un sesiju ierakstītājus tā izmanto",
+    effCoverTracksTitle: "EFF Cover Your Tracks",
+    effCoverTracksDesc: "Pārbaudiet, cik unikāls ir jūsu pārlūkprogrammas pirkstu nospiedums un cik labi esat aizsargāts pret izsekošanu",
+    effExplainerTitle: "Izpratne par pirkstu nospiedumiem",
+    effExplainerDesc: "Uzziniet vairāk par to, kā darbojas pārlūkprogrammas pirkstu nospiedumi un kāpēc tas ir svarīgi",
+    googleAdSettingsTitle: "Google reklāmu iestatījumi",
+    googleAdSettingsDesc: "Skatiet un kontrolējiet, kā Google personalizē reklāmas, pamatojoties uz jūsu darbībām",
+    appleAdsTitle: "Apple reklāmu iestatījumi",
+    appleAdsDesc: "Iestatījumi > Privātums un drošība > Apple reklāma",
+    androidAdIdTitle: "Android reklāmas ID",
+    androidAdIdDesc: "Iestatījumi > Privātums > Reklāmas > Atiestatīt vai dzēst reklāmas ID",
+    iosAttTitle: "iOS lietotņu izsekošanas caurspīdīgums",
+    iosAttDesc: "Iestatījumi > Privātums un drošība > Izsekošana",
+    clearCookiesTitle: "Dzēst sīkdatnes un vietnes datus",
+    clearCookiesDesc: "Noņemiet saglabātos izsekošanas datus no savas pārlūkprogrammas",
+    blockCookiesTitle: "Bloķēt trešo pušu sīkdatnes",
+    blockCookiesDesc: "Novērsiet starpvietņu izsekošanas sīkdatņu saglabāšanu",
+    hibpTitle: "Have I Been Pwned",
+    hibpDesc: "Pārbaudiet, vai jūsu e-pasts ir parādījies zināmās datu noplūdēs",
+    stepsForBrowser: "Soli pa solim instrukcijas priekš {browser}",
+  },
+  badges: {
+    optional: "Neobligāti",
+  },
+  nextActions: {
+    skippedStep: "Jūs izlaidāt \"{stepName}\". Pabeidziet šo sadaļu, kad jums būs laiks.",
+    requestGoogleRemoval: "Pieprasiet savas personīgās informācijas dzēšanu no Google meklēšanas rezultātiem, izmantojot 'Rezultāti par jums' rīku.",
+    optOutPeopleSearch: "Dzēsiet savu informāciju no personu meklēšanas vietnēm. Apmeklējiet datu aizsardzības iestādes vietni, lai uzzinātu vairāk par savām tiesībām.",
+    installContentBlocker: "Instalējiet uzticamu satura bloķētāju, piemēram, uBlock Origin, lai samazinātu izsekotāju ietekmi.",
+    fingerprintingRisk: "Jūsu pārlūkprogramma ir unikāli identificējama. Uzziniet vairāk par pirkstu nospiedumiem eff.org/pages/cover-your-tracks un izmēģiniet Firefox ar Uzlabotu izsekošanas aizsardzību iestatītu uz 'Stingrs'.",
+    turnOffGoogleAds: "Izslēdziet personalizētās reklāmas savos Google reklāmu centra iestatījumos.",
+    clearCookies: "Dzēsiet savas pārlūkprogrammas sīkdatnes un vietnes datus, lai noņemtu esošos izsekotājus.",
+    enableCookieBlocking: "Iespējojiet trešo pušu sīkdatņu bloķēšanu savas pārlūkprogrammas iestatījumos.",
+    checkHibp: "Pārbaudiet Have I Been Pwned (haveibeenpwned.com), lai redzētu, vai jūsu e-pasts ir bijis datu noplūdēs, un pierakstieties paziņojumiem haveibeenpwned.com/NotifyMe.",
+    allDone: "Lieliski padarīts! Apsveriet iespēju veikt šo auditu vēlreiz pēc dažiem mēnešiem, lai sekotu līdzi savai digitālajai pēdai.",
   },
 };
 
@@ -841,6 +944,50 @@ const ru: Translations = {
     later: "Сделаю позже",
     alreadyBlocked: "Уже заблокировано",
   },
+  externalTools: {
+    googleResultsTitle: "Google 'Результаты о вас'",
+    googleResultsDesc: "Посмотрите, какую личную информацию Google нашёл о вас в результатах поиска",
+    findContactTitle: "Найти сайты с контактной информацией",
+    findContactDesc: "Ищите своё имя в кавычках плюс город/область, чтобы найти списки поиска людей",
+    requestRemovalTitle: "Запросить удаление",
+    requestRemovalDesc: "Большинство сайтов поиска людей имеют страницы отказа. Ищите '[название сайта] удалить данные' или 'отказаться', чтобы их найти",
+    blacklightTitle: "Blacklight от The Markup",
+    blacklightDesc: "Введите любой URL сайта, чтобы увидеть, какие трекеры, куки и записыватели сессий он использует",
+    effCoverTracksTitle: "EFF Cover Your Tracks",
+    effCoverTracksDesc: "Проверьте, насколько уникален отпечаток вашего браузера и насколько хорошо вы защищены от отслеживания",
+    effExplainerTitle: "Понимание цифровых отпечатков",
+    effExplainerDesc: "Узнайте больше о том, как работают отпечатки браузера и почему это важно",
+    googleAdSettingsTitle: "Настройки рекламы Google",
+    googleAdSettingsDesc: "Просматривайте и контролируйте, как Google персонализирует рекламу на основе вашей активности",
+    appleAdsTitle: "Настройки рекламы Apple",
+    appleAdsDesc: "Настройки > Конфиденциальность и безопасность > Реклама Apple",
+    androidAdIdTitle: "Рекламный ID Android",
+    androidAdIdDesc: "Настройки > Конфиденциальность > Реклама > Сбросить или удалить рекламный ID",
+    iosAttTitle: "Прозрачность отслеживания приложений iOS",
+    iosAttDesc: "Настройки > Конфиденциальность и безопасность > Отслеживание",
+    clearCookiesTitle: "Очистить куки и данные сайтов",
+    clearCookiesDesc: "Удалите сохранённые данные отслеживания из браузера",
+    blockCookiesTitle: "Блокировать сторонние куки",
+    blockCookiesDesc: "Предотвратите сохранение межсайтовых отслеживающих куки",
+    hibpTitle: "Have I Been Pwned",
+    hibpDesc: "Проверьте, появлялся ли ваш email в известных утечках данных",
+    stepsForBrowser: "Пошаговые инструкции для {browser}",
+  },
+  badges: {
+    optional: "Необязательно",
+  },
+  nextActions: {
+    skippedStep: "Вы пропустили \"{stepName}\". Завершите этот раздел, когда у вас будет время.",
+    requestGoogleRemoval: "Запросите удаление вашей личной информации из результатов поиска Google, используя инструмент 'Результаты о вас'.",
+    optOutPeopleSearch: "Удалите вашу информацию с сайтов поиска людей. Посетите сайт органа защиты данных, чтобы узнать больше о ваших правах.",
+    installContentBlocker: "Установите надёжный блокировщик контента, например uBlock Origin, чтобы уменьшить воздействие трекеров.",
+    fingerprintingRisk: "Ваш браузер уникально идентифицируем. Узнайте больше о цифровых отпечатках на eff.org/pages/cover-your-tracks и попробуйте Firefox с усиленной защитой от отслеживания в режиме 'Строгий'.",
+    turnOffGoogleAds: "Отключите персонализированную рекламу в настройках рекламного центра Google.",
+    clearCookies: "Очистите куки и данные сайтов в браузере, чтобы удалить существующие трекеры.",
+    enableCookieBlocking: "Включите блокировку сторонних куки в настройках браузера.",
+    checkHibp: "Проверьте Have I Been Pwned (haveibeenpwned.com), чтобы узнать, был ли ваш email в утечках данных, и подпишитесь на уведомления на haveibeenpwned.com/NotifyMe.",
+    allDone: "Отличная работа! Рекомендуем провести этот аудит снова через несколько месяцев, чтобы следить за своим цифровым следом.",
+  },
 };
 
 export const allTranslations: Record<Locale, Translations> = {
@@ -854,15 +1001,21 @@ export function getTranslations(locale: Locale): Translations {
 }
 
 export function getLocaleFromStorage(): Locale {
+  // Fallback chain: user preference → browser locale (non-en) → lv → en
+  // Per Latvia v1 spec: Latvian is the default, English is final fallback only
   const stored = localStorage.getItem("footprintWizard:locale");
   if (stored && stored in allTranslations) {
     return stored as Locale;
   }
+  
   const browserLang = navigator.language.slice(0, 2);
-  if (browserLang in allTranslations) {
+  // Only use browser locale if it's lv or ru (not en, which is final fallback)
+  if (browserLang === "lv" || browserLang === "ru") {
     return browserLang as Locale;
   }
-  return "en";
+  
+  // Default to Latvian as per Latvia v1 spec
+  return "lv";
 }
 
 export function saveLocaleToStorage(locale: Locale): void {

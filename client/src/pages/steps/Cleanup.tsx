@@ -13,7 +13,7 @@ import type { YesNo, YesNoUnsure, CleanupAction } from "@shared/schema";
 
 export default function Cleanup() {
   const { data, updateResults, completeAudit, isFictional, tryLiveTools } = useWizard();
-  const { t } = useI18n();
+  const { t, format } = useI18n();
   const results = data.results.cleanup;
   const browser = data.device.browser;
   const showExternalLinks = !isFictional || tryLiveTools;
@@ -80,15 +80,15 @@ export default function Cleanup() {
               </h3>
               <div className="space-y-4">
                 <ExternalLinkCard
-                  title="Clear Cookies & Site Data"
-                  description={`Step-by-step instructions for ${browserInfo.name}`}
+                  title={t.externalTools.clearCookiesTitle}
+                  description={format(t.externalTools.stepsForBrowser, { browser: browserInfo.name })}
                   url={browserInfo.clearUrl}
                   icon={<Trash2 className="w-5 h-5" />}
                   testId="link-clear-cookies"
                 />
                 <ExternalLinkCard
-                  title="Block Third-Party Cookies"
-                  description={`Enhanced tracking protection for ${browserInfo.name}`}
+                  title={t.externalTools.blockCookiesTitle}
+                  description={t.externalTools.blockCookiesDesc}
                   url={browserInfo.blockUrl}
                   icon={<ShieldCheck className="w-5 h-5" />}
                   testId="link-block-cookies"
@@ -104,14 +104,14 @@ export default function Cleanup() {
                 <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
                   {t.cleanup.breachExposure}
                 </h3>
-                <Badge variant="outline" className="text-xs">Optional</Badge>
+                <Badge variant="outline" className="text-xs">{t.badges.optional}</Badge>
               </div>
               <p className="text-sm text-muted-foreground">
                 {t.cleanup.breachExposureDesc}
               </p>
               <ExternalLinkCard
-                title="Have I Been Pwned"
-                description="Enter your email on their site (not here) to see if it appeared in data breaches"
+                title={t.externalTools.hibpTitle}
+                description={t.externalTools.hibpDesc}
                 url="https://haveibeenpwned.com/"
                 icon={<ShieldAlert className="w-5 h-5" />}
                 testId="link-hibp"

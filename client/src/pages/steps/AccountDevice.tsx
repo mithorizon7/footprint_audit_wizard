@@ -34,8 +34,8 @@ export default function AccountDevice() {
             </h3>
             <div className="space-y-4">
               <ExternalLinkCard
-                title="Google Ad Settings"
-                description="Learn how Google personalized ads work and control your settings"
+                title={t.externalTools.googleAdSettingsTitle}
+                description={t.externalTools.googleAdSettingsDesc}
                 url="https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en"
                 icon={<SiGoogle className="w-5 h-5" />}
                 testId="link-google-ads"
@@ -43,8 +43,8 @@ export default function AccountDevice() {
 
               {showApple && (
                 <ExternalLinkCard
-                  title="Apple Personalized Ads"
-                  description="Manage Apple's personalized advertising settings"
+                  title={t.externalTools.appleAdsTitle}
+                  description={t.externalTools.appleAdsDesc}
                   url="https://support.apple.com/en-us/105131"
                   icon={<SiApple className="w-5 h-5" />}
                   testId="link-apple-ads"
@@ -53,8 +53,8 @@ export default function AccountDevice() {
 
               {showAndroid && (
                 <ExternalLinkCard
-                  title="Android Advertising ID"
-                  description="Reset or delete your Android advertising identifier"
+                  title={t.externalTools.androidAdIdTitle}
+                  description={t.externalTools.androidAdIdDesc}
                   url="https://support.google.com/googleplay/android-developer/answer/6048248?hl=en"
                   icon={<SiAndroid className="w-5 h-5" />}
                   testId="link-android-ads"
@@ -63,8 +63,8 @@ export default function AccountDevice() {
 
               {showApple && (
                 <ExternalLinkCard
-                  title="iOS App Tracking Transparency"
-                  description="Understand and control which apps can track you"
+                  title={t.externalTools.iosAttTitle}
+                  description={t.externalTools.iosAttDesc}
                   url="https://support.apple.com/en-us/102420"
                   icon={<Settings className="w-5 h-5" />}
                   testId="link-ios-att"
