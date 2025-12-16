@@ -286,3 +286,34 @@
     inset: -1px;
   }
 }
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  footer {
+    display: none !important;
+  }
+  
+  [data-testid="button-print"],
+  [data-testid="button-download"],
+  [data-testid="button-start-over"],
+  [data-testid="button-theme-toggle"],
+  [data-testid="button-panic"] {
+    display: none !important;
+  }
+  
+  .dark {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 9%;
+    --muted-foreground: 0 0% 35%;
+  }
+}

@@ -1,18 +1,149 @@
-import { sql } from "drizzle-orm";
-import { pgTable, text, varchar } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+export const deviceTypeSchema = z.enum(["desktop", "mobile", "unknown"]);
+export const osSchema = z.enum(["windows", "mac", "linux", "ios", "android", "unknown"]);
+export const browserSchema = z.enum(["chrome", "edge", "firefox", "safari", "other", "unknown"]);
+export const yesNoUnsureSchema = z.enum(["yes", "no", "unsure"]);
+export const yesNoSchema = z.enum(["yes", "no"]);
+export const siteCategorySchema = z.enum(["news", "shopping", "health", "social", "other", "unknown"]);
+export const trackingProtectionSchema = z.enum(["strong", "partial", "weak", "unsure"]);
+export const adSettingSchema = z.enum(["on", "off", "unsure", "not_used", "not_applicable"]);
+export const androidAdIdActionSchema = z.enum(["reset", "deleted", "none", "not_applicable", "unsure"]);
+export const iosATTSchema = z.enum(["allow_apps_to_request", "blocked", "unsure", "not_applicable"]);
+export const cleanupActionSchema = z.enum(["yes", "no", "later"]);
+export const modeSchema = z.enum(["self", "fictional"]);
+
+export const publicExposureSchema = z.object({
+  searchResultPagesWithPersonalInfo: z.number().min(0).max(5).default(0),
+  peopleSearchSitesFound: yesNoUnsureSchema.default("unsure"),
+  googleResultsAboutYouVisited: yesNoSchema.default("no"),
+  googleRemovalRequested: z.enum(["yes", "no", "not_applicable"]).default("no"),
 });
 
-export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
-  password: true,
+export const trackersSchema = z.object({
+  blacklightRun: yesNoSchema.default("no"),
+  siteCategoryScanned: siteCategorySchema.default("unknown"),
+  trackerCount: z.number().nullable().default(null),
+  thirdPartyCookiesFlagged: yesNoUnsureSchema.default("unsure"),
+  sessionRecordingFlagged: yesNoUnsureSchema.default("unsure"),
+  keyLoggingFlagged: yesNoUnsureSchema.default("unsure"),
+  fingerprintingFlagged: yesNoUnsureSchema.default("unsure"),
 });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
+export const fingerprintingSchema = z.object({
+  effTestRun: yesNoSchema.default("no"),
+  browserUnique: yesNoUnsureSchema.default("unsure"),
+  trackingProtection: trackingProtectionSchema.default("unsure"),
+});
+
+export const accountDeviceSchema = z.object({
+  googlePersonalizedAds: adSettingSchema.default("unsure"),
+  applePersonalizedAds: adSettingSchema.default("not_applicable"),
+  androidAdvertisingIdAction: androidAdIdActionSchema.default("not_applicable"),
+  iosATTSetting: iosATTSchema.default("not_applicable"),
+});
+
+export const cleanupSchema = z.object({
+  cookiesCleared: yesNoSchema.default("no"),
+  thirdPartyCookiesBlockedOrLimited: yesNoUnsureSchema.default("unsure"),
+  passwordHygieneActionTaken: cleanupActionSchema.default("later"),
+});
+
+export const deviceInfoSchema = z.object({
+  type: deviceTypeSchema.default("unknown"),
+  os: osSchema.default("unknown"),
+  browser: browserSchema.default("unknown"),
+});
+
+export const wizardResultsSchema = z.object({
+  publicExposure: publicExposureSchema.default({}),
+  trackers: trackersSchema.default({}),
+  fingerprinting: fingerprintingSchema.default({}),
+  accountDevice: accountDeviceSchema.default({}),
+  cleanup: cleanupSchema.default({}),
+});
+
+export const wizardDataSchema = z.object({
+  version: z.literal("1.0").default("1.0"),
+  mode: modeSchema.default("self"),
+  device: deviceInfoSchema.default({}),
+  results: wizardResultsSchema.default({}),
+  currentStep: z.number().min(0).max(6).default(0),
+  startedAt: z.string().nullable().default(null),
+  completedAt: z.string().nullable().default(null),
+});
+
+export type DeviceType = z.infer<typeof deviceTypeSchema>;
+export type OS = z.infer<typeof osSchema>;
+export type Browser = z.infer<typeof browserSchema>;
+export type YesNoUnsure = z.infer<typeof yesNoUnsureSchema>;
+export type YesNo = z.infer<typeof yesNoSchema>;
+export type SiteCategory = z.infer<typeof siteCategorySchema>;
+export type TrackingProtection = z.infer<typeof trackingProtectionSchema>;
+export type AdSetting = z.infer<typeof adSettingSchema>;
+export type AndroidAdIdAction = z.infer<typeof androidAdIdActionSchema>;
+export type IosATT = z.infer<typeof iosATTSchema>;
+export type CleanupAction = z.infer<typeof cleanupActionSchema>;
+export type Mode = z.infer<typeof modeSchema>;
+export type PublicExposure = z.infer<typeof publicExposureSchema>;
+export type Trackers = z.infer<typeof trackersSchema>;
+export type Fingerprinting = z.infer<typeof fingerprintingSchema>;
+export type AccountDevice = z.infer<typeof accountDeviceSchema>;
+export type Cleanup = z.infer<typeof cleanupSchema>;
+export type DeviceInfo = z.infer<typeof deviceInfoSchema>;
+export type WizardResults = z.infer<typeof wizardResultsSchema>;
+export type WizardData = z.infer<typeof wizardDataSchema>;
+
+export const FICTIONAL_DATA: WizardData = {
+  version: "1.0",
+  mode: "fictional",
+  device: { type: "desktop", os: "windows", browser: "chrome" },
+  currentStep: 0,
+  startedAt: null,
+  completedAt: null,
+  results: {
+    publicExposure: {
+      searchResultPagesWithPersonalInfo: 3,
+      peopleSearchSitesFound: "yes",
+      googleResultsAboutYouVisited: "yes",
+      googleRemovalRequested: "no",
+    },
+    trackers: {
+      blacklightRun: "yes",
+      siteCategoryScanned: "news",
+      trackerCount: 47,
+      thirdPartyCookiesFlagged: "yes",
+      sessionRecordingFlagged: "yes",
+      keyLoggingFlagged: "no",
+      fingerprintingFlagged: "yes",
+    },
+    fingerprinting: {
+      effTestRun: "yes",
+      browserUnique: "yes",
+      trackingProtection: "weak",
+    },
+    accountDevice: {
+      googlePersonalizedAds: "on",
+      applePersonalizedAds: "not_applicable",
+      androidAdvertisingIdAction: "not_applicable",
+      iosATTSetting: "not_applicable",
+    },
+    cleanup: {
+      cookiesCleared: "no",
+      thirdPartyCookiesBlockedOrLimited: "no",
+      passwordHygieneActionTaken: "later",
+    },
+  },
+};
+
+export const STEP_INFO = [
+  { id: 0, name: "Welcome", duration: 3 },
+  { id: 1, name: "Public Exposure", duration: 10 },
+  { id: 2, name: "Trackers", duration: 15 },
+  { id: 3, name: "Fingerprinting", duration: 10 },
+  { id: 4, name: "Account & Device", duration: 10 },
+  { id: 5, name: "Cleanup", duration: 9 },
+  { id: 6, name: "Report Card", duration: 3 },
+] as const;
+
+export const TOTAL_DURATION_MINUTES = 60;
