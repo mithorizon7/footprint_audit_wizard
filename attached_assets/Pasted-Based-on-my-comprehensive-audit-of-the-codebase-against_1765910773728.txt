@@ -1,0 +1,49 @@
+Based on my comprehensive audit of the codebase against the developer handoff specification, here's my prioritized list of improvements and fixes:
+
+PRIORITY 1: Critical Missing Features
+1.1 Account/Device Step - Missing Pitfall Callouts
+Spec says:
+
+"Turning off personalized ads may not reduce the number of ads; it changes targeting."
+"On managed devices, you may not be able to change some settings."
+Current: Only has 3 pitfalls, missing these two critical ones.
+
+1.2 FictionalBanner - "Try live tools anyway" toggle visibility
+Spec says: Demo mode should provide "Try live tools anyway" as optional for each step
+Current: Toggle exists but steps don't conditionally show/hide external link cards based on this toggle - in fictional mode, external links are always visible.
+
+PRIORITY 2: Missing Spec Requirements
+2.1 Fingerprinting Step - Missing EFF Explainer Link
+Spec link registry says: EFF explainer page: https://www.eff.org/pages/cover-your-tracks
+Current: Only has the test link, not the educational explainer.
+
+2.2 Report Card - "Next Actions" missing FTC people-search guidance
+Spec says: If peopleSearchSitesFound=yes, recommend FTC guidance (https://consumer.ftc.gov/articles/what-know-about-people-search-sites-sell-your-information)
+Current: Next Actions mentions "FTC guide" but uses shortened URL, not the exact registry URL.
+
+2.3 Welcome Page - Device/Browser Selection should be more clearly optional
+Spec says: "Dropdown: device OS/browser (optional)"
+Current: Shows "Optional: Help us show relevant instructions" but dropdowns don't clearly indicate they can be skipped - they default to "unknown" which is good.
+
+PRIORITY 3: Content & Copy Improvements
+3.1 Step 4 Missing Pitfall About Managed Devices
+The spec explicitly mentions: "On managed devices, you may not be able to change some settings."
+
+3.2 Cleanup Step - Missing "Password Hygiene" clarity
+Spec says: This is intentionally vague: "enabled MFA" / "updated a password" / "checked password manager"—do not capture details.
+Current: Label says "Did you check for breached accounts on Have I Been Pwned?" which is more specific than spec intends.
+
+3.3 Report Card Tile Labels Don't Match Spec Exactly
+Spec says: Tiles should be: "Public exposure signals", "Tracking intensity", "Fingerprint uniqueness", "Account/device ads", "Cleanup completed"
+Current: Using "Public Exposure", "Trackers Found", "Browser Uniqueness", "Ad Personalization", "Cleanup Completed"
+
+PRIORITY 4: Nice-to-Have Enhancements
+4.1 DuckDuckGo Email Protection Link (Optional per spec)
+Spec mentions: Optional concept demo for email tracker removal.
+
+4.2 Global Privacy Control Link (Optional per spec)
+Spec mentions: Optional concept: GPC "signal" idea.
+
+4.3 Account/Device "What This Means" accordion missing in Report Card
+Current: Has Public, Trackers, Fingerprint, Cleanup accordions but no Account/Device details accordion.
+
