@@ -10,8 +10,9 @@ import { AlertBox } from "@/components/wizard/AlertBox";
 import type { YesNo, YesNoUnsure, TrackingProtection } from "@shared/schema";
 
 export default function FingerprintingStep() {
-  const { data, updateResults } = useWizard();
+  const { data, updateResults, isFictional, tryLiveTools } = useWizard();
   const results = data.results.fingerprinting;
+  const showExternalLinks = !isFictional || tryLiveTools;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
@@ -26,27 +27,29 @@ export default function FingerprintingStep() {
           "Some privacy tools can actually make you MORE unique (ironic but true).",
         ]}
       >
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-            External Tools
-          </h3>
+        {showExternalLinks && (
           <div className="space-y-4">
-            <ExternalLinkCard
-              title="EFF Cover Your Tracks"
-              description="Test how well your browser protects you from tracking and fingerprinting"
-              url="https://coveryourtracks.eff.org/"
-              icon={<Fingerprint className="w-5 h-5" />}
-              testId="link-eff-coveryourtracks"
-            />
-            <ExternalLinkCard
-              title="Understanding Fingerprinting"
-              description="Learn more about how browser fingerprinting works and why it matters"
-              url="https://www.eff.org/pages/cover-your-tracks"
-              icon={<Fingerprint className="w-5 h-5" />}
-              testId="link-eff-explainer"
-            />
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
+              External Tools
+            </h3>
+            <div className="space-y-4">
+              <ExternalLinkCard
+                title="EFF Cover Your Tracks"
+                description="Test how well your browser protects you from tracking and fingerprinting"
+                url="https://coveryourtracks.eff.org/"
+                icon={<Fingerprint className="w-5 h-5" />}
+                testId="link-eff-coveryourtracks"
+              />
+              <ExternalLinkCard
+                title="Understanding Fingerprinting"
+                description="Learn more about how browser fingerprinting works and why it matters"
+                url="https://www.eff.org/pages/cover-your-tracks"
+                icon={<Fingerprint className="w-5 h-5" />}
+                testId="link-eff-explainer"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <AlertBox severity="info" className="mt-6">
           <strong>What to look for:</strong>

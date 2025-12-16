@@ -10,8 +10,9 @@ import { Separator } from "@/components/ui/separator";
 import type { YesNo, YesNoUnsure, SiteCategory } from "@shared/schema";
 
 export default function Trackers() {
-  const { data, updateResults } = useWizard();
+  const { data, updateResults, isFictional, tryLiveTools } = useWizard();
   const results = data.results.trackers;
+  const showExternalLinks = !isFictional || tryLiveTools;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
@@ -26,23 +27,25 @@ export default function Trackers() {
           "Avoid scanning health portals or internal company systems.",
         ]}
       >
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-            External Tool
-          </h3>
-          <ExternalLinkCard
-            title="Blacklight by The Markup"
-            description="Real-time privacy inspector that reveals trackers, cookies, and surveillance tech on any website"
-            url="https://themarkup.org/blacklight"
-            icon={<Eye className="w-5 h-5" />}
-            testId="link-blacklight"
-          />
-          <p className="text-sm text-muted-foreground">
-            Tip: Try scanning a news site or shopping site you frequently visit. Avoid
-            sensitive sites like health portals or banking.
-          </p>
-          <ToolFallbackBlock />
-        </div>
+        {showExternalLinks && (
+          <div className="space-y-4">
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
+              External Tool
+            </h3>
+            <ExternalLinkCard
+              title="Blacklight by The Markup"
+              description="Real-time privacy inspector that reveals trackers, cookies, and surveillance tech on any website"
+              url="https://themarkup.org/blacklight"
+              icon={<Eye className="w-5 h-5" />}
+              testId="link-blacklight"
+            />
+            <p className="text-sm text-muted-foreground">
+              Tip: Try scanning a news site or shopping site you frequently visit. Avoid
+              sensitive sites like health portals or banking.
+            </p>
+            <ToolFallbackBlock />
+          </div>
+        )}
 
         <Separator className="my-8" />
 

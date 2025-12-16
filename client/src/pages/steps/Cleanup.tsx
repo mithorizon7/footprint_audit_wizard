@@ -11,9 +11,10 @@ import { Badge } from "@/components/ui/badge";
 import type { YesNo, YesNoUnsure, CleanupAction } from "@shared/schema";
 
 export default function Cleanup() {
-  const { data, updateResults, completeAudit } = useWizard();
+  const { data, updateResults, completeAudit, isFictional, tryLiveTools } = useWizard();
   const results = data.results.cleanup;
   const browser = data.device.browser;
+  const showExternalLinks = !isFictional || tryLiveTools;
 
   const getBrowserInfo = () => {
     const browsers = {
@@ -75,53 +76,57 @@ export default function Cleanup() {
           know your passwords or have a password manager before proceeding.
         </AlertBox>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-            Browser Instructions for {browserInfo.name}
-          </h3>
-          <div className="space-y-4">
-            <ExternalLinkCard
-              title="Clear Cookies & Site Data"
-              description={`Step-by-step instructions for ${browserInfo.name}`}
-              url={browserInfo.clearUrl}
-              icon={<Trash2 className="w-5 h-5" />}
-              testId="link-clear-cookies"
-            />
-            <ExternalLinkCard
-              title="Block Third-Party Cookies"
-              description={`Enhanced tracking protection for ${browserInfo.name}`}
-              url={browserInfo.blockUrl}
-              icon={<ShieldCheck className="w-5 h-5" />}
-              testId="link-block-cookies"
-            />
-          </div>
-          <ToolFallbackBlock />
-        </div>
+        {showExternalLinks && (
+          <>
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
+                Browser Instructions for {browserInfo.name}
+              </h3>
+              <div className="space-y-4">
+                <ExternalLinkCard
+                  title="Clear Cookies & Site Data"
+                  description={`Step-by-step instructions for ${browserInfo.name}`}
+                  url={browserInfo.clearUrl}
+                  icon={<Trash2 className="w-5 h-5" />}
+                  testId="link-clear-cookies"
+                />
+                <ExternalLinkCard
+                  title="Block Third-Party Cookies"
+                  description={`Enhanced tracking protection for ${browserInfo.name}`}
+                  url={browserInfo.blockUrl}
+                  icon={<ShieldCheck className="w-5 h-5" />}
+                  testId="link-block-cookies"
+                />
+              </div>
+              <ToolFallbackBlock />
+            </div>
 
-        <Separator className="my-8" />
+            <Separator className="my-8" />
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-              Breach Exposure Check
-            </h3>
-            <Badge variant="outline" className="text-xs">Optional</Badge>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Check if your email addresses have appeared in known data breaches. This only takes 2 minutes.
-          </p>
-          <ExternalLinkCard
-            title="Have I Been Pwned"
-            description="Enter your email on their site (not here) to see if it appeared in data breaches"
-            url="https://haveibeenpwned.com/"
-            icon={<ShieldAlert className="w-5 h-5" />}
-            testId="link-hibp"
-          />
-          <AlertBox severity="info">
-            <strong>Important:</strong> Enter your email directly on the Have I Been Pwned website, never into this wizard. 
-            The wizard never asks for personal information.
-          </AlertBox>
-        </div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
+                  Breach Exposure Check
+                </h3>
+                <Badge variant="outline" className="text-xs">Optional</Badge>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Check if your email addresses have appeared in known data breaches. This only takes 2 minutes.
+              </p>
+              <ExternalLinkCard
+                title="Have I Been Pwned"
+                description="Enter your email on their site (not here) to see if it appeared in data breaches"
+                url="https://haveibeenpwned.com/"
+                icon={<ShieldAlert className="w-5 h-5" />}
+                testId="link-hibp"
+              />
+              <AlertBox severity="info">
+                <strong>Important:</strong> Enter your email directly on the Have I Been Pwned website, never into this wizard. 
+                The wizard never asks for personal information.
+              </AlertBox>
+            </div>
+          </>
+        )}
 
         <Separator className="my-8" />
 

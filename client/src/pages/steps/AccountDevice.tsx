@@ -9,12 +9,13 @@ import { SiGoogle, SiApple, SiAndroid } from "react-icons/si";
 import type { AdSetting, AndroidAdIdAction, IosATT } from "@shared/schema";
 
 export default function AccountDevice() {
-  const { data, updateResults } = useWizard();
+  const { data, updateResults, isFictional, tryLiveTools } = useWizard();
   const results = data.results.accountDevice;
   const os = data.device.os;
 
   const showAndroid = os === "android" || os === "unknown";
   const showApple = os === "ios" || os === "mac" || os === "unknown";
+  const showExternalLinks = !isFictional || tryLiveTools;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
@@ -31,50 +32,52 @@ export default function AccountDevice() {
           "Some settings require being logged into your account on the device.",
         ]}
       >
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-            External Tools
-          </h3>
+        {showExternalLinks && (
           <div className="space-y-4">
-            <ExternalLinkCard
-              title="Google Ad Settings"
-              description="Learn how Google personalized ads work and control your settings"
-              url="https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en"
-              icon={<SiGoogle className="w-5 h-5" />}
-              testId="link-google-ads"
-            />
-
-            {showApple && (
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
+              External Tools
+            </h3>
+            <div className="space-y-4">
               <ExternalLinkCard
-                title="Apple Personalized Ads"
-                description="Manage Apple's personalized advertising settings"
-                url="https://support.apple.com/en-us/105131"
-                icon={<SiApple className="w-5 h-5" />}
-                testId="link-apple-ads"
+                title="Google Ad Settings"
+                description="Learn how Google personalized ads work and control your settings"
+                url="https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en"
+                icon={<SiGoogle className="w-5 h-5" />}
+                testId="link-google-ads"
               />
-            )}
 
-            {showAndroid && (
-              <ExternalLinkCard
-                title="Android Advertising ID"
-                description="Reset or delete your Android advertising identifier"
-                url="https://support.google.com/googleplay/android-developer/answer/6048248?hl=en"
-                icon={<SiAndroid className="w-5 h-5" />}
-                testId="link-android-ads"
-              />
-            )}
+              {showApple && (
+                <ExternalLinkCard
+                  title="Apple Personalized Ads"
+                  description="Manage Apple's personalized advertising settings"
+                  url="https://support.apple.com/en-us/105131"
+                  icon={<SiApple className="w-5 h-5" />}
+                  testId="link-apple-ads"
+                />
+              )}
 
-            {showApple && (
-              <ExternalLinkCard
-                title="iOS App Tracking Transparency"
-                description="Understand and control which apps can track you"
-                url="https://support.apple.com/en-us/102420"
-                icon={<Settings className="w-5 h-5" />}
-                testId="link-ios-att"
-              />
-            )}
+              {showAndroid && (
+                <ExternalLinkCard
+                  title="Android Advertising ID"
+                  description="Reset or delete your Android advertising identifier"
+                  url="https://support.google.com/googleplay/android-developer/answer/6048248?hl=en"
+                  icon={<SiAndroid className="w-5 h-5" />}
+                  testId="link-android-ads"
+                />
+              )}
+
+              {showApple && (
+                <ExternalLinkCard
+                  title="iOS App Tracking Transparency"
+                  description="Understand and control which apps can track you"
+                  url="https://support.apple.com/en-us/102420"
+                  icon={<Settings className="w-5 h-5" />}
+                  testId="link-ios-att"
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         <Separator className="my-8" />
 

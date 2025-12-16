@@ -10,8 +10,9 @@ import { Separator } from "@/components/ui/separator";
 import type { YesNoUnsure, YesNo } from "@shared/schema";
 
 export default function PublicExposure() {
-  const { data, updateResults, isFictional } = useWizard();
+  const { data, updateResults, isFictional, tryLiveTools } = useWizard();
   const results = data.results.publicExposure;
+  const showExternalLinks = !isFictional || tryLiveTools;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
@@ -31,34 +32,36 @@ export default function PublicExposure() {
           directly into your own browser's search engine.
         </AlertBox>
 
-        <div className="space-y-4">
-          <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-            External Tools
-          </h3>
+        {showExternalLinks && (
           <div className="space-y-4">
-            <ExternalLinkCard
-              title="Google 'Results about you'"
-              description="See what personal info Google has found about you in search results"
-              url="https://myactivity.google.com/results-about-you"
-              icon={<Search className="w-5 h-5" />}
-              testId="link-google-results"
-            />
-            <ExternalLinkCard
-              title="Find Your Personal Contact Info"
-              description="Learn how to find your personal contact info in Google Search results"
-              url="https://support.google.com/websearch/answer/12719076?hl=en"
-              icon={<Search className="w-5 h-5" />}
-              testId="link-google-find-contact"
-            />
-            <ExternalLinkCard
-              title="Request Removal"
-              description="Ask Google to remove results containing your personal contact info"
-              url="https://support.google.com/websearch/answer/9673730?hl=en"
-              icon={<Shield className="w-5 h-5" />}
-              testId="link-google-removal"
-            />
+            <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
+              External Tools
+            </h3>
+            <div className="space-y-4">
+              <ExternalLinkCard
+                title="Google 'Results about you'"
+                description="See what personal info Google has found about you in search results"
+                url="https://myactivity.google.com/results-about-you"
+                icon={<Search className="w-5 h-5" />}
+                testId="link-google-results"
+              />
+              <ExternalLinkCard
+                title="Find Your Personal Contact Info"
+                description="Learn how to find your personal contact info in Google Search results"
+                url="https://support.google.com/websearch/answer/12719076?hl=en"
+                icon={<Search className="w-5 h-5" />}
+                testId="link-google-find-contact"
+              />
+              <ExternalLinkCard
+                title="Request Removal"
+                description="Ask Google to remove results containing your personal contact info"
+                url="https://support.google.com/websearch/answer/9673730?hl=en"
+                icon={<Shield className="w-5 h-5" />}
+                testId="link-google-removal"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         {!isFictional && (
           <AlertBox severity="info" className="mt-6">
