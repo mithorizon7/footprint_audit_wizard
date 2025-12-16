@@ -136,7 +136,7 @@ export const FICTIONAL_DATA: WizardData = {
   tryLiveToolsInFictional: false,
   results: {
     publicExposure: {
-      searchResultPagesWithPersonalInfo: 3,
+      searchResultPagesWithPersonalInfo: 2,
       peopleSearchSitesFound: "yes",
       googleResultsAboutYouVisited: "yes",
       googleRemovalRequested: "no",
@@ -144,7 +144,7 @@ export const FICTIONAL_DATA: WizardData = {
     trackers: {
       blacklightRun: "yes",
       siteCategoryScanned: "news",
-      trackerCount: 47,
+      trackerCount: 70,
       thirdPartyCookiesFlagged: "yes",
       sessionRecordingFlagged: "yes",
       keyLoggingFlagged: "no",

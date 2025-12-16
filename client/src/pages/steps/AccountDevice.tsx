@@ -46,7 +46,7 @@ export default function AccountDevice() {
               <ExternalLinkCard
                 title="Apple Personalized Ads"
                 description="Manage Apple's personalized advertising settings"
-                url="https://support.apple.com/en-us/HT202074"
+                url="https://support.apple.com/en-us/105131"
                 icon={<SiApple className="w-5 h-5" />}
                 testId="link-apple-ads"
               />
@@ -56,7 +56,7 @@ export default function AccountDevice() {
               <ExternalLinkCard
                 title="Android Advertising ID"
                 description="Reset or delete your Android advertising identifier"
-                url="https://support.google.com/googleplay/android-developer/answer/6048248"
+                url="https://support.google.com/googleplay/android-developer/answer/6048248?hl=en"
                 icon={<SiAndroid className="w-5 h-5" />}
                 testId="link-android-ads"
               />
@@ -66,7 +66,7 @@ export default function AccountDevice() {
               <ExternalLinkCard
                 title="iOS App Tracking Transparency"
                 description="Understand and control which apps can track you"
-                url="https://support.apple.com/en-us/HT212025"
+                url="https://support.apple.com/en-us/102420"
                 icon={<Settings className="w-5 h-5" />}
                 testId="link-ios-att"
               />

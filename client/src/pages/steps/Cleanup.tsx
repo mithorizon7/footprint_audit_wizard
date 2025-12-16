@@ -19,13 +19,13 @@ export default function Cleanup() {
     const browsers = {
       chrome: {
         name: "Chrome",
-        clearUrl: "https://support.google.com/chrome/answer/95647",
+        clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
         blockUrl: "https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cblock-third-party-cookies",
       },
       edge: {
         name: "Edge",
-        clearUrl: "https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09",
-        blockUrl: "https://support.microsoft.com/en-us/microsoft-edge/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
+        clearUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
+        blockUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
       },
       firefox: {
         name: "Firefox",
@@ -34,18 +34,18 @@ export default function Cleanup() {
       },
       safari: {
         name: "Safari",
-        clearUrl: "https://support.apple.com/guide/safari/manage-cookies-sfri11471/mac",
-        blockUrl: "https://support.apple.com/guide/safari/prevent-cross-site-tracking-sfri40732/mac",
+        clearUrl: "https://support.apple.com/en-us/105082",
+        blockUrl: "https://support.apple.com/en-us/105082",
       },
       other: {
         name: "your browser",
-        clearUrl: "https://support.google.com/chrome/answer/95647",
-        blockUrl: "https://support.google.com/chrome/answer/95647",
+        clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+        blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
       },
       unknown: {
         name: "your browser",
-        clearUrl: "https://support.google.com/chrome/answer/95647",
-        blockUrl: "https://support.google.com/chrome/answer/95647",
+        clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+        blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
       },
     };
     return browsers[browser] || browsers.unknown;
