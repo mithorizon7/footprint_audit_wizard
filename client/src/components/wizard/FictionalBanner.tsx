@@ -1,15 +1,17 @@
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { FlaskConical, ExternalLink } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 export function FictionalBanner() {
   const { isFictional, tryLiveTools, setTryLiveTools, setMode, currentStep } = useWizard();
+  const { t } = useI18n();
 
   if (!isFictional) return null;
 
   const handleSwitchToReal = () => {
-    if (window.confirm("Switch to 'My Footprint' mode? This will clear current demo data.")) {
+    if (window.confirm(t.fictional.switchConfirmation)) {
       setMode("self");
     }
   };
@@ -22,10 +24,10 @@ export function FictionalBanner() {
             <FlaskConical className="w-4 h-4 text-amber-700 dark:text-amber-300 flex-shrink-0" />
             <div>
               <p className="text-sm text-amber-800 dark:text-amber-200">
-                <span className="font-medium">Fictional Persona Mode</span>
+                <span className="font-medium">{t.fictional.bannerTitle}</span>
               </p>
               <p className="text-xs text-amber-700 dark:text-amber-300/80 mt-0.5">
-                Using example data. Click Next to proceed without real searches.
+                {t.fictional.bannerDescription}
               </p>
             </div>
           </div>
@@ -43,8 +45,7 @@ export function FictionalBanner() {
                 className="text-xs text-amber-800 dark:text-amber-200 cursor-pointer flex items-center gap-1"
               >
                 <ExternalLink className="w-3 h-3" />
-                <span className="hidden sm:inline">Try live tools anyway</span>
-                <span className="sm:hidden">Live tools</span>
+                <span>{t.fictional.tryLiveTools}</span>
               </Label>
             </div>
 
@@ -54,7 +55,7 @@ export function FictionalBanner() {
                 className="text-xs text-amber-700 dark:text-amber-300 hover:underline"
                 data-testid="button-switch-to-real"
               >
-                Switch to My Footprint
+                {t.fictional.switchToReal}
               </button>
             )}
           </div>

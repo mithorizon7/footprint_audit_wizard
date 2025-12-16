@@ -170,13 +170,13 @@ export const FICTIONAL_DATA: WizardData = {
 };
 
 export const STEP_INFO = [
-  { id: 0, name: "Welcome", duration: 3 },
-  { id: 1, name: "Public Exposure", duration: 10 },
-  { id: 2, name: "Trackers", duration: 15 },
-  { id: 3, name: "Fingerprinting", duration: 10 },
-  { id: 4, name: "Account & Device", duration: 10 },
-  { id: 5, name: "Cleanup", duration: 9 },
-  { id: 6, name: "Report Card", duration: 3 },
+  { id: 0, key: "welcome", name: "Welcome", duration: 3 },
+  { id: 1, key: "publicExposure", name: "Public Exposure", duration: 10 },
+  { id: 2, key: "trackers", name: "Trackers", duration: 15 },
+  { id: 3, key: "fingerprinting", name: "Fingerprinting", duration: 10 },
+  { id: 4, key: "accountDevice", name: "Account & Device", duration: 10 },
+  { id: 5, key: "cleanup", name: "Cleanup", duration: 9 },
+  { id: 6, key: "reportCard", name: "Report Card", duration: 3 },
 ] as const;
 
 export const TOTAL_DURATION_MINUTES = 60;

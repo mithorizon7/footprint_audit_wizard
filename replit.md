@@ -43,7 +43,8 @@ client/
 │   ├── context/
 │   │   └── WizardContext.tsx # Global wizard state
 │   ├── lib/
-│   │   └── wizardStorage.ts  # localStorage helpers
+│   │   ├── wizardStorage.ts  # localStorage helpers
+│   │   └── i18n.ts           # Translations for en, lv, ru
 │   ├── pages/
 │   │   ├── Welcome.tsx
 │   │   ├── ReportCard.tsx
@@ -98,7 +99,7 @@ interface WizardData {
 - **PII Protection**: No free-text inputs; warning labels on any PII-adjacent content
 - **Mobile Responsive**: Works on all device sizes
 - **WCAG Accessible**: Semantic HTML, keyboard navigation, high contrast
-- **i18n Ready**: I18nContext for multi-language support (English implemented)
+- **Multi-language Support**: Full i18n with English (en), Latvian (lv), and Russian (ru) translations via I18nContext
 
 ## External Tools Referenced
 

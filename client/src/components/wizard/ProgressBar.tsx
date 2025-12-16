@@ -1,11 +1,13 @@
 import { STEP_INFO, TOTAL_DURATION_MINUTES } from "@shared/schema";
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { Check, Clock, Target, SkipForward } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
 export function ProgressBar() {
   const { currentStep, timeRemaining, elapsedSeconds, currentStepTargetMinutes, data, isStepSkipped } = useWizard();
+  const { t } = useI18n();
   const isStarted = !!data.startedAt;
   const isCompleted = !!data.completedAt;
 
@@ -13,6 +15,19 @@ export function ProgressBar() {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const getStepName = (stepKey: string): string => {
+    const stepNames: Record<string, string> = {
+      welcome: t.steps.welcome,
+      publicExposure: t.steps.publicExposure,
+      trackers: t.steps.trackers,
+      fingerprinting: t.steps.fingerprinting,
+      accountDevice: t.steps.accountDevice,
+      cleanup: t.steps.cleanup,
+      reportCard: t.steps.reportCard,
+    };
+    return stepNames[stepKey] || stepKey;
   };
 
   const remainingSeconds = Math.max(0, TOTAL_DURATION_MINUTES * 60 - elapsedSeconds);
@@ -24,7 +39,7 @@ export function ProgressBar() {
         <div className="flex items-center justify-between gap-4 mb-2">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-foreground" data-testid="step-progress">
-              Step {currentStep + 1} of {STEP_INFO.length}
+              {t.progress.stepOf.replace("{current}", String(currentStep + 1)).replace("{total}", String(STEP_INFO.length))}
             </span>
             <Badge variant="secondary" className="text-xs">
               {Math.round(progressPercent)}%
@@ -35,11 +50,11 @@ export function ProgressBar() {
             <div className="flex items-center gap-4 text-sm shrink-0">
               <div className="hidden sm:flex items-center gap-1.5 text-muted-foreground">
                 <Target className="w-3.5 h-3.5" />
-                <span data-testid="step-target">Target: {currentStepTargetMinutes} min</span>
+                <span data-testid="step-target">{t.progress.target.replace("{minutes}", String(currentStepTargetMinutes))}</span>
               </div>
               <div className="flex items-center gap-1.5 text-foreground font-medium">
                 <Clock className="w-3.5 h-3.5" />
-                <span data-testid="time-remaining">{formatTime(remainingSeconds)} left</span>
+                <span data-testid="time-remaining">{t.progress.left.replace("{time}", formatTime(remainingSeconds))}</span>
               </div>
             </div>
           )}
@@ -63,7 +78,7 @@ export function ProgressBar() {
                     isUpcoming && "bg-muted text-muted-foreground"
                   )}
                   data-testid={`step-indicator-${step.id}`}
-                  title={wasSkipped ? `${step.name} (Skipped)` : step.name}
+                  title={wasSkipped ? `${getStepName(step.key)} (${t.common.skip})` : getStepName(step.key)}
                 >
                   {isCompletedStep ? (
                     wasSkipped ? (
@@ -108,11 +123,11 @@ export function ProgressBar() {
 
         <div className="mt-2 flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            {STEP_INFO[currentStep]?.name}
+            {getStepName(STEP_INFO[currentStep]?.key)}
           </p>
           {isStarted && !isCompleted && (
             <p className="text-xs text-muted-foreground sm:hidden">
-              Target: {currentStepTargetMinutes} min
+              {t.progress.target.replace("{minutes}", String(currentStepTargetMinutes))}
             </p>
           )}
         </div>

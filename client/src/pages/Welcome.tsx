@@ -107,7 +107,7 @@ export default function Welcome() {
 
         <div className="space-y-4 max-w-md mx-auto">
           <p className="text-xs text-center text-muted-foreground">
-            Optional: Help us show relevant instructions
+            {t.welcome.optionalHelp}
           </p>
 
           <div className="grid grid-cols-3 gap-4">

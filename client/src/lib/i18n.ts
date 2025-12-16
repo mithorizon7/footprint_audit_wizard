@@ -36,6 +36,7 @@ export interface Translations {
     optionalHelp: string;
   };
   steps: {
+    welcome: string;
     publicExposure: string;
     trackers: string;
     fingerprinting: string;
@@ -81,6 +82,12 @@ export interface Translations {
     bannerDescription: string;
     tryLiveTools: string;
     switchToReal: string;
+    switchConfirmation: string;
+  };
+  progress: {
+    stepOf: string;
+    target: string;
+    left: string;
   };
   publicExposure: {
     title: string;
@@ -221,6 +228,7 @@ const en: Translations = {
     optionalHelp: "Optional: Help us show relevant instructions",
   },
   steps: {
+    welcome: "Welcome",
     publicExposure: "Public Exposure",
     trackers: "Trackers",
     fingerprinting: "Fingerprinting",
@@ -269,6 +277,12 @@ const en: Translations = {
     bannerDescription: "Using example data. Click Next to proceed without real searches.",
     tryLiveTools: "Try live tools anyway",
     switchToReal: "Switch to My Footprint",
+    switchConfirmation: "Switch to 'My Footprint' mode? This will clear current demo data.",
+  },
+  progress: {
+    stepOf: "Step {current} of {total}",
+    target: "Target: {minutes} min",
+    left: "{time} left",
   },
   publicExposure: {
     title: "Public Exposure",
@@ -409,9 +423,10 @@ const lv: Translations = {
     optionalHelp: "Neobligāti: Palīdziet mums parādīt atbilstošas instrukcijas",
   },
   steps: {
+    welcome: "Sveicināti",
     publicExposure: "Publiskā redzamība",
     trackers: "Izsekotāji",
-    fingerprinting: "Pirkstu nospiedumi",
+    fingerprinting: "Pirkstu nospiedumu veidošana",
     accountDevice: "Konts/Ierīce",
     cleanup: "Tīrīšana",
     reportCard: "Atskaite",
@@ -457,6 +472,12 @@ const lv: Translations = {
     bannerDescription: "Izmanto piemēra datus. Noklikšķiniet Tālāk, lai turpinātu bez reālām meklēšanām.",
     tryLiveTools: "Tomēr izmēģināt reālos rīkus",
     switchToReal: "Pārslēgties uz Mana pēda",
+    switchConfirmation: "Pārslēgties uz 'Mana pēda' režīmu? Tas dzēsīs pašreizējos demo datus.",
+  },
+  progress: {
+    stepOf: "Solis {current} no {total}",
+    target: "Mērķis: {minutes} min",
+    left: "Atlikuši: {time}",
   },
   publicExposure: {
     title: "Publiskā redzamība",
@@ -597,9 +618,10 @@ const ru: Translations = {
     optionalHelp: "Необязательно: Помогите нам показать подходящие инструкции",
   },
   steps: {
+    welcome: "Добро пожаловать",
     publicExposure: "Публичная доступность",
     trackers: "Трекеры",
-    fingerprinting: "Отпечатки браузера",
+    fingerprinting: "Цифровые отпечатки",
     accountDevice: "Аккаунт/Устройство",
     cleanup: "Очистка",
     reportCard: "Отчёт",
@@ -645,6 +667,12 @@ const ru: Translations = {
     bannerDescription: "Используются примерные данные. Нажмите Далее, чтобы продолжить без реального поиска.",
     tryLiveTools: "Всё равно попробовать реальные инструменты",
     switchToReal: "Переключиться на Мой след",
+    switchConfirmation: "Переключиться на режим 'Мой след'? Это удалит текущие демо-данные.",
+  },
+  progress: {
+    stepOf: "Шаг {current} из {total}",
+    target: "Цель: {minutes} мин",
+    left: "Осталось: {time}",
   },
   publicExposure: {
     title: "Публичная доступность",
