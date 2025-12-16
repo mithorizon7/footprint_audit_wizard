@@ -26,6 +26,7 @@ import {
   RefreshCw,
   SkipForward,
   ExternalLink,
+  Trash2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { STEP_INFO } from "@shared/schema";
@@ -57,19 +58,22 @@ interface MetricTile {
 const STEP_LINKS: Record<number, { name: string; url: string; description: string }[]> = {
   1: [
     { name: "Google Results About You", url: "https://myactivity.google.com/results-about-you", description: "Review what Google found about you" },
-    { name: "Request Removal", url: "https://support.google.com/websearch/answer/9673730", description: "Remove personal info from Google search" },
+    { name: "Find Contact Info", url: "https://support.google.com/websearch/answer/12719076?hl=en", description: "Find your personal contact info in search" },
+    { name: "Request Removal", url: "https://support.google.com/websearch/answer/9673730?hl=en", description: "Remove personal info from Google search" },
   ],
   2: [
     { name: "Blacklight", url: "https://themarkup.org/blacklight", description: "Scan websites for trackers" },
   ],
   3: [
     { name: "EFF Cover Your Tracks", url: "https://coveryourtracks.eff.org/", description: "Test your browser fingerprint" },
+    { name: "EFF Explainer", url: "https://www.eff.org/pages/cover-your-tracks", description: "Learn about fingerprinting" },
   ],
   4: [
-    { name: "Google Ad Settings", url: "https://myadcenter.google.com/", description: "Control Google ad personalization" },
+    { name: "Google Ad Settings", url: "https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en", description: "Control Google ad personalization" },
   ],
   5: [
     { name: "Have I Been Pwned", url: "https://haveibeenpwned.com/", description: "Check if your email was in data breaches" },
+    { name: "HIBP Notifications", url: "https://haveibeenpwned.com/NotifyMe", description: "Get notified of future breaches" },
   ],
 };
 
@@ -106,6 +110,14 @@ export default function ReportCard() {
       results.accountDevice.applePersonalizedAds === "not_applicable";
     if (googleOff && appleOff) return "good";
     if (googleOff || appleOff) return "warning";
+    return "critical";
+  };
+
+  const getCleanupLevel = (): ScoreLevel => {
+    const cookiesCleared = results.cleanup.cookiesCleared === "yes";
+    const cookiesBlocked = results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes";
+    if (cookiesCleared && cookiesBlocked) return "good";
+    if (cookiesCleared || cookiesBlocked) return "warning";
     return "critical";
   };
 
@@ -172,6 +184,23 @@ export default function ReportCard() {
           : getAdSettingsLevel() === "warning"
             ? "Some ad personalization is still active. Consider disabling in your account settings."
             : "Ad personalization is active. Your activity is being used to target ads.",
+    },
+    {
+      icon: Trash2,
+      label: "Cleanup Completed",
+      value:
+        results.cleanup.cookiesCleared === "yes" && results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes"
+          ? "Done"
+          : results.cleanup.cookiesCleared === "yes" || results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes"
+            ? "Partial"
+            : "Not Yet",
+      level: getCleanupLevel(),
+      explanation:
+        getCleanupLevel() === "good"
+          ? "You've cleared cookies and enabled third-party cookie blocking. This suggests reduced tracking persistence."
+          : getCleanupLevel() === "warning"
+            ? "You've taken some cleanup actions. Consider completing both cookie clearing and blocking for better protection."
+            : "Hygiene actions like clearing cookies and blocking third-party cookies help reduce tracking persistence.",
     },
   ];
 
@@ -278,6 +307,11 @@ export default function ReportCard() {
       score: levelToScore(getAdSettingsLevel()),
       fullMark: 100,
     },
+    {
+      category: "Cleanup",
+      score: levelToScore(getCleanupLevel()),
+      fullMark: 100,
+    },
   ];
 
   const barChartData = [
@@ -300,6 +334,11 @@ export default function ReportCard() {
       name: "Ads",
       score: levelToScore(getAdSettingsLevel()),
       level: getAdSettingsLevel(),
+    },
+    {
+      name: "Cleanup",
+      score: levelToScore(getCleanupLevel()),
+      level: getCleanupLevel(),
     },
   ];
 

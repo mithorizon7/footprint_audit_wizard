@@ -44,9 +44,16 @@ export default function PublicExposure() {
               testId="link-google-results"
             />
             <ExternalLinkCard
+              title="Find Your Personal Contact Info"
+              description="Learn how to find your personal contact info in Google Search results"
+              url="https://support.google.com/websearch/answer/12719076?hl=en"
+              icon={<Search className="w-5 h-5" />}
+              testId="link-google-find-contact"
+            />
+            <ExternalLinkCard
               title="Request Removal"
               description="Ask Google to remove results containing your personal contact info"
-              url="https://support.google.com/websearch/answer/9673730"
+              url="https://support.google.com/websearch/answer/9673730?hl=en"
               icon={<Shield className="w-5 h-5" />}
               testId="link-google-removal"
             />

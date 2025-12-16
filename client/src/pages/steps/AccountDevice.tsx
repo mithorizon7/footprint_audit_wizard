@@ -36,8 +36,8 @@ export default function AccountDevice() {
           <div className="space-y-4">
             <ExternalLinkCard
               title="Google Ad Settings"
-              description="Control how Google personalizes ads based on your activity"
-              url="https://myadcenter.google.com/"
+              description="Learn how Google personalized ads work and control your settings"
+              url="https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en"
               icon={<SiGoogle className="w-5 h-5" />}
               testId="link-google-ads"
             />
