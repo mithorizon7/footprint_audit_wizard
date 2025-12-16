@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { ChevronLeft, ChevronRight, SkipForward } from "lucide-react";
 
 interface StepNavigationProps {
@@ -12,10 +13,11 @@ interface StepNavigationProps {
 export function StepNavigation({
   showPrevious = true,
   showSkip = true,
-  nextLabel = "Next",
+  nextLabel,
   onNext,
 }: StepNavigationProps) {
   const { prevStep, nextStep, skipStep, currentStep } = useWizard();
+  const { t } = useI18n();
 
   const handleNext = () => {
     if (onNext) {
@@ -34,7 +36,7 @@ export function StepNavigation({
             data-testid="button-previous"
           >
             <ChevronLeft className="w-4 h-4 mr-1" />
-            Previous
+            {t.common.back}
           </Button>
         )}
       </div>
@@ -46,12 +48,12 @@ export function StepNavigation({
             onClick={skipStep}
             data-testid="button-skip"
           >
-            Skip
+            {t.common.skip}
             <SkipForward className="w-4 h-4 ml-1" />
           </Button>
         )}
         <Button onClick={handleNext} data-testid="button-next">
-          {nextLabel}
+          {nextLabel || t.common.next}
           <ChevronRight className="w-4 h-4 ml-1" />
         </Button>
       </div>

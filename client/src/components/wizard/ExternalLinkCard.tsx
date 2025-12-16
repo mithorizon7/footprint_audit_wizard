@@ -2,6 +2,7 @@ import { ExternalLink, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 
 interface ExternalLinkCardProps {
   title: string;
@@ -13,6 +14,7 @@ interface ExternalLinkCardProps {
 
 export function ExternalLinkCard({ title, description, url, icon, testId }: ExternalLinkCardProps) {
   const { isFictional, tryLiveTools } = useWizard();
+  const { t } = useI18n();
   const isCollapsed = isFictional && !tryLiveTools;
 
   if (isCollapsed) {
@@ -30,7 +32,7 @@ export function ExternalLinkCard({ title, description, url, icon, testId }: Exte
               <Lock className="w-3 h-3 text-muted-foreground" />
             </div>
             <p className="text-sm text-muted-foreground/70 mt-1 line-clamp-2">
-              Using demo data. Enable "Try live tools" to open this.
+              {t.common.demoModeNotice}
             </p>
           </div>
           <Button
@@ -40,7 +42,7 @@ export function ExternalLinkCard({ title, description, url, icon, testId }: Exte
             className="shrink-0 opacity-50"
             data-testid={testId || `link-${title.toLowerCase().replace(/\s+/g, "-")}`}
           >
-            <span className="hidden sm:inline mr-2">Demo</span>
+            <span className="hidden sm:inline mr-2">{t.common.demo}</span>
             <ExternalLink className="w-4 h-4" />
           </Button>
         </div>
@@ -68,7 +70,7 @@ export function ExternalLinkCard({ title, description, url, icon, testId }: Exte
           data-testid={testId || `link-${title.toLowerCase().replace(/\s+/g, "-")}`}
         >
           <a href={url} target="_blank" rel="noopener noreferrer">
-            <span className="hidden sm:inline mr-2">Open</span>
+            <span className="hidden sm:inline mr-2">{t.common.open}</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </Button>

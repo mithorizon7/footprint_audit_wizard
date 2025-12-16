@@ -20,6 +20,11 @@ export interface Translations {
     no: string;
     unsure: string;
     viewReportCard: string;
+    stepNumber: string;
+    commonPitfalls: string;
+    open: string;
+    demo: string;
+    demoModeNotice: string;
   };
   accessibility: {
     languageSelector: string;
@@ -337,6 +342,11 @@ const en: Translations = {
     no: "No",
     unsure: "Unsure",
     viewReportCard: "View Report Card",
+    stepNumber: "Step {step}",
+    commonPitfalls: "Common Pitfalls",
+    open: "Open",
+    demo: "Demo",
+    demoModeNotice: "Using demo data. Enable \"Try live tools\" to open this.",
   },
   accessibility: {
     languageSelector: "Language selector",
@@ -660,6 +670,11 @@ const lv: Translations = {
     no: "Nē",
     unsure: "Nezinu",
     viewReportCard: "Skatīt atskaiti",
+    stepNumber: "{step}. solis",
+    commonPitfalls: "Biežākās kļūdas",
+    open: "Atvērt",
+    demo: "Demo",
+    demoModeNotice: "Tiek izmantoti demo dati. Iespējojiet \"Izmēģināt reālos rīkus\", lai atvērtu.",
   },
   accessibility: {
     languageSelector: "Valodas izvēle",
@@ -983,6 +998,11 @@ const ru: Translations = {
     no: "Нет",
     unsure: "Не уверен",
     viewReportCard: "Просмотреть отчёт",
+    stepNumber: "Шаг {step}",
+    commonPitfalls: "Частые ошибки",
+    open: "Открыть",
+    demo: "Демо",
+    demoModeNotice: "Используются демо-данные. Включите \"Попробовать реальные инструменты\", чтобы открыть.",
   },
   accessibility: {
     languageSelector: "Выбор языка",

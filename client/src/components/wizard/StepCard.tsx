@@ -9,6 +9,7 @@ import {
 import { AlertBox } from "./AlertBox";
 import { Lightbulb } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/context/I18nContext";
 
 interface StepCardProps {
   stepNumber: number;
@@ -29,12 +30,14 @@ export function StepCard({
   children,
   className,
 }: StepCardProps) {
+  const { t, format } = useI18n();
+
   return (
     <Card className={cn("w-full", className)}>
       <CardHeader className="space-y-4">
         <div className="flex items-start gap-3 flex-wrap">
           <Badge variant="secondary" className="shrink-0" data-testid={`badge-step-${stepNumber}`}>
-            Step {stepNumber}
+            {format(t.common.stepNumber, { step: stepNumber })}
           </Badge>
           <CardTitle className="text-2xl font-serif">{title}</CardTitle>
         </div>
@@ -60,7 +63,7 @@ export function StepCard({
                 className="text-sm text-muted-foreground hover:text-foreground py-2"
                 data-testid="accordion-pitfalls"
               >
-                Common Pitfalls
+                {t.common.commonPitfalls}
               </AccordionTrigger>
               <AccordionContent>
                 <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
