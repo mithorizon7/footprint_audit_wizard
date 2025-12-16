@@ -18,43 +18,35 @@ export default function Cleanup() {
   const browser = data.device.browser;
   const showExternalLinks = !isFictional || tryLiveTools;
 
-  const getBrowserInfo = () => {
-    const browsers = {
-      chrome: {
-        name: "Chrome",
-        clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-        blockUrl: "https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cblock-third-party-cookies",
-      },
-      edge: {
-        name: "Edge",
-        clearUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
-        blockUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
-      },
-      firefox: {
-        name: "Firefox",
-        clearUrl: "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
-        blockUrl: "https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop",
-      },
-      safari: {
-        name: "Safari",
-        clearUrl: "https://support.apple.com/en-us/105082",
-        blockUrl: "https://support.apple.com/en-us/105082",
-      },
-      other: {
-        name: "your browser",
-        clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-        blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-      },
-      unknown: {
-        name: "your browser",
-        clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-        blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-      },
-    };
-    return browsers[browser] || browsers.unknown;
+  const BROWSER_URLS = {
+    chrome: {
+      clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+      blockUrl: "https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cblock-third-party-cookies",
+    },
+    edge: {
+      clearUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
+      blockUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
+    },
+    firefox: {
+      clearUrl: "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
+      blockUrl: "https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop",
+    },
+    safari: {
+      clearUrl: "https://support.apple.com/en-us/105082",
+      blockUrl: "https://support.apple.com/en-us/105082",
+    },
+    other: {
+      clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+      blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+    },
+    unknown: {
+      clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+      blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+    },
   };
 
-  const browserInfo = getBrowserInfo();
+  const browserUrls = BROWSER_URLS[browser] || BROWSER_URLS.unknown;
+  const browserName = t.browserNames[browser] || t.browserNames.unknown;
 
   const handleNext = () => {
     completeAudit();
@@ -76,20 +68,20 @@ export default function Cleanup() {
           <>
             <div className="space-y-4">
               <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
-                {t.cleanup.browserInstructions} {browserInfo.name}
+                {t.cleanup.browserInstructions} {browserName}
               </h3>
               <div className="space-y-4">
                 <ExternalLinkCard
                   title={t.externalTools.clearCookiesTitle}
-                  description={format(t.externalTools.stepsForBrowser, { browser: browserInfo.name })}
-                  url={browserInfo.clearUrl}
+                  description={format(t.externalTools.stepsForBrowser, { browser: browserName })}
+                  url={browserUrls.clearUrl}
                   icon={<Trash2 className="w-5 h-5" />}
                   testId="link-clear-cookies"
                 />
                 <ExternalLinkCard
                   title={t.externalTools.blockCookiesTitle}
                   description={t.externalTools.blockCookiesDesc}
-                  url={browserInfo.blockUrl}
+                  url={browserUrls.blockUrl}
                   icon={<ShieldCheck className="w-5 h-5" />}
                   testId="link-block-cookies"
                 />
@@ -169,7 +161,7 @@ export default function Cleanup() {
           />
         </div>
 
-        <StepNavigation nextLabel="View Report Card" onNext={handleNext} showSkip={false} />
+        <StepNavigation nextLabel={t.common.viewReportCard} onNext={handleNext} showSkip={false} />
       </StepCard>
     </div>
   );

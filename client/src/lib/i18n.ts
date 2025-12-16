@@ -19,6 +19,7 @@ export interface Translations {
     yes: string;
     no: string;
     unsure: string;
+    viewReportCard: string;
   };
   accessibility: {
     languageSelector: string;
@@ -306,6 +307,14 @@ export interface Translations {
     adSettings: string;
     cleanup: string;
   };
+  browserNames: {
+    chrome: string;
+    edge: string;
+    firefox: string;
+    safari: string;
+    other: string;
+    unknown: string;
+  };
 }
 
 const en: Translations = {
@@ -327,6 +336,7 @@ const en: Translations = {
     yes: "Yes",
     no: "No",
     unsure: "Unsure",
+    viewReportCard: "View Report Card",
   },
   accessibility: {
     languageSelector: "Language selector",
@@ -620,6 +630,14 @@ const en: Translations = {
     adSettings: "Ad Settings",
     cleanup: "Cleanup",
   },
+  browserNames: {
+    chrome: "Chrome",
+    edge: "Edge",
+    firefox: "Firefox",
+    safari: "Safari",
+    other: "your browser",
+    unknown: "your browser",
+  },
 };
 
 const lv: Translations = {
@@ -641,6 +659,7 @@ const lv: Translations = {
     yes: "Jā",
     no: "Nē",
     unsure: "Nezinu",
+    viewReportCard: "Skatīt atskaiti",
   },
   accessibility: {
     languageSelector: "Valodas izvēle",
@@ -934,6 +953,14 @@ const lv: Translations = {
     adSettings: "Reklāmu iestatījumi",
     cleanup: "Tīrīšana",
   },
+  browserNames: {
+    chrome: "Chrome",
+    edge: "Edge",
+    firefox: "Firefox",
+    safari: "Safari",
+    other: "jūsu pārlūkprogramma",
+    unknown: "jūsu pārlūkprogramma",
+  },
 };
 
 const ru: Translations = {
@@ -955,6 +982,7 @@ const ru: Translations = {
     yes: "Да",
     no: "Нет",
     unsure: "Не уверен",
+    viewReportCard: "Просмотреть отчёт",
   },
   accessibility: {
     languageSelector: "Выбор языка",
@@ -1247,6 +1275,14 @@ const ru: Translations = {
     fingerprint: "Отпечаток",
     adSettings: "Настройки рекламы",
     cleanup: "Очистка",
+  },
+  browserNames: {
+    chrome: "Chrome",
+    edge: "Edge",
+    firefox: "Firefox",
+    safari: "Safari",
+    other: "ваш браузер",
+    unknown: "ваш браузер",
   },
 };
 
