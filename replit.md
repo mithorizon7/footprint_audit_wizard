@@ -36,6 +36,7 @@ client/
 │   │   │   ├── NumberStepper.tsx
 │   │   │   ├── RadioPills.tsx
 │   │   │   ├── FictionalBanner.tsx
+│   │   │   ├── ToolFallbackBlock.tsx
 │   │   │   └── PanicButton.tsx
 │   │   ├── ui/               # shadcn components
 │   │   └── ThemeToggle.tsx
@@ -81,17 +82,23 @@ interface WizardData {
 
 ## Features
 
-- **Progress Tracking**: Visual progress bar with step indicators and time remaining
+- **Timer System**: 60-minute countdown with per-step target times, elapsed time tracking, and session persistence in localStorage
+- **Progress Tracking**: Visual progress bar with step indicators, current step highlighting, and time remaining display
 - **Two Modes**: 
   - "My Footprint" - Real self-audit
-  - "Fictional Persona" - Prefilled demo data
-- **External Tool Links**: Opens trusted tools (Blacklight, EFF Cover Your Tracks, etc.) in new tabs
-- **Report Card**: Summary metrics with personalized next actions
-- **PDF Export**: Print-friendly report generation
+  - "Fictional Persona" - Prefilled demo data with "Try live tools anyway" toggle
+- **Skip Functionality**: Skip any step; skipped steps appear in dedicated Report Card section with educational context
+- **External Tool Links**: Opens trusted tools (Blacklight, EFF, Have I Been Pwned, etc.) in new tabs
+- **Tool Fallback Blocks**: Collapsible instructions for when external tools are blocked by corporate networks
+- **Browser-Specific Guidance**: Cleanup step detects browser and shows relevant instructions for Chrome, Firefox, Safari, or Edge
+- **Report Card**: Summary metrics, radar/bar charts, skipped items section, Reality Check disclaimer, and personalized next actions
+- **PDF Export**: Print stylesheet for clean PDF generation with proper page breaks and hidden navigation
 - **Dark Mode**: Theme toggle with system preference detection
-- **Panic Button**: Clear all data instantly
+- **Panic Button**: Clear all wizard and timer data instantly with confirmation dialog
+- **PII Protection**: No free-text inputs; warning labels on any PII-adjacent content
 - **Mobile Responsive**: Works on all device sizes
 - **WCAG Accessible**: Semantic HTML, keyboard navigation, high contrast
+- **i18n Ready**: I18nContext for multi-language support (English implemented)
 
 ## External Tools Referenced
 
