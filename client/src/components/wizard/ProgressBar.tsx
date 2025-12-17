@@ -35,7 +35,7 @@ export function ProgressBar() {
 
   return (
     <div className="w-full bg-card border-b border-card-border sticky top-0 z-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 pr-24 sm:pr-28">
         <div className="flex items-center justify-between gap-4 mb-2">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-foreground" data-testid="step-progress">
