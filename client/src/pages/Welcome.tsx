@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Shield, User, FlaskConical, Monitor, Smartphone, HelpCircle } from "lucide-react";
+import { Shield, User, FlaskConical, Monitor, Smartphone, HelpCircle, Clock, CheckCircle, ExternalLink, Lock, BookOpen, Target, Lightbulb, Key } from "lucide-react";
 import { AlertBox } from "@/components/wizard/AlertBox";
 import { cn } from "@/lib/utils";
 import type { Mode, DeviceType, OS, Browser } from "@shared/schema";
@@ -24,7 +24,7 @@ export default function Welcome() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
-      <div className="w-full max-w-2xl space-y-8">
+      <div className="w-full max-w-3xl space-y-8">
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
             <Shield className="w-10 h-10 text-primary" />
@@ -37,14 +37,89 @@ export default function Welcome() {
           </p>
         </div>
 
+        <Card className="p-0">
+          <CardContent className="p-6 space-y-6">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                <h2 className="font-semibold text-foreground">{t.welcome.whatYoullLearn}</h2>
+              </div>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <span>{t.welcome.learnPoint1}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <span>{t.welcome.learnPoint2}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <span>{t.welcome.learnPoint3}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <span>{t.welcome.learnPoint4}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="border-t pt-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Target className="w-5 h-5 text-primary" />
+                <h2 className="font-semibold text-foreground">{t.welcome.whatToExpect}</h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Clock className="w-4 h-4 text-primary shrink-0" />
+                  <span>{t.welcome.expectTime}</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <CheckCircle className="w-4 h-4 text-primary shrink-0" />
+                  <span>{t.welcome.expectSteps}</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <ExternalLink className="w-4 h-4 text-primary shrink-0" />
+                  <span>{t.welcome.expectTools}</span>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Lock className="w-4 h-4 text-primary shrink-0" />
+                  <span>{t.welcome.expectPrivacy}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t pt-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-primary" />
+                <h2 className="font-semibold text-foreground">{t.welcome.beforeYouStart}</h2>
+              </div>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <Key className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+                  <span>{t.welcome.prepPoint1}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Monitor className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+                  <span>{t.welcome.prepPoint2}</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Clock className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+                  <span>{t.welcome.prepPoint3}</span>
+                </li>
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
+
         <AlertBox severity="warning" className="max-w-xl mx-auto">
           {t.welcome.safetyNote}
         </AlertBox>
 
         <div className="space-y-4">
-          <p className="text-sm font-medium text-center text-muted-foreground">
-            {t.welcome.chooseMode}
-          </p>
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="text-lg font-semibold text-foreground">{t.welcome.chooseYourPath}</h2>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Card

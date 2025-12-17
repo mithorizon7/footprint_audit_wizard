@@ -2,6 +2,7 @@ import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
+import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { Settings, FileText } from "lucide-react";
@@ -27,6 +28,15 @@ export default function AccountDevice() {
         concept={t.accountDevice.concept}
         whyItMatters={t.accountDevice.whyItMatters}
       >
+        <InstructionBlock
+          title={t.instructions.whatToDo}
+          instructions={[
+            t.instructions.accountDevice1,
+            t.instructions.accountDevice2,
+            t.instructions.accountDevice3,
+          ]}
+        />
+
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">

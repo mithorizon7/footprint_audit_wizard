@@ -2,6 +2,7 @@ import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
+import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
@@ -60,6 +61,15 @@ export default function Cleanup() {
         concept={t.cleanup.concept}
         whyItMatters={t.cleanup.whyItMatters}
       >
+        <InstructionBlock
+          title={t.instructions.whatToDo}
+          instructions={[
+            t.instructions.cleanup1,
+            t.instructions.cleanup2,
+            t.instructions.cleanup3,
+          ]}
+        />
+
         <AlertBox severity="warning" className="mb-6">
           {t.cleanup.cookiesWarning}
         </AlertBox>

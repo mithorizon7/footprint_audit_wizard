@@ -2,6 +2,7 @@ import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
+import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { NumberStepper } from "@/components/wizard/NumberStepper";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
@@ -24,6 +25,15 @@ export default function Trackers() {
         concept={t.trackers.concept}
         whyItMatters={t.trackers.whyItMatters}
       >
+        <InstructionBlock
+          title={t.instructions.whatToDo}
+          instructions={[
+            t.instructions.trackers1,
+            t.instructions.trackers2,
+            t.instructions.trackers3,
+          ]}
+        />
+
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">

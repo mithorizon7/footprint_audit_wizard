@@ -46,6 +46,21 @@ export interface Translations {
     browserLabel: string;
     consent: string;
     optionalHelp: string;
+    whatYoullLearn: string;
+    learnPoint1: string;
+    learnPoint2: string;
+    learnPoint3: string;
+    learnPoint4: string;
+    whatToExpect: string;
+    expectTime: string;
+    expectSteps: string;
+    expectTools: string;
+    expectPrivacy: string;
+    beforeYouStart: string;
+    prepPoint1: string;
+    prepPoint2: string;
+    prepPoint3: string;
+    chooseYourPath: string;
   };
   steps: {
     welcome: string;
@@ -169,6 +184,24 @@ export interface Translations {
     passwordHygieneQuestion: string;
     passwordHygieneHelper: string;
     cookiesWarning: string;
+  };
+  instructions: {
+    whatToDo: string;
+    publicExposure1: string;
+    publicExposure2: string;
+    publicExposure3: string;
+    trackers1: string;
+    trackers2: string;
+    trackers3: string;
+    fingerprinting1: string;
+    fingerprinting2: string;
+    fingerprinting3: string;
+    accountDevice1: string;
+    accountDevice2: string;
+    accountDevice3: string;
+    cleanup1: string;
+    cleanup2: string;
+    cleanup3: string;
   };
   siteCategories: {
     news: string;
@@ -357,20 +390,35 @@ const en: Translations = {
   welcome: {
     title: "Footprint Audit Wizard",
     subtitle:
-      "This 60-minute lab helps you see what parts of your digital footprint are visible and trackable. You'll use a few trusted public tools to explore your online presence.",
+      "Discover what's visible about you online and learn how to protect your privacy.",
     safetyNote:
       "Self-audit only: Search only your own identifiers or use Fictional Persona Mode. We never ask for your name, email, or phone. You'll only record counts and yes/no answers. Everything stays on your device.",
     chooseMode: "Choose how you'd like to proceed:",
     myFootprint: "My Footprint",
-    myFootprintDesc: "Search your own name and record real findings",
+    myFootprintDesc: "Search your own name and record real findings from live tools",
     fictionalPersona: "Fictional Persona Demo",
-    fictionalPersonaDesc: "View prefilled example data without real searches",
+    fictionalPersonaDesc: "Learn the process with prefilled example data (no real searches)",
     deviceLabel: "Device",
     osLabel: "OS",
     browserLabel: "Browser",
     consent:
       "By continuing, you acknowledge this is a self-audit tool. We do not collect or transmit any personal identifiers. All data stays on your device.",
     optionalHelp: "Optional: Help us show relevant instructions",
+    whatYoullLearn: "What You'll Learn",
+    learnPoint1: "How much personal info appears when someone searches your name",
+    learnPoint2: "Which websites track your browsing behavior",
+    learnPoint3: "Whether your browser can be uniquely identified (fingerprinted)",
+    learnPoint4: "How to take practical steps to reduce your digital footprint",
+    whatToExpect: "What to Expect",
+    expectTime: "About 60 minutes to complete",
+    expectSteps: "5 guided steps plus a personalized report",
+    expectTools: "You'll use free, trusted privacy tools (links provided)",
+    expectPrivacy: "All your data stays on your device - nothing is sent to us",
+    beforeYouStart: "Before You Start",
+    prepPoint1: "Have your passwords ready - clearing cookies will log you out of sites",
+    prepPoint2: "Use an incognito/private window if you're on a shared computer",
+    prepPoint3: "Set aside uninterrupted time to focus on each step",
+    chooseYourPath: "Choose Your Path",
   },
   steps: {
     welcome: "Welcome",
@@ -497,6 +545,24 @@ const en: Translations = {
     passwordHygieneQuestion: "Did you take any password hygiene action?",
     passwordHygieneHelper: "Examples: checked Have I Been Pwned, enabled MFA, updated a password, or reviewed your password manager",
     cookiesWarning: "Clearing cookies will log you out of websites. Make sure you know your passwords or have a password manager before proceeding.",
+  },
+  instructions: {
+    whatToDo: "What to Do",
+    publicExposure1: "Search your name (in quotes) on Google and count how many result pages show personal info like address or phone",
+    publicExposure2: "Check if you appear on people-search sites (like Spokeo, WhitePages, or BeenVerified)",
+    publicExposure3: "Record your findings below, then continue to the next step",
+    trackers1: "Open Blacklight and enter a website you visit often (e.g., a news site or shopping site)",
+    trackers2: "Review what the tool finds: trackers, cookies, session recorders, and fingerprinting",
+    trackers3: "Record the tracker count and any concerning findings below",
+    fingerprinting1: "Click the link to open EFF's Cover Your Tracks test",
+    fingerprinting2: "Run the test and note if your browser fingerprint is unique",
+    fingerprinting3: "Check your tracking protection level and record the results below",
+    accountDevice1: "Check your Google Ad Settings and note if personalized ads are on or off",
+    accountDevice2: "Check Apple/Android ad settings on your device (if applicable)",
+    accountDevice3: "Record your current settings below - you can change them later if you wish",
+    cleanup1: "Clear your cookies and site data using the browser instructions provided",
+    cleanup2: "Enable blocking of third-party cookies in your browser settings",
+    cleanup3: "Optionally, check Have I Been Pwned for any email breaches",
   },
   siteCategories: {
     news: "News",
@@ -685,20 +751,35 @@ const lv: Translations = {
   welcome: {
     title: "Digitālās pēdas audita vednis",
     subtitle:
-      "Šī 60 minūšu laboratorija palīdz jums redzēt, kādas jūsu digitālās pēdas daļas ir redzamas un izsekojamas. Jūs izmantosiet dažus uzticamus publiskos rīkus, lai izpētītu savu tiešsaistes klātbūtni.",
+      "Uzziniet, kas par jums ir redzams tiešsaistē, un iemācieties aizsargāt savu privātumu.",
     safetyNote:
       "Tikai pašnovērtējums: Meklējiet tikai savus identifikatorus vai izmantojiet fiktīvās personas režīmu. Mēs nekad neprasām jūsu vārdu, e-pastu vai tālruņa numuru. Jūs ierakstīsiet tikai skaitļus un jā/nē atbildes. Viss paliek jūsu ierīcē.",
     chooseMode: "Izvēlieties, kā vēlaties turpināt:",
     myFootprint: "Mana pēda",
-    myFootprintDesc: "Meklējiet savu vārdu un ierakstiet reālus atklājumus",
+    myFootprintDesc: "Meklējiet savu vārdu un ierakstiet reālus rezultātus no tiešiem rīkiem",
     fictionalPersona: "Fiktīvās personas demo",
-    fictionalPersonaDesc: "Skatīt iepriekš aizpildītus piemēra datus bez reālām meklēšanām",
+    fictionalPersonaDesc: "Iemācieties procesu ar iepriekš aizpildītiem piemēra datiem (bez reālām meklēšanām)",
     deviceLabel: "Ierīce",
     osLabel: "OS",
     browserLabel: "Pārlūkprogramma",
     consent:
       "Turpinot, jūs atzīstat, ka šis ir pašnovērtējuma rīks. Mēs nevācam un nepārsūtām nekādus personīgos identifikatorus. Visi dati paliek jūsu ierīcē.",
     optionalHelp: "Neobligāti: Palīdziet mums parādīt atbilstošas instrukcijas",
+    whatYoullLearn: "Ko jūs uzzināsiet",
+    learnPoint1: "Cik daudz personīgās informācijas parādās, kad kāds meklē jūsu vārdu",
+    learnPoint2: "Kuras tīmekļa vietnes izseko jūsu pārlūkošanas aktivitāti",
+    learnPoint3: "Vai jūsu pārlūkprogrammu var unikāli identificēt (pirkstu nospiedumu veidošana)",
+    learnPoint4: "Kā veikt praktiskus soļus, lai samazinātu savu digitālo pēdu",
+    whatToExpect: "Ko sagaidīt",
+    expectTime: "Aptuveni 60 minūtes, lai pabeigtu",
+    expectSteps: "5 vadīti soļi plus personalizēta atskaite",
+    expectTools: "Jūs izmantosiet bezmaksas, uzticamus privātuma rīkus (saites sniegtas)",
+    expectPrivacy: "Visi jūsu dati paliek jūsu ierīcē - nekas netiek sūtīts mums",
+    beforeYouStart: "Pirms sākat",
+    prepPoint1: "Sagatavojiet savas paroles - sīkdatņu dzēšana jūs izrakstīs no vietnēm",
+    prepPoint2: "Izmantojiet inkognito/privāto logu, ja esat koplietotā datorā",
+    prepPoint3: "Atvēliet nepārtrauktu laiku, lai koncentrētos uz katru soli",
+    chooseYourPath: "Izvēlieties savu ceļu",
   },
   steps: {
     welcome: "Sveicināti",
@@ -825,6 +906,24 @@ const lv: Translations = {
     passwordHygieneQuestion: "Vai veicāt kādu paroļu higiēnas darbību?",
     passwordHygieneHelper: "Piemēri: pārbaudījāt Have I Been Pwned, iespējojāt MFA, atjauninājāt paroli vai pārskatījāt savu paroļu pārvaldnieku",
     cookiesWarning: "Sīkdatņu dzēšana jūs izrakstīs no vietnēm. Pārliecinieties, ka zināt savas paroles vai jums ir paroļu pārvaldnieks, pirms turpināt.",
+  },
+  instructions: {
+    whatToDo: "Ko darīt",
+    publicExposure1: "Meklējiet savu vārdu (pēdiņās) Google un saskaitiet, cik rezultātu lapas parāda personīgo informāciju, piemēram, adresi vai tālruni",
+    publicExposure2: "Pārbaudiet, vai parādāties personu meklēšanas vietnēs (piemēram, Spokeo, WhitePages vai BeenVerified)",
+    publicExposure3: "Ierakstiet savus atklājumus zemāk, pēc tam turpiniet uz nākamo soli",
+    trackers1: "Atveriet Blacklight un ievadiet vietni, kuru bieži apmeklējat (piem., ziņu vai iepirkšanās vietni)",
+    trackers2: "Pārskatiet, ko rīks atrod: izsekotājus, sīkdatnes, sesiju ierakstītājus un pirkstu nospiedumus",
+    trackers3: "Ierakstiet izsekotāju skaitu un visus satraucošos atradumus zemāk",
+    fingerprinting1: "Noklikšķiniet uz saites, lai atvērtu EFF Cover Your Tracks testu",
+    fingerprinting2: "Palaidiet testu un atzīmējiet, vai jūsu pārlūkprogrammas pirkstu nospiedums ir unikāls",
+    fingerprinting3: "Pārbaudiet savu izsekošanas aizsardzības līmeni un ierakstiet rezultātus zemāk",
+    accountDevice1: "Pārbaudiet savus Google reklāmu iestatījumus un atzīmējiet, vai personalizētās reklāmas ir ieslēgtas vai izslēgtas",
+    accountDevice2: "Pārbaudiet Apple/Android reklāmu iestatījumus savā ierīcē (ja piemērojams)",
+    accountDevice3: "Ierakstiet savus pašreizējos iestatījumus zemāk - vēlāk tos varat mainīt, ja vēlaties",
+    cleanup1: "Dzēsiet savas sīkdatnes un vietnes datus, izmantojot sniegtos pārlūkprogrammas norādījumus",
+    cleanup2: "Iespējojiet trešo pušu sīkdatņu bloķēšanu savos pārlūkprogrammas iestatījumos",
+    cleanup3: "Pēc izvēles pārbaudiet Have I Been Pwned, lai atrastu e-pasta noplūdes",
   },
   siteCategories: {
     news: "Ziņas",
@@ -1013,20 +1112,35 @@ const ru: Translations = {
   welcome: {
     title: "Мастер аудита цифрового следа",
     subtitle:
-      "Эта 60-минутная лаборатория поможет вам увидеть, какие части вашего цифрового следа видимы и отслеживаемы. Вы будете использовать несколько надёжных публичных инструментов для изучения своего присутствия в интернете.",
+      "Узнайте, что о вас видно в интернете, и научитесь защищать свою конфиденциальность.",
     safetyNote:
       "Только самопроверка: Ищите только свои идентификаторы или используйте режим вымышленной персоны. Мы никогда не спрашиваем ваше имя, email или телефон. Вы будете записывать только числа и ответы да/нет. Всё остаётся на вашем устройстве.",
     chooseMode: "Выберите, как вы хотите продолжить:",
     myFootprint: "Мой след",
-    myFootprintDesc: "Искать своё имя и записывать реальные находки",
+    myFootprintDesc: "Искать своё имя и записывать реальные результаты из живых инструментов",
     fictionalPersona: "Демо вымышленной персоны",
-    fictionalPersonaDesc: "Просмотр предзаполненных примеров без реального поиска",
+    fictionalPersonaDesc: "Изучите процесс с предзаполненными примерами (без реального поиска)",
     deviceLabel: "Устройство",
     osLabel: "ОС",
     browserLabel: "Браузер",
     consent:
       "Продолжая, вы подтверждаете, что это инструмент самопроверки. Мы не собираем и не передаём никаких личных идентификаторов. Все данные остаются на вашем устройстве.",
     optionalHelp: "Необязательно: Помогите нам показать подходящие инструкции",
+    whatYoullLearn: "Что вы узнаете",
+    learnPoint1: "Сколько личной информации появляется при поиске вашего имени",
+    learnPoint2: "Какие сайты отслеживают вашу активность в браузере",
+    learnPoint3: "Можно ли уникально идентифицировать ваш браузер (цифровой отпечаток)",
+    learnPoint4: "Как предпринять практические шаги для уменьшения цифрового следа",
+    whatToExpect: "Чего ожидать",
+    expectTime: "Около 60 минут на выполнение",
+    expectSteps: "5 пошаговых этапов плюс персонализированный отчёт",
+    expectTools: "Вы будете использовать бесплатные, надёжные инструменты конфиденциальности (ссылки предоставлены)",
+    expectPrivacy: "Все ваши данные остаются на вашем устройстве - ничего не отправляется нам",
+    beforeYouStart: "Перед началом",
+    prepPoint1: "Подготовьте свои пароли - очистка cookies приведёт к выходу из сайтов",
+    prepPoint2: "Используйте режим инкогнито/приватный режим на общем компьютере",
+    prepPoint3: "Выделите непрерывное время для сосредоточения на каждом этапе",
+    chooseYourPath: "Выберите свой путь",
   },
   steps: {
     welcome: "Добро пожаловать",
@@ -1153,6 +1267,24 @@ const ru: Translations = {
     passwordHygieneQuestion: "Предприняли ли вы какие-либо действия по гигиене паролей?",
     passwordHygieneHelper: "Примеры: проверили Have I Been Pwned, включили MFA, обновили пароль или проверили менеджер паролей",
     cookiesWarning: "Очистка куки выйдет из всех сайтов. Убедитесь, что вы знаете свои пароли или у вас есть менеджер паролей, прежде чем продолжить.",
+  },
+  instructions: {
+    whatToDo: "Что делать",
+    publicExposure1: "Поищите своё имя (в кавычках) в Google и посчитайте, сколько страниц результатов показывают личную информацию, такую как адрес или телефон",
+    publicExposure2: "Проверьте, появляетесь ли вы на сайтах поиска людей (таких как Spokeo, WhitePages или BeenVerified)",
+    publicExposure3: "Запишите свои находки ниже, затем перейдите к следующему шагу",
+    trackers1: "Откройте Blacklight и введите сайт, который вы часто посещаете (напр., новостной или интернет-магазин)",
+    trackers2: "Изучите, что находит инструмент: трекеры, куки, записыватели сессий и отпечатки",
+    trackers3: "Запишите количество трекеров и любые тревожные находки ниже",
+    fingerprinting1: "Нажмите на ссылку, чтобы открыть тест EFF Cover Your Tracks",
+    fingerprinting2: "Запустите тест и отметьте, уникален ли отпечаток вашего браузера",
+    fingerprinting3: "Проверьте уровень защиты от отслеживания и запишите результаты ниже",
+    accountDevice1: "Проверьте настройки рекламы Google и отметьте, включена или выключена персонализированная реклама",
+    accountDevice2: "Проверьте настройки рекламы Apple/Android на вашем устройстве (если применимо)",
+    accountDevice3: "Запишите свои текущие настройки ниже - вы можете изменить их позже, если захотите",
+    cleanup1: "Очистите куки и данные сайтов, используя предоставленные инструкции для браузера",
+    cleanup2: "Включите блокировку сторонних куки в настройках браузера",
+    cleanup3: "При желании проверьте Have I Been Pwned на наличие утечек email",
   },
   siteCategories: {
     news: "Новости",

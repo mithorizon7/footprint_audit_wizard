@@ -2,6 +2,7 @@ import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
+import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
@@ -23,6 +24,15 @@ export default function FingerprintingStep() {
         concept={t.fingerprinting.concept}
         whyItMatters={t.fingerprinting.whyItMatters}
       >
+        <InstructionBlock
+          title={t.instructions.whatToDo}
+          instructions={[
+            t.instructions.fingerprinting1,
+            t.instructions.fingerprinting2,
+            t.instructions.fingerprinting3,
+          ]}
+        />
+
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">

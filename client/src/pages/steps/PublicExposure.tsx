@@ -2,9 +2,9 @@ import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
 import { StepCard } from "@/components/wizard/StepCard";
 import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
+import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { NumberStepper } from "@/components/wizard/NumberStepper";
 import { RadioPills } from "@/components/wizard/RadioPills";
-import { AlertBox } from "@/components/wizard/AlertBox";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { Search, FileText, Shield } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -24,6 +24,15 @@ export default function PublicExposure() {
         concept={t.publicExposure.concept}
         whyItMatters={t.publicExposure.whyItMatters}
       >
+        <InstructionBlock
+          title={t.instructions.whatToDo}
+          instructions={[
+            t.instructions.publicExposure1,
+            t.instructions.publicExposure2,
+            t.instructions.publicExposure3,
+          ]}
+        />
+
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
