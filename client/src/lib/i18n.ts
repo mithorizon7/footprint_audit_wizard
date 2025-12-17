@@ -46,16 +46,15 @@ export interface Translations {
     browserLabel: string;
     consent: string;
     optionalHelp: string;
-    whatYoullLearn: string;
-    learnPoint1: string;
-    learnPoint2: string;
-    learnPoint3: string;
-    learnPoint4: string;
+    introParagraph: string;
     whatToExpect: string;
+    expectDescription: string;
     expectTime: string;
     expectSteps: string;
     expectTools: string;
     expectPrivacy: string;
+    privacyTitle: string;
+    privacyDescription: string;
     beforeYouStart: string;
     prepPoint1: string;
     prepPoint2: string;
@@ -404,16 +403,15 @@ const en: Translations = {
     consent:
       "By continuing, you acknowledge this is a self-audit tool. We do not collect or transmit any personal identifiers. All data stays on your device.",
     optionalHelp: "Optional: Help us show relevant instructions",
-    whatYoullLearn: "What You'll Learn",
-    learnPoint1: "How much personal info appears when someone searches your name",
-    learnPoint2: "Which websites track your browsing behavior",
-    learnPoint3: "Whether your browser can be uniquely identified (fingerprinted)",
-    learnPoint4: "How to take practical steps to reduce your digital footprint",
-    whatToExpect: "What to Expect",
-    expectTime: "About 60 minutes to complete",
-    expectSteps: "5 guided steps plus a personalized report",
-    expectTools: "You'll use free, trusted privacy tools (links provided)",
-    expectPrivacy: "All your data stays on your device - nothing is sent to us",
+    introParagraph: "Every time you browse the web, you leave traces - your name in search results, trackers following you across sites, and a unique browser fingerprint that identifies you. This hands-on lab helps you discover exactly what's visible about you online and gives you the tools to take back control of your privacy.",
+    whatToExpect: "What You'll Do",
+    expectDescription: "Over the next 60 minutes, you'll use free privacy tools to audit your digital presence. You'll search for your name online, scan websites for hidden trackers, test if your browser can be uniquely identified, review your ad settings, and take cleanup actions. At the end, you'll receive a personalized report with your findings and recommended next steps.",
+    expectTime: "60 minutes",
+    expectSteps: "5 guided steps",
+    expectTools: "Free privacy tools",
+    expectPrivacy: "100% local data",
+    privacyTitle: "Self-Audit Only",
+    privacyDescription: "Your privacy is protected throughout this process. You'll only search your own information, and we never ask for your name, email, or personal details. Everything you record stays on your device - nothing is sent anywhere.",
     beforeYouStart: "Before You Start",
     prepPoint1: "Have your passwords ready - clearing cookies will log you out of sites",
     prepPoint2: "Use an incognito/private window if you're on a shared computer",
@@ -765,16 +763,15 @@ const lv: Translations = {
     consent:
       "Turpinot, jūs atzīstat, ka šis ir pašnovērtējuma rīks. Mēs nevācam un nepārsūtām nekādus personīgos identifikatorus. Visi dati paliek jūsu ierīcē.",
     optionalHelp: "Neobligāti: Palīdziet mums parādīt atbilstošas instrukcijas",
-    whatYoullLearn: "Ko jūs uzzināsiet",
-    learnPoint1: "Cik daudz personīgās informācijas parādās, kad kāds meklē jūsu vārdu",
-    learnPoint2: "Kuras tīmekļa vietnes izseko jūsu pārlūkošanas aktivitāti",
-    learnPoint3: "Vai jūsu pārlūkprogrammu var unikāli identificēt (pirkstu nospiedumu veidošana)",
-    learnPoint4: "Kā veikt praktiskus soļus, lai samazinātu savu digitālo pēdu",
-    whatToExpect: "Ko sagaidīt",
-    expectTime: "Aptuveni 60 minūtes, lai pabeigtu",
-    expectSteps: "5 vadīti soļi plus personalizēta atskaite",
-    expectTools: "Jūs izmantosiet bezmaksas, uzticamus privātuma rīkus (saites sniegtas)",
-    expectPrivacy: "Visi jūsu dati paliek jūsu ierīcē - nekas netiek sūtīts mums",
+    introParagraph: "Katru reizi, kad pārlūkojat tīmekli, jūs atstājat pēdas - jūsu vārds meklēšanas rezultātos, izsekotāji, kas seko jums pa vietnēm, un unikāls pārlūkprogrammas pirkstu nospiedums, kas jūs identificē. Šī praktiskā laboratorija palīdz jums precīzi uzzināt, kas par jums ir redzams tiešsaistē, un sniedz rīkus, lai atgūtu kontroli pār savu privātumu.",
+    whatToExpect: "Ko jūs darīsiet",
+    expectDescription: "Nākamo 60 minūšu laikā jūs izmantosiet bezmaksas privātuma rīkus, lai pārbaudītu savu digitālo klātbūtni. Jūs meklēsiet savu vārdu tiešsaistē, skenēsiet vietnes, lai atrastu slēptus izsekotājus, pārbaudīsiet, vai jūsu pārlūkprogrammu var unikāli identificēt, pārskatīsiet savus reklāmu iestatījumus un veiksiet tīrīšanas darbības. Beigās jūs saņemsiet personalizētu atskaiti ar saviem atradumiem un ieteicamajiem nākamajiem soļiem.",
+    expectTime: "60 minūtes",
+    expectSteps: "5 vadīti soļi",
+    expectTools: "Bezmaksas privātuma rīki",
+    expectPrivacy: "100% lokāli dati",
+    privacyTitle: "Tikai pašnovērtējums",
+    privacyDescription: "Jūsu privātums ir aizsargāts visā šajā procesā. Jūs meklēsiet tikai savu informāciju, un mēs nekad neprasām jūsu vārdu, e-pastu vai personīgās detaļas. Viss, ko ierakstāt, paliek jūsu ierīcē - nekas netiek sūtīts nekur.",
     beforeYouStart: "Pirms sākat",
     prepPoint1: "Sagatavojiet savas paroles - sīkdatņu dzēšana jūs izrakstīs no vietnēm",
     prepPoint2: "Izmantojiet inkognito/privāto logu, ja esat koplietotā datorā",
@@ -1126,16 +1123,15 @@ const ru: Translations = {
     consent:
       "Продолжая, вы подтверждаете, что это инструмент самопроверки. Мы не собираем и не передаём никаких личных идентификаторов. Все данные остаются на вашем устройстве.",
     optionalHelp: "Необязательно: Помогите нам показать подходящие инструкции",
-    whatYoullLearn: "Что вы узнаете",
-    learnPoint1: "Сколько личной информации появляется при поиске вашего имени",
-    learnPoint2: "Какие сайты отслеживают вашу активность в браузере",
-    learnPoint3: "Можно ли уникально идентифицировать ваш браузер (цифровой отпечаток)",
-    learnPoint4: "Как предпринять практические шаги для уменьшения цифрового следа",
-    whatToExpect: "Чего ожидать",
-    expectTime: "Около 60 минут на выполнение",
-    expectSteps: "5 пошаговых этапов плюс персонализированный отчёт",
-    expectTools: "Вы будете использовать бесплатные, надёжные инструменты конфиденциальности (ссылки предоставлены)",
-    expectPrivacy: "Все ваши данные остаются на вашем устройстве - ничего не отправляется нам",
+    introParagraph: "Каждый раз, когда вы просматриваете интернет, вы оставляете следы - ваше имя в результатах поиска, трекеры, следящие за вами на разных сайтах, и уникальный отпечаток браузера, который вас идентифицирует. Эта практическая лаборатория поможет вам точно узнать, что о вас видно в сети, и даст инструменты для восстановления контроля над вашей конфиденциальностью.",
+    whatToExpect: "Что вы будете делать",
+    expectDescription: "В течение следующих 60 минут вы будете использовать бесплатные инструменты конфиденциальности для проверки своего цифрового присутствия. Вы поищете своё имя в интернете, просканируете сайты на скрытые трекеры, проверите, можно ли уникально идентифицировать ваш браузер, проверите настройки рекламы и выполните действия по очистке. В конце вы получите персонализированный отчёт с вашими результатами и рекомендуемыми следующими шагами.",
+    expectTime: "60 минут",
+    expectSteps: "5 этапов",
+    expectTools: "Бесплатные инструменты",
+    expectPrivacy: "100% локальные данные",
+    privacyTitle: "Только самопроверка",
+    privacyDescription: "Ваша конфиденциальность защищена на протяжении всего процесса. Вы будете искать только свою информацию, и мы никогда не спрашиваем ваше имя, email или личные данные. Всё, что вы записываете, остаётся на вашем устройстве - ничего никуда не отправляется.",
     beforeYouStart: "Перед началом",
     prepPoint1: "Подготовьте свои пароли - очистка cookies приведёт к выходу из сайтов",
     prepPoint2: "Используйте режим инкогнито/приватный режим на общем компьютере",

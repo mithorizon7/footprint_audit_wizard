@@ -9,8 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Shield, User, FlaskConical, Monitor, Smartphone, HelpCircle, Clock, CheckCircle, ExternalLink, Lock, BookOpen, Target, Lightbulb, Key } from "lucide-react";
-import { AlertBox } from "@/components/wizard/AlertBox";
+import { Shield, User, FlaskConical, Monitor, Smartphone, HelpCircle, Clock, CheckCircle, ExternalLink, Lock, Lightbulb, Key } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Mode, DeviceType, OS, Browser } from "@shared/schema";
 
@@ -37,54 +36,33 @@ export default function Welcome() {
           </p>
         </div>
 
+        <p className="text-base text-foreground leading-relaxed text-center max-w-2xl mx-auto bg-primary/5 p-6 rounded-md border border-primary/10">
+          {t.welcome.introParagraph}
+        </p>
+
         <Card className="p-0">
           <CardContent className="p-6 space-y-6">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-primary" />
-                <h2 className="font-semibold text-foreground">{t.welcome.whatYoullLearn}</h2>
-              </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <span>{t.welcome.learnPoint1}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <span>{t.welcome.learnPoint2}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <span>{t.welcome.learnPoint3}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                  <span>{t.welcome.learnPoint4}</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="border-t pt-4 space-y-3">
-              <div className="flex items-center gap-2">
-                <Target className="w-5 h-5 text-primary" />
-                <h2 className="font-semibold text-foreground">{t.welcome.whatToExpect}</h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Clock className="w-4 h-4 text-primary shrink-0" />
-                  <span>{t.welcome.expectTime}</span>
+            <div className="space-y-4">
+              <h2 className="font-semibold text-foreground text-lg">{t.welcome.whatToExpect}</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {t.welcome.expectDescription}
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
+                  <Clock className="w-5 h-5 text-primary" />
+                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectTime}</span>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <CheckCircle className="w-4 h-4 text-primary shrink-0" />
-                  <span>{t.welcome.expectSteps}</span>
+                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
+                  <CheckCircle className="w-5 h-5 text-primary" />
+                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectSteps}</span>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <ExternalLink className="w-4 h-4 text-primary shrink-0" />
-                  <span>{t.welcome.expectTools}</span>
+                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
+                  <ExternalLink className="w-5 h-5 text-primary" />
+                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectTools}</span>
                 </div>
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Lock className="w-4 h-4 text-primary shrink-0" />
-                  <span>{t.welcome.expectPrivacy}</span>
+                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
+                  <Lock className="w-5 h-5 text-primary" />
+                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectPrivacy}</span>
                 </div>
               </div>
             </div>
@@ -112,9 +90,19 @@ export default function Welcome() {
           </CardContent>
         </Card>
 
-        <AlertBox severity="warning" className="max-w-xl mx-auto">
-          {t.welcome.safetyNote}
-        </AlertBox>
+        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md p-5 max-w-xl mx-auto">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center shrink-0">
+              <Shield className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="font-semibold text-emerald-800 dark:text-emerald-200">{t.welcome.privacyTitle}</h3>
+              <p className="text-sm text-emerald-700 dark:text-emerald-300 leading-relaxed">
+                {t.welcome.privacyDescription}
+              </p>
+            </div>
+          </div>
+        </div>
 
         <div className="space-y-4">
           <div className="flex items-center justify-center gap-2">
