@@ -1317,21 +1317,15 @@ export function getTranslations(locale: Locale): Translations {
 }
 
 export function getLocaleFromStorage(): Locale {
-  // Fallback chain: user preference → browser locale (non-en) → lv → en
-  // Per Latvia v1 spec: Latvian is the default, English is final fallback only
+  // Fallback chain: user preference → English (default)
+  // Users can select other languages (Latvian, Russian) if desired
   const stored = localStorage.getItem("footprintWizard:locale");
   if (stored && stored in allTranslations) {
     return stored as Locale;
   }
   
-  const browserLang = navigator.language.slice(0, 2);
-  // Only use browser locale if it's lv or ru (not en, which is final fallback)
-  if (browserLang === "lv" || browserLang === "ru") {
-    return browserLang as Locale;
-  }
-  
-  // Default to Latvian as per Latvia v1 spec
-  return "lv";
+  // Default to English
+  return "en";
 }
 
 export function saveLocaleToStorage(locale: Locale): void {
