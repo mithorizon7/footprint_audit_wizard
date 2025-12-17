@@ -60,6 +60,7 @@ export interface Translations {
     prepPoint2: string;
     prepPoint3: string;
     chooseYourPath: string;
+    chooseYourPathDesc: string;
   };
   steps: {
     welcome: string;
@@ -394,15 +395,15 @@ const en: Translations = {
       "Self-audit only: Search only your own identifiers or use Fictional Persona Mode. We never ask for your name, email, or phone. You'll only record counts and yes/no answers. Everything stays on your device.",
     chooseMode: "Choose how you'd like to proceed:",
     myFootprint: "My Footprint",
-    myFootprintDesc: "Search your own name and record real findings from live tools",
+    myFootprintDesc: "Audit your real digital presence by searching your own name and using live privacy tools. You'll discover what's actually visible about you online and take real cleanup actions. Best if you want actionable insights about your personal privacy.",
     fictionalPersona: "Fictional Persona Demo",
-    fictionalPersonaDesc: "Learn the process with prefilled example data (no real searches)",
+    fictionalPersonaDesc: "Walk through the audit process using example data without searching anything real. Great for learning how the tools work first, practicing in a group setting, or if you're on a shared/work computer and prefer not to search personal information.",
     deviceLabel: "Device",
     osLabel: "OS",
     browserLabel: "Browser",
     consent:
       "By continuing, you acknowledge this is a self-audit tool. We do not collect or transmit any personal identifiers. All data stays on your device.",
-    optionalHelp: "Optional: Help us show relevant instructions",
+    optionalHelp: "Telling us your device, OS, and browser helps us show you the right instructions for clearing cookies and adjusting privacy settings on your specific setup.",
     introParagraph: "Every time you browse the web, you leave traces - your name in search results, trackers following you across sites, and a unique browser fingerprint that identifies you. This hands-on lab helps you discover exactly what's visible about you online and gives you the tools to take back control of your privacy.",
     whatToExpect: "What You'll Do",
     expectDescription: "Over the next 60 minutes, you'll use free privacy tools to audit your digital presence. You'll search for your name online, scan websites for hidden trackers, test if your browser can be uniquely identified, review your ad settings, and take cleanup actions. At the end, you'll receive a personalized report with your findings and recommended next steps.",
@@ -417,6 +418,7 @@ const en: Translations = {
     prepPoint2: "Use an incognito/private window if you're on a shared computer",
     prepPoint3: "Set aside uninterrupted time to focus on each step",
     chooseYourPath: "Choose Your Path",
+    chooseYourPathDesc: "You can either audit your real digital footprint or practice with fictional example data. Both paths teach the same concepts - choose based on whether you're ready to search your own information.",
   },
   steps: {
     welcome: "Welcome",
@@ -754,15 +756,15 @@ const lv: Translations = {
       "Tikai pašnovērtējums: Meklējiet tikai savus identifikatorus vai izmantojiet fiktīvās personas režīmu. Mēs nekad neprasām jūsu vārdu, e-pastu vai tālruņa numuru. Jūs ierakstīsiet tikai skaitļus un jā/nē atbildes. Viss paliek jūsu ierīcē.",
     chooseMode: "Izvēlieties, kā vēlaties turpināt:",
     myFootprint: "Mana pēda",
-    myFootprintDesc: "Meklējiet savu vārdu un ierakstiet reālus rezultātus no tiešiem rīkiem",
+    myFootprintDesc: "Pārbaudiet savu reālo digitālo klātbūtni, meklējot savu vārdu un izmantojot tiešos privātuma rīkus. Jūs uzzināsiet, kas patiesībā ir redzams par jums tiešsaistē, un veiksiet reālas tīrīšanas darbības. Labākais, ja vēlaties praktisku ieskatu par savu personīgo privātumu.",
     fictionalPersona: "Fiktīvās personas demo",
-    fictionalPersonaDesc: "Iemācieties procesu ar iepriekš aizpildītiem piemēra datiem (bez reālām meklēšanām)",
+    fictionalPersonaDesc: "Izejiet cauri audita procesam, izmantojot piemēra datus, nemeklējot neko reālu. Lieliski, lai vispirms iemācītos, kā rīki darbojas, praktizētos grupas vidē vai ja esat koplietotā/darba datorā un nevēlaties meklēt personīgo informāciju.",
     deviceLabel: "Ierīce",
     osLabel: "OS",
     browserLabel: "Pārlūkprogramma",
     consent:
       "Turpinot, jūs atzīstat, ka šis ir pašnovērtējuma rīks. Mēs nevācam un nepārsūtām nekādus personīgos identifikatorus. Visi dati paliek jūsu ierīcē.",
-    optionalHelp: "Neobligāti: Palīdziet mums parādīt atbilstošas instrukcijas",
+    optionalHelp: "Norādot savu ierīci, OS un pārlūkprogrammu, mēs varēsim parādīt pareizās instrukcijas sīkdatņu dzēšanai un privātuma iestatījumu pielāgošanai tieši jūsu konfigurācijai.",
     introParagraph: "Katru reizi, kad pārlūkojat tīmekli, jūs atstājat pēdas - jūsu vārds meklēšanas rezultātos, izsekotāji, kas seko jums pa vietnēm, un unikāls pārlūkprogrammas pirkstu nospiedums, kas jūs identificē. Šī praktiskā laboratorija palīdz jums precīzi uzzināt, kas par jums ir redzams tiešsaistē, un sniedz rīkus, lai atgūtu kontroli pār savu privātumu.",
     whatToExpect: "Ko jūs darīsiet",
     expectDescription: "Nākamo 60 minūšu laikā jūs izmantosiet bezmaksas privātuma rīkus, lai pārbaudītu savu digitālo klātbūtni. Jūs meklēsiet savu vārdu tiešsaistē, skenēsiet vietnes, lai atrastu slēptus izsekotājus, pārbaudīsiet, vai jūsu pārlūkprogrammu var unikāli identificēt, pārskatīsiet savus reklāmu iestatījumus un veiksiet tīrīšanas darbības. Beigās jūs saņemsiet personalizētu atskaiti ar saviem atradumiem un ieteicamajiem nākamajiem soļiem.",
@@ -777,6 +779,7 @@ const lv: Translations = {
     prepPoint2: "Izmantojiet inkognito/privāto logu, ja esat koplietotā datorā",
     prepPoint3: "Atvēliet nepārtrauktu laiku, lai koncentrētos uz katru soli",
     chooseYourPath: "Izvēlieties savu ceļu",
+    chooseYourPathDesc: "Jūs varat vai nu pārbaudīt savu reālo digitālo pēdu, vai praktizēties ar fiktīviem piemēra datiem. Abi ceļi māca tos pašus konceptus - izvēlieties, balstoties uz to, vai esat gatavs meklēt savu informāciju.",
   },
   steps: {
     welcome: "Sveicināti",
@@ -1114,15 +1117,15 @@ const ru: Translations = {
       "Только самопроверка: Ищите только свои идентификаторы или используйте режим вымышленной персоны. Мы никогда не спрашиваем ваше имя, email или телефон. Вы будете записывать только числа и ответы да/нет. Всё остаётся на вашем устройстве.",
     chooseMode: "Выберите, как вы хотите продолжить:",
     myFootprint: "Мой след",
-    myFootprintDesc: "Искать своё имя и записывать реальные результаты из живых инструментов",
+    myFootprintDesc: "Проверьте своё реальное цифровое присутствие, выполняя поиск своего имени и используя реальные инструменты конфиденциальности. Вы узнаете, что действительно видно о вас в сети, и выполните реальные действия по очистке. Лучший выбор, если вам нужны практические результаты о вашей личной конфиденциальности.",
     fictionalPersona: "Демо вымышленной персоны",
-    fictionalPersonaDesc: "Изучите процесс с предзаполненными примерами (без реального поиска)",
+    fictionalPersonaDesc: "Пройдите процесс аудита с примерными данными без реального поиска. Отлично подходит для изучения работы инструментов, практики в группе или если вы на общем/рабочем компьютере и предпочитаете не искать личную информацию.",
     deviceLabel: "Устройство",
     osLabel: "ОС",
     browserLabel: "Браузер",
     consent:
       "Продолжая, вы подтверждаете, что это инструмент самопроверки. Мы не собираем и не передаём никаких личных идентификаторов. Все данные остаются на вашем устройстве.",
-    optionalHelp: "Необязательно: Помогите нам показать подходящие инструкции",
+    optionalHelp: "Указав ваше устройство, ОС и браузер, мы сможем показать правильные инструкции по очистке cookies и настройке конфиденциальности именно для вашей конфигурации.",
     introParagraph: "Каждый раз, когда вы просматриваете интернет, вы оставляете следы - ваше имя в результатах поиска, трекеры, следящие за вами на разных сайтах, и уникальный отпечаток браузера, который вас идентифицирует. Эта практическая лаборатория поможет вам точно узнать, что о вас видно в сети, и даст инструменты для восстановления контроля над вашей конфиденциальностью.",
     whatToExpect: "Что вы будете делать",
     expectDescription: "В течение следующих 60 минут вы будете использовать бесплатные инструменты конфиденциальности для проверки своего цифрового присутствия. Вы поищете своё имя в интернете, просканируете сайты на скрытые трекеры, проверите, можно ли уникально идентифицировать ваш браузер, проверите настройки рекламы и выполните действия по очистке. В конце вы получите персонализированный отчёт с вашими результатами и рекомендуемыми следующими шагами.",
@@ -1137,6 +1140,7 @@ const ru: Translations = {
     prepPoint2: "Используйте режим инкогнито/приватный режим на общем компьютере",
     prepPoint3: "Выделите непрерывное время для сосредоточения на каждом этапе",
     chooseYourPath: "Выберите свой путь",
+    chooseYourPathDesc: "Вы можете либо проверить свой реальный цифровой след, либо попрактиковаться с вымышленными примерными данными. Оба пути обучают одним и тем же концепциям - выбирайте в зависимости от того, готовы ли вы искать свою информацию.",
   },
   steps: {
     welcome: "Добро пожаловать",

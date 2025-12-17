@@ -105,8 +105,11 @@ export default function Welcome() {
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-center gap-2">
+          <div className="text-center space-y-2">
             <h2 className="text-lg font-semibold text-foreground">{t.welcome.chooseYourPath}</h2>
+            <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+              {t.welcome.chooseYourPathDesc}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -118,19 +121,19 @@ export default function Welcome() {
               onClick={() => handleModeChange("self")}
               data-testid="mode-self"
             >
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center gap-3">
+              <CardContent className="p-5">
+                <div className="flex items-start gap-4">
                   <div
                     className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center",
+                      "w-10 h-10 rounded-full flex items-center justify-center shrink-0",
                       mode === "self" ? "bg-primary text-primary-foreground" : "bg-muted"
                     )}
                   >
-                    <User className="w-6 h-6" />
+                    <User className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <h3 className="font-semibold text-foreground">{t.welcome.myFootprint}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {t.welcome.myFootprintDesc}
                     </p>
                   </div>
@@ -146,19 +149,19 @@ export default function Welcome() {
               onClick={() => handleModeChange("fictional")}
               data-testid="mode-fictional"
             >
-              <CardContent className="p-6">
-                <div className="flex flex-col items-center text-center gap-3">
+              <CardContent className="p-5">
+                <div className="flex items-start gap-4">
                   <div
                     className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center",
+                      "w-10 h-10 rounded-full flex items-center justify-center shrink-0",
                       mode === "fictional" ? "bg-primary text-primary-foreground" : "bg-muted"
                     )}
                   >
-                    <FlaskConical className="w-6 h-6" />
+                    <FlaskConical className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <h3 className="font-semibold text-foreground">{t.welcome.fictionalPersona}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {t.welcome.fictionalPersonaDesc}
                     </p>
                   </div>
