@@ -65,7 +65,7 @@ export default function AccountDevice() {
                 <ExternalLinkCard
                   title={t.externalTools.androidAdIdTitle}
                   description={t.externalTools.androidAdIdDesc}
-                  url="https://support.google.com/googleplay/android-developer/answer/6048248?hl=en"
+                  url="https://support.google.com/android/answer/3118621?hl=en"
                   icon={<SiAndroid className="w-5 h-5" />}
                   testId="link-android-ads"
                 />
