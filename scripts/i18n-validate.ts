@@ -87,6 +87,11 @@ function validatePlaceholderConsistency(
   const locales = Object.keys(translations).filter((l) => l !== "en");
 
   for (const [key, enValue] of Object.entries(enStrings)) {
+    // Skip ICU plural messages - they have localized plural categories
+    if (enValue.includes("{") && (enValue.includes("plural,") || enValue.includes(", plural,"))) {
+      continue;
+    }
+    
     const enPlaceholders = extractPlaceholders(enValue);
 
     for (const locale of locales) {
@@ -99,6 +104,11 @@ function validatePlaceholderConsistency(
           message: `Missing translation for key: ${key}`,
           type: "missing",
         });
+        continue;
+      }
+
+      // Skip ICU plural messages for localized versions too
+      if (localizedValue.includes("{") && (localizedValue.includes("plural,") || localizedValue.includes(", plural,"))) {
         continue;
       }
 
