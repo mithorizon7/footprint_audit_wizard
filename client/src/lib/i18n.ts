@@ -61,6 +61,32 @@ export interface Translations {
     prepPoint3: string;
     chooseYourPath: string;
     chooseYourPathDesc: string;
+    auditPurposeTitle: string;
+    auditPurposeDesc1: string;
+    auditPurposeDesc2: string;
+    understandingOptionsTitle: string;
+    optionTableStarting: string;
+    optionTableTools: string;
+    optionTableLearn: string;
+    optionTableBestFor: string;
+    optionSelfStarting: string;
+    optionSelfTools: string;
+    optionSelfLearn: string;
+    optionSelfBestFor: string;
+    optionDemoStarting: string;
+    optionDemoTools: string;
+    optionDemoLearn: string;
+    optionDemoBestFor: string;
+    privacyProtectedTitle: string;
+    privacyProtectedIntro: string;
+    privacyBullet1Title: string;
+    privacyBullet1Desc: string;
+    privacyBullet2Title: string;
+    privacyBullet2Desc: string;
+    privacyBullet3Title: string;
+    privacyBullet3Desc: string;
+    privacyBullet4Title: string;
+    privacyBullet4Desc: string;
   };
   steps: {
     welcome: string;
@@ -503,6 +529,32 @@ const en: Translations = {
     prepPoint3: "Set aside uninterrupted time to focus on each step",
     chooseYourPath: "Choose Your Path",
     chooseYourPathDesc: "You can either audit your real digital footprint or practice with fictional example data. Both paths teach the same concepts - choose based on whether you're ready to search your own information.",
+    auditPurposeTitle: "What This Audit Helps You Do",
+    auditPurposeDesc1: "Your digital footprint is the trail of data you leave behind online - from search results containing your name to invisible trackers following you across websites. Understanding this footprint is the first step to taking control of your privacy.",
+    auditPurposeDesc2: "There are many free tools across the internet that can help you see what's being collected about you - but they're scattered and can be overwhelming to navigate alone. This guided audit walks you through the most important ones, step by step, helping you understand what you find and what actions you can take.",
+    understandingOptionsTitle: "Understanding Your Options",
+    optionTableStarting: "Starting point",
+    optionTableTools: "External tools",
+    optionTableLearn: "What you learn",
+    optionTableBestFor: "Best for",
+    optionSelfStarting: "Blank - you enter your real findings",
+    optionSelfTools: "Active links to Blacklight, EFF, etc.",
+    optionSelfLearn: "Actual insights about your privacy",
+    optionSelfBestFor: "Getting actionable results for yourself",
+    optionDemoStarting: "Pre-filled with example data",
+    optionDemoTools: "Disabled by default (with option to enable)",
+    optionDemoLearn: "How the process works using sample data",
+    optionDemoBestFor: "Learning first, group training, or shared computers",
+    privacyProtectedTitle: "Your Privacy is Protected",
+    privacyProtectedIntro: "This is a self-audit tool. We have no servers, no accounts, no tracking.",
+    privacyBullet1Title: "Nothing leaves your browser",
+    privacyBullet1Desc: "All your responses are stored only in this browser's local storage on this device",
+    privacyBullet2Title: "No data transmitted",
+    privacyBullet2Desc: "We don't collect, store, or send any information you enter",
+    privacyBullet3Title: "You control deletion",
+    privacyBullet3Desc: "Clear all data instantly using the reset button at any time",
+    privacyBullet4Title: "External tools are your choice",
+    privacyBullet4Desc: "When you click links to tools like Blacklight or EFF, those sites open in new tabs and are separate from this audit",
   },
   steps: {
     welcome: "Welcome",
@@ -1020,6 +1072,32 @@ const lv: Translations = {
     prepPoint3: "Atvēliet nepārtrauktu laiku, lai koncentrētos uz katru soli",
     chooseYourPath: "Izvēlieties savu ceļu",
     chooseYourPathDesc: "Jūs varat vai nu pārbaudīt savu reālo digitālo pēdu, vai praktizēties ar fiktīviem piemēra datiem. Abi ceļi māca tos pašus konceptus - izvēlieties, balstoties uz to, vai esat gatavs meklēt savu informāciju.",
+    auditPurposeTitle: "Ko šis audits palīdz jums izdarīt",
+    auditPurposeDesc1: "Jūsu digitālā pēda ir datu pēdas, ko atstājat tiešsaistē - no meklēšanas rezultātiem ar jūsu vārdu līdz neredzamiem izsekotājiem, kas seko jums pa tīmekļa vietnēm. Šīs pēdas izpratne ir pirmais solis, lai pārņemtu kontroli pār savu privātumu.",
+    auditPurposeDesc2: "Internetā ir daudz bezmaksas rīku, kas var palīdzēt redzēt, kas tiek vākts par jums - bet tie ir izkaisīti un var būt grūti orientēties vienatnē. Šis vadītais audits palīdz jums iziet cauri svarīgākajiem, soli pa solim, palīdzot saprast, ko atrodat un kādas darbības varat veikt.",
+    understandingOptionsTitle: "Izpratne par jūsu iespējām",
+    optionTableStarting: "Sākumpunkts",
+    optionTableTools: "Ārējie rīki",
+    optionTableLearn: "Ko jūs uzzināsiet",
+    optionTableBestFor: "Vislabāk piemērots",
+    optionSelfStarting: "Tukšs - jūs ievadāt savus reālos atradumus",
+    optionSelfTools: "Aktīvas saites uz Blacklight, EFF utt.",
+    optionSelfLearn: "Reālas atziņas par jūsu privātumu",
+    optionSelfBestFor: "Praktisku rezultātu iegūšanai sev",
+    optionDemoStarting: "Aizpildīts ar piemēra datiem",
+    optionDemoTools: "Pēc noklusējuma atspējots (ar iespēju iespējot)",
+    optionDemoLearn: "Kā process darbojas, izmantojot parauga datus",
+    optionDemoBestFor: "Vispirms mācīšanās, grupu apmācība vai dalīti datori",
+    privacyProtectedTitle: "Jūsu privātums ir aizsargāts",
+    privacyProtectedIntro: "Šis ir pašaudita rīks. Mums nav serveru, nav kontu, nav izsekošanas.",
+    privacyBullet1Title: "Nekas nepamet jūsu pārlūkprogrammu",
+    privacyBullet1Desc: "Visas jūsu atbildes tiek glabātas tikai šīs pārlūkprogrammas lokālajā krātuvē šajā ierīcē",
+    privacyBullet2Title: "Dati netiek pārsūtīti",
+    privacyBullet2Desc: "Mēs nevācam, neglabājam un nesūtām nekādu informāciju, ko ievadāt",
+    privacyBullet3Title: "Jūs kontrolējat dzēšanu",
+    privacyBullet3Desc: "Dzēsiet visus datus uzreiz, izmantojot atiestatīšanas pogu jebkurā laikā",
+    privacyBullet4Title: "Ārējie rīki ir jūsu izvēle",
+    privacyBullet4Desc: "Noklikšķinot uz saitēm uz rīkiem kā Blacklight vai EFF, šīs vietnes atveras jaunās cilnēs un ir atsevišķi no šī audita",
   },
   steps: {
     welcome: "Sveicināti",
@@ -1521,6 +1599,32 @@ const ru: Translations = {
     prepPoint3: "Выделите непрерывное время для сосредоточения на каждом этапе",
     chooseYourPath: "Выберите свой путь",
     chooseYourPathDesc: "Вы можете либо проверить свой реальный цифровой след, либо попрактиковаться с вымышленными примерными данными. Оба пути обучают одним и тем же концепциям - выбирайте в зависимости от того, готовы ли вы искать свою информацию.",
+    auditPurposeTitle: "Что помогает сделать этот аудит",
+    auditPurposeDesc1: "Ваш цифровой след - это данные, которые вы оставляете в интернете: от результатов поиска с вашим именем до невидимых трекеров, следящих за вами на сайтах. Понимание этого следа - первый шаг к контролю над вашей конфиденциальностью.",
+    auditPurposeDesc2: "В интернете есть много бесплатных инструментов, которые помогут увидеть, что о вас собирают - но они разбросаны и могут быть сложны для самостоятельного изучения. Этот пошаговый аудит проведёт вас через самые важные из них, помогая понять находки и возможные действия.",
+    understandingOptionsTitle: "Понимание ваших вариантов",
+    optionTableStarting: "Начальная точка",
+    optionTableTools: "Внешние инструменты",
+    optionTableLearn: "Что вы узнаете",
+    optionTableBestFor: "Лучше всего для",
+    optionSelfStarting: "Пустой - вы вводите свои реальные находки",
+    optionSelfTools: "Активные ссылки на Blacklight, EFF и др.",
+    optionSelfLearn: "Реальные выводы о вашей конфиденциальности",
+    optionSelfBestFor: "Получения практических результатов для себя",
+    optionDemoStarting: "Заполнен примерными данными",
+    optionDemoTools: "По умолчанию отключены (с возможностью включить)",
+    optionDemoLearn: "Как работает процесс на примерных данных",
+    optionDemoBestFor: "Сначала обучения, групповых тренингов или общих компьютеров",
+    privacyProtectedTitle: "Ваша конфиденциальность защищена",
+    privacyProtectedIntro: "Это инструмент самоаудита. У нас нет серверов, аккаунтов, отслеживания.",
+    privacyBullet1Title: "Ничего не покидает ваш браузер",
+    privacyBullet1Desc: "Все ваши ответы хранятся только в локальном хранилище этого браузера на этом устройстве",
+    privacyBullet2Title: "Данные не передаются",
+    privacyBullet2Desc: "Мы не собираем, не храним и не отправляем никакую введённую вами информацию",
+    privacyBullet3Title: "Вы контролируете удаление",
+    privacyBullet3Desc: "Удалите все данные мгновенно с помощью кнопки сброса в любое время",
+    privacyBullet4Title: "Внешние инструменты - ваш выбор",
+    privacyBullet4Desc: "Когда вы нажимаете на ссылки на инструменты вроде Blacklight или EFF, эти сайты открываются в новых вкладках и отделены от этого аудита",
   },
   steps: {
     welcome: "Добро пожаловать",
