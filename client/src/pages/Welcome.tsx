@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Shield, User, FlaskConical, Monitor, Smartphone, HelpCircle, Clock, CheckCircle, ExternalLink, Lock, Lightbulb, Key } from "lucide-react";
+import { Shield, User, FlaskConical, Monitor, Smartphone, HelpCircle, Clock, CheckCircle, ExternalLink, Lock, Lightbulb, Key, Database, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Mode, DeviceType, OS, Browser } from "@shared/schema";
 
@@ -36,80 +36,144 @@ export default function Welcome() {
           </p>
         </div>
 
-        <p className="text-base text-foreground leading-relaxed text-center max-w-2xl mx-auto bg-primary/5 p-6 rounded-md border border-primary/10">
-          {t.welcome.introParagraph}
-        </p>
-
+        {/* What This Audit Helps You Do */}
         <Card className="p-0">
-          <CardContent className="p-6 space-y-6">
-            <div className="space-y-4">
-              <h2 className="font-semibold text-foreground text-lg">{t.welcome.whatToExpect}</h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {t.welcome.expectDescription}
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
-                  <Clock className="w-5 h-5 text-primary" />
-                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectTime}</span>
-                </div>
-                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
-                  <CheckCircle className="w-5 h-5 text-primary" />
-                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectSteps}</span>
-                </div>
-                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
-                  <ExternalLink className="w-5 h-5 text-primary" />
-                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectTools}</span>
-                </div>
-                <div className="flex flex-col items-center gap-2 p-3 bg-muted/50 rounded-md">
-                  <Lock className="w-5 h-5 text-primary" />
-                  <span className="text-xs text-muted-foreground text-center">{t.welcome.expectPrivacy}</span>
-                </div>
-              </div>
-            </div>
+          <CardContent className="p-6 space-y-4">
+            <h2 className="font-semibold text-foreground text-lg">{t.welcome.auditPurposeTitle}</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {t.welcome.auditPurposeDesc1}
+            </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {t.welcome.auditPurposeDesc2}
+            </p>
+          </CardContent>
+        </Card>
 
-            <div className="border-t pt-4 space-y-3">
-              <div className="flex items-center gap-2">
-                <Lightbulb className="w-5 h-5 text-primary" />
-                <h2 className="font-semibold text-foreground">{t.welcome.beforeYouStart}</h2>
-              </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <Key className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-                  <span>{t.welcome.prepPoint1}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Monitor className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-                  <span>{t.welcome.prepPoint2}</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <Clock className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-                  <span>{t.welcome.prepPoint3}</span>
-                </li>
-              </ul>
+        {/* Understanding Your Options - Comparison Table */}
+        <Card className="p-0">
+          <CardContent className="p-6 space-y-4">
+            <h2 className="font-semibold text-foreground text-lg">{t.welcome.understandingOptionsTitle}</h2>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-2 pr-4 font-medium text-muted-foreground"></th>
+                    <th className="text-left py-2 px-4 font-semibold text-foreground">
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-primary" />
+                        {t.welcome.myFootprint}
+                      </div>
+                    </th>
+                    <th className="text-left py-2 px-4 font-semibold text-foreground">
+                      <div className="flex items-center gap-2">
+                        <FlaskConical className="w-4 h-4 text-primary" />
+                        {t.welcome.fictionalPersona}
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableStarting}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfStarting}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoStarting}</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableTools}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfTools}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoTools}</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableLearn}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfLearn}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoLearn}</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableBestFor}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfBestFor}</td>
+                    <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoBestFor}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </CardContent>
         </Card>
 
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md p-5 max-w-xl mx-auto">
-          <div className="flex items-start gap-3">
+        {/* Your Privacy is Protected */}
+        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md p-6 space-y-4">
+          <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center shrink-0">
               <Shield className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             </div>
-            <div className="space-y-1">
-              <h3 className="font-semibold text-emerald-800 dark:text-emerald-200">{t.welcome.privacyTitle}</h3>
-              <p className="text-sm text-emerald-700 dark:text-emerald-300 leading-relaxed">
-                {t.welcome.privacyDescription}
+            <div>
+              <h3 className="font-semibold text-emerald-800 dark:text-emerald-200">{t.welcome.privacyProtectedTitle}</h3>
+              <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                {t.welcome.privacyProtectedIntro}
               </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="flex items-start gap-2">
+              <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet1Title}</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet1Desc}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <Database className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet2Title}</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet2Desc}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <Trash2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet3Title}</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet3Desc}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2">
+              <ExternalLink className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet4Title}</p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet4Desc}</p>
+              </div>
             </div>
           </div>
         </div>
 
+        {/* Before You Start Tips */}
+        <Card className="p-0">
+          <CardContent className="p-6 space-y-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-primary" />
+              <h2 className="font-semibold text-foreground">{t.welcome.beforeYouStart}</h2>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <Key className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+                <span>{t.welcome.prepPoint1}</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Monitor className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+                <span>{t.welcome.prepPoint2}</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Clock className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
+                <span>{t.welcome.prepPoint3}</span>
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        {/* Mode Selection */}
         <div className="space-y-4">
           <div className="text-center space-y-2">
             <h2 className="text-lg font-semibold text-foreground">{t.welcome.chooseYourPath}</h2>
-            <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-              {t.welcome.chooseYourPathDesc}
-            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
