@@ -6,6 +6,7 @@ import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
+import { CleanupEducational } from "@/components/wizard/EducationalContent";
 import { Trash2, FileText, ShieldCheck, ShieldAlert } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AlertBox } from "@/components/wizard/AlertBox";
@@ -61,6 +62,8 @@ export default function Cleanup() {
         concept={t.cleanup.concept}
         whyItMatters={t.cleanup.whyItMatters}
       >
+        <CleanupEducational content={t.cleanup.educationalContent} />
+
         <InstructionBlock
           title={t.instructions.whatToDo}
           instructions={[

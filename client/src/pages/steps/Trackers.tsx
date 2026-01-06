@@ -7,6 +7,7 @@ import { NumberStepper } from "@/components/wizard/NumberStepper";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
+import { TrackersEducational } from "@/components/wizard/EducationalContent";
 import { Eye, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import type { YesNo, YesNoUnsure, SiteCategory } from "@shared/schema";
@@ -25,6 +26,8 @@ export default function Trackers() {
         concept={t.trackers.concept}
         whyItMatters={t.trackers.whyItMatters}
       >
+        <TrackersEducational content={t.trackers.educationalContent} />
+
         <InstructionBlock
           title={t.instructions.whatToDo}
           instructions={[

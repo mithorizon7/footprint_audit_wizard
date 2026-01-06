@@ -6,6 +6,7 @@ import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { NumberStepper } from "@/components/wizard/NumberStepper";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
+import { PublicExposureEducational } from "@/components/wizard/EducationalContent";
 import { Search, FileText, Shield } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import type { YesNoUnsure, YesNo } from "@shared/schema";
@@ -24,6 +25,8 @@ export default function PublicExposure() {
         concept={t.publicExposure.concept}
         whyItMatters={t.publicExposure.whyItMatters}
       >
+        <PublicExposureEducational content={t.publicExposure.educationalContent} />
+
         <InstructionBlock
           title={t.instructions.whatToDo}
           instructions={[

@@ -120,6 +120,20 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    educationalContent: {
+      sectionTitle: string;
+      industryTitle: string;
+      industryParagraph1: string;
+      industryParagraph2: string;
+      dataSourcesTitle: string;
+      dataSourcesParagraph: string;
+      dataSourcesList: string[];
+      dataSourcesConclusion: string;
+      meaningTitle: string;
+      meaningParagraph: string;
+      meaningList: string[];
+      activityPreview: string;
+    };
     externalTools: string;
     recordFindings: string;
     searchPagesQuestion: string;
@@ -132,6 +146,27 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    educationalContent: {
+      sectionTitle: string;
+      introTitle: string;
+      introParagraph1: string;
+      introParagraph2: string;
+      trackingTypesTitle: string;
+      trackingTypesIntro: string;
+      trackingTypes: {
+        adTrackers: { title: string; description: string };
+        thirdPartyCookies: { title: string; description: string };
+        sessionRecording: { title: string; description: string };
+        keystrokeLogging: { title: string; description: string };
+        canvasFingerprinting: { title: string; description: string };
+        facebookPixel: { title: string; description: string };
+        googleAnalytics: { title: string; description: string };
+      };
+      beyondAdsTitle: string;
+      beyondAdsParagraph: string;
+      beyondAdsList: string[];
+      activityPreview: string;
+    };
     externalTool: string;
     blacklightTip: string;
     recordFindings: string;
@@ -151,6 +186,20 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    educationalContent: {
+      sectionTitle: string;
+      introTitle: string;
+      introParagraph: string;
+      howItWorksTitle: string;
+      howItWorksParagraph: string;
+      attributesList: string[];
+      statisticsTitle: string;
+      statisticsParagraph: string;
+      privateBrowsingTitle: string;
+      privateBrowsingParagraph1: string;
+      privateBrowsingParagraph2: string;
+      activityPreview: string;
+    };
     externalTools: string;
     whatToLookFor: string;
     effRunQuestion: string;
@@ -163,6 +212,22 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    educationalContent: {
+      sectionTitle: string;
+      introTitle: string;
+      introParagraph: string;
+      howItWorksTitle: string;
+      howItWorksParagraph: string;
+      howItWorksList: string[];
+      scaleTitle: string;
+      scaleParagraph: string;
+      attTitle: string;
+      attParagraph1: string;
+      attParagraph2: string;
+      activityPreviewTitle: string;
+      activityPreviewList: string[];
+      activityPreviewConclusion: string;
+    };
     externalTools: string;
     recordSettings: string;
     googleAdsQuestion: string;
@@ -175,6 +240,25 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    educationalContent: {
+      sectionTitle: string;
+      breachesTitle: string;
+      breachesParagraph1: string;
+      breachesParagraph2: string;
+      cookiesTitle: string;
+      cookiesParagraph: string;
+      cookiesList: string[];
+      blockingTitle: string;
+      blockingParagraph1: string;
+      blockingParagraph2: string;
+      blockingBrowsers: string[];
+      hibpTitle: string;
+      hibpParagraph1: string;
+      hibpParagraph2: string;
+      activityPreviewTitle: string;
+      activityPreviewList: string[];
+      activityPreviewConclusion: string;
+    };
     browserInstructions: string;
     breachExposure: string;
     breachExposureDesc: string;
@@ -481,6 +565,33 @@ const en: Translations = {
     title: "Public Exposure",
     concept: "Some personal info is publicly discoverable via search. 'Privacy' isn't only about what you post yourself.",
     whyItMatters: "Data brokers and people-search sites aggregate public records, social media, and other sources. Even without your knowledge, your contact info may be visible to anyone with a search engine.",
+    educationalContent: {
+      sectionTitle: "Understanding Public Exposure",
+      industryTitle: "The $323 Billion Industry Trading Your Identity",
+      industryParagraph1: "Every time you've filled out a form, registered to vote, bought a house, or even just existed as a citizen, you've created data points. What you may not know is that a massive industry has built itself around collecting, packaging, and selling this information about you.",
+      industryParagraph2: "The data broker industry is worth $323 billion in 2024 and is projected to nearly double to $697 billion by 2034. These companies don't just have a file on you—they maintain an average of 1,500 data points per person. One of the largest brokers, Acxiom, holds over 2.5 billion consumer records worldwide. Data brokers trade information on over 80% of American consumers.",
+      dataSourcesTitle: "Where Does Your Data Come From?",
+      dataSourcesParagraph: "People-search sites like Spokeo, Whitepages, and BeenVerified don't create information about you—they aggregate it from sources you'd never expect:",
+      dataSourcesList: [
+        "Public records: Property deeds, court filings, voter registrations, marriage licenses, bankruptcy filings",
+        "Commercial sources: Credit applications, car loans, rental agreements, utility records, and even some state DMVs that sell registration data",
+        "Social media: Any profile you've ever made public, even briefly",
+        "Other data brokers: These companies cross-reference and sell data to each other, creating an interconnected web"
+      ],
+      dataSourcesConclusion: "The key insight is that none of this data was necessarily \"leaked\"—much of it has always been technically public. The difference now is that companies have automated the collection and made your entire life searchable in seconds. What once required a private investigator and weeks of work now takes anyone with internet access about 30 seconds.",
+      meaningTitle: "What This Means for You",
+      meaningParagraph: "When a stranger, a potential employer, an ex-partner, or a scammer searches your name, they can potentially find:",
+      meaningList: [
+        "Your current and previous addresses",
+        "Phone numbers (including ones you thought were private)",
+        "Email addresses",
+        "Names of your relatives and associates",
+        "Your approximate age and date of birth",
+        "Property ownership and estimated home value",
+        "Court records and legal history"
+      ],
+      activityPreview: "The activity you're about to do will show you exactly what's discoverable about you. For many people, this is eye-opening—not because they've done anything wrong, but because they had no idea how much of their life is catalogued and for sale."
+    },
     externalTools: "External Tools",
     recordFindings: "Record Your Findings",
     searchPagesQuestion: "How many search result pages contained personal info (address, phone, relatives)?",
@@ -493,6 +604,53 @@ const en: Translations = {
     title: "Tracker Visibility",
     concept: "One normal webpage can load dozens of third parties. Tracking isn't just 'cookies' — it includes session recording, fingerprinting, and more.",
     whyItMatters: "When you visit a website, invisible scripts often record your behavior, share data with advertisers, and build a profile of your interests — often without your knowledge.",
+    educationalContent: {
+      sectionTitle: "Understanding Web Tracking",
+      introTitle: "What Happens in the First Second You Visit a Website",
+      introParagraph1: "When you click a link to visit a website, something invisible happens before the page even finishes loading. Scripts execute, connections open to dozens of third-party servers, and data about you begins flowing in multiple directions. This happens so fast you'd never notice—but it's happening on almost every website you visit.",
+      introParagraph2: "Research shows that 90% of websites include at least one tracking script, and the average website has 48 trackers. Social media sites are the worst offenders, averaging 28 trackers per site—and in some regions like Hong Kong, that number climbs to 169 trackers on a single social media site. Google trackers are present on 74% of all web traffic, with Facebook accounting for another 11%. A typical user encounters approximately 177 different trackers every week.",
+      trackingTypesTitle: "The Seven Types of Tracking You'll Discover",
+      trackingTypesIntro: "The tool you're about to use (Blacklight, created by The Markup) will reveal what's really happening behind the scenes:",
+      trackingTypes: {
+        adTrackers: {
+          title: "Ad Trackers",
+          description: "These send information about your visit to advertising networks. They're building a profile of your interests based on every site you visit, every product you look at, and how long you spend on each page."
+        },
+        thirdPartyCookies: {
+          title: "Third-Party Cookies",
+          description: "Unlike cookies from the site you're visiting, these come from external domains. Here's how they work: You visit an online shoe store, and a cookie from an ad network (let's call it \"adtracker.com\") is placed in your browser. Later, you visit a news site that also uses adtracker.com. That same cookie is read, and now the ad network knows you were shopping for shoes. That's why you see shoe ads following you around the internet."
+        },
+        sessionRecording: {
+          title: "Session Recording",
+          description: "This is more invasive than you might expect. Session recording tools capture a video-like reconstruction of everything you do on a page—your mouse movements, where you pause, what you click, how you scroll. Companies like Hotjar and FullStory sell these services, and thousands of websites use them. The recording shows exactly what you saw and did, replayed like a movie."
+        },
+        keystrokeLogging: {
+          title: "Keystroke Logging",
+          description: "Some tracking scripts record what you type into forms—sometimes even before you hit submit. This is primarily used to capture partial form submissions, but it means your keystrokes are being transmitted to servers as you type."
+        },
+        canvasFingerprinting: {
+          title: "Canvas Fingerprinting",
+          description: "Your browser can be asked to draw an invisible image. Due to subtle differences in how your specific hardware and software render graphics, this image is slightly different from almost everyone else's. This creates an identifier that works even if you block cookies."
+        },
+        facebookPixel: {
+          title: "Facebook Pixel",
+          description: "Even if you're not logged into Facebook, and even if you don't have a Facebook account, many websites send data to Facebook about your visit through an embedded tracking pixel."
+        },
+        googleAnalytics: {
+          title: "Google Analytics",
+          description: "Present on the majority of websites, Google Analytics tracks visitors and shares data with Google's advertising ecosystem."
+        }
+      },
+      beyondAdsTitle: "Why This Matters Beyond Ads",
+      beyondAdsParagraph: "You might think: \"So what? I just get more relevant ads.\" But tracking has implications beyond advertising:",
+      beyondAdsList: [
+        "Price discrimination: Some retailers show different prices based on your browsing history or inferred income level",
+        "Insurance and employment: Data brokers sell behavioral profiles that can influence credit decisions, insurance rates, and even hiring",
+        "Profile permanence: The behavioral profiles built from tracking data persist for years and are traded between companies",
+        "Security risk: Each company that holds data about you is a potential breach target"
+      ],
+      activityPreview: "The activity you're about to do lets you scan a website you actually visit and see exactly what tracking is happening. Many people are shocked to see the number and types of trackers on their favorite sites."
+    },
     externalTool: "External Tool",
     blacklightTip: "Tip: Try scanning a news site or shopping site you frequently visit. Avoid sensitive sites like health portals or banking.",
     recordFindings: "Record Your Findings",
@@ -512,6 +670,29 @@ const en: Translations = {
     title: "Fingerprinting",
     concept: "Clearing cookies doesn't make you invisible. Browser fingerprinting can still identify your device through unique combinations of settings, fonts, and hardware.",
     whyItMatters: "Even in 'private browsing' mode, your browser's unique characteristics (screen size, installed fonts, timezone, WebGL settings) can create a fingerprint that identifies you across websites.",
+    educationalContent: {
+      sectionTitle: "Understanding Browser Fingerprinting",
+      introTitle: "The Tracking Method You Can't Block by Clearing Cookies",
+      introParagraph: "You've probably heard that clearing your cookies helps protect your privacy. And it does—for one type of tracking. But there's another method that doesn't require storing anything on your device at all. It's called browser fingerprinting, and studies show it can uniquely identify 83-90% of browsers.",
+      howItWorksTitle: "How Your Browser Betrays Your Identity",
+      howItWorksParagraph: "Browser fingerprinting works by collecting dozens of small details about your device and browser that, combined, create a unique signature. Think of it like this: any single characteristic might be common, but the specific combination of 20 or 30 characteristics together is likely unique to you. Here's what gets collected:",
+      attributesList: [
+        "Screen resolution and color depth: Your display's exact pixel dimensions",
+        "Timezone and language: Your location and language preferences",
+        "Installed fonts: The specific combination of fonts on your system is highly distinctive",
+        "Browser plugins: Which extensions and their versions you have installed",
+        "Hardware specifications: Details about your graphics card, CPU, and available memory",
+        "WebGL rendering: Your browser can be asked to draw a 3D graphic, and microscopic differences in how your hardware renders it create a unique signature",
+        "Audio fingerprinting: Similar technique using audio processing",
+        "Canvas fingerprinting: Drawing an invisible 2D image to identify rendering differences"
+      ],
+      statisticsTitle: "The Numbers Are Striking",
+      statisticsParagraph: "The Electronic Frontier Foundation (EFF) demonstrated that the distribution of fingerprints has at least 18.1 bits of entropy, meaning the average user has only a 1 in 286,777 chance of sharing their exact fingerprint with another user. A 2016 AmIUnique study found that 89.4% of fingerprints are unique. Even a more conservative 2018 study found that 33.6% of fingerprints are completely unique, and on desktop computers specifically, the uniqueness rate remains very high.",
+      privateBrowsingTitle: "Why Private Browsing Doesn't Help Here",
+      privateBrowsingParagraph1: "When you open an incognito or private browsing window, your browser doesn't save cookies or history. But it doesn't change your screen resolution, fonts, graphics card, or timezone. Your fingerprint in private mode is often identical to your fingerprint in regular mode—which means websites can still recognize you.",
+      privateBrowsingParagraph2: "Some privacy-focused browsers like Firefox and Brave have implemented fingerprinting protections that either block certain collection techniques or deliberately provide generic responses.",
+      activityPreview: "The test you're about to run will tell you: (1) whether your browser fingerprint is unique (meaning you can be identified), (2) how strong your tracking protection is, and (3) which specific characteristics make you most identifiable. For many people, discovering that their browser is as unique as a fingerprint—even with no cookies—is a wake-up call about how sophisticated modern tracking has become."
+    },
     externalTools: "External Tools",
     whatToLookFor: "What to look for",
     effRunQuestion: "Did you run the EFF Cover Your Tracks test?",
@@ -524,6 +705,32 @@ const en: Translations = {
     title: "Account & Device Identifiers",
     concept: "Tracking also happens at the account/device level through ad personalization settings, device IDs, and app tracking permissions.",
     whyItMatters: "Even if you block website trackers, your accounts and devices may still share data with advertisers through built-in identifiers that follow you across apps and services.",
+    educationalContent: {
+      sectionTitle: "Understanding Mobile and Account Tracking",
+      introTitle: "The Identifiers That Follow You Across Every App",
+      introParagraph: "Website tracking uses cookies. But what about the apps on your phone? Apps can't read each other's cookies—they're sandboxed for security. So how do advertisers track you across apps? The answer is a special identifier built into your device's operating system: the Google Advertising ID (GAID) on Android and the Identifier for Advertisers (IDFA) on Apple devices.",
+      howItWorksTitle: "How Mobile Advertising IDs Work",
+      howItWorksParagraph: "When you installed your phone's operating system, it generated a unique advertising ID—a string of letters and numbers that identifies your device. This ID is accessible to every app you install, and it's designed specifically to enable advertising and tracking. Here's what this enables:",
+      howItWorksList: [
+        "You search for flights in one app → You see hotel ads in a completely different app",
+        "You browse products in a shopping app → You see ads for those products in your social media apps",
+        "You play a free game → The game shares your activity with ad networks tied to your advertising ID",
+        "Your location data, app usage patterns, and behavioral profile are all linked to this single identifier"
+      ],
+      scaleTitle: "The Scale of Mobile Tracking",
+      scaleParagraph: "Unlike cookies, your advertising ID follows you across your entire app ecosystem—games, social media, news apps, utilities, everything. Because it's persistent, companies can build a comprehensive profile of everything you do on your phone over months or years. Data brokers and ad networks use these identifiers to track your physical location across time, build behavioral profiles based on app usage, connect your app activity to your web browsing through cross-device tracking, and sell this data to advertisers, analytics companies, and increasingly, to anyone willing to pay.",
+      attTitle: "Apple's App Tracking Transparency Changed the Game",
+      attParagraph1: "In 2021, Apple introduced App Tracking Transparency (ATT), which requires apps to ask permission before accessing your IDFA. You've probably seen the popup: \"Allow this app to track your activity across other companies' apps and websites?\" This was significant: before ATT, apps accessed your IDFA automatically without asking.",
+      attParagraph2: "After ATT, users had to explicitly opt in. Current statistics show that globally, about 50% of users now consent to tracking—meaning 50% decline. This single change cost the advertising industry billions of dollars in lost targeting capability. Google is following suit, planning to replace the GAID with more privacy-preserving alternatives.",
+      activityPreviewTitle: "What You'll Check in This Activity",
+      activityPreviewList: [
+        "Google Ad Personalization: Whether Google builds a profile of your interests across all Google services",
+        "Apple Advertising: Whether Apple uses your data for targeted ads within their ecosystem",
+        "Android Advertising ID: You can reset (give yourself a new ID) or delete it entirely",
+        "iOS App Tracking Transparency: Whether apps can request to track you at all"
+      ],
+      activityPreviewConclusion: "Many people discover that ad personalization has been on by default for years, building a detailed profile they never knew existed."
+    },
     externalTools: "External Tools",
     recordSettings: "Record Your Settings",
     googleAdsQuestion: "Is Google personalized ads turned on or off?",
@@ -536,6 +743,39 @@ const en: Translations = {
     title: "Cleanup Sprint",
     concept: "Now it's time to take action. Clear tracking data and optionally enable privacy protections.",
     whyItMatters: "Clearing cookies and site data removes existing trackers. Blocking third-party cookies prevents many future tracking attempts. These are quick wins that immediately improve your privacy.",
+    educationalContent: {
+      sectionTitle: "Why Digital Hygiene Matters",
+      breachesTitle: "The 1.7 Billion Reasons to Practice Good Digital Hygiene",
+      breachesParagraph1: "In 2024 alone, 1.7 billion people had their personal data compromised in data breaches. The largest single breach—at National Public Data—exposed the personal information of approximately 2.9 billion records, including Social Security numbers, addresses, and dates of birth of citizens across the US, Canada, and the UK.",
+      breachesParagraph2: "Here's what makes this particularly sobering: the Ticketmaster, Advance Auto Parts, Change Healthcare, and AT&T breaches—which together exposed over 1.24 billion records—all happened because hackers gained access using compromised credentials for accounts that did not have multi-factor authentication enabled. These were preventable.",
+      cookiesTitle: "Why Cookies Matter for Your Security",
+      cookiesParagraph: "Cookies aren't just about ads—they're also how websites remember that you're logged in. When you visit your email or bank and don't have to re-enter your password, a cookie is what proves to the site that you've already authenticated. This is convenient, but it has implications:",
+      cookiesList: [
+        "If someone accesses your browser, they access your logged-in accounts",
+        "Session hijacking: If an attacker captures your cookies (through malware, insecure WiFi, or a compromised website), they can impersonate you without knowing your password",
+        "Long-lived sessions: Some cookies persist for months or years, meaning a single compromise has a long window of exposure"
+      ],
+      blockingTitle: "Third-Party Cookie Blocking: The Single Most Impactful Setting",
+      blockingParagraph1: "If there's one privacy setting that delivers the most protection for the least inconvenience, it's blocking third-party cookies. First-party cookies come from the site you're visiting (they're necessary for logging in and using the site). Third-party cookies come from external domains and are used almost exclusively for cross-site tracking.",
+      blockingParagraph2: "Modern browsers handle this differently:",
+      blockingBrowsers: [
+        "Firefox: Uses \"Total Cookie Protection\" to isolate third-party cookies per site",
+        "Safari: Blocks third-party cookies by default through \"Prevent Cross-Site Tracking\"",
+        "Chrome: Still allows third-party cookies by default (Google reversed plans to phase them out)",
+        "Enabling this setting breaks cross-site tracking without affecting your ability to use websites normally"
+      ],
+      hibpTitle: "Have I Been Pwned: The Reality Check",
+      hibpParagraph1: "The optional activity in this step—checking Have I Been Pwned—is a moment of truth for most people. This service, run by security researcher Troy Hunt, aggregates data from 936 known breaches containing over 17 billion compromised account records.",
+      hibpParagraph2: "When you enter your email address, it checks whether that email appeared in any known data breach. For most people who've had an email address for more than a few years, the answer is yes—often in multiple breaches. This is why password hygiene matters: unique passwords for every account, ideally managed by a password manager, and multi-factor authentication wherever it's available.",
+      activityPreviewTitle: "What You're About to Do",
+      activityPreviewList: [
+        "Clear cookies and site data: Remove existing trackers and force fresh authentication",
+        "Block third-party cookies: Prevent future cross-site tracking",
+        "Check for breach exposure: See if your credentials have been compromised",
+        "Plan password hygiene actions: Update compromised passwords, enable MFA"
+      ],
+      activityPreviewConclusion: "By the time you complete this step, you'll have taken concrete actions that meaningfully reduce your tracking exposure and improve your account security. These aren't theoretical benefits—they're immediate, measurable improvements to your digital privacy."
+    },
     browserInstructions: "Browser Instructions for",
     breachExposure: "Breach Exposure Check",
     breachExposureDesc: "Check if your email addresses have appeared in known data breaches. This only takes 2 minutes.",
@@ -842,6 +1082,34 @@ const lv: Translations = {
     title: "Publiskā redzamība",
     concept: "Dažu personīgo informāciju var atrast publiski, izmantojot meklēšanu. 'Privātums' nav tikai par to, ko jūs pats publicējat.",
     whyItMatters: "Datu brokeri un cilvēku meklēšanas vietnes apkopo publiskos ierakstus, sociālos medijus un citus avotus. Pat bez jūsu ziņas jūsu kontaktinformācija var būt redzama ikvienam, kurš izmanto meklētājprogrammu.",
+    // TODO: Translate educational content to Latvian
+    educationalContent: {
+      sectionTitle: "Understanding Public Exposure",
+      industryTitle: "The $323 Billion Industry Trading Your Identity",
+      industryParagraph1: "Every time you've filled out a form, registered to vote, bought a house, or even just existed as a citizen, you've created data points. What you may not know is that a massive industry has built itself around collecting, packaging, and selling this information about you.",
+      industryParagraph2: "The data broker industry is worth $323 billion in 2024 and is projected to nearly double to $697 billion by 2034. These companies don't just have a file on you—they maintain an average of 1,500 data points per person. One of the largest brokers, Acxiom, holds over 2.5 billion consumer records worldwide. Data brokers trade information on over 80% of American consumers.",
+      dataSourcesTitle: "Where Does Your Data Come From?",
+      dataSourcesParagraph: "People-search sites like Spokeo, Whitepages, and BeenVerified don't create information about you—they aggregate it from sources you'd never expect:",
+      dataSourcesList: [
+        "Public records: Property deeds, court filings, voter registrations, marriage licenses, bankruptcy filings",
+        "Commercial sources: Credit applications, car loans, rental agreements, utility records, and even some state DMVs that sell registration data",
+        "Social media: Any profile you've ever made public, even briefly",
+        "Other data brokers: These companies cross-reference and sell data to each other, creating an interconnected web"
+      ],
+      dataSourcesConclusion: "The key insight is that none of this data was necessarily \"leaked\"—much of it has always been technically public. The difference now is that companies have automated the collection and made your entire life searchable in seconds. What once required a private investigator and weeks of work now takes anyone with internet access about 30 seconds.",
+      meaningTitle: "What This Means for You",
+      meaningParagraph: "When a stranger, a potential employer, an ex-partner, or a scammer searches your name, they can potentially find:",
+      meaningList: [
+        "Your current and previous addresses",
+        "Phone numbers (including ones you thought were private)",
+        "Email addresses",
+        "Names of your relatives and associates",
+        "Your approximate age and date of birth",
+        "Property ownership and estimated home value",
+        "Court records and legal history"
+      ],
+      activityPreview: "The activity you're about to do will show you exactly what's discoverable about you. For many people, this is eye-opening—not because they've done anything wrong, but because they had no idea how much of their life is catalogued and for sale."
+    },
     externalTools: "Ārējie rīki",
     recordFindings: "Ierakstiet savus atklājumus",
     searchPagesQuestion: "Cik meklēšanas rezultātu lapas saturēja personīgo informāciju (adrese, tālrunis, radinieki)?",
@@ -854,6 +1122,33 @@ const lv: Translations = {
     title: "Izsekotāju redzamība",
     concept: "Viena parasta tīmekļa lapa var ielādēt desmitiem trešo pušu. Izsekošana nav tikai 'sīkdatnes' — tā ietver sesiju ierakstīšanu, pirkstu nospiedumus un daudz ko citu.",
     whyItMatters: "Apmeklējot vietni, neredzami skripti bieži ieraksta jūsu uzvedību, kopīgo datus ar reklāmdevējiem un veido jūsu interešu profilu — bieži vien bez jūsu ziņas.",
+    // TODO: Translate educational content to Latvian
+    educationalContent: {
+      sectionTitle: "Understanding Web Tracking",
+      introTitle: "What Happens in the First Second You Visit a Website",
+      introParagraph1: "When you click a link to visit a website, something invisible happens before the page even finishes loading. Scripts execute, connections open to dozens of third-party servers, and data about you begins flowing in multiple directions. This happens so fast you'd never notice—but it's happening on almost every website you visit.",
+      introParagraph2: "Research shows that 90% of websites include at least one tracking script, and the average website has 48 trackers. Social media sites are the worst offenders, averaging 28 trackers per site—and in some regions like Hong Kong, that number climbs to 169 trackers on a single social media site. Google trackers are present on 74% of all web traffic, with Facebook accounting for another 11%. A typical user encounters approximately 177 different trackers every week.",
+      trackingTypesTitle: "The Seven Types of Tracking You'll Discover",
+      trackingTypesIntro: "The tool you're about to use (Blacklight, created by The Markup) will reveal what's really happening behind the scenes:",
+      trackingTypes: {
+        adTrackers: { title: "Ad Trackers", description: "These send information about your visit to advertising networks. They're building a profile of your interests based on every site you visit, every product you look at, and how long you spend on each page." },
+        thirdPartyCookies: { title: "Third-Party Cookies", description: "Unlike cookies from the site you're visiting, these come from external domains. Here's how they work: You visit an online shoe store, and a cookie from an ad network (let's call it \"adtracker.com\") is placed in your browser. Later, you visit a news site that also uses adtracker.com. That same cookie is read, and now the ad network knows you were shopping for shoes. That's why you see shoe ads following you around the internet." },
+        sessionRecording: { title: "Session Recording", description: "This is more invasive than you might expect. Session recording tools capture a video-like reconstruction of everything you do on a page—your mouse movements, where you pause, what you click, how you scroll. Companies like Hotjar and FullStory sell these services, and thousands of websites use them. The recording shows exactly what you saw and did, replayed like a movie." },
+        keystrokeLogging: { title: "Keystroke Logging", description: "Some tracking scripts record what you type into forms—sometimes even before you hit submit. This is primarily used to capture partial form submissions, but it means your keystrokes are being transmitted to servers as you type." },
+        canvasFingerprinting: { title: "Canvas Fingerprinting", description: "Your browser can be asked to draw an invisible image. Due to subtle differences in how your specific hardware and software render graphics, this image is slightly different from almost everyone else's. This creates an identifier that works even if you block cookies." },
+        facebookPixel: { title: "Facebook Pixel", description: "Even if you're not logged into Facebook, and even if you don't have a Facebook account, many websites send data to Facebook about your visit through an embedded tracking pixel." },
+        googleAnalytics: { title: "Google Analytics", description: "Present on the majority of websites, Google Analytics tracks visitors and shares data with Google's advertising ecosystem." }
+      },
+      beyondAdsTitle: "Why This Matters Beyond Ads",
+      beyondAdsParagraph: "You might think: \"So what? I just get more relevant ads.\" But tracking has implications beyond advertising:",
+      beyondAdsList: [
+        "Price discrimination: Some retailers show different prices based on your browsing history or inferred income level",
+        "Insurance and employment: Data brokers sell behavioral profiles that can influence credit decisions, insurance rates, and even hiring",
+        "Profile permanence: The behavioral profiles built from tracking data persist for years and are traded between companies",
+        "Security risk: Each company that holds data about you is a potential breach target"
+      ],
+      activityPreview: "The activity you're about to do lets you scan a website you actually visit and see exactly what tracking is happening. Many people are shocked to see the number and types of trackers on their favorite sites."
+    },
     externalTool: "Ārējais rīks",
     blacklightTip: "Padoms: Mēģiniet skenēt ziņu vai iepirkšanās vietni, ko bieži apmeklējat. Izvairieties no sensitīvām vietnēm, piemēram, veselības portāliem vai bankām.",
     recordFindings: "Ierakstiet savus atklājumus",
@@ -873,6 +1168,30 @@ const lv: Translations = {
     title: "Pirkstu nospiedumi",
     concept: "Sīkdatņu dzēšana nepadara jūs neredzamu. Pārlūkprogrammas pirkstu nospiedumi joprojām var identificēt jūsu ierīci, izmantojot unikālas iestatījumu, fontu un aparatūras kombinācijas.",
     whyItMatters: "Pat 'privātās pārlūkošanas' režīmā jūsu pārlūkprogrammas unikālās īpašības (ekrāna izmērs, instalētie fonti, laika josla, WebGL iestatījumi) var izveidot pirkstu nospiedumu, kas jūs identificē dažādās vietnēs.",
+    // TODO: Translate educational content to Latvian
+    educationalContent: {
+      sectionTitle: "Understanding Browser Fingerprinting",
+      introTitle: "The Tracking Method You Can't Block by Clearing Cookies",
+      introParagraph: "You've probably heard that clearing your cookies helps protect your privacy. And it does—for one type of tracking. But there's another method that doesn't require storing anything on your device at all. It's called browser fingerprinting, and studies show it can uniquely identify 83-90% of browsers.",
+      howItWorksTitle: "How Your Browser Betrays Your Identity",
+      howItWorksParagraph: "Browser fingerprinting works by collecting dozens of small details about your device and browser that, combined, create a unique signature. Think of it like this: any single characteristic might be common, but the specific combination of 20 or 30 characteristics together is likely unique to you. Here's what gets collected:",
+      attributesList: [
+        "Screen resolution and color depth: Your display's exact pixel dimensions",
+        "Timezone and language: Your location and language preferences",
+        "Installed fonts: The specific combination of fonts on your system is highly distinctive",
+        "Browser plugins: Which extensions and their versions you have installed",
+        "Hardware specifications: Details about your graphics card, CPU, and available memory",
+        "WebGL rendering: Your browser can be asked to draw a 3D graphic, and microscopic differences in how your hardware renders it create a unique signature",
+        "Audio fingerprinting: Similar technique using audio processing",
+        "Canvas fingerprinting: Drawing an invisible 2D image to identify rendering differences"
+      ],
+      statisticsTitle: "The Numbers Are Striking",
+      statisticsParagraph: "The Electronic Frontier Foundation (EFF) demonstrated that the distribution of fingerprints has at least 18.1 bits of entropy, meaning the average user has only a 1 in 286,777 chance of sharing their exact fingerprint with another user. A 2016 AmIUnique study found that 89.4% of fingerprints are unique. Even a more conservative 2018 study found that 33.6% of fingerprints are completely unique, and on desktop computers specifically, the uniqueness rate remains very high.",
+      privateBrowsingTitle: "Why Private Browsing Doesn't Help Here",
+      privateBrowsingParagraph1: "When you open an incognito or private browsing window, your browser doesn't save cookies or history. But it doesn't change your screen resolution, fonts, graphics card, or timezone. Your fingerprint in private mode is often identical to your fingerprint in regular mode—which means websites can still recognize you.",
+      privateBrowsingParagraph2: "Some privacy-focused browsers like Firefox and Brave have implemented fingerprinting protections that either block certain collection techniques or deliberately provide generic responses.",
+      activityPreview: "The test you're about to run will tell you: (1) whether your browser fingerprint is unique (meaning you can be identified), (2) how strong your tracking protection is, and (3) which specific characteristics make you most identifiable. For many people, discovering that their browser is as unique as a fingerprint—even with no cookies—is a wake-up call about how sophisticated modern tracking has become."
+    },
     externalTools: "Ārējie rīki",
     whatToLookFor: "Uz ko pievērst uzmanību",
     effRunQuestion: "Vai palaidāt EFF Cover Your Tracks testu?",
@@ -885,6 +1204,33 @@ const lv: Translations = {
     title: "Konta un ierīces identifikatori",
     concept: "Izsekošana notiek arī konta/ierīces līmenī, izmantojot reklāmu personalizācijas iestatījumus, ierīču ID un lietotņu izsekošanas atļaujas.",
     whyItMatters: "Pat ja bloķējat vietņu izsekotājus, jūsu konti un ierīces joprojām var kopīgot datus ar reklāmdevējiem, izmantojot iebūvētos identifikatorus, kas jūs seko pa lietotnēm un pakalpojumiem.",
+    // TODO: Translate educational content to Latvian
+    educationalContent: {
+      sectionTitle: "Understanding Mobile and Account Tracking",
+      introTitle: "The Identifiers That Follow You Across Every App",
+      introParagraph: "Website tracking uses cookies. But what about the apps on your phone? Apps can't read each other's cookies—they're sandboxed for security. So how do advertisers track you across apps? The answer is a special identifier built into your device's operating system: the Google Advertising ID (GAID) on Android and the Identifier for Advertisers (IDFA) on Apple devices.",
+      howItWorksTitle: "How Mobile Advertising IDs Work",
+      howItWorksParagraph: "When you installed your phone's operating system, it generated a unique advertising ID—a string of letters and numbers that identifies your device. This ID is accessible to every app you install, and it's designed specifically to enable advertising and tracking. Here's what this enables:",
+      howItWorksList: [
+        "You search for flights in one app → You see hotel ads in a completely different app",
+        "You browse products in a shopping app → You see ads for those products in your social media apps",
+        "You play a free game → The game shares your activity with ad networks tied to your advertising ID",
+        "Your location data, app usage patterns, and behavioral profile are all linked to this single identifier"
+      ],
+      scaleTitle: "The Scale of Mobile Tracking",
+      scaleParagraph: "Unlike cookies, your advertising ID follows you across your entire app ecosystem—games, social media, news apps, utilities, everything. Because it's persistent, companies can build a comprehensive profile of everything you do on your phone over months or years. Data brokers and ad networks use these identifiers to track your physical location across time, build behavioral profiles based on app usage, connect your app activity to your web browsing through cross-device tracking, and sell this data to advertisers, analytics companies, and increasingly, to anyone willing to pay.",
+      attTitle: "Apple's App Tracking Transparency Changed the Game",
+      attParagraph1: "In 2021, Apple introduced App Tracking Transparency (ATT), which requires apps to ask permission before accessing your IDFA. You've probably seen the popup: \"Allow this app to track your activity across other companies' apps and websites?\" This was significant: before ATT, apps accessed your IDFA automatically without asking.",
+      attParagraph2: "After ATT, users had to explicitly opt in. Current statistics show that globally, about 50% of users now consent to tracking—meaning 50% decline. This single change cost the advertising industry billions of dollars in lost targeting capability. Google is following suit, planning to replace the GAID with more privacy-preserving alternatives.",
+      activityPreviewTitle: "What You'll Check in This Activity",
+      activityPreviewList: [
+        "Google Ad Personalization: Whether Google builds a profile of your interests across all Google services",
+        "Apple Advertising: Whether Apple uses your data for targeted ads within their ecosystem",
+        "Android Advertising ID: You can reset (give yourself a new ID) or delete it entirely",
+        "iOS App Tracking Transparency: Whether apps can request to track you at all"
+      ],
+      activityPreviewConclusion: "Many people discover that ad personalization has been on by default for years, building a detailed profile they never knew existed."
+    },
     externalTools: "Ārējie rīki",
     recordSettings: "Ierakstiet savus iestatījumus",
     googleAdsQuestion: "Vai Google personalizētās reklāmas ir ieslēgtas vai izslēgtas?",
@@ -897,6 +1243,40 @@ const lv: Translations = {
     title: "Tīrīšanas sprints",
     concept: "Tagad ir laiks rīkoties. Dzēsiet izsekošanas datus un pēc izvēles iespējojiet privātuma aizsardzību.",
     whyItMatters: "Sīkdatņu un vietnes datu dzēšana noņem esošos izsekotājus. Trešo pušu sīkdatņu bloķēšana novērš daudzus nākotnes izsekošanas mēģinājumus. Tie ir ātri ieguvumi, kas nekavējoties uzlabo jūsu privātumu.",
+    // TODO: Translate educational content to Latvian
+    educationalContent: {
+      sectionTitle: "Why Digital Hygiene Matters",
+      breachesTitle: "The 1.7 Billion Reasons to Practice Good Digital Hygiene",
+      breachesParagraph1: "In 2024 alone, 1.7 billion people had their personal data compromised in data breaches. The largest single breach—at National Public Data—exposed the personal information of approximately 2.9 billion records, including Social Security numbers, addresses, and dates of birth of citizens across the US, Canada, and the UK.",
+      breachesParagraph2: "Here's what makes this particularly sobering: the Ticketmaster, Advance Auto Parts, Change Healthcare, and AT&T breaches—which together exposed over 1.24 billion records—all happened because hackers gained access using compromised credentials for accounts that did not have multi-factor authentication enabled. These were preventable.",
+      cookiesTitle: "Why Cookies Matter for Your Security",
+      cookiesParagraph: "Cookies aren't just about ads—they're also how websites remember that you're logged in. When you visit your email or bank and don't have to re-enter your password, a cookie is what proves to the site that you've already authenticated. This is convenient, but it has implications:",
+      cookiesList: [
+        "If someone accesses your browser, they access your logged-in accounts",
+        "Session hijacking: If an attacker captures your cookies (through malware, insecure WiFi, or a compromised website), they can impersonate you without knowing your password",
+        "Long-lived sessions: Some cookies persist for months or years, meaning a single compromise has a long window of exposure"
+      ],
+      blockingTitle: "Third-Party Cookie Blocking: The Single Most Impactful Setting",
+      blockingParagraph1: "If there's one privacy setting that delivers the most protection for the least inconvenience, it's blocking third-party cookies. First-party cookies come from the site you're visiting (they're necessary for logging in and using the site). Third-party cookies come from external domains and are used almost exclusively for cross-site tracking.",
+      blockingParagraph2: "Modern browsers handle this differently:",
+      blockingBrowsers: [
+        "Firefox: Uses \"Total Cookie Protection\" to isolate third-party cookies per site",
+        "Safari: Blocks third-party cookies by default through \"Prevent Cross-Site Tracking\"",
+        "Chrome: Still allows third-party cookies by default (Google reversed plans to phase them out)",
+        "Enabling this setting breaks cross-site tracking without affecting your ability to use websites normally"
+      ],
+      hibpTitle: "Have I Been Pwned: The Reality Check",
+      hibpParagraph1: "The optional activity in this step—checking Have I Been Pwned—is a moment of truth for most people. This service, run by security researcher Troy Hunt, aggregates data from 936 known breaches containing over 17 billion compromised account records.",
+      hibpParagraph2: "When you enter your email address, it checks whether that email appeared in any known data breach. For most people who've had an email address for more than a few years, the answer is yes—often in multiple breaches. This is why password hygiene matters: unique passwords for every account, ideally managed by a password manager, and multi-factor authentication wherever it's available.",
+      activityPreviewTitle: "What You're About to Do",
+      activityPreviewList: [
+        "Clear cookies and site data: Remove existing trackers and force fresh authentication",
+        "Block third-party cookies: Prevent future cross-site tracking",
+        "Check for breach exposure: See if your credentials have been compromised",
+        "Plan password hygiene actions: Update compromised passwords, enable MFA"
+      ],
+      activityPreviewConclusion: "By the time you complete this step, you'll have taken concrete actions that meaningfully reduce your tracking exposure and improve your account security. These aren't theoretical benefits—they're immediate, measurable improvements to your digital privacy."
+    },
     browserInstructions: "Pārlūkprogrammas instrukcijas priekš",
     breachExposure: "Datu noplūdes pārbaude",
     breachExposureDesc: "Pārbaudiet, vai jūsu e-pasta adreses ir parādījušās zināmās datu noplūdēs. Tas aizņem tikai 2 minūtes.",
@@ -1203,6 +1583,33 @@ const ru: Translations = {
     title: "Публичная доступность",
     concept: "Некоторую личную информацию можно найти публично через поиск. 'Конфиденциальность' — это не только о том, что вы сами публикуете.",
     whyItMatters: "Брокеры данных и сайты поиска людей собирают публичные записи, социальные сети и другие источники. Даже без вашего ведома ваша контактная информация может быть видна любому, кто пользуется поисковой системой.",
+    educationalContent: {
+      sectionTitle: "Понимание публичной доступности",
+      industryTitle: "Индустрия стоимостью $323 миллиарда, торгующая вашей личностью",
+      industryParagraph1: "Каждый раз, когда вы заполняли форму, регистрировались для голосования, покупали дом или просто существовали как гражданин, вы создавали точки данных. Чего вы, возможно, не знаете — это то, что огромная индустрия построила себя вокруг сбора, упаковки и продажи этой информации о вас.",
+      industryParagraph2: "Индустрия брокеров данных оценивается в $323 миллиарда в 2024 году и, по прогнозам, почти удвоится до $697 миллиардов к 2034 году. Эти компании не просто имеют файл на вас — они хранят в среднем 1500 точек данных на человека. Один из крупнейших брокеров, Acxiom, хранит более 2,5 миллиарда записей потребителей по всему миру. Брокеры данных торгуют информацией о более чем 80% американских потребителей.",
+      dataSourcesTitle: "Откуда берутся ваши данные?",
+      dataSourcesParagraph: "Сайты поиска людей, такие как Spokeo, Whitepages и BeenVerified, не создают информацию о вас — они агрегируют её из источников, о которых вы и не подозревали:",
+      dataSourcesList: [
+        "Публичные записи: акты собственности, судебные документы, регистрации избирателей, свидетельства о браке, дела о банкротстве",
+        "Коммерческие источники: кредитные заявки, автокредиты, договоры аренды, записи коммунальных служб, и даже некоторые DMV штатов, продающие регистрационные данные",
+        "Социальные сети: любой профиль, который вы когда-либо сделали публичным, даже ненадолго",
+        "Другие брокеры данных: эти компании перекрёстно проверяют и продают данные друг другу, создавая взаимосвязанную сеть"
+      ],
+      dataSourcesConclusion: "Ключевой вывод в том, что эти данные не обязательно были «утечкой» — большая часть всегда была технически публичной. Разница в том, что компании автоматизировали сбор и сделали всю вашу жизнь доступной для поиска за секунды. То, что раньше требовало частного детектива и недель работы, теперь занимает около 30 секунд у любого с доступом в интернет.",
+      meaningTitle: "Что это значит для вас",
+      meaningParagraph: "Когда незнакомец, потенциальный работодатель, бывший партнёр или мошенник ищет ваше имя, они потенциально могут найти:",
+      meaningList: [
+        "Ваши текущие и предыдущие адреса",
+        "Номера телефонов (включая те, которые вы считали приватными)",
+        "Адреса электронной почты",
+        "Имена ваших родственников и знакомых",
+        "Ваш примерный возраст и дату рождения",
+        "Владение недвижимостью и её оценочную стоимость",
+        "Судебные записи и правовую историю"
+      ],
+      activityPreview: "Упражнение, которое вы сейчас выполните, покажет вам точно, что можно обнаружить о вас. Для многих людей это открытие глаз — не потому, что они сделали что-то неправильно, а потому, что они не представляли, сколько их жизни каталогизировано и выставлено на продажу."
+    },
     externalTools: "Внешние инструменты",
     recordFindings: "Запишите свои находки",
     searchPagesQuestion: "Сколько страниц результатов поиска содержали личную информацию (адрес, телефон, родственники)?",
@@ -1215,6 +1622,32 @@ const ru: Translations = {
     title: "Видимость трекеров",
     concept: "Одна обычная веб-страница может загружать десятки сторонних скриптов. Отслеживание — это не только 'куки', оно включает запись сессий, снятие отпечатков и многое другое.",
     whyItMatters: "Когда вы посещаете сайт, невидимые скрипты часто записывают ваше поведение, делятся данными с рекламодателями и создают профиль ваших интересов — часто без вашего ведома.",
+    educationalContent: {
+      sectionTitle: "Понимание веб-отслеживания",
+      introTitle: "Что происходит в первую секунду посещения сайта",
+      introParagraph1: "Когда вы нажимаете на ссылку для посещения сайта, нечто невидимое происходит ещё до того, как страница закончит загрузку. Выполняются скрипты, открываются соединения с десятками сторонних серверов, и данные о вас начинают течь в разных направлениях. Это происходит так быстро, что вы никогда не заметите — но это происходит почти на каждом сайте, который вы посещаете.",
+      introParagraph2: "Исследования показывают, что 90% сайтов включают хотя бы один отслеживающий скрипт, а средний сайт имеет 48 трекеров. Социальные сети — худшие нарушители, в среднем 28 трекеров на сайт — а в некоторых регионах, как Гонконг, это число достигает 169 трекеров на одном сайте социальной сети. Трекеры Google присутствуют на 74% всего веб-трафика, Facebook составляет ещё 11%. Типичный пользователь сталкивается примерно с 177 разными трекерами каждую неделю.",
+      trackingTypesTitle: "Семь типов отслеживания, которые вы обнаружите",
+      trackingTypesIntro: "Инструмент, который вы собираетесь использовать (Blacklight, созданный The Markup), покажет, что на самом деле происходит за кулисами:",
+      trackingTypes: {
+        adTrackers: { title: "Рекламные трекеры", description: "Они отправляют информацию о вашем визите рекламным сетям. Они строят профиль ваших интересов на основе каждого сайта, который вы посещаете, каждого продукта, который вы смотрите, и того, сколько времени вы проводите на каждой странице." },
+        thirdPartyCookies: { title: "Сторонние куки", description: "В отличие от куки с сайта, который вы посещаете, они приходят с внешних доменов. Вот как это работает: вы посещаете интернет-магазин обуви, и куки от рекламной сети (назовём её \"adtracker.com\") помещается в ваш браузер. Позже вы посещаете новостной сайт, который тоже использует adtracker.com. Та же куки считывается, и теперь рекламная сеть знает, что вы искали обувь. Вот почему вы видите рекламу обуви, следующую за вами по интернету." },
+        sessionRecording: { title: "Запись сессий", description: "Это более инвазивно, чем вы могли ожидать. Инструменты записи сессий создают видеоподобную реконструкцию всего, что вы делаете на странице — ваши движения мыши, где вы останавливаетесь, что вы нажимаете, как вы прокручиваете. Компании вроде Hotjar и FullStory продают эти услуги, и тысячи сайтов их используют. Запись показывает именно то, что вы видели и делали, воспроизведённое как фильм." },
+        keystrokeLogging: { title: "Запись нажатий клавиш", description: "Некоторые отслеживающие скрипты записывают то, что вы вводите в формы — иногда даже до того, как вы нажмёте кнопку отправки. Это в основном используется для захвата частично заполненных форм, но это означает, что ваши нажатия клавиш передаются на серверы по мере ввода." },
+        canvasFingerprinting: { title: "Canvas-отпечатки", description: "Вашему браузеру можно предложить нарисовать невидимое изображение. Из-за тонких различий в том, как именно ваше оборудование и программное обеспечение отображают графику, это изображение слегка отличается от почти всех остальных. Это создаёт идентификатор, который работает, даже если вы блокируете куки." },
+        facebookPixel: { title: "Пиксель Facebook", description: "Даже если вы не залогинены в Facebook, и даже если у вас нет аккаунта Facebook, многие сайты отправляют данные о вашем визите в Facebook через встроенный отслеживающий пиксель." },
+        googleAnalytics: { title: "Google Analytics", description: "Присутствует на большинстве сайтов, Google Analytics отслеживает посетителей и делится данными с рекламной экосистемой Google." }
+      },
+      beyondAdsTitle: "Почему это важно помимо рекламы",
+      beyondAdsParagraph: "Вы можете подумать: «Ну и что? Я просто получаю более релевантную рекламу.» Но отслеживание имеет последствия за пределами рекламы:",
+      beyondAdsList: [
+        "Ценовая дискриминация: некоторые магазины показывают разные цены в зависимости от вашей истории просмотров или предполагаемого уровня дохода",
+        "Страхование и трудоустройство: брокеры данных продают поведенческие профили, которые могут влиять на кредитные решения, страховые ставки и даже найм на работу",
+        "Постоянство профиля: поведенческие профили, построенные на данных отслеживания, сохраняются годами и продаются между компаниями",
+        "Риск безопасности: каждая компания, хранящая данные о вас — потенциальная цель для утечки"
+      ],
+      activityPreview: "Упражнение, которое вы сейчас выполните, позволит вам просканировать сайт, который вы реально посещаете, и увидеть точно, какое отслеживание происходит. Многие люди шокированы количеством и типами трекеров на их любимых сайтах."
+    },
     externalTool: "Внешний инструмент",
     blacklightTip: "Совет: Попробуйте сканировать новостной или интернет-магазин, который вы часто посещаете. Избегайте чувствительных сайтов, таких как медицинские порталы или банки.",
     recordFindings: "Запишите свои находки",
@@ -1234,6 +1667,29 @@ const ru: Translations = {
     title: "Отпечатки браузера",
     concept: "Очистка куки не делает вас невидимым. Отпечатки браузера всё ещё могут идентифицировать ваше устройство через уникальные комбинации настроек, шрифтов и оборудования.",
     whyItMatters: "Даже в режиме 'приватного просмотра' уникальные характеристики вашего браузера (размер экрана, установленные шрифты, часовой пояс, настройки WebGL) могут создать отпечаток, который идентифицирует вас на разных сайтах.",
+    educationalContent: {
+      sectionTitle: "Понимание отпечатков браузера",
+      introTitle: "Метод отслеживания, который нельзя заблокировать очисткой куки",
+      introParagraph: "Вы, вероятно, слышали, что очистка куки помогает защитить вашу конфиденциальность. И это так — для одного типа отслеживания. Но есть другой метод, который вообще не требует хранения чего-либо на вашем устройстве. Это называется отпечаток браузера, и исследования показывают, что он может уникально идентифицировать 83-90% браузеров.",
+      howItWorksTitle: "Как ваш браузер выдаёт вашу личность",
+      howItWorksParagraph: "Отпечаток браузера работает путём сбора десятков мелких деталей о вашем устройстве и браузере, которые вместе создают уникальную подпись. Подумайте об этом так: любая отдельная характеристика может быть общей, но конкретная комбинация 20 или 30 характеристик вместе, вероятно, уникальна для вас. Вот что собирается:",
+      attributesList: [
+        "Разрешение экрана и глубина цвета: точные размеры пикселей вашего дисплея",
+        "Часовой пояс и язык: ваше местоположение и языковые предпочтения",
+        "Установленные шрифты: конкретная комбинация шрифтов в вашей системе очень характерна",
+        "Плагины браузера: какие расширения и их версии у вас установлены",
+        "Технические характеристики: детали о вашей видеокарте, процессоре и доступной памяти",
+        "WebGL-рендеринг: вашему браузеру можно предложить нарисовать 3D-графику, и микроскопические различия в том, как ваше оборудование её отображает, создают уникальную подпись",
+        "Аудио-отпечатки: похожая техника с использованием обработки звука",
+        "Canvas-отпечатки: рисование невидимого 2D-изображения для идентификации различий рендеринга"
+      ],
+      statisticsTitle: "Цифры впечатляют",
+      statisticsParagraph: "Electronic Frontier Foundation (EFF) продемонстрировала, что распределение отпечатков имеет как минимум 18,1 бит энтропии, что означает, что у среднего пользователя только 1 шанс из 286 777 совпасть отпечатком с другим пользователем. Исследование AmIUnique 2016 года показало, что 89,4% отпечатков уникальны. Даже более консервативное исследование 2018 года показало, что 33,6% отпечатков полностью уникальны, а на настольных компьютерах уровень уникальности остаётся очень высоким.",
+      privateBrowsingTitle: "Почему приватный просмотр здесь не помогает",
+      privateBrowsingParagraph1: "Когда вы открываете окно инкогнито или приватного просмотра, ваш браузер не сохраняет куки или историю. Но он не меняет разрешение экрана, шрифты, видеокарту или часовой пояс. Ваш отпечаток в приватном режиме часто идентичен отпечатку в обычном режиме — что означает, что сайты всё ещё могут вас узнать.",
+      privateBrowsingParagraph2: "Некоторые браузеры, ориентированные на конфиденциальность, такие как Firefox и Brave, внедрили защиту от отпечатков, которая либо блокирует определённые методы сбора, либо намеренно предоставляет общие ответы.",
+      activityPreview: "Тест, который вы сейчас запустите, покажет: (1) является ли отпечаток вашего браузера уникальным (что означает, что вас можно идентифицировать), (2) насколько сильна ваша защита от отслеживания, и (3) какие конкретные характеристики делают вас наиболее идентифицируемым. Для многих людей открытие того, что их браузер так же уникален, как отпечаток пальца — даже без куки — становится сигналом о том, насколько изощрённым стало современное отслеживание."
+    },
     externalTools: "Внешние инструменты",
     whatToLookFor: "На что обратить внимание",
     effRunQuestion: "Запускали ли вы тест EFF Cover Your Tracks?",
@@ -1246,6 +1702,32 @@ const ru: Translations = {
     title: "Идентификаторы аккаунта и устройства",
     concept: "Отслеживание также происходит на уровне аккаунта/устройства через настройки персонализации рекламы, ID устройств и разрешения на отслеживание приложений.",
     whyItMatters: "Даже если вы блокируете трекеры сайтов, ваши аккаунты и устройства всё ещё могут делиться данными с рекламодателями через встроенные идентификаторы, которые следуют за вами между приложениями и сервисами.",
+    educationalContent: {
+      sectionTitle: "Понимание мобильного отслеживания и отслеживания аккаунтов",
+      introTitle: "Идентификаторы, которые следуют за вами через каждое приложение",
+      introParagraph: "Отслеживание сайтов использует куки. Но что насчёт приложений на вашем телефоне? Приложения не могут читать куки друг друга — они изолированы для безопасности. Так как же рекламодатели отслеживают вас между приложениями? Ответ — специальный идентификатор, встроенный в операционную систему вашего устройства: Google Advertising ID (GAID) на Android и Identifier for Advertisers (IDFA) на устройствах Apple.",
+      howItWorksTitle: "Как работают мобильные рекламные идентификаторы",
+      howItWorksParagraph: "Когда вы установили операционную систему телефона, она сгенерировала уникальный рекламный ID — строку букв и цифр, которая идентифицирует ваше устройство. Этот ID доступен каждому приложению, которое вы устанавливаете, и он создан специально для обеспечения рекламы и отслеживания. Вот что это позволяет:",
+      howItWorksList: [
+        "Вы ищете авиабилеты в одном приложении → Вы видите рекламу отелей в совершенно другом приложении",
+        "Вы просматриваете товары в приложении магазина → Вы видите рекламу этих товаров в социальных сетях",
+        "Вы играете в бесплатную игру → Игра делится вашей активностью с рекламными сетями, привязанными к вашему рекламному ID",
+        "Ваши данные о местоположении, паттерны использования приложений и поведенческий профиль — всё связано с этим единственным идентификатором"
+      ],
+      scaleTitle: "Масштаб мобильного отслеживания",
+      scaleParagraph: "В отличие от куки, ваш рекламный ID следует за вами по всей экосистеме приложений — игры, социальные сети, новостные приложения, утилиты, всё. Поскольку он постоянен, компании могут строить всеобъемлющий профиль всего, что вы делаете на телефоне в течение месяцев или лет. Брокеры данных и рекламные сети используют эти идентификаторы для отслеживания вашего физического местоположения во времени, построения поведенческих профилей на основе использования приложений, связывания активности приложений с веб-сёрфингом через кросс-девайсное отслеживание и продажи этих данных рекламодателям, аналитическим компаниям и, всё чаще, любому, кто готов платить.",
+      attTitle: "App Tracking Transparency от Apple изменила игру",
+      attParagraph1: "В 2021 году Apple представила App Tracking Transparency (ATT), которая требует от приложений спрашивать разрешение перед доступом к вашему IDFA. Вы, вероятно, видели всплывающее окно: «Разрешить этому приложению отслеживать вашу активность в приложениях и на сайтах других компаний?» Это было значимо: до ATT приложения получали доступ к вашему IDFA автоматически без запроса.",
+      attParagraph2: "После ATT пользователи должны были явно согласиться. Текущая статистика показывает, что глобально около 50% пользователей теперь соглашаются на отслеживание — это означает, что 50% отказываются. Это единственное изменение стоило рекламной индустрии миллиардов долларов потерянных возможностей таргетирования. Google следует этому примеру, планируя заменить GAID более приватными альтернативами.",
+      activityPreviewTitle: "Что вы проверите в этом упражнении",
+      activityPreviewList: [
+        "Персонализация рекламы Google: строит ли Google профиль ваших интересов по всем сервисам Google",
+        "Реклама Apple: использует ли Apple ваши данные для таргетированной рекламы в своей экосистеме",
+        "Рекламный ID Android: вы можете сбросить (получить новый ID) или удалить его полностью",
+        "iOS App Tracking Transparency: могут ли приложения вообще запрашивать отслеживание"
+      ],
+      activityPreviewConclusion: "Многие люди обнаруживают, что персонализация рекламы была включена по умолчанию годами, создавая детальный профиль, о существовании которого они не знали."
+    },
     externalTools: "Внешние инструменты",
     recordSettings: "Запишите свои настройки",
     googleAdsQuestion: "Персонализированная реклама Google включена или выключена?",
@@ -1258,6 +1740,39 @@ const ru: Translations = {
     title: "Спринт очистки",
     concept: "Теперь пора действовать. Очистите данные отслеживания и при желании включите защиту конфиденциальности.",
     whyItMatters: "Очистка куки и данных сайтов удаляет существующие трекеры. Блокировка сторонних куки предотвращает многие будущие попытки отслеживания. Это быстрые победы, которые немедленно улучшают вашу конфиденциальность.",
+    educationalContent: {
+      sectionTitle: "Почему цифровая гигиена важна",
+      breachesTitle: "1,7 миллиарда причин практиковать хорошую цифровую гигиену",
+      breachesParagraph1: "Только в 2024 году 1,7 миллиарда человек имели свои персональные данные скомпрометированными в утечках данных. Крупнейшая единичная утечка — в National Public Data — раскрыла персональную информацию примерно 2,9 миллиарда записей, включая номера социального страхования, адреса и даты рождения граждан США, Канады и Великобритании.",
+      breachesParagraph2: "Вот что делает это особенно отрезвляющим: утечки Ticketmaster, Advance Auto Parts, Change Healthcare и AT&T — которые вместе раскрыли более 1,24 миллиарда записей — все произошли потому, что хакеры получили доступ, используя скомпрометированные учётные данные для аккаунтов, на которых не была включена многофакторная аутентификация. Это было предотвратимо.",
+      cookiesTitle: "Почему куки важны для вашей безопасности",
+      cookiesParagraph: "Куки — это не только о рекламе, они также являются способом, которым сайты помнят, что вы залогинены. Когда вы посещаете почту или банк и вам не нужно повторно вводить пароль, куки — это то, что доказывает сайту, что вы уже аутентифицировались. Это удобно, но имеет последствия:",
+      cookiesList: [
+        "Если кто-то получит доступ к вашему браузеру, он получит доступ к вашим залогиненным аккаунтам",
+        "Перехват сессии: если злоумышленник захватит ваши куки (через вредоносное ПО, небезопасный WiFi или скомпрометированный сайт), он сможет выдать себя за вас, не зная пароля",
+        "Долгоживущие сессии: некоторые куки сохраняются месяцами или годами, что означает, что единственная компрометация имеет длительное окно уязвимости"
+      ],
+      blockingTitle: "Блокировка сторонних куки: самая эффективная настройка",
+      blockingParagraph1: "Если есть одна настройка конфиденциальности, которая даёт максимальную защиту при минимальных неудобствах, это блокировка сторонних куки. Куки первой стороны приходят с сайта, который вы посещаете (они необходимы для входа и использования сайта). Сторонние куки приходят с внешних доменов и используются почти исключительно для межсайтового отслеживания.",
+      blockingParagraph2: "Современные браузеры обрабатывают это по-разному:",
+      blockingBrowsers: [
+        "Firefox: использует «Total Cookie Protection» для изоляции сторонних куки по сайтам",
+        "Safari: блокирует сторонние куки по умолчанию через «Prevent Cross-Site Tracking»",
+        "Chrome: всё ещё разрешает сторонние куки по умолчанию (Google отменил планы по их отмене)",
+        "Включение этой настройки ломает межсайтовое отслеживание, не влияя на вашу способность использовать сайты нормально"
+      ],
+      hibpTitle: "Have I Been Pwned: проверка реальности",
+      hibpParagraph1: "Необязательное упражнение на этом этапе — проверка Have I Been Pwned — это момент истины для большинства людей. Этот сервис, управляемый исследователем безопасности Троем Хантом, агрегирует данные из 936 известных утечек, содержащих более 17 миллиардов скомпрометированных записей аккаунтов.",
+      hibpParagraph2: "Когда вы вводите свой email, он проверяет, появлялся ли этот email в какой-либо известной утечке данных. Для большинства людей, у которых email был более нескольких лет, ответ — да, часто в нескольких утечках. Вот почему гигиена паролей важна: уникальные пароли для каждого аккаунта, в идеале управляемые менеджером паролей, и многофакторная аутентификация везде, где она доступна.",
+      activityPreviewTitle: "Что вы сейчас сделаете",
+      activityPreviewList: [
+        "Очистить куки и данные сайтов: удалить существующие трекеры и заставить заново аутентифицироваться",
+        "Заблокировать сторонние куки: предотвратить будущее межсайтовое отслеживание",
+        "Проверить подверженность утечкам: узнать, были ли ваши учётные данные скомпрометированы",
+        "Спланировать действия по гигиене паролей: обновить скомпрометированные пароли, включить MFA"
+      ],
+      activityPreviewConclusion: "К тому времени, когда вы завершите этот этап, вы предпримете конкретные действия, которые значимо уменьшат вашу подверженность отслеживанию и улучшат безопасность аккаунтов. Это не теоретические преимущества — это немедленные, измеримые улучшения вашей цифровой конфиденциальности."
+    },
     browserInstructions: "Инструкции для браузера",
     breachExposure: "Проверка утечек данных",
     breachExposureDesc: "Проверьте, появлялись ли ваши адреса электронной почты в известных утечках данных. Это займёт всего 2 минуты.",

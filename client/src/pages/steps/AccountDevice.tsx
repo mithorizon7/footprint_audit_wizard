@@ -5,6 +5,7 @@ import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
 import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
+import { AccountDeviceEducational } from "@/components/wizard/EducationalContent";
 import { Settings, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { SiGoogle, SiApple, SiAndroid } from "react-icons/si";
@@ -28,6 +29,8 @@ export default function AccountDevice() {
         concept={t.accountDevice.concept}
         whyItMatters={t.accountDevice.whyItMatters}
       >
+        <AccountDeviceEducational content={t.accountDevice.educationalContent} />
+
         <InstructionBlock
           title={t.instructions.whatToDo}
           instructions={[

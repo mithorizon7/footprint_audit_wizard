@@ -6,6 +6,7 @@ import { InstructionBlock } from "@/components/wizard/InstructionBlock";
 import { RadioPills } from "@/components/wizard/RadioPills";
 import { StepNavigation } from "@/components/wizard/StepNavigation";
 import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
+import { FingerprintingEducational } from "@/components/wizard/EducationalContent";
 import { Fingerprint, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import type { YesNo, YesNoUnsure, TrackingProtection } from "@shared/schema";
@@ -24,6 +25,8 @@ export default function FingerprintingStep() {
         concept={t.fingerprinting.concept}
         whyItMatters={t.fingerprinting.whyItMatters}
       >
+        <FingerprintingEducational content={t.fingerprinting.educationalContent} />
+
         <InstructionBlock
           title={t.instructions.whatToDo}
           instructions={[
