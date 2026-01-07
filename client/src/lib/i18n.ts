@@ -1160,33 +1160,32 @@ const lv: Translations = {
     title: "Publiskā redzamība",
     concept: "Dažu personīgo informāciju var atrast publiski, izmantojot meklēšanu. 'Privātums' nav tikai par to, ko jūs pats publicējat.",
     whyItMatters: "Datu brokeri un cilvēku meklēšanas vietnes apkopo publiskos ierakstus, sociālos medijus un citus avotus. Pat bez jūsu ziņas jūsu kontaktinformācija var būt redzama ikvienam, kurš izmanto meklētājprogrammu.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Public Exposure",
-      industryTitle: "The $323 Billion Industry Trading Your Identity",
-      industryParagraph1: "Every time you've filled out a form, registered to vote, bought a house, or even just existed as a citizen, you've created data points. What you may not know is that a massive industry has built itself around collecting, packaging, and selling this information about you.",
-      industryParagraph2: "The data broker industry is worth $323 billion in 2024 and is projected to nearly double to $697 billion by 2034. These companies don't just have a file on you—they maintain an average of 1,500 data points per person. One of the largest brokers, Acxiom, holds over 2.5 billion consumer records worldwide. Data brokers trade information on over 80% of American consumers.",
-      dataSourcesTitle: "Where Does Your Data Come From?",
-      dataSourcesParagraph: "People-search sites like Spokeo, Whitepages, and BeenVerified don't create information about you—they aggregate it from sources you'd never expect:",
+      sectionTitle: "Publiskās redzamības izpratne",
+      industryTitle: "323 miljardu dolāru nozare, kas tirgo jūsu identitāti",
+      industryParagraph1: "Katru reizi, kad esat aizpildījis veidlapu, reģistrējies vēlēšanām, iegādājies māju vai vienkārši eksistējis kā pilsonis, jūs esat radījis datu punktus. Iespējams, jūs nezināt, ka milzīga nozare ir izveidojusies ap šīs informācijas par jums vākšanu, iepakošanu un pārdošanu.",
+      industryParagraph2: "Datu brokeru nozares vērtība 2024. gadā ir 323 miljardi dolāru, un tiek prognozēts, ka līdz 2034. gadam tā gandrīz dubultosies līdz 697 miljardiem dolāru. Šie uzņēmumi ne tikai uztur failu par jums — tie vidēji glabā 1500 datu punktus par katru personu. Viens no lielākajiem brokeriem, Acxiom, glabā vairāk nekā 2,5 miljardus patērētāju ierakstu visā pasaulē. Datu brokeri tirgo informāciju par vairāk nekā 80% Amerikas patērētāju.",
+      dataSourcesTitle: "No kurienes nāk jūsu dati?",
+      dataSourcesParagraph: "Cilvēku meklēšanas vietnes, piemēram, Spokeo, Whitepages un BeenVerified, nerada informāciju par jums — tās to apkopo no avotiem, ko jūs nekad nebūtu gaidījis:",
       dataSourcesList: [
-        "Public records: Property deeds, court filings, voter registrations, marriage licenses, bankruptcy filings",
-        "Commercial sources: Credit applications, car loans, rental agreements, utility records, and even some state DMVs that sell registration data",
-        "Social media: Any profile you've ever made public, even briefly",
-        "Other data brokers: These companies cross-reference and sell data to each other, creating an interconnected web"
+        "Publiskie ieraksti: īpašuma akti, tiesas lietas, vēlētāju reģistrācijas, laulības apliecības, bankrota lietas",
+        "Komerciālie avoti: kredītu pieteikumi, auto aizdevumi, īres līgumi, komunālo pakalpojumu ieraksti un pat daži štatu autovadītāju reģistri, kas pārdod reģistrācijas datus",
+        "Sociālie mediji: jebkurš profils, ko esat kādreiz padarījis publisku, pat īslaicīgi",
+        "Citi datu brokeri: šie uzņēmumi veic datu krustenisko salīdzināšanu un pārdod tos viens otram, veidojot savstarpēji savienotu tīklu"
       ],
-      dataSourcesConclusion: "The key insight is that none of this data was necessarily \"leaked\"—much of it has always been technically public. The difference now is that companies have automated the collection and made your entire life searchable in seconds. What once required a private investigator and weeks of work now takes anyone with internet access about 30 seconds.",
-      meaningTitle: "What This Means for You",
-      meaningParagraph: "When a stranger, a potential employer, an ex-partner, or a scammer searches your name, they can potentially find:",
+      dataSourcesConclusion: "Galvenā atziņa ir tāda, ka neviens no šiem datiem nav obligāti \"noplūdis\" — liela daļa vienmēr ir bijusi tehniski publiska. Atšķirība tagad ir tāda, ka uzņēmumi ir automatizējuši vākšanu un padarījuši visu jūsu dzīvi meklējamu dažās sekundēs. Tas, kam agrāk bija nepieciešams privātdetektīvs un nedēļu darbs, tagad jebkuram ar interneta pieeju aizņem aptuveni 30 sekundes.",
+      meaningTitle: "Ko tas nozīmē jums",
+      meaningParagraph: "Kad svešinieks, potenciālais darba devējs, bijušais partneris vai krāpnieks meklē jūsu vārdu, viņš potenciāli var atrast:",
       meaningList: [
-        "Your current and previous addresses",
-        "Phone numbers (including ones you thought were private)",
-        "Email addresses",
-        "Names of your relatives and associates",
-        "Your approximate age and date of birth",
-        "Property ownership and estimated home value",
-        "Court records and legal history"
+        "Jūsu pašreizējo un iepriekšējās adreses",
+        "Tālruņu numurus (ieskaitot tos, ko uzskatījāt par privātiem)",
+        "E-pasta adreses",
+        "Jūsu radinieku un paziņu vārdus",
+        "Jūsu aptuveno vecumu un dzimšanas datumu",
+        "Īpašuma piederību un aptuveno mājas vērtību",
+        "Tiesas ierakstus un juridisko vēsturi"
       ],
-      activityPreview: "The activity you're about to do will show you exactly what's discoverable about you. For many people, this is eye-opening—not because they've done anything wrong, but because they had no idea how much of their life is catalogued and for sale."
+      activityPreview: "Aktivitāte, ko tagad veiksiet, parādīs tieši to, kas par jums ir atrodams. Daudziem cilvēkiem tas ir acis atvērošs pārdzīvojums — ne tāpēc, ka viņi būtu darījuši kaut ko nepareizu, bet tāpēc, ka viņiem nebija ne jausmas, cik liela daļa viņu dzīves ir katalogizēta un pārdošanā."
     },
     externalTools: "Ārējie rīki",
     recordFindings: "Ierakstiet savus atklājumus",
@@ -1200,32 +1199,31 @@ const lv: Translations = {
     title: "Izsekotāju redzamība",
     concept: "Viena parasta tīmekļa lapa var ielādēt desmitiem trešo pušu. Izsekošana nav tikai 'sīkdatnes' — tā ietver sesiju ierakstīšanu, pirkstu nospiedumus un daudz ko citu.",
     whyItMatters: "Apmeklējot vietni, neredzami skripti bieži ieraksta jūsu uzvedību, kopīgo datus ar reklāmdevējiem un veido jūsu interešu profilu — bieži vien bez jūsu ziņas.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Web Tracking",
-      introTitle: "What Happens in the First Second You Visit a Website",
-      introParagraph1: "When you click a link to visit a website, something invisible happens before the page even finishes loading. Scripts execute, connections open to dozens of third-party servers, and data about you begins flowing in multiple directions. This happens so fast you'd never notice—but it's happening on almost every website you visit.",
-      introParagraph2: "Research shows that 90% of websites include at least one tracking script, and the average website has 48 trackers. Social media sites are the worst offenders, averaging 28 trackers per site—and in some regions like Hong Kong, that number climbs to 169 trackers on a single social media site. Google trackers are present on 74% of all web traffic, with Facebook accounting for another 11%. A typical user encounters approximately 177 different trackers every week.",
-      trackingTypesTitle: "The Seven Types of Tracking You'll Discover",
-      trackingTypesIntro: "The tool you're about to use (Blacklight, created by The Markup) will reveal what's really happening behind the scenes:",
+      sectionTitle: "Tīmekļa izsekošanas izpratne",
+      introTitle: "Kas notiek pirmajā sekundē, kad apmeklējat vietni",
+      introParagraph1: "Kad noklikšķināt uz saites, lai apmeklētu vietni, kaut kas neredzams notiek vēl pirms lapas pilnīgas ielādes. Skripti izpildās, savienojumi atveras ar desmitiem trešo pušu serveru, un dati par jums sāk plūst vairākos virzienos. Tas notiek tik ātri, ka jūs to nekad nepamanītu — bet tas notiek gandrīz katrā vietnē, ko apmeklējat.",
+      introParagraph2: "Pētījumi rāda, ka 90% vietņu ietver vismaz vienu izsekošanas skriptu, un vidēji vietnē ir 48 izsekotāji. Sociālo mediju vietnes ir lielākās pārkāpējas — vidēji 28 izsekotāji vienā vietnē, un dažos reģionos, piemēram, Honkongā, šis skaitlis sasniedz 169 izsekotājus vienā sociālo mediju vietnē. Google izsekotāji ir klāt 74% no visa tīmekļa trafika, un Facebook veido vēl 11%. Tipisks lietotājs katru nedēļu saskaras ar aptuveni 177 dažādiem izsekotājiem.",
+      trackingTypesTitle: "Septiņi izsekošanas veidi, ko atklāsiet",
+      trackingTypesIntro: "Rīks, ko izmantosiet (Blacklight, ko izveidoja The Markup), atklās, kas patiesībā notiek aizkulisēs:",
       trackingTypes: {
-        adTrackers: { title: "Ad Trackers", description: "These send information about your visit to advertising networks. They're building a profile of your interests based on every site you visit, every product you look at, and how long you spend on each page." },
-        thirdPartyCookies: { title: "Third-Party Cookies", description: "Unlike cookies from the site you're visiting, these come from external domains. Here's how they work: You visit an online shoe store, and a cookie from an ad network (let's call it \"adtracker.com\") is placed in your browser. Later, you visit a news site that also uses adtracker.com. That same cookie is read, and now the ad network knows you were shopping for shoes. That's why you see shoe ads following you around the internet." },
-        sessionRecording: { title: "Session Recording", description: "This is more invasive than you might expect. Session recording tools capture a video-like reconstruction of everything you do on a page—your mouse movements, where you pause, what you click, how you scroll. Companies like Hotjar and FullStory sell these services, and thousands of websites use them. The recording shows exactly what you saw and did, replayed like a movie." },
-        keystrokeLogging: { title: "Keystroke Logging", description: "Some tracking scripts record what you type into forms—sometimes even before you hit submit. This is primarily used to capture partial form submissions, but it means your keystrokes are being transmitted to servers as you type." },
-        canvasFingerprinting: { title: "Canvas Fingerprinting", description: "Your browser can be asked to draw an invisible image. Due to subtle differences in how your specific hardware and software render graphics, this image is slightly different from almost everyone else's. This creates an identifier that works even if you block cookies." },
-        facebookPixel: { title: "Facebook Pixel", description: "Even if you're not logged into Facebook, and even if you don't have a Facebook account, many websites send data to Facebook about your visit through an embedded tracking pixel." },
-        googleAnalytics: { title: "Google Analytics", description: "Present on the majority of websites, Google Analytics tracks visitors and shares data with Google's advertising ecosystem." }
+        adTrackers: { title: "Reklāmu izsekotāji", description: "Tie nosūta informāciju par jūsu apmeklējumu reklāmu tīkliem. Tie veido jūsu interešu profilu, balstoties uz katru vietni, ko apmeklējat, katru produktu, ko aplūkojat, un cik ilgi pavadāt katrā lapā." },
+        thirdPartyCookies: { title: "Trešo pušu sīkdatnes", description: "Atšķirībā no sīkdatnēm no vietnes, ko apmeklējat, šīs nāk no ārējiem domēniem. Lūk, kā tās darbojas: jūs apmeklējat tiešsaistes apavu veikalu, un sīkdatne no reklāmu tīkla (sauksim to par \"adtracker.com\") tiek ievietota jūsu pārlūkprogrammā. Vēlāk jūs apmeklējat ziņu vietni, kas arī izmanto adtracker.com. Tā pati sīkdatne tiek nolasīta, un tagad reklāmu tīkls zina, ka jūs iepirkāties apavus. Tāpēc jūs redzat apavu reklāmas, kas seko jums pa visu internetu." },
+        sessionRecording: { title: "Sesiju ierakstīšana", description: "Tas ir invazīvāk, nekā varētu gaidīt. Sesiju ierakstīšanas rīki tver video veida rekonstrukciju visa, ko darāt lapā — jūsu peles kustības, kur apstājaties, uz ko klikšķināt, kā ritināt. Uzņēmumi kā Hotjar un FullStory pārdod šos pakalpojumus, un tūkstošiem vietņu tos izmanto. Ieraksts parāda tieši to, ko redzējāt un darījāt, atskaņots kā filma." },
+        keystrokeLogging: { title: "Taustiņu reģistrēšana", description: "Daži izsekošanas skripti ieraksta to, ko rakstāt formās — dažreiz pat pirms nospiežat \"Iesniegt\". To galvenokārt izmanto, lai tvertu daļējas veidlapu aizpildes, bet tas nozīmē, ka jūsu taustiņu nospiešanas tiek pārsūtītas uz serveriem, kamēr rakstāt." },
+        canvasFingerprinting: { title: "Canvas pirkstu nospiedumi", description: "Jūsu pārlūkprogrammai var lūgt uzzīmēt neredzamu attēlu. Sakarā ar smalkām atšķirībām tajā, kā jūsu konkrētā aparatūra un programmatūra renderē grafiku, šis attēls ir nedaudz atšķirīgs no gandrīz visu pārējo. Tas rada identifikatoru, kas darbojas pat tad, ja bloķējat sīkdatnes." },
+        facebookPixel: { title: "Facebook pikselis", description: "Pat ja neesat pieteicies Facebook un pat ja jums nav Facebook konta, daudzas vietnes nosūta datus Facebook par jūsu apmeklējumu, izmantojot iegultu izsekošanas pikseli." },
+        googleAnalytics: { title: "Google Analytics", description: "Klātesošs lielākajā daļā vietņu, Google Analytics izseko apmeklētājus un dalās ar datiem ar Google reklāmu ekosistēmu." }
       },
-      beyondAdsTitle: "Why This Matters Beyond Ads",
-      beyondAdsParagraph: "You might think: \"So what? I just get more relevant ads.\" But tracking has implications beyond advertising:",
+      beyondAdsTitle: "Kāpēc tas ir svarīgi ārpus reklāmām",
+      beyondAdsParagraph: "Jūs varētu domāt: \"Nu un? Es vienkārši redzu atbilstošākas reklāmas.\" Bet izsekošanai ir sekas ārpus reklāmas:",
       beyondAdsList: [
-        "Price discrimination: Some retailers show different prices based on your browsing history or inferred income level",
-        "Insurance and employment: Data brokers sell behavioral profiles that can influence credit decisions, insurance rates, and even hiring",
-        "Profile permanence: The behavioral profiles built from tracking data persist for years and are traded between companies",
-        "Security risk: Each company that holds data about you is a potential breach target"
+        "Cenu diskriminācija: daži mazumtirgotāji rāda atšķirīgas cenas, balstoties uz jūsu pārlūkošanas vēsturi vai izsecināto ienākumu līmeni",
+        "Apdrošināšana un nodarbinātība: datu brokeri pārdod uzvedības profilus, kas var ietekmēt kredītlēmumus, apdrošināšanas likmes un pat pieņemšanu darbā",
+        "Profilu pastāvīgums: uzvedības profili, kas veidoti no izsekošanas datiem, saglabājas gadiem un tiek tirgoti starp uzņēmumiem",
+        "Drošības risks: katrs uzņēmums, kas glabā datus par jums, ir potenciāls datu noplūdes mērķis"
       ],
-      activityPreview: "The activity you're about to do lets you scan a website you actually visit and see exactly what tracking is happening. Many people are shocked to see the number and types of trackers on their favorite sites."
+      activityPreview: "Aktivitāte, ko veiksiet, ļauj skenēt vietni, ko patiešām apmeklējat, un redzēt tieši to, kāda izsekošana notiek. Daudzi cilvēki ir šokēti, redzot izsekotāju skaitu un veidus savās iecienītākajās vietnēs."
     },
     externalTool: "Ārējais rīks",
     blacklightTip: "Padoms: Mēģiniet skenēt ziņu vai iepirkšanās vietni, ko bieži apmeklējat. Izvairieties no sensitīvām vietnēm, piemēram, veselības portāliem vai bankām.",
@@ -1246,29 +1244,28 @@ const lv: Translations = {
     title: "Pirkstu nospiedumi",
     concept: "Sīkdatņu dzēšana nepadara jūs neredzamu. Pārlūkprogrammas pirkstu nospiedumi joprojām var identificēt jūsu ierīci, izmantojot unikālas iestatījumu, fontu un aparatūras kombinācijas.",
     whyItMatters: "Pat 'privātās pārlūkošanas' režīmā jūsu pārlūkprogrammas unikālās īpašības (ekrāna izmērs, instalētie fonti, laika josla, WebGL iestatījumi) var izveidot pirkstu nospiedumu, kas jūs identificē dažādās vietnēs.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Browser Fingerprinting",
-      introTitle: "The Tracking Method You Can't Block by Clearing Cookies",
-      introParagraph: "You've probably heard that clearing your cookies helps protect your privacy. And it does—for one type of tracking. But there's another method that doesn't require storing anything on your device at all. It's called browser fingerprinting, and studies show it can uniquely identify 83-90% of browsers.",
-      howItWorksTitle: "How Your Browser Betrays Your Identity",
-      howItWorksParagraph: "Browser fingerprinting works by collecting dozens of small details about your device and browser that, combined, create a unique signature. Think of it like this: any single characteristic might be common, but the specific combination of 20 or 30 characteristics together is likely unique to you. Here's what gets collected:",
+      sectionTitle: "Pārlūkprogrammas pirkstu nospiedumu izpratne",
+      introTitle: "Izsekošanas metode, ko nevar bloķēt, dzēšot sīkdatnes",
+      introParagraph: "Jūs droši vien esat dzirdējis, ka sīkdatņu dzēšana palīdz aizsargāt jūsu privātumu. Un tā arī ir — vienam izsekošanas veidam. Bet ir cita metode, kas vispār neprasa neko glabāt jūsu ierīcē. To sauc par pārlūkprogrammas pirkstu nospiedumiem, un pētījumi rāda, ka tā var unikāli identificēt 83-90% pārlūkprogrammu.",
+      howItWorksTitle: "Kā jūsu pārlūkprogramma nodod jūsu identitāti",
+      howItWorksParagraph: "Pārlūkprogrammas pirkstu nospiedumu vākšana darbojas, savācot desmitiem sīku detaļu par jūsu ierīci un pārlūkprogrammu, kas apvienotas veido unikālu parakstu. Iedomājieties šādi: jebkura atsevišķa īpašība var būt izplatīta, bet konkrētā 20 vai 30 īpašību kombinācija kopā, visticamāk, ir unikāla tieši jums. Lūk, kas tiek savākts:",
       attributesList: [
-        "Screen resolution and color depth: Your display's exact pixel dimensions",
-        "Timezone and language: Your location and language preferences",
-        "Installed fonts: The specific combination of fonts on your system is highly distinctive",
-        "Browser plugins: Which extensions and their versions you have installed",
-        "Hardware specifications: Details about your graphics card, CPU, and available memory",
-        "WebGL rendering: Your browser can be asked to draw a 3D graphic, and microscopic differences in how your hardware renders it create a unique signature",
-        "Audio fingerprinting: Similar technique using audio processing",
-        "Canvas fingerprinting: Drawing an invisible 2D image to identify rendering differences"
+        "Ekrāna izšķirtspēja un krāsu dziļums: jūsu displeja precīzās pikseļu dimensijas",
+        "Laika josla un valoda: jūsu atrašanās vieta un valodas preferences",
+        "Instalētie fonti: konkrētā fontu kombinācija jūsu sistēmā ir ļoti atšķirīga",
+        "Pārlūkprogrammas spraudņi: kādi paplašinājumi un to versijas jums ir instalētas",
+        "Aparatūras specifikācijas: detaļas par jūsu grafikas karti, procesoru un pieejamo atmiņu",
+        "WebGL renderēšana: jūsu pārlūkprogrammai var lūgt uzzīmēt 3D grafiku, un mikroskopiskas atšķirības tajā, kā jūsu aparatūra to renderē, rada unikālu parakstu",
+        "Audio pirkstu nospiedumi: līdzīga tehnika, izmantojot audio apstrādi",
+        "Canvas pirkstu nospiedumi: neredzama 2D attēla zīmēšana, lai identificētu renderēšanas atšķirības"
       ],
-      statisticsTitle: "The Numbers Are Striking",
-      statisticsParagraph: "The Electronic Frontier Foundation (EFF) demonstrated that the distribution of fingerprints has at least 18.1 bits of entropy, meaning the average user has only a 1 in 286,777 chance of sharing their exact fingerprint with another user. A 2016 AmIUnique study found that 89.4% of fingerprints are unique. Even a more conservative 2018 study found that 33.6% of fingerprints are completely unique, and on desktop computers specifically, the uniqueness rate remains very high.",
-      privateBrowsingTitle: "Why Private Browsing Doesn't Help Here",
-      privateBrowsingParagraph1: "When you open an incognito or private browsing window, your browser doesn't save cookies or history. But it doesn't change your screen resolution, fonts, graphics card, or timezone. Your fingerprint in private mode is often identical to your fingerprint in regular mode—which means websites can still recognize you.",
-      privateBrowsingParagraph2: "Some privacy-focused browsers like Firefox and Brave have implemented fingerprinting protections that either block certain collection techniques or deliberately provide generic responses.",
-      activityPreview: "The test you're about to run will tell you: (1) whether your browser fingerprint is unique (meaning you can be identified), (2) how strong your tracking protection is, and (3) which specific characteristics make you most identifiable. For many people, discovering that their browser is as unique as a fingerprint—even with no cookies—is a wake-up call about how sophisticated modern tracking has become."
+      statisticsTitle: "Skaitļi ir pārsteidzoši",
+      statisticsParagraph: "Electronic Frontier Foundation (EFF) demonstrēja, ka pirkstu nospiedumu sadalījumam ir vismaz 18,1 entropijas biti, kas nozīmē, ka vidējam lietotājam ir tikai 1 no 286 777 iespēja dalīties ar precīzi tādu pašu pirkstu nospiedumu ar citu lietotāju. 2016. gada AmIUnique pētījums atklāja, ka 89,4% pirkstu nospiedumu ir unikāli. Pat konservatīvāks 2018. gada pētījums atklāja, ka 33,6% pirkstu nospiedumu ir pilnīgi unikāli, un galddatoriem konkrēti unikalitātes līmenis saglabājas ļoti augsts.",
+      privateBrowsingTitle: "Kāpēc privātā pārlūkošana šeit nepalīdz",
+      privateBrowsingParagraph1: "Kad atverat inkognito vai privātās pārlūkošanas logu, jūsu pārlūkprogramma nesaglabā sīkdatnes vai vēsturi. Bet tā nemaina jūsu ekrāna izšķirtspēju, fontus, grafikas karti vai laika joslu. Jūsu pirkstu nospiedums privātajā režīmā bieži ir identisks jūsu pirkstu nospiedumam parastajā režīmā — kas nozīmē, ka vietnes joprojām var jūs atpazīt.",
+      privateBrowsingParagraph2: "Dažas uz privātumu vērstas pārlūkprogrammas, piemēram, Firefox un Brave, ir ieviesušas pirkstu nospiedumu aizsardzību, kas vai nu bloķē noteiktas vākšanas tehnikas, vai apzināti sniedz vispārīgas atbildes.",
+      activityPreview: "Tests, ko veiksiet, jums pateiks: (1) vai jūsu pārlūkprogrammas pirkstu nospiedums ir unikāls (kas nozīmē, ka jūs var identificēt), (2) cik spēcīga ir jūsu izsekošanas aizsardzība, un (3) kuras konkrētas īpašības padara jūs visvairāk identificējamu. Daudziem cilvēkiem atklājums, ka viņu pārlūkprogramma ir tikpat unikāla kā pirkstu nospiedums — pat bez sīkdatnēm — ir modinātājzvans par to, cik sarežģīta ir kļuvusi mūsdienu izsekošana."
     },
     externalTools: "Ārējie rīki",
     whatToLookFor: "Uz ko pievērst uzmanību",
@@ -1282,32 +1279,31 @@ const lv: Translations = {
     title: "Konta un ierīces identifikatori",
     concept: "Izsekošana notiek arī konta/ierīces līmenī, izmantojot reklāmu personalizācijas iestatījumus, ierīču ID un lietotņu izsekošanas atļaujas.",
     whyItMatters: "Pat ja bloķējat vietņu izsekotājus, jūsu konti un ierīces joprojām var kopīgot datus ar reklāmdevējiem, izmantojot iebūvētos identifikatorus, kas jūs seko pa lietotnēm un pakalpojumiem.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Mobile and Account Tracking",
-      introTitle: "The Identifiers That Follow You Across Every App",
-      introParagraph: "Website tracking uses cookies. But what about the apps on your phone? Apps can't read each other's cookies—they're sandboxed for security. So how do advertisers track you across apps? The answer is a special identifier built into your device's operating system: the Google Advertising ID (GAID) on Android and the Identifier for Advertisers (IDFA) on Apple devices.",
-      howItWorksTitle: "How Mobile Advertising IDs Work",
-      howItWorksParagraph: "When you installed your phone's operating system, it generated a unique advertising ID—a string of letters and numbers that identifies your device. This ID is accessible to every app you install, and it's designed specifically to enable advertising and tracking. Here's what this enables:",
+      sectionTitle: "Mobilo un kontu izsekošanas izpratne",
+      introTitle: "Identifikatori, kas seko jums visās lietotnēs",
+      introParagraph: "Vietņu izsekošana izmanto sīkdatnes. Bet kā ar lietotnēm jūsu tālrunī? Lietotnes nevar lasīt citu lietotņu sīkdatnes — tās ir izolētas drošības nolūkos. Tātad, kā reklāmdevēji izseko jūs pa lietotnēm? Atbilde ir īpašs identifikators, kas iebūvēts jūsu ierīces operētājsistēmā: Google reklāmas ID (GAID) Android ierīcēs un reklāmdevēju identifikators (IDFA) Apple ierīcēs.",
+      howItWorksTitle: "Kā darbojas mobilo reklāmu ID",
+      howItWorksParagraph: "Kad instalējāt sava tālruņa operētājsistēmu, tā ģenerēja unikālu reklāmas ID — burtu un ciparu virkni, kas identificē jūsu ierīci. Šis ID ir pieejams katrai lietotnei, ko instalējat, un tas ir īpaši paredzēts, lai nodrošinātu reklāmu un izsekošanu. Lūk, ko tas ļauj:",
       howItWorksList: [
-        "You search for flights in one app → You see hotel ads in a completely different app",
-        "You browse products in a shopping app → You see ads for those products in your social media apps",
-        "You play a free game → The game shares your activity with ad networks tied to your advertising ID",
-        "Your location data, app usage patterns, and behavioral profile are all linked to this single identifier"
+        "Jūs meklējat lidojumus vienā lietotnē → Jūs redzat viesnīcu reklāmas pilnīgi citā lietotnē",
+        "Jūs pārlūkojat produktus iepirkšanās lietotnē → Jūs redzat šo produktu reklāmas savās sociālo mediju lietotnēs",
+        "Jūs spēlējat bezmaksas spēli → Spēle dalās ar jūsu aktivitāti ar reklāmu tīkliem, kas saistīti ar jūsu reklāmas ID",
+        "Jūsu atrašanās vietas dati, lietotņu lietošanas modeļi un uzvedības profils — viss ir saistīts ar šo vienu identifikatoru"
       ],
-      scaleTitle: "The Scale of Mobile Tracking",
-      scaleParagraph: "Unlike cookies, your advertising ID follows you across your entire app ecosystem—games, social media, news apps, utilities, everything. Because it's persistent, companies can build a comprehensive profile of everything you do on your phone over months or years. Data brokers and ad networks use these identifiers to track your physical location across time, build behavioral profiles based on app usage, connect your app activity to your web browsing through cross-device tracking, and sell this data to advertisers, analytics companies, and increasingly, to anyone willing to pay.",
-      attTitle: "Apple's App Tracking Transparency Changed the Game",
-      attParagraph1: "In 2021, Apple introduced App Tracking Transparency (ATT), which requires apps to ask permission before accessing your IDFA. You've probably seen the popup: \"Allow this app to track your activity across other companies' apps and websites?\" This was significant: before ATT, apps accessed your IDFA automatically without asking.",
-      attParagraph2: "After ATT, users had to explicitly opt in. Current statistics show that globally, about 50% of users now consent to tracking—meaning 50% decline. This single change cost the advertising industry billions of dollars in lost targeting capability. Google is following suit, planning to replace the GAID with more privacy-preserving alternatives.",
-      activityPreviewTitle: "What You'll Check in This Activity",
+      scaleTitle: "Mobilās izsekošanas mērogs",
+      scaleParagraph: "Atšķirībā no sīkdatnēm, jūsu reklāmas ID seko jums pa visu jūsu lietotņu ekosistēmu — spēles, sociālie mediji, ziņu lietotnes, utilītas, viss. Tā kā tas ir pastāvīgs, uzņēmumi var veidot visaptverošu profilu par visu, ko darāt savā tālrunī mēnešu vai gadu garumā. Datu brokeri un reklāmu tīkli izmanto šos identifikatorus, lai izsekotu jūsu fizisko atrašanās vietu laika gaitā, veidotu uzvedības profilus, balstoties uz lietotņu lietošanu, savienotu jūsu lietotņu aktivitāti ar tīmekļa pārlūkošanu, izmantojot starpierīču izsekošanu, un pārdotu šos datus reklāmdevējiem, analītikas uzņēmumiem un arvien biežāk — jebkuram, kurš ir gatavs maksāt.",
+      attTitle: "Apple lietotņu izsekošanas caurspīdīgums mainīja spēles noteikumus",
+      attParagraph1: "2021. gadā Apple ieviesa lietotņu izsekošanas caurspīdīgumu (ATT), kas pieprasa lietotnēm lūgt atļauju pirms piekļuves jūsu IDFA. Jūs droši vien esat redzējis uznirstošo logu: \"Atļaut šai lietotnei izsekot jūsu aktivitāti citu uzņēmumu lietotnēs un vietnēs?\" Tas bija nozīmīgi: pirms ATT lietotnes piekļuva jūsu IDFA automātiski, nejautājot.",
+      attParagraph2: "Pēc ATT lietotājiem bija skaidri jāpiekrīt. Pašreizējā statistika rāda, ka globāli aptuveni 50% lietotāju tagad piekrīt izsekošanai — kas nozīmē, ka 50% atsakās. Šī viena izmaiņa izmaksāja reklāmas nozarei miljardus dolāru zaudētās mērķēšanas spējās. Google seko līdzi, plānojot aizstāt GAID ar privātumu vairāk saudzējošām alternatīvām.",
+      activityPreviewTitle: "Ko pārbaudīsiet šajā aktivitātē",
       activityPreviewList: [
-        "Google Ad Personalization: Whether Google builds a profile of your interests across all Google services",
-        "Apple Advertising: Whether Apple uses your data for targeted ads within their ecosystem",
-        "Android Advertising ID: You can reset (give yourself a new ID) or delete it entirely",
-        "iOS App Tracking Transparency: Whether apps can request to track you at all"
+        "Google reklāmu personalizācija: vai Google veido jūsu interešu profilu visos Google pakalpojumos",
+        "Apple reklāma: vai Apple izmanto jūsu datus mērķētām reklāmām savā ekosistēmā",
+        "Android reklāmas ID: varat atiestatīt (piešķirt sev jaunu ID) vai pilnībā dzēst",
+        "iOS lietotņu izsekošanas caurspīdīgums: vai lietotnes vispār var pieprasīt jūs izsekot"
       ],
-      activityPreviewConclusion: "Many people discover that ad personalization has been on by default for years, building a detailed profile they never knew existed."
+      activityPreviewConclusion: "Daudzi cilvēki atklāj, ka reklāmu personalizācija ir bijusi ieslēgta pēc noklusējuma gadiem, veidojot detalizētu profilu, par kura eksistenci viņiem nebija ne jausmas."
     },
     externalTools: "Ārējie rīki",
     recordSettings: "Ierakstiet savus iestatījumus",
@@ -1321,39 +1317,38 @@ const lv: Translations = {
     title: "Tīrīšanas sprints",
     concept: "Tagad ir laiks rīkoties. Dzēsiet izsekošanas datus un pēc izvēles iespējojiet privātuma aizsardzību.",
     whyItMatters: "Sīkdatņu un vietnes datu dzēšana noņem esošos izsekotājus. Trešo pušu sīkdatņu bloķēšana novērš daudzus nākotnes izsekošanas mēģinājumus. Tie ir ātri ieguvumi, kas nekavējoties uzlabo jūsu privātumu.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Why Digital Hygiene Matters",
-      breachesTitle: "The 1.7 Billion Reasons to Practice Good Digital Hygiene",
-      breachesParagraph1: "In 2024 alone, 1.7 billion people had their personal data compromised in data breaches. The largest single breach—at National Public Data—exposed the personal information of approximately 2.9 billion records, including Social Security numbers, addresses, and dates of birth of citizens across the US, Canada, and the UK.",
-      breachesParagraph2: "Here's what makes this particularly sobering: the Ticketmaster, Advance Auto Parts, Change Healthcare, and AT&T breaches—which together exposed over 1.24 billion records—all happened because hackers gained access using compromised credentials for accounts that did not have multi-factor authentication enabled. These were preventable.",
-      cookiesTitle: "Why Cookies Matter for Your Security",
-      cookiesParagraph: "Cookies aren't just about ads—they're also how websites remember that you're logged in. When you visit your email or bank and don't have to re-enter your password, a cookie is what proves to the site that you've already authenticated. This is convenient, but it has implications:",
+      sectionTitle: "Kāpēc digitālā higiēna ir svarīga",
+      breachesTitle: "1,7 miljardi iemeslu praktizēt labu digitālo higiēnu",
+      breachesParagraph1: "Tikai 2024. gadā vien 1,7 miljardiem cilvēku tika kompromitēti personas dati datu noplūdēs. Lielākā atsevišķā noplūde — National Public Data — atklāja aptuveni 2,9 miljardu ierakstu personīgo informāciju, ieskaitot sociālās apdrošināšanas numurus, adreses un dzimšanas datumus iedzīvotājiem ASV, Kanādā un Apvienotajā Karalistē.",
+      breachesParagraph2: "Lūk, kas padara to īpaši satraucošu: Ticketmaster, Advance Auto Parts, Change Healthcare un AT&T noplūdes — kas kopā atklāja vairāk nekā 1,24 miljardus ierakstu — visas notika tāpēc, ka hakeri ieguva piekļuvi, izmantojot kompromitētus akreditācijas datus kontiem, kuriem nebija iespējota daudzfaktoru autentifikācija. Tās bija novēršamas.",
+      cookiesTitle: "Kāpēc sīkdatnes ir svarīgas jūsu drošībai",
+      cookiesParagraph: "Sīkdatnes nav tikai par reklāmām — tās arī ir veids, kā vietnes atceras, ka esat pieteicies. Kad apmeklējat savu e-pastu vai banku un jums nav atkārtoti jāievada parole, sīkdatne ir tas, kas pierāda vietnei, ka jau esat autentificējies. Tas ir ērti, bet tam ir sekas:",
       cookiesList: [
-        "If someone accesses your browser, they access your logged-in accounts",
-        "Session hijacking: If an attacker captures your cookies (through malware, insecure WiFi, or a compromised website), they can impersonate you without knowing your password",
-        "Long-lived sessions: Some cookies persist for months or years, meaning a single compromise has a long window of exposure"
+        "Ja kāds piekļūst jūsu pārlūkprogrammai, viņš piekļūst jūsu pieteiktajiem kontiem",
+        "Sesijas nolaupīšana: ja uzbrucējs tver jūsu sīkdatnes (caur ļaunprogrammatūru, nedrošu WiFi vai kompromitētu vietni), viņš var uzdoties par jums, nezinot jūsu paroli",
+        "Ilgdzīvojošas sesijas: dažas sīkdatnes saglabājas mēnešiem vai gadiem, kas nozīmē, ka vienam kompromitējumam ir ilgs iedarbības logs"
       ],
-      blockingTitle: "Third-Party Cookie Blocking: The Single Most Impactful Setting",
-      blockingParagraph1: "If there's one privacy setting that delivers the most protection for the least inconvenience, it's blocking third-party cookies. First-party cookies come from the site you're visiting (they're necessary for logging in and using the site). Third-party cookies come from external domains and are used almost exclusively for cross-site tracking.",
-      blockingParagraph2: "Modern browsers handle this differently:",
+      blockingTitle: "Trešo pušu sīkdatņu bloķēšana: vienietekmīgākais iestatījums",
+      blockingParagraph1: "Ja ir viens privātuma iestatījums, kas sniedz visvairāk aizsardzības ar vismazākajām neērtībām, tā ir trešo pušu sīkdatņu bloķēšana. Pirmās puses sīkdatnes nāk no vietnes, ko apmeklējat (tās ir nepieciešamas pieteikšanās un vietnes lietošanai). Trešo pušu sīkdatnes nāk no ārējiem domēniem un tiek izmantotas gandrīz tikai starpvietņu izsekošanai.",
+      blockingParagraph2: "Mūsdienu pārlūkprogrammas to apstrādā atšķirīgi:",
       blockingBrowsers: [
-        "Firefox: Uses \"Total Cookie Protection\" to isolate third-party cookies per site",
-        "Safari: Blocks third-party cookies by default through \"Prevent Cross-Site Tracking\"",
-        "Chrome: Still allows third-party cookies by default (Google reversed plans to phase them out)",
-        "Enabling this setting breaks cross-site tracking without affecting your ability to use websites normally"
+        "Firefox: izmanto \"Total Cookie Protection\", lai izolētu trešo pušu sīkdatnes katrai vietnei",
+        "Safari: bloķē trešo pušu sīkdatnes pēc noklusējuma, izmantojot \"Novērst starpvietņu izsekošanu\"",
+        "Chrome: joprojām atļauj trešo pušu sīkdatnes pēc noklusējuma (Google atcēla plānus tās pakāpeniski izbeigt)",
+        "Šī iestatījuma iespējošana pārtrauc starpvietņu izsekošanu, neietekmējot jūsu spēju normāli lietot vietnes"
       ],
-      hibpTitle: "Have I Been Pwned: The Reality Check",
-      hibpParagraph1: "The optional activity in this step—checking Have I Been Pwned—is a moment of truth for most people. This service, run by security researcher Troy Hunt, aggregates data from 936 known breaches containing over 17 billion compromised account records.",
-      hibpParagraph2: "When you enter your email address, it checks whether that email appeared in any known data breach. For most people who've had an email address for more than a few years, the answer is yes—often in multiple breaches. This is why password hygiene matters: unique passwords for every account, ideally managed by a password manager, and multi-factor authentication wherever it's available.",
-      activityPreviewTitle: "What You're About to Do",
+      hibpTitle: "Have I Been Pwned: realitātes pārbaude",
+      hibpParagraph1: "Neobligātā aktivitāte šajā solī — Have I Been Pwned pārbaude — ir patiesības brīdis lielākajai daļai cilvēku. Šis pakalpojums, ko vada drošības pētnieks Troy Hunt, apkopo datus no 936 zināmām noplūdēm, kas satur vairāk nekā 17 miljardus kompromitētu kontu ierakstu.",
+      hibpParagraph2: "Kad ievadāt savu e-pasta adresi, tas pārbauda, vai šis e-pasts ir parādījies kādā zināmā datu noplūdē. Lielākajai daļai cilvēku, kuriem e-pasta adrese ir bijusi vairāk nekā dažus gadus, atbilde ir jā — bieži vairākās noplūdēs. Tāpēc paroļu higiēna ir svarīga: unikālas paroles katram kontam, ideālā gadījumā pārvaldītas ar paroļu pārvaldnieku, un daudzfaktoru autentifikācija visur, kur tā ir pieejama.",
+      activityPreviewTitle: "Ko jūs tagad darīsiet",
       activityPreviewList: [
-        "Clear cookies and site data: Remove existing trackers and force fresh authentication",
-        "Block third-party cookies: Prevent future cross-site tracking",
-        "Check for breach exposure: See if your credentials have been compromised",
-        "Plan password hygiene actions: Update compromised passwords, enable MFA"
+        "Dzēst sīkdatnes un vietnes datus: noņemt esošos izsekotājus un piespiest jaunu autentifikāciju",
+        "Bloķēt trešo pušu sīkdatnes: novērst nākotnes starpvietņu izsekošanu",
+        "Pārbaudīt noplūdes iedarbību: redzēt, vai jūsu akreditācijas dati ir kompromitēti",
+        "Plānot paroļu higiēnas darbības: atjaunināt kompromitētās paroles, iespējot MFA"
       ],
-      activityPreviewConclusion: "By the time you complete this step, you'll have taken concrete actions that meaningfully reduce your tracking exposure and improve your account security. These aren't theoretical benefits—they're immediate, measurable improvements to your digital privacy."
+      activityPreviewConclusion: "Līdz šī soļa pabeigšanai jūs būsiet veicis konkrētas darbības, kas būtiski samazina jūsu izsekošanas iedarbību un uzlabo jūsu kontu drošību. Tie nav teorētiski ieguvumi — tie ir tūlītēji, izmērāmi uzlabojumi jūsu digitālajam privātumam."
     },
     browserInstructions: "Pārlūkprogrammas instrukcijas priekš",
     breachExposure: "Datu noplūdes pārbaude",
