@@ -199,6 +199,7 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    pitfalls: string[];
     educationalContent: {
       sectionTitle: string;
       industryTitle: string;
@@ -227,6 +228,7 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    pitfalls: string[];
     educationalContent: {
       sectionTitle: string;
       introTitle: string;
@@ -269,6 +271,7 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    pitfalls: string[];
     educationalContent: {
       sectionTitle: string;
       introTitle: string;
@@ -297,6 +300,11 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    pitfalls: string[];
+    deviceSelectionTitle: string;
+    deviceSelectionHelper: string;
+    deviceSelectionOptionBoth: string;
+    deviceSelectionOptionNone: string;
     educationalContent: {
       sectionTitle: string;
       introTitle: string;
@@ -327,6 +335,7 @@ export interface Translations {
     title: string;
     concept: string;
     whyItMatters: string;
+    pitfalls: string[];
     educationalContent: {
       sectionTitle: string;
       breachesTitle: string;
@@ -766,6 +775,11 @@ const en: Translations = {
     title: "Public Exposure",
     concept: "Some personal info is publicly discoverable via search. 'Privacy' isn't only about what you post yourself.",
     whyItMatters: "Data brokers and people-search sites aggregate public records, social media, and other sources. Even without your knowledge, your contact info may be visible to anyone with a search engine.",
+    pitfalls: [
+      "Self-audit only: search for your own identifiers, or use Fictional Persona mode.",
+      "Use a private/incognito window if you're on a shared or managed device.",
+      "Avoid entering sensitive identifiers (SSN, full DOB) into any people-search site.",
+    ],
     educationalContent: {
       sectionTitle: "Understanding Public Exposure",
       industryTitle: "The Data Broker Ecosystem Behind Public Exposure",
@@ -812,6 +826,11 @@ const en: Translations = {
     title: "Tracker Visibility",
     concept: "One normal webpage can load dozens of third parties. Tracking isn't just 'cookies' — it includes session recording, fingerprinting, and more.",
     whyItMatters: "When you visit a website, invisible scripts often record your behavior, share data with advertisers, and build a profile of your interests — often without your knowledge.",
+    pitfalls: [
+      "Don't scan sensitive sites (banking, health, school portals). Pick a public site you use often.",
+      "Results are a snapshot and can vary by region, browser, and time.",
+      "On managed networks, tools may be blocked—use Fictional mode if needed.",
+    ],
     educationalContent: {
       sectionTitle: "Understanding Web Tracking",
       introTitle: "What Happens in the First Second You Visit a Website",
@@ -885,6 +904,11 @@ const en: Translations = {
     title: "Fingerprinting",
     concept: "Clearing cookies doesn't make you invisible. Browser fingerprinting can still identify your device through unique combinations of settings, fonts, and hardware.",
     whyItMatters: "Even in 'private browsing' mode, your browser's unique characteristics (screen size, installed fonts, timezone, WebGL settings) can create a fingerprint that identifies you across websites.",
+    pitfalls: [
+      "Run the test in the browser you use most—extensions and settings change results.",
+      "A 'unique' result doesn't mean your name is known; it means you can be distinguished.",
+      "Private browsing hides history, not your fingerprint.",
+    ],
     educationalContent: {
       sectionTitle: "Understanding Browser Fingerprinting",
       introTitle: "The Tracking Method You Can't Block by Clearing Cookies",
@@ -931,6 +955,15 @@ const en: Translations = {
     title: "Account & Device Identifiers",
     concept: "Tracking also happens at the account/device level through ad personalization settings, device IDs, and app tracking permissions.",
     whyItMatters: "Even if you block website trackers, your accounts and devices may still share data with advertisers through built-in identifiers that follow you across apps and services.",
+    deviceSelectionTitle: "Which mobile devices do you want to review?",
+    deviceSelectionHelper: "Choose the platforms you use so we can show the right settings.",
+    deviceSelectionOptionBoth: "Both iOS and Android",
+    deviceSelectionOptionNone: "I don't use a smartphone/tablet",
+    pitfalls: [
+      "If a device is managed by work/school, some settings may be locked.",
+      "Check each device you use (phone/tablet/laptop) — settings don't always sync.",
+      "Changing ad settings can affect recommendations; note what you change.",
+    ],
     educationalContent: {
       sectionTitle: "Understanding Mobile and Account Tracking",
       introTitle: "The Identifiers That Follow You Across Every App",
@@ -984,6 +1017,11 @@ const en: Translations = {
     title: "Cleanup Sprint",
     concept: "Now it's time to take action. Clear tracking data and optionally enable privacy protections.",
     whyItMatters: "Clearing cookies and site data removes existing trackers. Blocking third-party cookies prevents many future tracking attempts. These are quick wins that immediately improve your privacy.",
+    pitfalls: [
+      "Clearing cookies will log you out; make sure you know your passwords.",
+      "If you're on a shared or managed device, follow local policies before changing settings.",
+      "Don't delete saved passwords unless you're ready to replace them with a manager.",
+    ],
     educationalContent: {
       sectionTitle: "Why Digital Hygiene Matters",
       breachesTitle: "Why Breaches Keep Happening",
@@ -1446,6 +1484,11 @@ const lv: Translations = {
     title: "Publiskā redzamība",
     concept: "Dažu personīgo informāciju var atrast publiski, izmantojot meklēšanu. 'Privātums' nav tikai par to, ko jūs pats publicējat.",
     whyItMatters: "Datu brokeri un cilvēku meklēšanas vietnes apkopo publiskos ierakstus, sociālos medijus un citus avotus. Pat bez jūsu ziņas jūsu kontaktinformācija var būt redzama ikvienam, kurš izmanto meklētājprogrammu.",
+    pitfalls: [
+      "Pašpārbaude tikai: meklējiet tikai savus identifikatorus vai izmantojiet Fiktīvās personas režīmu.",
+      "Ja esat uz koplietojamas vai pārvaldītas ierīces, izmantojiet privāto/inkognito logu.",
+      "Neievadiet sensitīvus identifikatorus (personas kodu, pilnu dzimšanas datumu) cilvēku meklēšanas vietnēs.",
+    ],
     educationalContent: {
       sectionTitle: "Publiskās redzamības izpratne",
       industryTitle: "Datu brokeru ekosistēma aiz publiskās redzamības",
@@ -1492,6 +1535,11 @@ const lv: Translations = {
     title: "Izsekotāju redzamība",
     concept: "Viena parasta tīmekļa lapa var ielādēt desmitiem trešo pušu. Izsekošana nav tikai 'sīkdatnes' — tā ietver sesiju ierakstīšanu, pirkstu nospiedumus un daudz ko citu.",
     whyItMatters: "Apmeklējot vietni, neredzami skripti bieži ieraksta jūsu uzvedību, kopīgo datus ar reklāmdevējiem un veido jūsu interešu profilu — bieži vien bez jūsu ziņas.",
+    pitfalls: [
+      "Neskenējiet sensitīvas vietnes (bankas, veselības, skolu portālus). Izvēlieties publisku vietni, ko bieži apmeklējat.",
+      "Rezultāti ir momentuzņēmums un var atšķirties pēc reģiona, pārlūkprogrammas un laika.",
+      "Pārvaldītos tīklos rīki var būt bloķēti — vajadzības gadījumā izmantojiet Fiktīvo režīmu.",
+    ],
     educationalContent: {
       sectionTitle: "Tīmekļa izsekošanas izpratne",
       introTitle: "Kas notiek pirmajā sekundē, kad apmeklējat vietni",
@@ -1544,6 +1592,11 @@ const lv: Translations = {
     title: "Pirkstu nospiedumi",
     concept: "Sīkdatņu dzēšana nepadara jūs neredzamu. Pārlūkprogrammas pirkstu nospiedumi joprojām var identificēt jūsu ierīci, izmantojot unikālas iestatījumu, fontu un aparatūras kombinācijas.",
     whyItMatters: "Pat 'privātās pārlūkošanas' režīmā jūsu pārlūkprogrammas unikālās īpašības (ekrāna izmērs, instalētie fonti, laika josla, WebGL iestatījumi) var izveidot pirkstu nospiedumu, kas jūs identificē dažādās vietnēs.",
+    pitfalls: [
+      "Palaidiet testu tajā pārlūkā, ko lietojat visbiežāk — paplašinājumi un iestatījumi maina rezultātu.",
+      "“Unikāls” nenozīmē, ka jūsu vārds ir zināms; tas nozīmē, ka jūs var atšķirt.",
+      "Privātā pārlūkošana slēpj vēsturi, nevis pirkstu nospiedumu.",
+    ],
     educationalContent: {
       sectionTitle: "Pārlūkprogrammu pirkstu nospiedumu izpratne",
       introTitle: "Izsekošanas metode, ko nevar apturēt, vienkārši dzēšot sīkdatnes",
@@ -1590,6 +1643,15 @@ const lv: Translations = {
     title: "Konta un ierīces identifikatori",
     concept: "Izsekošana notiek arī konta/ierīces līmenī, izmantojot reklāmu personalizācijas iestatījumus, ierīču ID un lietotņu izsekošanas atļaujas.",
     whyItMatters: "Pat ja bloķējat vietņu izsekotājus, jūsu konti un ierīces joprojām var kopīgot datus ar reklāmdevējiem, izmantojot iebūvētos identifikatorus, kas jūs seko pa lietotnēm un pakalpojumiem.",
+    deviceSelectionTitle: "Kuras mobilās ierīces vēlaties pārskatīt?",
+    deviceSelectionHelper: "Izvēlieties platformas, ko lietojat, lai parādītu atbilstošos iestatījumus.",
+    deviceSelectionOptionBoth: "Gan iOS, gan Android",
+    deviceSelectionOptionNone: "Es neizmantoju viedtālruni/planšeti",
+    pitfalls: [
+      "Ja ierīce ir darba/skolas pārvaldīta, daži iestatījumi var būt bloķēti.",
+      "Pārbaudiet katru izmantoto ierīci (tālruni/planšeti/klēpjdatoru) — iestatījumi ne vienmēr sinhronizējas.",
+      "Iestatījumu maiņa var ietekmēt ieteikumus; pierakstiet, ko maināt.",
+    ],
     educationalContent: {
       sectionTitle: "Mobilās un konta izsekošanas izpratne",
       introTitle: "Identifikatori, kas seko jums caur katru lietotni",
@@ -1643,6 +1705,11 @@ const lv: Translations = {
     title: "Tīrīšanas sprints",
     concept: "Tagad ir laiks rīkoties. Dzēsiet izsekošanas datus un pēc izvēles iespējojiet privātuma aizsardzību.",
     whyItMatters: "Sīkdatņu un vietnes datu dzēšana noņem esošos izsekotājus. Trešo pušu sīkdatņu bloķēšana novērš daudzus nākotnes izsekošanas mēģinājumus. Tie ir ātri ieguvumi, kas nekavējoties uzlabo jūsu privātumu.",
+    pitfalls: [
+      "Sīkdatņu dzēšana jūs izrakstīs; pārliecinieties, ka zināt paroles.",
+      "Ja esat uz koplietojamas vai pārvaldītas ierīces, ievērojiet vietējos noteikumus pirms iestatījumu maiņas.",
+      "Nedzēsiet saglabātās paroles, ja neesat gatavs tās aizstāt ar paroļu pārvaldnieku.",
+    ],
     educationalContent: {
       sectionTitle: "Kāpēc digitālā higiēna ir svarīga",
       breachesTitle: "Kāpēc datu noplūdes turpinās",
@@ -2105,6 +2172,11 @@ const ru: Translations = {
     title: "Публичная доступность",
     concept: "Некоторую личную информацию можно найти публично через поиск. 'Конфиденциальность' — это не только о том, что вы сами публикуете.",
     whyItMatters: "Брокеры данных и сайты поиска людей собирают публичные записи, социальные сети и другие источники. Даже без вашего ведома ваша контактная информация может быть видна любому, кто пользуется поисковой системой.",
+    pitfalls: [
+      "Только самопроверка: ищите свои идентификаторы или используйте режим вымышленной персоны.",
+      "Если устройство общее или управляемое, используйте приватное/инкогнито окно.",
+      "Не вводите чувствительные идентификаторы (паспорт, полный ДР) на сайтах поиска людей.",
+    ],
     educationalContent: {
       sectionTitle: "Понимание публичной доступности",
       industryTitle: "Экосистема брокеров данных за публичной доступностью",
@@ -2151,6 +2223,11 @@ const ru: Translations = {
     title: "Видимость трекеров",
     concept: "Одна обычная веб-страница может загружать десятки сторонних скриптов. Отслеживание — это не только 'куки', оно включает запись сессий, снятие отпечатков и многое другое.",
     whyItMatters: "Когда вы посещаете сайт, невидимые скрипты часто записывают ваше поведение, делятся данными с рекламодателями и создают профиль ваших интересов — часто без вашего ведома.",
+    pitfalls: [
+      "Не сканируйте чувствительные сайты (банки, медицина, школьные порталы). Выберите публичный сайт, который вы часто посещаете.",
+      "Результаты — это снимок и могут отличаться по региону, браузеру и времени.",
+      "В управляемых сетях инструменты могут быть заблокированы — при необходимости используйте демо-режим.",
+    ],
     educationalContent: {
       sectionTitle: "Понимание веб-отслеживания",
       introTitle: "Что происходит в первую секунду посещения сайта",
@@ -2203,6 +2280,11 @@ const ru: Translations = {
     title: "Отпечатки браузера",
     concept: "Очистка куки не делает вас невидимым. Отпечатки браузера всё ещё могут идентифицировать ваше устройство через уникальные комбинации настроек, шрифтов и оборудования.",
     whyItMatters: "Даже в режиме 'приватного просмотра' уникальные характеристики вашего браузера (размер экрана, установленные шрифты, часовой пояс, настройки WebGL) могут создать отпечаток, который идентифицирует вас на разных сайтах.",
+    pitfalls: [
+      "Запускайте тест в браузере, которым пользуетесь чаще всего — расширения и настройки меняют результат.",
+      "«Уникален» не означает, что ваше имя известно; это означает, что вас можно отличить.",
+      "Приватный режим скрывает историю, а не отпечаток.",
+    ],
     educationalContent: {
       sectionTitle: "Понимание отпечатков браузера",
       introTitle: "Метод отслеживания, который нельзя заблокировать очисткой куки",
@@ -2249,6 +2331,15 @@ const ru: Translations = {
     title: "Идентификаторы аккаунта и устройства",
     concept: "Отслеживание также происходит на уровне аккаунта/устройства через настройки персонализации рекламы, ID устройств и разрешения на отслеживание приложений.",
     whyItMatters: "Даже если вы блокируете трекеры сайтов, ваши аккаунты и устройства всё ещё могут делиться данными с рекламодателями через встроенные идентификаторы, которые следуют за вами между приложениями и сервисами.",
+    deviceSelectionTitle: "Какие мобильные устройства вы хотите проверить?",
+    deviceSelectionHelper: "Выберите платформы, которыми вы пользуетесь, чтобы показать нужные настройки.",
+    deviceSelectionOptionBoth: "И iOS, и Android",
+    deviceSelectionOptionNone: "Я не пользуюсь смартфоном/планшетом",
+    pitfalls: [
+      "Если устройство управляется работой/школой, некоторые настройки могут быть заблокированы.",
+      "Проверьте каждое устройство (телефон/планшет/ноутбук) — настройки не всегда синхронизируются.",
+      "Изменение рекламных настроек может повлиять на рекомендации; фиксируйте, что меняете.",
+    ],
     educationalContent: {
       sectionTitle: "Понимание мобильного отслеживания и отслеживания аккаунтов",
       introTitle: "Идентификаторы, которые следуют за вами через каждое приложение",
@@ -2302,6 +2393,11 @@ const ru: Translations = {
     title: "Спринт очистки",
     concept: "Теперь пора действовать. Очистите данные отслеживания и при желании включите защиту конфиденциальности.",
     whyItMatters: "Очистка куки и данных сайтов удаляет существующие трекеры. Блокировка сторонних куки предотвращает многие будущие попытки отслеживания. Это быстрые победы, которые немедленно улучшают вашу конфиденциальность.",
+    pitfalls: [
+      "Очистка куки выведет вас из аккаунтов; убедитесь, что знаете пароли.",
+      "Если устройство общее или управляемое, соблюдайте локальные правила перед изменением настроек.",
+      "Не удаляйте сохранённые пароли, если не готовы заменить их менеджером паролей.",
+    ],
     educationalContent: {
       sectionTitle: "Почему цифровая гигиена важна",
       breachesTitle: "Почему утечки продолжаются",

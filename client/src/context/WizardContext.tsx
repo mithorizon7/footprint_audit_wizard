@@ -202,6 +202,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
           prev.device.browser !== "unknown"
             ? prev.device.browser
             : (detectedDevice.browser as DeviceInfo["browser"]),
+        mobilePlatformSelection: prev.device.mobilePlatformSelection ?? "unsure",
       },
     }));
   }, []);

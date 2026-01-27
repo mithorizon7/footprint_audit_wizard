@@ -25,6 +25,7 @@ export default function Trackers() {
         title={t.trackers.title}
         concept={t.trackers.concept}
         whyItMatters={t.trackers.whyItMatters}
+        pitfalls={t.trackers.pitfalls}
       >
         <TrackersEducational content={t.trackers.educationalContent} />
 

@@ -24,6 +24,7 @@ export default function FingerprintingStep() {
         title={t.fingerprinting.title}
         concept={t.fingerprinting.concept}
         whyItMatters={t.fingerprinting.whyItMatters}
+        pitfalls={t.fingerprinting.pitfalls}
       >
         <FingerprintingEducational content={t.fingerprinting.educationalContent} />
 

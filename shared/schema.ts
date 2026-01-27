@@ -30,6 +30,7 @@ export type AuditSession = typeof auditSessions.$inferSelect;
 export const deviceTypeSchema = z.enum(["desktop", "mobile", "unknown"]);
 export const osSchema = z.enum(["windows", "mac", "linux", "ios", "android", "unknown"]);
 export const browserSchema = z.enum(["chrome", "edge", "firefox", "safari", "other", "unknown"]);
+export const mobilePlatformSelectionSchema = z.enum(["ios", "android", "both", "none", "unsure"]);
 export const yesNoUnsureSchema = z.enum(["yes", "no", "unsure"]);
 export const yesNoSchema = z.enum(["yes", "no"]);
 export const cookieBlockingSchema = z.enum(["yes", "no", "unsure", "already_blocked"]);
@@ -81,6 +82,7 @@ export const deviceInfoSchema = z.object({
   type: deviceTypeSchema.default("unknown"),
   os: osSchema.default("unknown"),
   browser: browserSchema.default("unknown"),
+  mobilePlatformSelection: mobilePlatformSelectionSchema.default("unsure"),
 });
 
 export const wizardResultsSchema = z.object({
@@ -107,6 +109,7 @@ export const wizardDataSchema = z.object({
 export type DeviceType = z.infer<typeof deviceTypeSchema>;
 export type OS = z.infer<typeof osSchema>;
 export type Browser = z.infer<typeof browserSchema>;
+export type MobilePlatformSelection = z.infer<typeof mobilePlatformSelectionSchema>;
 export type YesNoUnsure = z.infer<typeof yesNoUnsureSchema>;
 export type YesNo = z.infer<typeof yesNoSchema>;
 export type CookieBlocking = z.infer<typeof cookieBlockingSchema>;
@@ -129,7 +132,7 @@ export type WizardData = z.infer<typeof wizardDataSchema>;
 export const FICTIONAL_DATA: WizardData = {
   version: "1.0",
   mode: "fictional",
-  device: { type: "desktop", os: "windows", browser: "chrome" },
+  device: { type: "desktop", os: "windows", browser: "chrome", mobilePlatformSelection: "unsure" },
   currentStep: 0,
   startedAt: null,
   completedAt: null,

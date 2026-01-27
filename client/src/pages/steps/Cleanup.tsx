@@ -61,6 +61,7 @@ export default function Cleanup() {
         title={t.cleanup.title}
         concept={t.cleanup.concept}
         whyItMatters={t.cleanup.whyItMatters}
+        pitfalls={t.cleanup.pitfalls}
       >
         <CleanupEducational content={t.cleanup.educationalContent} />
 

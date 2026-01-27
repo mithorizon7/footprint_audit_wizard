@@ -9,14 +9,17 @@ import { AccountDeviceEducational } from "@/components/wizard/EducationalContent
 import { Settings, FileText } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { SiGoogle, SiApple, SiAndroid } from "react-icons/si";
-import type { AdSetting, AndroidAdIdAction, IosATT } from "@shared/schema";
+import type { AdSetting, AndroidAdIdAction, IosATT, MobilePlatformSelection } from "@shared/schema";
 
 export default function AccountDevice() {
-  const { data, updateResults, isFictional, tryLiveTools } = useWizard();
+  const { data, updateResults, isFictional, tryLiveTools, setDevice } = useWizard();
   const { t } = useI18n();
   const results = data.results.accountDevice;
-  const showAndroid = true;
-  const showApple = true;
+  const mobileSelection = data.device.mobilePlatformSelection ?? "unsure";
+  const showApple =
+    mobileSelection === "ios" || mobileSelection === "both" || mobileSelection === "unsure";
+  const showAndroid =
+    mobileSelection === "android" || mobileSelection === "both" || mobileSelection === "unsure";
   const showExternalLinks = !isFictional || tryLiveTools;
 
   return (
@@ -26,6 +29,7 @@ export default function AccountDevice() {
         title={t.accountDevice.title}
         concept={t.accountDevice.concept}
         whyItMatters={t.accountDevice.whyItMatters}
+        pitfalls={t.accountDevice.pitfalls}
       >
         <AccountDeviceEducational content={t.accountDevice.educationalContent} />
 
@@ -36,6 +40,21 @@ export default function AccountDevice() {
             t.instructions.accountDevice2,
             t.instructions.accountDevice3,
           ]}
+        />
+
+        <RadioPills<MobilePlatformSelection>
+          value={mobileSelection}
+          onChange={(value) => setDevice({ mobilePlatformSelection: value })}
+          label={t.accountDevice.deviceSelectionTitle}
+          helperText={t.accountDevice.deviceSelectionHelper}
+          options={[
+            { value: "ios", label: t.osNames.ios },
+            { value: "android", label: t.osNames.android },
+            { value: "both", label: t.accountDevice.deviceSelectionOptionBoth },
+            { value: "none", label: t.accountDevice.deviceSelectionOptionNone },
+            { value: "unsure", label: t.common.unsure },
+          ]}
+          testId="device-selection"
         />
 
         {showExternalLinks && (

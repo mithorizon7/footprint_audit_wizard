@@ -2,6 +2,18 @@ import { useRef } from "react";
 import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
 import type { Translations } from "@/lib/i18n";
+import {
+  type ScoreLevel,
+  displayValue,
+  formatMappedValue,
+  getAdSettingsLevel,
+  getCleanupLevel,
+  getFingerprintLevel,
+  getPublicExposureLevel,
+  getTrackerLevel,
+  isNA,
+  scoreFor,
+} from "@/lib/reportUtils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -46,8 +58,6 @@ import {
   Cell,
   Tooltip,
 } from "recharts";
-
-type ScoreLevel = "good" | "warning" | "critical" | "unknown";
 
 interface MetricTile {
   icon: typeof Shield;
@@ -98,124 +108,41 @@ export default function ReportCard() {
   const accountSkipped = isStepSkipped(4);
   const cleanupSkipped = isStepSkipped(5);
 
-  const getPublicExposureLevel = (): ScoreLevel => {
-    if (publicSkipped) return "unknown";
-    const pages = results.publicExposure.searchResultPagesWithPersonalInfo;
-    if (pages === 0 && results.publicExposure.peopleSearchSitesFound === "no") return "good";
-    if (pages <= 2) return "warning";
-    return "critical";
-  };
+  const publicLevel = getPublicExposureLevel(results, publicSkipped);
+  const trackersLevel = getTrackerLevel(results, trackersSkipped);
+  const fingerprintLevel = getFingerprintLevel(results, fingerprintSkipped);
+  const adSettingsLevel = getAdSettingsLevel(results, accountSkipped);
+  const cleanupLevel = getCleanupLevel(results, cleanupSkipped);
 
-  const getTrackerLevel = (): ScoreLevel => {
-    if (trackersSkipped) return "unknown";
-    const count = results.trackers.trackerCount;
-    if (count === null || count === undefined) return "unknown";
-    if (count <= 10) return "good";
-    if (count <= 30) return "warning";
-    return "critical";
-  };
-
-  const getFingerprintLevel = (): ScoreLevel => {
-    if (fingerprintSkipped) return "unknown";
-    if (results.fingerprinting.browserUnique === "no") return "good";
-    if (results.fingerprinting.browserUnique === "yes") return "critical";
-    return "unknown";
-  };
-
-  const getAdSettingsLevel = (): ScoreLevel => {
-    if (accountSkipped) return "unknown";
-
-    const googleStatus =
-      results.accountDevice.googlePersonalizedAds === "off" ||
-      results.accountDevice.googlePersonalizedAds === "not_used"
-        ? "good"
-        : results.accountDevice.googlePersonalizedAds === "on"
-          ? "bad"
-          : "unknown";
-
-    const appleStatus =
-      results.accountDevice.applePersonalizedAds === "not_applicable"
-        ? "na"
-        : results.accountDevice.applePersonalizedAds === "off"
-          ? "good"
-          : results.accountDevice.applePersonalizedAds === "on"
-            ? "bad"
-            : "unknown";
-
-    const androidStatus =
-      results.accountDevice.androidAdvertisingIdAction === "not_applicable"
-        ? "na"
-        : results.accountDevice.androidAdvertisingIdAction === "deleted"
-          ? "good"
-          : results.accountDevice.androidAdvertisingIdAction === "reset"
-            ? "warn"
-            : results.accountDevice.androidAdvertisingIdAction === "none"
-              ? "bad"
-              : "unknown";
-
-    const iosStatus =
-      results.accountDevice.iosATTSetting === "not_applicable"
-        ? "na"
-        : results.accountDevice.iosATTSetting === "blocked"
-          ? "good"
-          : results.accountDevice.iosATTSetting === "allow_apps_to_request"
-            ? "bad"
-            : "unknown";
-
-    const statuses = [googleStatus, appleStatus, androidStatus, iosStatus].filter(
-      (status) => status !== "na"
-    );
-
-    if (statuses.length === 0 || statuses.every((status) => status === "unknown")) {
-      return "unknown";
-    }
-
-    const hasBad = statuses.includes("bad");
-    const hasWarn = statuses.includes("warn");
-    const hasGood = statuses.includes("good");
-
-    if (hasBad) {
-      return hasGood || hasWarn ? "warning" : "critical";
-    }
-
-    if (hasWarn) return "warning";
-    return "good";
-  };
-
-  const getCleanupLevel = (): ScoreLevel => {
-    if (cleanupSkipped) return "unknown";
-    const cookiesCleared = results.cleanup.cookiesCleared === "yes";
-    const cookiesBlocked =
-      results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes" ||
-      results.cleanup.thirdPartyCookiesBlockedOrLimited === "already_blocked";
-    if (cookiesCleared && cookiesBlocked) return "good";
-    if (cookiesCleared || cookiesBlocked) return "warning";
-    return "critical";
-  };
+  const publicNA = isNA(publicLevel, publicSkipped);
+  const trackersNA = isNA(trackersLevel, trackersSkipped);
+  const fingerprintNA = isNA(fingerprintLevel, fingerprintSkipped);
+  const adSettingsNA = isNA(adSettingsLevel, accountSkipped);
+  const cleanupNA = isNA(cleanupLevel, cleanupSkipped);
 
   const getExposureValue = () => {
-    if (publicSkipped) return t.metrics.valueSkipped;
+    if (publicNA) return t.metrics.valueNA;
     const pages = results.publicExposure.searchResultPagesWithPersonalInfo;
     if (pages === 0) return t.metrics.valueLow;
     return formatPageCount(pages);
   };
 
   const getTrackerValue = () => {
-    if (trackersSkipped) return t.metrics.valueSkipped;
+    if (trackersNA) return t.metrics.valueNA;
     const count = results.trackers.trackerCount;
     if (count === null || count === undefined) return t.metrics.valueNotAnswered;
     return formatNum(count);
   };
 
   const getFingerprintValue = () => {
-    if (fingerprintSkipped) return t.metrics.valueSkipped;
+    if (fingerprintNA) return t.metrics.valueNA;
     if (results.fingerprinting.browserUnique === "yes") return t.metrics.valueUnique;
     if (results.fingerprinting.browserUnique === "no") return t.metrics.valueNotUnique;
     return t.metrics.valueUnknown;
   };
 
   const getAdSettingsValue = () => {
-    if (accountSkipped) return t.metrics.valueSkipped;
+    if (adSettingsNA) return t.metrics.valueNA;
 
     const values = [
       results.accountDevice.googlePersonalizedAds,
@@ -249,7 +176,7 @@ export default function ReportCard() {
   };
 
   const getCleanupValue = () => {
-    if (cleanupSkipped) return t.metrics.valueSkipped;
+    if (cleanupNA) return t.metrics.valueNA;
     const cookiesCleared = results.cleanup.cookiesCleared === "yes";
     const cookiesBlocked =
       results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes" ||
@@ -261,7 +188,7 @@ export default function ReportCard() {
 
   const getExposureExplanation = () => {
     if (publicSkipped) return t.metrics.skippedExplanation;
-    const level = getPublicExposureLevel();
+    const level = publicLevel;
     if (level === "good") return t.metrics.exposureGood;
     if (level === "warning") return t.metrics.exposureWarning;
     return t.metrics.exposureCritical;
@@ -269,7 +196,7 @@ export default function ReportCard() {
 
   const getTrackerExplanation = () => {
     if (trackersSkipped) return t.metrics.skippedExplanation;
-    const level = getTrackerLevel();
+    const level = trackersLevel;
     if (level === "good") return t.metrics.trackingGood;
     if (level === "warning") return t.metrics.trackingWarning;
     if (level === "critical") return t.metrics.trackingCritical;
@@ -278,7 +205,7 @@ export default function ReportCard() {
 
   const getFingerprintExplanation = () => {
     if (fingerprintSkipped) return t.metrics.skippedExplanation;
-    const level = getFingerprintLevel();
+    const level = fingerprintLevel;
     if (level === "good") return t.metrics.fingerprintGood;
     if (level === "critical") return t.metrics.fingerprintCritical;
     return t.metrics.fingerprintUnknown;
@@ -286,7 +213,7 @@ export default function ReportCard() {
 
   const getAdSettingsExplanation = () => {
     if (accountSkipped) return t.metrics.skippedExplanation;
-    const level = getAdSettingsLevel();
+    const level = adSettingsLevel;
     if (level === "good") return t.metrics.adsGood;
     if (level === "warning") return t.metrics.adsWarning;
     if (level === "unknown") return t.metrics.adsUnknown;
@@ -295,7 +222,7 @@ export default function ReportCard() {
 
   const getCleanupExplanation = () => {
     if (cleanupSkipped) return t.metrics.skippedExplanation;
-    const level = getCleanupLevel();
+    const level = cleanupLevel;
     if (level === "good") return t.metrics.cleanupGood;
     if (level === "warning") return t.metrics.cleanupWarning;
     if (level === "unknown") return t.metrics.cleanupUnknown;
@@ -307,35 +234,35 @@ export default function ReportCard() {
       icon: Shield,
       label: t.metrics.publicExposureLabel,
       value: getExposureValue(),
-      level: getPublicExposureLevel(),
+      level: publicLevel,
       explanation: getExposureExplanation(),
     },
     {
       icon: Eye,
       label: t.metrics.trackingIntensityLabel,
       value: getTrackerValue(),
-      level: getTrackerLevel(),
+      level: trackersLevel,
       explanation: getTrackerExplanation(),
     },
     {
       icon: Fingerprint,
       label: t.metrics.fingerprintLabel,
       value: getFingerprintValue(),
-      level: getFingerprintLevel(),
+      level: fingerprintLevel,
       explanation: getFingerprintExplanation(),
     },
     {
       icon: Settings,
       label: t.metrics.adSettingsLabel,
       value: getAdSettingsValue(),
-      level: getAdSettingsLevel(),
+      level: adSettingsLevel,
       explanation: getAdSettingsExplanation(),
     },
     {
       icon: Trash2,
       label: t.metrics.cleanupLabel,
       value: getCleanupValue(),
-      level: getCleanupLevel(),
+      level: cleanupLevel,
       explanation: getCleanupExplanation(),
     },
   ];
@@ -374,7 +301,7 @@ export default function ReportCard() {
       actions.push(format(t.nextActions.skippedStep, { stepName: name }));
     });
 
-    if (getPublicExposureLevel() !== "good" && !skippedSteps.includes(1)) {
+    if (publicLevel !== "good" && !skippedSteps.includes(1)) {
       actions.push(t.nextActions.requestGoogleRemoval);
     }
 
@@ -382,11 +309,11 @@ export default function ReportCard() {
       actions.push(t.nextActions.optOutPeopleSearch);
     }
 
-    if ((getTrackerLevel() === "critical" || getTrackerLevel() === "warning") && !skippedSteps.includes(2)) {
+    if ((trackersLevel === "critical" || trackersLevel === "warning") && !skippedSteps.includes(2)) {
       actions.push(t.nextActions.installContentBlocker);
     }
 
-    if (getFingerprintLevel() === "critical" && !skippedSteps.includes(3)) {
+    if (fingerprintLevel === "critical" && !skippedSteps.includes(3)) {
       actions.push(t.nextActions.fingerprintingRisk);
     }
 
@@ -417,45 +344,30 @@ export default function ReportCard() {
     return actions.slice(0, 7);
   };
 
-  const levelToScore = (level: ScoreLevel): number => {
-    switch (level) {
-      case "good":
-        return 100;
-      case "warning":
-        return 60;
-      case "critical":
-        return 25;
-      default:
-        return 50;
-    }
-  };
-
-  const scoreFor = (level: ScoreLevel, skipped: boolean) => (skipped ? 0 : levelToScore(level));
-
   const chartData = [
     {
       category: t.chartCategories.publicExposure,
-      score: scoreFor(getPublicExposureLevel(), publicSkipped),
+      score: scoreFor(publicLevel, publicSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.trackers,
-      score: scoreFor(getTrackerLevel(), trackersSkipped),
+      score: scoreFor(trackersLevel, trackersSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.fingerprint,
-      score: scoreFor(getFingerprintLevel(), fingerprintSkipped),
+      score: scoreFor(fingerprintLevel, fingerprintSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.adSettings,
-      score: scoreFor(getAdSettingsLevel(), accountSkipped),
+      score: scoreFor(adSettingsLevel, accountSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.cleanup,
-      score: scoreFor(getCleanupLevel(), cleanupSkipped),
+      score: scoreFor(cleanupLevel, cleanupSkipped),
       fullMark: 100,
     },
   ];
@@ -463,32 +375,32 @@ export default function ReportCard() {
   const barChartData = [
     {
       name: t.chartCategories.publicExposure,
-      score: scoreFor(getPublicExposureLevel(), publicSkipped),
-      level: getPublicExposureLevel(),
+      score: scoreFor(publicLevel, publicSkipped),
+      level: publicLevel,
       skipped: publicSkipped,
     },
     {
       name: t.chartCategories.trackers,
-      score: scoreFor(getTrackerLevel(), trackersSkipped),
-      level: getTrackerLevel(),
+      score: scoreFor(trackersLevel, trackersSkipped),
+      level: trackersLevel,
       skipped: trackersSkipped,
     },
     {
       name: t.chartCategories.fingerprint,
-      score: scoreFor(getFingerprintLevel(), fingerprintSkipped),
-      level: getFingerprintLevel(),
+      score: scoreFor(fingerprintLevel, fingerprintSkipped),
+      level: fingerprintLevel,
       skipped: fingerprintSkipped,
     },
     {
       name: t.chartCategories.adSettings,
-      score: scoreFor(getAdSettingsLevel(), accountSkipped),
-      level: getAdSettingsLevel(),
+      score: scoreFor(adSettingsLevel, accountSkipped),
+      level: adSettingsLevel,
       skipped: accountSkipped,
     },
     {
       name: t.chartCategories.cleanup,
-      score: scoreFor(getCleanupLevel(), cleanupSkipped),
-      level: getCleanupLevel(),
+      score: scoreFor(cleanupLevel, cleanupSkipped),
+      level: cleanupLevel,
       skipped: cleanupSkipped,
     },
   ];
@@ -549,16 +461,11 @@ export default function ReportCard() {
     }
   };
 
-  const formatMappedValue = (value: string | number | null | undefined, map: Record<string, string>) => {
-    if (value === null || value === undefined) return t.metrics.valueNotAnswered;
-    const key = String(value);
-    return map[key] ?? key;
-  };
-
-  const displayValue = (skipped: boolean, value: string) => (skipped ? t.common.skipped : value);
-
   const formatPageCount = (count: number) =>
     count >= 5 ? `${count}+` : format(t.metrics.valuePages, { count });
+
+  const displayValueNA = (skipped: boolean, value: string) =>
+    displayValue(skipped, value, t.metrics.valueNA);
 
   const yesNoMap = {
     yes: t.common.yes,
@@ -706,6 +613,7 @@ export default function ReportCard() {
                       stroke="hsl(var(--primary))"
                       fill="hsl(var(--primary))"
                       fillOpacity={0.4}
+                      connectNulls
                     />
                   </RadarChart>
                 </ResponsiveContainer>
@@ -728,6 +636,9 @@ export default function ReportCard() {
                         borderRadius: "6px",
                       }}
                       labelStyle={{ color: "hsl(var(--foreground))" }}
+                      formatter={(value) =>
+                        (value === null ? t.metrics.valueNA : value) as string | number
+                      }
                     />
                     <Bar dataKey="score" radius={[0, 4, 4, 0]}>
                       {barChartData.map((entry, index) => (
@@ -767,7 +678,7 @@ export default function ReportCard() {
                   <p>
                     {t.publicExposure.searchPagesQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         publicSkipped,
                         formatPageCount(results.publicExposure.searchResultPagesWithPersonalInfo)
                       )}
@@ -776,27 +687,27 @@ export default function ReportCard() {
                   <p>
                     {t.publicExposure.peopleSearchQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         publicSkipped,
-                        formatMappedValue(results.publicExposure.peopleSearchSitesFound, yesNoUnsureMap)
+                        formatMappedValue(results.publicExposure.peopleSearchSitesFound, yesNoUnsureMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.publicExposure.googleVisitedQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         publicSkipped,
-                        formatMappedValue(results.publicExposure.googleResultsAboutYouVisited, yesNoMap)
+                        formatMappedValue(results.publicExposure.googleResultsAboutYouVisited, yesNoMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.publicExposure.removalRequestedQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         publicSkipped,
-                        formatMappedValue(results.publicExposure.googleRemovalRequested, googleRemovalMap)
+                        formatMappedValue(results.publicExposure.googleRemovalRequested, googleRemovalMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
@@ -809,25 +720,25 @@ export default function ReportCard() {
                   <p>
                     {t.trackers.blacklightRunQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         trackersSkipped,
-                        formatMappedValue(results.trackers.blacklightRun, yesNoMap)
+                        formatMappedValue(results.trackers.blacklightRun, yesNoMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.trackers.siteCategoryQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         trackersSkipped,
-                        formatMappedValue(results.trackers.siteCategoryScanned, siteCategoryMap)
+                        formatMappedValue(results.trackers.siteCategoryScanned, siteCategoryMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.trackers.trackerCountQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         trackersSkipped,
                         results.trackers.trackerCount === null || results.trackers.trackerCount === undefined
                           ? t.metrics.valueNotAnswered
@@ -838,27 +749,27 @@ export default function ReportCard() {
                   <p>
                     {t.trackers.sessionRecordingQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         trackersSkipped,
-                        formatMappedValue(results.trackers.sessionRecordingFlagged, yesNoUnsureMap)
+                        formatMappedValue(results.trackers.sessionRecordingFlagged, yesNoUnsureMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.trackers.keyLoggingQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         trackersSkipped,
-                        formatMappedValue(results.trackers.keyLoggingFlagged, yesNoUnsureMap)
+                        formatMappedValue(results.trackers.keyLoggingFlagged, yesNoUnsureMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.trackers.fingerprintingQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         trackersSkipped,
-                        formatMappedValue(results.trackers.fingerprintingFlagged, yesNoUnsureMap)
+                        formatMappedValue(results.trackers.fingerprintingFlagged, yesNoUnsureMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
@@ -871,27 +782,27 @@ export default function ReportCard() {
                   <p>
                     {t.fingerprinting.effRunQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         fingerprintSkipped,
-                        formatMappedValue(results.fingerprinting.effTestRun, yesNoMap)
+                        formatMappedValue(results.fingerprinting.effTestRun, yesNoMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.fingerprinting.browserUniqueQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         fingerprintSkipped,
-                        formatMappedValue(results.fingerprinting.browserUnique, yesNoUnsureMap)
+                        formatMappedValue(results.fingerprinting.browserUnique, yesNoUnsureMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.fingerprinting.trackingProtectionQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         fingerprintSkipped,
-                        formatMappedValue(results.fingerprinting.trackingProtection, trackingProtectionMap)
+                        formatMappedValue(results.fingerprinting.trackingProtection, trackingProtectionMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
@@ -904,36 +815,36 @@ export default function ReportCard() {
                   <p>
                     {t.accountDevice.googleAdsQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         accountSkipped,
-                        formatMappedValue(results.accountDevice.googlePersonalizedAds, adSettingMap)
+                        formatMappedValue(results.accountDevice.googlePersonalizedAds, adSettingMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.accountDevice.appleAdsQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         accountSkipped,
-                        formatMappedValue(results.accountDevice.applePersonalizedAds, adSettingMap)
+                        formatMappedValue(results.accountDevice.applePersonalizedAds, adSettingMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.accountDevice.androidIdQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         accountSkipped,
-                        formatMappedValue(results.accountDevice.androidAdvertisingIdAction, androidActionMap)
+                        formatMappedValue(results.accountDevice.androidAdvertisingIdAction, androidActionMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.accountDevice.iosAttQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         accountSkipped,
-                        formatMappedValue(results.accountDevice.iosATTSetting, iosAttMap)
+                        formatMappedValue(results.accountDevice.iosATTSetting, iosAttMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
@@ -946,20 +857,21 @@ export default function ReportCard() {
                   <p>
                     {t.cleanup.cookiesClearedQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         cleanupSkipped,
-                        formatMappedValue(results.cleanup.cookiesCleared, yesNoMap)
+                        formatMappedValue(results.cleanup.cookiesCleared, yesNoMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>
                   <p>
                     {t.cleanup.cookiesBlockedQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         cleanupSkipped,
                         formatMappedValue(
                           results.cleanup.thirdPartyCookiesBlockedOrLimited,
-                          cookieBlockingMap
+                          cookieBlockingMap,
+                          t.metrics.valueNotAnswered
                         )
                       )}
                     </strong>
@@ -967,9 +879,9 @@ export default function ReportCard() {
                   <p>
                     {t.cleanup.passwordHygieneQuestion}:{" "}
                     <strong>
-                      {displayValue(
+                      {displayValueNA(
                         cleanupSkipped,
-                        formatMappedValue(results.cleanup.passwordHygieneActionTaken, passwordHygieneMap)
+                        formatMappedValue(results.cleanup.passwordHygieneActionTaken, passwordHygieneMap, t.metrics.valueNotAnswered)
                       )}
                     </strong>
                   </p>

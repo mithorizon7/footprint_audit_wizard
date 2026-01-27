@@ -24,6 +24,7 @@ export default function PublicExposure() {
         title={t.publicExposure.title}
         concept={t.publicExposure.concept}
         whyItMatters={t.publicExposure.whyItMatters}
+        pitfalls={t.publicExposure.pitfalls}
       >
         <PublicExposureEducational content={t.publicExposure.educationalContent} />
 
