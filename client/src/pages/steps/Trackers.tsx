@@ -90,12 +90,14 @@ export default function Trackers() {
           />
 
           <NumberStepper
-            value={results.trackerCount ?? 0}
+            value={results.trackerCount}
             onChange={(v) => updateResults("trackers", { trackerCount: v })}
             min={0}
             max={100}
             label={t.trackers.trackerCountQuestion}
             helperText={t.trackers.trackerCountHelper}
+            emptyLabel={t.metrics.valueNotAnswered}
+            showPlusAtMax={false}
             testId="input-tracker-count"
           />
 

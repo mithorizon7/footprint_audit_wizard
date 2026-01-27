@@ -15,10 +15,8 @@ export default function AccountDevice() {
   const { data, updateResults, isFictional, tryLiveTools } = useWizard();
   const { t } = useI18n();
   const results = data.results.accountDevice;
-  const os = data.device.os;
-
-  const showAndroid = os === "android" || os === "unknown";
-  const showApple = os === "ios" || os === "mac" || os === "unknown";
+  const showAndroid = true;
+  const showApple = true;
   const showExternalLinks = !isFictional || tryLiveTools;
 
   return (

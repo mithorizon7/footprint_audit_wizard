@@ -19,6 +19,8 @@ export interface Translations {
     yes: string;
     no: string;
     unsure: string;
+    unknown: string;
+    skipped: string;
     viewReportCard: string;
     stepNumber: string;
     commonPitfalls: string;
@@ -31,6 +33,24 @@ export interface Translations {
     switchTheme: string;
     darkMode: string;
     lightMode: string;
+    decrease: string;
+    increase: string;
+    close: string;
+    previousSlide: string;
+    nextSlide: string;
+    toggleSidebar: string;
+    sidebarTitle: string;
+    sidebarDescription: string;
+    breadcrumbMore: string;
+    breadcrumbLabel: string;
+  };
+  pagination: {
+    ariaLabel: string;
+    previous: string;
+    next: string;
+    more: string;
+    previousAria: string;
+    nextAria: string;
   };
   welcome: {
     title: string;
@@ -116,11 +136,36 @@ export interface Translations {
     cleanupCompleted: string;
     realityCheck: string;
   };
+  facilitatorDashboard: {
+    title: string;
+    subtitle: string;
+    loading: string;
+    loadError: string;
+    retry: string;
+    liveUpdates: string;
+    refresh: string;
+    totalSessions: string;
+    completed: string;
+    completionRate: string;
+    avgTrackersFound: string;
+    avgPrivacyScores: string;
+    deviceBreakdown: string;
+    noDeviceData: string;
+    sessionsOverTime: string;
+    noSessionData: string;
+    privacyNotice: string;
+  };
+  notFound: {
+    title: string;
+    description: string;
+  };
   panic: {
     buttonLabel: string;
     title: string;
     description: string;
     confirmButton: string;
+    toastTitle: string;
+    toastDescription: string;
   };
   sessionRecovery: {
     title: string;
@@ -129,6 +174,7 @@ export interface Translations {
     lastStep: string;
     resumeButton: string;
     startFreshButton: string;
+    unknownStep: string;
   };
   fictional: {
     bannerTitle: string;
@@ -136,6 +182,13 @@ export interface Translations {
     tryLiveTools: string;
     switchToReal: string;
     switchConfirmation: string;
+  };
+  toolFallback: {
+    title: string;
+    description: string;
+    suggestions: string[];
+    confirmSwitch: string;
+    switchButton: string;
   };
   progress: {
     stepOf: string;
@@ -159,6 +212,8 @@ export interface Translations {
       meaningParagraph: string;
       meaningList: string[];
       activityPreview: string;
+      sourcesTitle: string;
+      sources: { label: string; url: string }[];
     };
     externalTools: string;
     recordFindings: string;
@@ -192,6 +247,8 @@ export interface Translations {
       beyondAdsParagraph: string;
       beyondAdsList: string[];
       activityPreview: string;
+      sourcesTitle: string;
+      sources: { label: string; url: string }[];
     };
     externalTool: string;
     blacklightTip: string;
@@ -225,6 +282,8 @@ export interface Translations {
       privateBrowsingParagraph1: string;
       privateBrowsingParagraph2: string;
       activityPreview: string;
+      sourcesTitle: string;
+      sources: { label: string; url: string }[];
     };
     externalTools: string;
     whatToLookFor: string;
@@ -253,6 +312,8 @@ export interface Translations {
       activityPreviewTitle: string;
       activityPreviewList: string[];
       activityPreviewConclusion: string;
+      sourcesTitle: string;
+      sources: { label: string; url: string }[];
     };
     externalTools: string;
     recordSettings: string;
@@ -284,6 +345,8 @@ export interface Translations {
       activityPreviewTitle: string;
       activityPreviewList: string[];
       activityPreviewConclusion: string;
+      sourcesTitle: string;
+      sources: { label: string; url: string }[];
     };
     browserInstructions: string;
     breachExposure: string;
@@ -412,6 +475,9 @@ export interface Translations {
     radarView: string;
     scoreComparison: string;
     privacyScore: string;
+    legendGood: string;
+    legendWarning: string;
+    legendCritical: string;
   };
   metrics: {
     publicExposureLabel: string;
@@ -431,6 +497,8 @@ export interface Translations {
     valuePartial: string;
     valueNotYet: string;
     valueNA: string;
+    valueNotAnswered: string;
+    valueSkipped: string;
     exposureGood: string;
     exposureWarning: string;
     exposureCritical: string;
@@ -443,10 +511,13 @@ export interface Translations {
     fingerprintUnknown: string;
     adsGood: string;
     adsWarning: string;
+    adsUnknown: string;
     adsCritical: string;
     cleanupGood: string;
     cleanupWarning: string;
+    cleanupUnknown: string;
     cleanupCritical: string;
+    skippedExplanation: string;
   };
   chartCategories: {
     publicExposure: string;
@@ -454,6 +525,27 @@ export interface Translations {
     fingerprint: string;
     adSettings: string;
     cleanup: string;
+  };
+  deviceNames: {
+    desktop: string;
+    mobile: string;
+    unknown: string;
+  };
+  osNames: {
+    windows: string;
+    mac: string;
+    linux: string;
+    ios: string;
+    android: string;
+    unknown: string;
+  };
+  browserOptions: {
+    chrome: string;
+    edge: string;
+    firefox: string;
+    safari: string;
+    other: string;
+    unknown: string;
   };
   browserNames: {
     chrome: string;
@@ -484,6 +576,8 @@ const en: Translations = {
     yes: "Yes",
     no: "No",
     unsure: "Unsure",
+    unknown: "Unknown",
+    skipped: "Skipped",
     viewReportCard: "View Report Card",
     stepNumber: "Step {step}",
     commonPitfalls: "Common Pitfalls",
@@ -496,6 +590,24 @@ const en: Translations = {
     switchTheme: "Switch theme",
     darkMode: "Dark mode",
     lightMode: "Light mode",
+    decrease: "Decrease",
+    increase: "Increase",
+    close: "Close",
+    previousSlide: "Previous slide",
+    nextSlide: "Next slide",
+    toggleSidebar: "Toggle Sidebar",
+    sidebarTitle: "Sidebar",
+    sidebarDescription: "Displays the mobile sidebar.",
+    breadcrumbMore: "More",
+    breadcrumbLabel: "Breadcrumb",
+  },
+  pagination: {
+    ariaLabel: "Pagination",
+    previous: "Previous",
+    next: "Next",
+    more: "More pages",
+    previousAria: "Go to previous page",
+    nextAria: "Go to next page",
   },
   welcome: {
     title: "Footprint Audit Wizard",
@@ -546,7 +658,7 @@ const en: Translations = {
     optionDemoLearn: "How the process works using sample data",
     optionDemoBestFor: "Learning first, group training, or shared computers",
     privacyProtectedTitle: "Your Privacy is Protected",
-    privacyProtectedIntro: "This is a self-audit tool. We have no servers, no accounts, no tracking.",
+    privacyProtectedIntro: "This is a self-audit tool. We don't use accounts, and we don't track you.",
     privacyBullet1Title: "Nothing leaves your browser",
     privacyBullet1Desc: "All your responses are stored only in this browser's local storage on this device",
     privacyBullet2Title: "No data transmitted",
@@ -585,12 +697,37 @@ const en: Translations = {
     cleanupCompleted: "Cleanup Completed",
     realityCheck: "Reality Check",
   },
+  facilitatorDashboard: {
+    title: "Facilitator Dashboard",
+    subtitle: "Anonymized aggregate metrics from all lab sessions",
+    loading: "Loading dashboard metrics...",
+    loadError: "Failed to load dashboard metrics.",
+    retry: "Retry",
+    liveUpdates: "Live Updates",
+    refresh: "Refresh",
+    totalSessions: "Total Sessions",
+    completed: "Completed",
+    completionRate: "Completion Rate",
+    avgTrackersFound: "Avg Trackers Found",
+    avgPrivacyScores: "Average Privacy Scores",
+    deviceBreakdown: "Device Breakdown",
+    noDeviceData: "No device data yet",
+    sessionsOverTime: "Sessions Over Time (Last 14 Days)",
+    noSessionData: "No session data yet. Start some audits to see trends.",
+    privacyNotice: "All metrics are anonymized. No personal identifiers are collected or stored.",
+  },
+  notFound: {
+    title: "404 Page Not Found",
+    description: "Did you forget to add the page to the router?",
+  },
   panic: {
     buttonLabel: "Clear my lab data",
     title: "Clear all lab data?",
     description:
       "This will permanently delete all your audit progress and recorded data from this device. You'll start fresh with a new audit. This action cannot be undone.",
     confirmButton: "Yes, clear everything",
+    toastTitle: "Data cleared",
+    toastDescription: "All your lab data has been removed from this device.",
   },
   sessionRecovery: {
     title: "Incomplete Session Found",
@@ -600,6 +737,7 @@ const en: Translations = {
     lastStep: "Last step:",
     resumeButton: "Resume Session",
     startFreshButton: "Start Fresh",
+    unknownStep: "Unknown step",
   },
   fictional: {
     bannerTitle: "Fictional Persona Mode",
@@ -607,6 +745,17 @@ const en: Translations = {
     tryLiveTools: "Try live tools anyway",
     switchToReal: "Switch to My Footprint",
     switchConfirmation: "Switch to 'My Footprint' mode? This will clear current demo data.",
+  },
+  toolFallback: {
+    title: "Tool not loading?",
+    description: "Some networks or privacy tools may block these external tools. Try:",
+    suggestions: [
+      "Try a different website or tool category",
+      "Try using your mobile phone with cellular data (bypasses corporate network)",
+      "Continue with Fictional mode to learn the concepts without live tools",
+    ],
+    confirmSwitch: "Switch to Fictional Persona mode? This will use demo data instead.",
+    switchButton: "Use Fictional Mode",
   },
   progress: {
     stepOf: "Step {current} of {total}",
@@ -619,9 +768,9 @@ const en: Translations = {
     whyItMatters: "Data brokers and people-search sites aggregate public records, social media, and other sources. Even without your knowledge, your contact info may be visible to anyone with a search engine.",
     educationalContent: {
       sectionTitle: "Understanding Public Exposure",
-      industryTitle: "The $323 Billion Industry Trading Your Identity",
+      industryTitle: "The Data Broker Ecosystem Behind Public Exposure",
       industryParagraph1: "Every time you've filled out a form, registered to vote, bought a house, or even just existed as a citizen, you've created data points. What you may not know is that a massive industry has built itself around collecting, packaging, and selling this information about you.",
-      industryParagraph2: "The data broker industry is worth $323 billion in 2024 and is projected to nearly double to $697 billion by 2034. These companies don't just have a file on you—they maintain an average of 1,500 data points per person. One of the largest brokers, Acxiom, holds over 2.5 billion consumer records worldwide. Data brokers trade information on over 80% of American consumers.",
+      industryParagraph2: "A 2014 U.S. Federal Trade Commission (FTC) report illustrates the scale: major data brokers held hundreds of billions of data points, and one example listed over 1.1 billion unique identity elements plus 1.4 billion consumer transactions. The same report noted a broker claiming coverage of over 80% of U.S. consumer email addresses. These are historical, self-reported examples rather than a full census, but they show how large this ecosystem can be.",
       dataSourcesTitle: "Where Does Your Data Come From?",
       dataSourcesParagraph: "People-search sites like Spokeo, Whitepages, and BeenVerified don't create information about you—they aggregate it from sources you'd never expect:",
       dataSourcesList: [
@@ -642,7 +791,14 @@ const en: Translations = {
         "Property ownership and estimated home value",
         "Court records and legal history"
       ],
-      activityPreview: "The activity you're about to do will show you exactly what's discoverable about you. For many people, this is eye-opening—not because they've done anything wrong, but because they had no idea how much of their life is catalogued and for sale."
+      activityPreview: "The activity you're about to do will show you exactly what's discoverable about you. For many people, this is eye-opening—not because they've done anything wrong, but because they had no idea how much of their life is catalogued and for sale.",
+      sourcesTitle: "Sources",
+      sources: [
+        {
+          label: "U.S. FTC (2014) — Data Brokers: A Call for Transparency and Accountability",
+          url: "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
+        },
+      ],
     },
     externalTools: "External Tools",
     recordFindings: "Record Your Findings",
@@ -660,7 +816,7 @@ const en: Translations = {
       sectionTitle: "Understanding Web Tracking",
       introTitle: "What Happens in the First Second You Visit a Website",
       introParagraph1: "When you click a link to visit a website, something invisible happens before the page even finishes loading. Scripts execute, connections open to dozens of third-party servers, and data about you begins flowing in multiple directions. This happens so fast you'd never notice—but it's happening on almost every website you visit.",
-      introParagraph2: "Research shows that 90% of websites include at least one tracking script, and the average website has 48 trackers. Social media sites are the worst offenders, averaging 28 trackers per site—and in some regions like Hong Kong, that number climbs to 169 trackers on a single social media site. Google trackers are present on 74% of all web traffic, with Facebook accounting for another 11%. A typical user encounters approximately 177 different trackers every week.",
+      introParagraph2: "Large-scale measurements show tracking is widespread. The 2025 HTTP Archive Web Almanac reports that about 75% of pages include at least one tracker, and Google trackers appear on about 61% of desktop pages (Facebook trackers about 22%). Exact numbers vary by site category and region, but the pattern is consistent: most pages load third-party tracking.",
       trackingTypesTitle: "The Seven Types of Tracking You'll Discover",
       trackingTypesIntro: "The tool you're about to use (Blacklight, created by The Markup) will reveal what's really happening behind the scenes:",
       trackingTypes: {
@@ -701,7 +857,14 @@ const en: Translations = {
         "Profile permanence: The behavioral profiles built from tracking data persist for years and are traded between companies",
         "Security risk: Each company that holds data about you is a potential breach target"
       ],
-      activityPreview: "The activity you're about to do lets you scan a website you actually visit and see exactly what tracking is happening. Many people are shocked to see the number and types of trackers on their favorite sites."
+      activityPreview: "The activity you're about to do lets you scan a website you actually visit and see exactly what tracking is happening. Many people are shocked to see the number and types of trackers on their favorite sites.",
+      sourcesTitle: "Sources",
+      sources: [
+        {
+          label: "HTTP Archive Web Almanac 2025 — Privacy (tracker prevalence)",
+          url: "https://almanac.httparchive.org/en/2025/privacy",
+        },
+      ],
     },
     externalTool: "External Tool",
     blacklightTip: "Tip: Try scanning a news site or shopping site you frequently visit. Avoid sensitive sites like health portals or banking.",
@@ -725,7 +888,7 @@ const en: Translations = {
     educationalContent: {
       sectionTitle: "Understanding Browser Fingerprinting",
       introTitle: "The Tracking Method You Can't Block by Clearing Cookies",
-      introParagraph: "You've probably heard that clearing your cookies helps protect your privacy. And it does—for one type of tracking. But there's another method that doesn't require storing anything on your device at all. It's called browser fingerprinting, and studies show it can uniquely identify 83-90% of browsers.",
+      introParagraph: "You've probably heard that clearing your cookies helps protect your privacy. And it does—for one type of tracking. But there's another method that doesn't require storing anything on your device at all. It's called browser fingerprinting. Classic research like EFF's Panopticlick found that most browsers were uniquely fingerprintable, and EFF notes that the vast majority of browsers still present a unique fingerprint even without cookies. Uniqueness rates change as browsers add defenses, but fingerprinting remains a common tracking technique.",
       howItWorksTitle: "How Your Browser Betrays Your Identity",
       howItWorksParagraph: "Browser fingerprinting works by collecting dozens of small details about your device and browser that, combined, create a unique signature. Think of it like this: any single characteristic might be common, but the specific combination of 20 or 30 characteristics together is likely unique to you. Here's what gets collected:",
       attributesList: [
@@ -738,12 +901,23 @@ const en: Translations = {
         "Audio fingerprinting: Similar technique using audio processing",
         "Canvas fingerprinting: Drawing an invisible 2D image to identify rendering differences"
       ],
-      statisticsTitle: "The Numbers Are Striking",
-      statisticsParagraph: "The Electronic Frontier Foundation (EFF) demonstrated that the distribution of fingerprints has at least 18.1 bits of entropy, meaning the average user has only a 1 in 286,777 chance of sharing their exact fingerprint with another user. A 2016 AmIUnique study found that 89.4% of fingerprints are unique. Even a more conservative 2018 study found that 33.6% of fingerprints are completely unique, and on desktop computers specifically, the uniqueness rate remains very high.",
+      statisticsTitle: "Why Fingerprints Are Often Unique",
+      statisticsParagraph: "EFF's Panopticlick project and later guidance explain that combining many attributes (fonts, screen size, hardware, and more) can produce a fingerprint that is often unique enough to track a user across sites. Anti-fingerprinting protections can reduce uniqueness, but results vary by browser and configuration.",
       privateBrowsingTitle: "Why Private Browsing Doesn't Help Here",
       privateBrowsingParagraph1: "When you open an incognito or private browsing window, your browser doesn't save cookies or history. But it doesn't change your screen resolution, fonts, graphics card, or timezone. Your fingerprint in private mode is often identical to your fingerprint in regular mode—which means websites can still recognize you.",
       privateBrowsingParagraph2: "Some privacy-focused browsers like Firefox and Brave have implemented fingerprinting protections that either block certain collection techniques or deliberately provide generic responses.",
-      activityPreview: "The test you're about to run will tell you: (1) whether your browser fingerprint is unique (meaning you can be identified), (2) how strong your tracking protection is, and (3) which specific characteristics make you most identifiable. For many people, discovering that their browser is as unique as a fingerprint—even with no cookies—is a wake-up call about how sophisticated modern tracking has become."
+      activityPreview: "The test you're about to run will tell you: (1) whether your browser fingerprint is unique (meaning you can be identified), (2) how strong your tracking protection is, and (3) which specific characteristics make you most identifiable. For many people, discovering that their browser is as unique as a fingerprint—even with no cookies—is a wake-up call about how sophisticated modern tracking has become.",
+      sourcesTitle: "Sources",
+      sources: [
+        {
+          label: "EFF — Panopticlick (browser fingerprinting study)",
+          url: "https://www.eff.org/press/releases/eff-launches-panopticlick-unique-fingerprint-every-browser",
+        },
+        {
+          label: "EFF Surveillance Self-Defense — What is fingerprinting? (reviewed 2024)",
+          url: "https://ssd.eff.org/module/what-fingerprinting",
+        },
+      ],
     },
     externalTools: "External Tools",
     whatToLookFor: "What to look for",
@@ -773,7 +947,7 @@ const en: Translations = {
       scaleParagraph: "Unlike cookies, your advertising ID follows you across your entire app ecosystem—games, social media, news apps, utilities, everything. Because it's persistent, companies can build a comprehensive profile of everything you do on your phone over months or years. Data brokers and ad networks use these identifiers to track your physical location across time, build behavioral profiles based on app usage, connect your app activity to your web browsing through cross-device tracking, and sell this data to advertisers, analytics companies, and increasingly, to anyone willing to pay.",
       attTitle: "Apple's App Tracking Transparency Changed the Game",
       attParagraph1: "In 2021, Apple introduced App Tracking Transparency (ATT), which requires apps to ask permission before accessing your IDFA. You've probably seen the popup: \"Allow this app to track your activity across other companies' apps and websites?\" This was significant: before ATT, apps accessed your IDFA automatically without asking.",
-      attParagraph2: "After ATT, users had to explicitly opt in. Current statistics show that globally, about 50% of users now consent to tracking—meaning 50% decline. This single change cost the advertising industry billions of dollars in lost targeting capability. Google is following suit, planning to replace the GAID with more privacy-preserving alternatives.",
+      attParagraph2: "After ATT, users must explicitly opt in. Reported opt-in rates vary widely by measurement method, app category, and geography. For example, AppsFlyer reported global opt-in around 50% in Q1 2024, while Singular reported much lower opt-in at first app open in Q4 2025. Treat any single number as context-specific. Google has said its Privacy Sandbox on Android aims to operate without cross-app identifiers like the advertising ID.",
       activityPreviewTitle: "What You'll Check in This Activity",
       activityPreviewList: [
         "Google Ad Personalization: Whether Google builds a profile of your interests across all Google services",
@@ -781,7 +955,22 @@ const en: Translations = {
         "Android Advertising ID: You can reset (give yourself a new ID) or delete it entirely",
         "iOS App Tracking Transparency: Whether apps can request to track you at all"
       ],
-      activityPreviewConclusion: "Many people discover that ad personalization has been on by default for years, building a detailed profile they never knew existed."
+      activityPreviewConclusion: "Many people discover that ad personalization has been on by default for years, building a detailed profile they never knew existed.",
+      sourcesTitle: "Sources",
+      sources: [
+        {
+          label: "AppsFlyer (2024) — ATT opt-in rate report (Q1 2024)",
+          url: "https://www.appsflyer.com/resources/reports/app-tracking-transparency-opt-in-rate/",
+        },
+        {
+          label: "Singular (2025) — Q4 2025 Insights (ATT opt-in at first open)",
+          url: "https://www.singular.net/blog/singular-q4-2025-insights/",
+        },
+        {
+          label: "Google Android Developers Blog (2022) — Privacy Sandbox on Android",
+          url: "https://android-developers.googleblog.com/2022/02/introducing-privacy-sandbox-android.html",
+        },
+      ],
     },
     externalTools: "External Tools",
     recordSettings: "Record Your Settings",
@@ -797,9 +986,9 @@ const en: Translations = {
     whyItMatters: "Clearing cookies and site data removes existing trackers. Blocking third-party cookies prevents many future tracking attempts. These are quick wins that immediately improve your privacy.",
     educationalContent: {
       sectionTitle: "Why Digital Hygiene Matters",
-      breachesTitle: "The 1.7 Billion Reasons to Practice Good Digital Hygiene",
-      breachesParagraph1: "In 2024 alone, 1.7 billion people had their personal data compromised in data breaches. The largest single breach—at National Public Data—exposed the personal information of approximately 2.9 billion records, including Social Security numbers, addresses, and dates of birth of citizens across the US, Canada, and the UK.",
-      breachesParagraph2: "Here's what makes this particularly sobering: the Ticketmaster, Advance Auto Parts, Change Healthcare, and AT&T breaches—which together exposed over 1.24 billion records—all happened because hackers gained access using compromised credentials for accounts that did not have multi-factor authentication enabled. These were preventable.",
+      breachesTitle: "Why Breaches Keep Happening",
+      breachesParagraph1: "Verizon's 2024 Data Breach Investigations Report (DBIR) finds the human element in about 68% of breaches, and stolen credentials remain one of the most common ways attackers get in (about 31% in Verizon's 10-year analysis).",
+      breachesParagraph2: "That makes password hygiene and multi-factor authentication especially important. They don't prevent every breach, but they reduce the risk of account takeovers and credential-stuffing attacks.",
       cookiesTitle: "Why Cookies Matter for Your Security",
       cookiesParagraph: "Cookies aren't just about ads—they're also how websites remember that you're logged in. When you visit your email or bank and don't have to re-enter your password, a cookie is what proves to the site that you've already authenticated. This is convenient, but it has implications:",
       cookiesList: [
@@ -817,7 +1006,7 @@ const en: Translations = {
         "Enabling this setting breaks cross-site tracking without affecting your ability to use websites normally"
       ],
       hibpTitle: "Have I Been Pwned: The Reality Check",
-      hibpParagraph1: "The optional activity in this step—checking Have I Been Pwned—is a moment of truth for most people. This service, run by security researcher Troy Hunt, aggregates data from 936 known breaches containing over 17 billion compromised account records.",
+      hibpParagraph1: "The optional activity in this step—checking Have I Been Pwned—is a moment of truth for most people. As of January 2026, HIBP lists 941 breached sites and about 17.4 billion pwned accounts. These totals change over time as new breaches are added.",
       hibpParagraph2: "When you enter your email address, it checks whether that email appeared in any known data breach. For most people who've had an email address for more than a few years, the answer is yes—often in multiple breaches. This is why password hygiene matters: unique passwords for every account, ideally managed by a password manager, and multi-factor authentication wherever it's available.",
       activityPreviewTitle: "What You're About to Do",
       activityPreviewList: [
@@ -826,7 +1015,18 @@ const en: Translations = {
         "Check for breach exposure: See if your credentials have been compromised",
         "Plan password hygiene actions: Update compromised passwords, enable MFA"
       ],
-      activityPreviewConclusion: "By the time you complete this step, you'll have taken concrete actions that meaningfully reduce your tracking exposure and improve your account security. These aren't theoretical benefits—they're immediate, measurable improvements to your digital privacy."
+      activityPreviewConclusion: "By the time you complete this step, you'll have taken concrete actions that meaningfully reduce your tracking exposure and improve your account security. These aren't theoretical benefits—they're immediate, measurable improvements to your digital privacy.",
+      sourcesTitle: "Sources",
+      sources: [
+        {
+          label: "Verizon 2024 Data Breach Investigations Report (DBIR) — highlights",
+          url: "https://www.verizon.com/about/news/2024-data-breach-investigations-report",
+        },
+        {
+          label: "Have I Been Pwned — Pwned websites statistics",
+          url: "https://haveibeenpwned.com/PwnedWebsites",
+        },
+      ],
     },
     browserInstructions: "Browser Instructions for",
     breachExposure: "Breach Exposure Check",
@@ -850,7 +1050,7 @@ const en: Translations = {
     fingerprinting2: "Run the test and note if your browser fingerprint is unique",
     fingerprinting3: "Check your tracking protection level and record the results below",
     accountDevice1: "Check your Google Ad Settings and note if personalized ads are on or off",
-    accountDevice2: "Check Apple/Android ad settings on your device (if applicable)",
+    accountDevice2: "Check Apple/Android ad settings on any devices you use (select N/A if not applicable)",
     accountDevice3: "Record your current settings below - you can change them later if you wish",
     cleanup1: "Clear your cookies and site data using the browser instructions provided",
     cleanup2: "Enable blocking of third-party cookies in your browser settings",
@@ -955,6 +1155,9 @@ const en: Translations = {
     radarView: "Radar View",
     scoreComparison: "Score Comparison",
     privacyScore: "Privacy Score",
+    legendGood: "Good (100)",
+    legendWarning: "Warning (60)",
+    legendCritical: "Critical (25)",
   },
   metrics: {
     publicExposureLabel: "Public Exposure Signals",
@@ -974,6 +1177,8 @@ const en: Translations = {
     valuePartial: "Partial",
     valueNotYet: "Not Yet",
     valueNA: "N/A",
+    valueNotAnswered: "Not answered",
+    valueSkipped: "Skipped",
     exposureGood: "Great! Your personal info wasn't easily found in search results.",
     exposureWarning: "Some personal info is visible. Consider requesting removal from search engines.",
     exposureCritical: "Your personal info is exposed. Take action to remove it from data brokers and search results.",
@@ -986,10 +1191,13 @@ const en: Translations = {
     fingerprintUnknown: "Run the EFF test to check your browser's fingerprint.",
     adsGood: "You've disabled ad personalization on your accounts.",
     adsWarning: "Some ad personalization is still active. Consider disabling in your account settings.",
+    adsUnknown: "Review your account and device ad settings to see what's enabled.",
     adsCritical: "Ad personalization is active. Your activity is being used to target ads.",
     cleanupGood: "You've cleared cookies and enabled third-party cookie blocking. This suggests reduced tracking persistence.",
     cleanupWarning: "You've taken some cleanup actions. Consider completing both cookie clearing and blocking for better protection.",
+    cleanupUnknown: "Complete the cleanup step to see your hygiene status.",
     cleanupCritical: "Hygiene actions like clearing cookies and blocking third-party cookies help reduce tracking persistence.",
+    skippedExplanation: "You skipped this step, so no score is shown.",
   },
   chartCategories: {
     publicExposure: "Public Exposure",
@@ -997,6 +1205,27 @@ const en: Translations = {
     fingerprint: "Fingerprint",
     adSettings: "Ad Settings",
     cleanup: "Cleanup",
+  },
+  deviceNames: {
+    desktop: "Desktop",
+    mobile: "Mobile",
+    unknown: "Unknown",
+  },
+  osNames: {
+    windows: "Windows",
+    mac: "macOS",
+    linux: "Linux",
+    ios: "iOS",
+    android: "Android",
+    unknown: "Unknown",
+  },
+  browserOptions: {
+    chrome: "Chrome",
+    edge: "Edge",
+    firefox: "Firefox",
+    safari: "Safari",
+    other: "Other",
+    unknown: "Unknown",
   },
   browserNames: {
     chrome: "Chrome",
@@ -1027,6 +1256,8 @@ const lv: Translations = {
     yes: "Jā",
     no: "Nē",
     unsure: "Nezinu",
+    unknown: "Nezināms",
+    skipped: "Izlaists",
     viewReportCard: "Skatīt atskaiti",
     stepNumber: "{step}. solis",
     commonPitfalls: "Biežākās kļūdas",
@@ -1039,6 +1270,24 @@ const lv: Translations = {
     switchTheme: "Mainīt motīvu",
     darkMode: "Tumšais režīms",
     lightMode: "Gaišais režīms",
+    decrease: "Samazināt",
+    increase: "Palielināt",
+    close: "Aizvērt",
+    previousSlide: "Iepriekšējais slaids",
+    nextSlide: "Nākamais slaids",
+    toggleSidebar: "Pārslēgt sānjoslu",
+    sidebarTitle: "Sānjosla",
+    sidebarDescription: "Rāda mobilo sānjoslu.",
+    breadcrumbMore: "Vairāk",
+    breadcrumbLabel: "Atrašanās vietas josla",
+  },
+  pagination: {
+    ariaLabel: "Lappušu pārslēgšana",
+    previous: "Iepriekšējā",
+    next: "Nākamā",
+    more: "Vairāk lappušu",
+    previousAria: "Doties uz iepriekšējo lappusi",
+    nextAria: "Doties uz nākamo lappusi",
   },
   welcome: {
     title: "Digitālās pēdas audita vednis",
@@ -1089,7 +1338,7 @@ const lv: Translations = {
     optionDemoLearn: "Kā process darbojas, izmantojot parauga datus",
     optionDemoBestFor: "Mācīšanās, grupu apmācības vai koplietotiem datoriem",
     privacyProtectedTitle: "Jūsu privātums ir aizsargāts",
-    privacyProtectedIntro: "Šis ir pašpārbaudes rīks. Mums nav serveru, nav kontu, nav izsekošanas.",
+    privacyProtectedIntro: "Šis ir pašpārbaudes rīks. Mēs neizmantojam kontus un jūs neizsekojam.",
     privacyBullet1Title: "Nekas neiziet ārpus jūsu pārlūkprogrammas",
     privacyBullet1Desc: "Visas jūsu atbildes tiek saglabātas tikai šīs pārlūkprogrammas lokālajā krātuvē šajā ierīcē",
     privacyBullet2Title: "Dati netiek nosūtīti",
@@ -1128,12 +1377,37 @@ const lv: Translations = {
     cleanupCompleted: "Tīrīšana pabeigta",
     realityCheck: "Realitātes pārbaude",
   },
+  facilitatorDashboard: {
+    title: "Facilitatora panelis",
+    subtitle: "Anonimizēti apkopotie rādītāji no visām laboratorijas sesijām",
+    loading: "Ielādē paneļa rādītājus...",
+    loadError: "Neizdevās ielādēt paneļa rādītājus.",
+    retry: "Mēģināt vēlreiz",
+    liveUpdates: "Tiešsaistes atjauninājumi",
+    refresh: "Atsvaidzināt",
+    totalSessions: "Kopējās sesijas",
+    completed: "Pabeigts",
+    completionRate: "Pabeigšanas rādītājs",
+    avgTrackersFound: "Vidēji atrastie izsekotāji",
+    avgPrivacyScores: "Vidējie privātuma rezultāti",
+    deviceBreakdown: "Ierīču sadalījums",
+    noDeviceData: "Pagaidām nav ierīču datu",
+    sessionsOverTime: "Sesijas laika gaitā (pēdējās 14 dienas)",
+    noSessionData: "Pagaidām nav sesiju datu. Sāciet dažus auditus, lai redzētu tendences.",
+    privacyNotice: "Visi rādītāji ir anonimizēti. Netiek vākti vai glabāti personīgie identifikatori.",
+  },
+  notFound: {
+    title: "404 Lapa nav atrasta",
+    description: "Vai aizmirsāt pievienot lapu maršrutētājam?",
+  },
   panic: {
     buttonLabel: "Dzēst manus laboratorijas datus",
     title: "Dzēst visus laboratorijas datus?",
     description:
       "Tas neatgriezeniski izdzēsīs visu jūsu audita progresu un ierakstītos datus no šīs ierīces. Jūs sāksiet no jauna ar jaunu auditu. Šo darbību nevar atsaukt.",
     confirmButton: "Jā, dzēst visu",
+    toastTitle: "Dati dzēsti",
+    toastDescription: "Visi jūsu laboratorijas dati ir dzēsti no šīs ierīces.",
   },
   sessionRecovery: {
     title: "Atrasta nepabeigta sesija",
@@ -1143,6 +1417,7 @@ const lv: Translations = {
     lastStep: "Pēdējais solis:",
     resumeButton: "Turpināt sesiju",
     startFreshButton: "Sākt no jauna",
+    unknownStep: "Nezināms solis",
   },
   fictional: {
     bannerTitle: "Fiktīvās personas režīms",
@@ -1150,6 +1425,17 @@ const lv: Translations = {
     tryLiveTools: "Tomēr izmēģināt reālos rīkus",
     switchToReal: "Pārslēgties uz Mana pēda",
     switchConfirmation: "Pārslēgties uz 'Mana pēda' režīmu? Tas dzēsīs pašreizējos demo datus.",
+  },
+  toolFallback: {
+    title: "Rīks neielādējas?",
+    description: "Daži tīkli vai privātuma rīki var bloķēt šos ārējos rīkus. Pamēģiniet:",
+    suggestions: [
+      "Pamēģiniet citu vietni vai rīku kategoriju",
+      "Pamēģiniet izmantot mobilo telefonu ar mobilo datu savienojumu (apiet korporatīvo tīklu)",
+      "Turpiniet Fiktīvās personas režīmā, lai apgūtu jēdzienus bez tiešsaistes rīkiem",
+    ],
+    confirmSwitch: "Pārslēgties uz Fiktīvās personas režīmu? Tiks izmantoti demo dati.",
+    switchButton: "Lietot fiktīvo režīmu",
   },
   progress: {
     stepOf: "Solis {current} no {total}",
@@ -1160,33 +1446,39 @@ const lv: Translations = {
     title: "Publiskā redzamība",
     concept: "Dažu personīgo informāciju var atrast publiski, izmantojot meklēšanu. 'Privātums' nav tikai par to, ko jūs pats publicējat.",
     whyItMatters: "Datu brokeri un cilvēku meklēšanas vietnes apkopo publiskos ierakstus, sociālos medijus un citus avotus. Pat bez jūsu ziņas jūsu kontaktinformācija var būt redzama ikvienam, kurš izmanto meklētājprogrammu.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Public Exposure",
-      industryTitle: "The $323 Billion Industry Trading Your Identity",
-      industryParagraph1: "Every time you've filled out a form, registered to vote, bought a house, or even just existed as a citizen, you've created data points. What you may not know is that a massive industry has built itself around collecting, packaging, and selling this information about you.",
-      industryParagraph2: "The data broker industry is worth $323 billion in 2024 and is projected to nearly double to $697 billion by 2034. These companies don't just have a file on you—they maintain an average of 1,500 data points per person. One of the largest brokers, Acxiom, holds over 2.5 billion consumer records worldwide. Data brokers trade information on over 80% of American consumers.",
-      dataSourcesTitle: "Where Does Your Data Come From?",
-      dataSourcesParagraph: "People-search sites like Spokeo, Whitepages, and BeenVerified don't create information about you—they aggregate it from sources you'd never expect:",
+      sectionTitle: "Publiskās redzamības izpratne",
+      industryTitle: "Datu brokeru ekosistēma aiz publiskās redzamības",
+      industryParagraph1: "Katru reizi, kad esat aizpildījis veidlapu, reģistrējies balsošanai, nopircis māju vai pat vienkārši pastāvējis kā pilsonis, jūs esat izveidojis datu punktus. Ko jūs, iespējams, nezināt: ap šo informāciju par jums ir izveidojusies milzīga industrija, kas to vāc, iepako un pārdod.",
+      industryParagraph2: "2014. gada ASV Federālās tirdzniecības komisijas (FTC) ziņojums rāda mērogu: lielie datu brokeri glabāja simtiem miljardu datu punktu, un vienā piemērā bija vairāk nekā 1,1 miljards unikālu identitātes elementu un 1,4 miljardi patērētāju darījumu. Tas pats ziņojums min brokeri, kurš apgalvoja, ka aptver vairāk nekā 80% ASV patērētāju e‑pasta adrešu. Šie ir vēsturiski, pašu ziņoti piemēri, nevis pilnīgs skaitījums, taču tie parāda ekosistēmas mērogu.",
+      dataSourcesTitle: "No kurienes nāk jūsu dati?",
+      dataSourcesParagraph: "Cilvēku meklēšanas vietnes, piemēram, Spokeo, Whitepages un BeenVerified, neveido informāciju par jums — tās to apvieno no avotiem, kurus jūs negaidītu:",
       dataSourcesList: [
-        "Public records: Property deeds, court filings, voter registrations, marriage licenses, bankruptcy filings",
-        "Commercial sources: Credit applications, car loans, rental agreements, utility records, and even some state DMVs that sell registration data",
-        "Social media: Any profile you've ever made public, even briefly",
-        "Other data brokers: These companies cross-reference and sell data to each other, creating an interconnected web"
+        "Publiskie ieraksti: īpašuma reģistri, tiesu dokumenti, vēlētāju reģistri, laulību apliecības, bankrota lietas",
+        "Komercavoti: kredītu pieteikumi, auto kredīti, īres līgumi, komunālo pakalpojumu ieraksti, un pat dažu štatu DMV, kas pārdod reģistrācijas datus",
+        "Sociālie tīkli: jebkurš profils, kuru jebkad esat padarījis publisku, pat uz īsu brīdi",
+        "Citi datu brokeri: šie uzņēmumi savstarpēji pārbauda un pārdod datus, veidojot savstarpēji saistītu tīklu"
       ],
-      dataSourcesConclusion: "The key insight is that none of this data was necessarily \"leaked\"—much of it has always been technically public. The difference now is that companies have automated the collection and made your entire life searchable in seconds. What once required a private investigator and weeks of work now takes anyone with internet access about 30 seconds.",
-      meaningTitle: "What This Means for You",
-      meaningParagraph: "When a stranger, a potential employer, an ex-partner, or a scammer searches your name, they can potentially find:",
+      dataSourcesConclusion: "Galvenā atziņa ir tāda, ka šie dati ne vienmēr ir “noplūduši” — liela daļa no tiem vienmēr ir bijuši tehniski publiski. Atšķirība ir tā, ka uzņēmumi ir automatizējuši vākšanu un padarījuši visu jūsu dzīvi meklējamu dažu sekunžu laikā. Tas, kam agrāk vajadzēja privātdetektīvu un nedēļu darba, tagad ikviens ar internetu var izdarīt aptuveni 30 sekunžu laikā.",
+      meaningTitle: "Ko tas nozīmē jums",
+      meaningParagraph: "Kad svešinieks, potenciāls darba devējs, bijušais partneris vai krāpnieks meklē jūsu vārdu, viņi var atrast:",
       meaningList: [
-        "Your current and previous addresses",
-        "Phone numbers (including ones you thought were private)",
-        "Email addresses",
-        "Names of your relatives and associates",
-        "Your approximate age and date of birth",
-        "Property ownership and estimated home value",
-        "Court records and legal history"
+        "Jūsu pašreizējās un iepriekšējās adreses",
+        "Tālruņa numurus (tostarp tos, kurus uzskatījāt par privātiem)",
+        "E-pasta adreses",
+        "Jūsu radinieku un saistīto personu vārdus",
+        "Jūsu aptuveno vecumu un dzimšanas datumu",
+        "Īpašuma īpašumtiesības un aptuveno mājokļa vērtību",
+        "Tiesu ierakstus un juridisko vēsturi"
       ],
-      activityPreview: "The activity you're about to do will show you exactly what's discoverable about you. For many people, this is eye-opening—not because they've done anything wrong, but because they had no idea how much of their life is catalogued and for sale."
+      activityPreview: "Uzdevums, ko tūlīt veiksiet, parādīs tieši to, kas par jums ir atrodams. Daudziem tas ir acu atvērējs — nevis tāpēc, ka viņi būtu darījuši ko sliktu, bet tāpēc, ka viņi nebija sapratuši, cik daudz viņu dzīves ir katalogizēts un pārdodams.",
+      sourcesTitle: "Avoti",
+      sources: [
+        {
+          label: "ASV FTC (2014) — Datu brokeri: aicinājums uz caurspīdīgumu un atbildību",
+          url: "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
+        },
+      ],
     },
     externalTools: "Ārējie rīki",
     recordFindings: "Ierakstiet savus atklājumus",
@@ -1200,32 +1492,38 @@ const lv: Translations = {
     title: "Izsekotāju redzamība",
     concept: "Viena parasta tīmekļa lapa var ielādēt desmitiem trešo pušu. Izsekošana nav tikai 'sīkdatnes' — tā ietver sesiju ierakstīšanu, pirkstu nospiedumus un daudz ko citu.",
     whyItMatters: "Apmeklējot vietni, neredzami skripti bieži ieraksta jūsu uzvedību, kopīgo datus ar reklāmdevējiem un veido jūsu interešu profilu — bieži vien bez jūsu ziņas.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Web Tracking",
-      introTitle: "What Happens in the First Second You Visit a Website",
-      introParagraph1: "When you click a link to visit a website, something invisible happens before the page even finishes loading. Scripts execute, connections open to dozens of third-party servers, and data about you begins flowing in multiple directions. This happens so fast you'd never notice—but it's happening on almost every website you visit.",
-      introParagraph2: "Research shows that 90% of websites include at least one tracking script, and the average website has 48 trackers. Social media sites are the worst offenders, averaging 28 trackers per site—and in some regions like Hong Kong, that number climbs to 169 trackers on a single social media site. Google trackers are present on 74% of all web traffic, with Facebook accounting for another 11%. A typical user encounters approximately 177 different trackers every week.",
-      trackingTypesTitle: "The Seven Types of Tracking You'll Discover",
-      trackingTypesIntro: "The tool you're about to use (Blacklight, created by The Markup) will reveal what's really happening behind the scenes:",
+      sectionTitle: "Tīmekļa izsekošanas izpratne",
+      introTitle: "Kas notiek pirmajā sekundē, kad apmeklējat vietni",
+      introParagraph1: "Kad noklikšķināt uz saites, lai apmeklētu vietni, kaut kas neredzams notiek vēl pirms lapa pilnībā ielādējas. Izpildās skripti, atveras savienojumi ar desmitiem trešo pušu serveru, un dati par jums sāk plūst dažādos virzienos. Tas notiek tik ātri, ka jūs to nepamanāt — bet tas notiek gandrīz katrā vietnē, ko apmeklējat.",
+      introParagraph2: "Plaša mēroga mērījumi rāda, ka izsekošana ir plaši izplatīta. 2025. gada HTTP Archive Web Almanac ziņo, ka apmēram 75% lapu satur vismaz vienu izsekotāju, un Google izsekotāji ir apmēram 61% darbvirsmas lapu (Facebook izsekotāji — ap 22%). Precīzi skaitļi atšķiras pēc vietnes kategorijas un reģiona, bet kopaina ir konsekventa: lielākajā daļā lapu tiek ielādēta trešo pušu izsekošana.",
+      trackingTypesTitle: "Septiņi izsekošanas veidi, ko jūs atklāsiet",
+      trackingTypesIntro: "Rīks, ko tūlīt izmantosiet (Blacklight, ko izveidoja The Markup), atklās, kas patiesībā notiek aizkulisēs:",
       trackingTypes: {
-        adTrackers: { title: "Ad Trackers", description: "These send information about your visit to advertising networks. They're building a profile of your interests based on every site you visit, every product you look at, and how long you spend on each page." },
-        thirdPartyCookies: { title: "Third-Party Cookies", description: "Unlike cookies from the site you're visiting, these come from external domains. Here's how they work: You visit an online shoe store, and a cookie from an ad network (let's call it \"adtracker.com\") is placed in your browser. Later, you visit a news site that also uses adtracker.com. That same cookie is read, and now the ad network knows you were shopping for shoes. That's why you see shoe ads following you around the internet." },
-        sessionRecording: { title: "Session Recording", description: "This is more invasive than you might expect. Session recording tools capture a video-like reconstruction of everything you do on a page—your mouse movements, where you pause, what you click, how you scroll. Companies like Hotjar and FullStory sell these services, and thousands of websites use them. The recording shows exactly what you saw and did, replayed like a movie." },
-        keystrokeLogging: { title: "Keystroke Logging", description: "Some tracking scripts record what you type into forms—sometimes even before you hit submit. This is primarily used to capture partial form submissions, but it means your keystrokes are being transmitted to servers as you type." },
-        canvasFingerprinting: { title: "Canvas Fingerprinting", description: "Your browser can be asked to draw an invisible image. Due to subtle differences in how your specific hardware and software render graphics, this image is slightly different from almost everyone else's. This creates an identifier that works even if you block cookies." },
-        facebookPixel: { title: "Facebook Pixel", description: "Even if you're not logged into Facebook, and even if you don't have a Facebook account, many websites send data to Facebook about your visit through an embedded tracking pixel." },
-        googleAnalytics: { title: "Google Analytics", description: "Present on the majority of websites, Google Analytics tracks visitors and shares data with Google's advertising ecosystem." }
+        adTrackers: { title: "Reklāmu izsekotāji", description: "Tie nosūta informāciju par jūsu apmeklējumu reklāmu tīkliem. Tie veido profilu par jūsu interesēm, balstoties uz katru vietni, ko apmeklējat, katru produktu, ko apskatāt, un laiku, ko pavadāt katrā lapā." },
+        thirdPartyCookies: { title: "Trešo pušu sīkdatnes", description: "Atšķirībā no sīkdatnēm no vietnes, kuru apmeklējat, šīs nāk no ārējiem domēniem. Kā tas darbojas: jūs apmeklējat tiešsaistes apavu veikalu, un reklāmu tīkla sīkdatne (sauksim to par \"adtracker.com\") tiek ievietota jūsu pārlūkprogrammā. Vēlāk jūs apmeklējat ziņu vietni, kas arī izmanto adtracker.com. Tā pati sīkdatne tiek nolasīta, un reklāmu tīkls tagad zina, ka jūs skatījāties apavus. Tāpēc jūs redzat apavu reklāmas visā internetā." },
+        sessionRecording: { title: "Sesiju ierakstīšana", description: "Tas ir invazīvāk, nekā varētu šķist. Sesiju ierakstīšanas rīki veido video līdzīgu rekonstrukciju par visu, ko darāt lapā — peles kustības, pauzes, klikšķus, ritināšanu. Tādus pakalpojumus kā Hotjar un FullStory izmanto tūkstošiem vietņu. Ieraksts parāda tieši to, ko redzējāt un darījāt, atskaņots kā filma." },
+        keystrokeLogging: { title: "Taustiņu reģistrēšana", description: "Daži izsekošanas skripti fiksē to, ko rakstāt formās — dažreiz pat pirms nospiežat Iesniegt. Tas galvenokārt tiek izmantots, lai uztvertu daļēji aizpildītas formas, taču tas nozīmē, ka jūsu taustiņsitieni tiek nosūtīti uz serveriem, kamēr jūs rakstāt." },
+        canvasFingerprinting: { title: "Canvas pirkstu nospiedumi", description: "Jūsu pārlūkprogrammai var likt uzzīmēt neredzamu attēlu. Smalku atšķirību dēļ, kā jūsu konkrētā aparatūra un programmatūra renderē grafiku, šis attēls ir nedaudz atšķirīgs no gandrīz visiem citiem. Tas rada identifikatoru, kas darbojas pat tad, ja bloķējat sīkdatnes." },
+        facebookPixel: { title: "Facebook Pixel", description: "Pat ja neesat pieteicies Facebook un pat ja jums nav Facebook konta, daudzas vietnes nosūta datus Facebook par jūsu apmeklējumu, izmantojot iegultu izsekošanas pikseli." },
+        googleAnalytics: { title: "Google Analytics", description: "Atrodas lielākajā daļā vietņu, Google Analytics izseko apmeklētājus un kopīgo datus ar Google reklāmas ekosistēmu." }
       },
-      beyondAdsTitle: "Why This Matters Beyond Ads",
-      beyondAdsParagraph: "You might think: \"So what? I just get more relevant ads.\" But tracking has implications beyond advertising:",
+      beyondAdsTitle: "Kāpēc tas ir svarīgi ne tikai reklāmu dēļ",
+      beyondAdsParagraph: "Jūs varētu domāt: \"Nu un? Es vienkārši redzu atbilstošākas reklāmas.\" Taču izsekošanai ir sekas arī ārpus reklāmas:",
       beyondAdsList: [
-        "Price discrimination: Some retailers show different prices based on your browsing history or inferred income level",
-        "Insurance and employment: Data brokers sell behavioral profiles that can influence credit decisions, insurance rates, and even hiring",
-        "Profile permanence: The behavioral profiles built from tracking data persist for years and are traded between companies",
-        "Security risk: Each company that holds data about you is a potential breach target"
+        "Cenu diskriminācija: daži tirgotāji rāda atšķirīgas cenas, balstoties uz jūsu pārlūkošanas vēsturi vai secināto ienākumu līmeni",
+        "Apdrošināšana un nodarbinātība: datu brokeri pārdod uzvedības profilus, kas var ietekmēt kredīta lēmumus, apdrošināšanas likmes un pat pieņemšanu darbā",
+        "Profila noturība: no izsekošanas datiem veidotie profili saglabājas gadiem un tiek tirgoti starp uzņēmumiem",
+        "Drošības risks: katrs uzņēmums, kas glabā datus par jums, ir potenciāls uzlaušanas mērķis"
       ],
-      activityPreview: "The activity you're about to do lets you scan a website you actually visit and see exactly what tracking is happening. Many people are shocked to see the number and types of trackers on their favorite sites."
+      activityPreview: "Uzdevums, ko tūlīt veiksiet, ļauj noskenēt vietni, ko tiešām apmeklējat, un redzēt, kāda izsekošana notiek. Daudzi ir šokēti par izsekotāju skaitu un veidiem savās iecienītajās vietnēs.",
+      sourcesTitle: "Avoti",
+      sources: [
+        {
+          label: "HTTP Archive Web Almanac 2025 — Privātums (izsekotāju izplatība)",
+          url: "https://almanac.httparchive.org/en/2025/privacy",
+        },
+      ],
     },
     externalTool: "Ārējais rīks",
     blacklightTip: "Padoms: Mēģiniet skenēt ziņu vai iepirkšanās vietni, ko bieži apmeklējat. Izvairieties no sensitīvām vietnēm, piemēram, veselības portāliem vai bankām.",
@@ -1246,29 +1544,39 @@ const lv: Translations = {
     title: "Pirkstu nospiedumi",
     concept: "Sīkdatņu dzēšana nepadara jūs neredzamu. Pārlūkprogrammas pirkstu nospiedumi joprojām var identificēt jūsu ierīci, izmantojot unikālas iestatījumu, fontu un aparatūras kombinācijas.",
     whyItMatters: "Pat 'privātās pārlūkošanas' režīmā jūsu pārlūkprogrammas unikālās īpašības (ekrāna izmērs, instalētie fonti, laika josla, WebGL iestatījumi) var izveidot pirkstu nospiedumu, kas jūs identificē dažādās vietnēs.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Browser Fingerprinting",
-      introTitle: "The Tracking Method You Can't Block by Clearing Cookies",
-      introParagraph: "You've probably heard that clearing your cookies helps protect your privacy. And it does—for one type of tracking. But there's another method that doesn't require storing anything on your device at all. It's called browser fingerprinting, and studies show it can uniquely identify 83-90% of browsers.",
-      howItWorksTitle: "How Your Browser Betrays Your Identity",
-      howItWorksParagraph: "Browser fingerprinting works by collecting dozens of small details about your device and browser that, combined, create a unique signature. Think of it like this: any single characteristic might be common, but the specific combination of 20 or 30 characteristics together is likely unique to you. Here's what gets collected:",
+      sectionTitle: "Pārlūkprogrammu pirkstu nospiedumu izpratne",
+      introTitle: "Izsekošanas metode, ko nevar apturēt, vienkārši dzēšot sīkdatnes",
+      introParagraph: "Jūs droši vien esat dzirdējis, ka sīkdatņu dzēšana palīdz aizsargāt privātumu. Tā arī ir — vienā izsekošanas veidā. Taču pastāv cits paņēmiens, kuram nav jāglabā nekas jūsu ierīcē. To sauc par pārlūkprogrammas pirkstu nospiedumu veidošanu. Klasiskie pētījumi, piemēram, EFF Panopticlick, parādīja, ka lielākā daļa pārlūkprogrammu ir unikāli identificējamas, un EFF norāda, ka arī mūsdienās bez sīkdatnēm lielākajai daļai pārlūkprogrammu ir unikāls pirkstu nospiedums. Unikalitātes līmenis mainās, pārlūkprogrammām ieviešot aizsardzību, taču pirkstu nospiedumu veidošana joprojām ir izplatīta izsekošanas tehnika.",
+      howItWorksTitle: "Kā jūsu pārlūkprogramma nodod jūsu identitāti",
+      howItWorksParagraph: "Pārlūkprogrammas pirkstu nospiedumu veidošana darbojas, savācot desmitiem sīku detaļu par jūsu ierīci un pārlūkprogrammu, kas kopā veido unikālu parakstu. Iedomājieties to šādi: jebkura viena īpašība var būt izplatīta, bet tieši 20 vai 30 īpašību konkrētā kombinācija, visticamāk, ir unikāla. Lūk, kas tiek vāks:",
       attributesList: [
-        "Screen resolution and color depth: Your display's exact pixel dimensions",
-        "Timezone and language: Your location and language preferences",
-        "Installed fonts: The specific combination of fonts on your system is highly distinctive",
-        "Browser plugins: Which extensions and their versions you have installed",
-        "Hardware specifications: Details about your graphics card, CPU, and available memory",
-        "WebGL rendering: Your browser can be asked to draw a 3D graphic, and microscopic differences in how your hardware renders it create a unique signature",
-        "Audio fingerprinting: Similar technique using audio processing",
-        "Canvas fingerprinting: Drawing an invisible 2D image to identify rendering differences"
+        "Ekrāna izšķirtspēja un krāsu dziļums: jūsu displeja precīzie pikseļu izmēri",
+        "Laika josla un valoda: jūsu atrašanās vieta un valodas preferences",
+        "Instalētie fonti: konkrētā fontu kombinācija jūsu sistēmā ir ļoti raksturīga",
+        "Pārlūkprogrammas spraudņi: kādi paplašinājumi un to versijas jums ir instalēti",
+        "Aparatūras specifikācijas: informācija par videokarti, CPU un pieejamo atmiņu",
+        "WebGL renderēšana: pārlūkprogramma var zīmēt 3D grafiku, un mikroskopiskas atšķirības tajā, kā jūsu aparatūra to renderē, rada unikālu parakstu",
+        "Audio pirkstu nospiedumi: līdzīga tehnika, izmantojot audio apstrādi",
+        "Canvas pirkstu nospiedumi: neredzama 2D attēla zīmēšana, lai noteiktu renderēšanas atšķirības"
       ],
-      statisticsTitle: "The Numbers Are Striking",
-      statisticsParagraph: "The Electronic Frontier Foundation (EFF) demonstrated that the distribution of fingerprints has at least 18.1 bits of entropy, meaning the average user has only a 1 in 286,777 chance of sharing their exact fingerprint with another user. A 2016 AmIUnique study found that 89.4% of fingerprints are unique. Even a more conservative 2018 study found that 33.6% of fingerprints are completely unique, and on desktop computers specifically, the uniqueness rate remains very high.",
-      privateBrowsingTitle: "Why Private Browsing Doesn't Help Here",
-      privateBrowsingParagraph1: "When you open an incognito or private browsing window, your browser doesn't save cookies or history. But it doesn't change your screen resolution, fonts, graphics card, or timezone. Your fingerprint in private mode is often identical to your fingerprint in regular mode—which means websites can still recognize you.",
-      privateBrowsingParagraph2: "Some privacy-focused browsers like Firefox and Brave have implemented fingerprinting protections that either block certain collection techniques or deliberately provide generic responses.",
-      activityPreview: "The test you're about to run will tell you: (1) whether your browser fingerprint is unique (meaning you can be identified), (2) how strong your tracking protection is, and (3) which specific characteristics make you most identifiable. For many people, discovering that their browser is as unique as a fingerprint—even with no cookies—is a wake-up call about how sophisticated modern tracking has become."
+      statisticsTitle: "Kāpēc pirkstu nospiedumi bieži ir unikāli",
+      statisticsParagraph: "EFF Panopticlick projekts un vēlākā EFF metodika skaidro, ka daudzu atribūtu (fonti, ekrāna izmērs, aparatūra u.c.) kombinācija var veidot pirkstu nospiedumu, kas bieži ir pietiekami unikāls, lai izsekotu lietotāju dažādās vietnēs. Pretpirkstu nospiedumu aizsardzība var samazināt unikalitāti, taču rezultāti atšķiras atkarībā no pārlūkprogrammas un iestatījumiem.",
+      privateBrowsingTitle: "Kāpēc privātā pārlūkošana šeit nepalīdz",
+      privateBrowsingParagraph1: "Atverot inkognito vai privātās pārlūkošanas logu, pārlūkprogramma nesaglabā sīkdatnes vai vēsturi. Taču tā nemaina jūsu ekrāna izšķirtspēju, fontus, videokarti vai laika joslu. Jūsu pirkstu nospiedums privātajā režīmā bieži ir identisks pirkstu nospiedumam parastajā režīmā — kas nozīmē, ka vietnes joprojām var jūs atpazīt.",
+      privateBrowsingParagraph2: "Dažas uz privātumu vērstas pārlūkprogrammas, piemēram, Firefox un Brave, ir ieviesušas pirkstu nospiedumu aizsardzību, kas vai nu bloķē noteiktas vākšanas tehnikas, vai apzināti sniedz vispārīgas atbildes.",
+      activityPreview: "Tests, ko tūlīt veiksiet, pateiks jums: (1) vai jūsu pārlūkprogrammas pirkstu nospiedums ir unikāls (t.i., vai jūs var identificēt), (2) cik spēcīga ir jūsu izsekošanas aizsardzība, un (3) kuras konkrētās īpašības padara jūs visvieglāk atpazīstamu. Daudziem atklājums, ka viņu pārlūkprogramma ir tikpat unikāla kā pirkstu nospiedums — pat bez sīkdatnēm — ir signāls, cik izsmalcināta ir mūsdienu izsekošana.",
+      sourcesTitle: "Avoti",
+      sources: [
+        {
+          label: "EFF — Panopticlick (pārlūkprogrammu pirkstu nospiedumu pētījums)",
+          url: "https://www.eff.org/press/releases/eff-launches-panopticlick-unique-fingerprint-every-browser",
+        },
+        {
+          label: "EFF Surveillance Self-Defense — Kas ir pirkstu nospiedumi? (pārskatīts 2024)",
+          url: "https://ssd.eff.org/module/what-fingerprinting",
+        },
+      ],
     },
     externalTools: "Ārējie rīki",
     whatToLookFor: "Uz ko pievērst uzmanību",
@@ -1282,32 +1590,46 @@ const lv: Translations = {
     title: "Konta un ierīces identifikatori",
     concept: "Izsekošana notiek arī konta/ierīces līmenī, izmantojot reklāmu personalizācijas iestatījumus, ierīču ID un lietotņu izsekošanas atļaujas.",
     whyItMatters: "Pat ja bloķējat vietņu izsekotājus, jūsu konti un ierīces joprojām var kopīgot datus ar reklāmdevējiem, izmantojot iebūvētos identifikatorus, kas jūs seko pa lietotnēm un pakalpojumiem.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Understanding Mobile and Account Tracking",
-      introTitle: "The Identifiers That Follow You Across Every App",
-      introParagraph: "Website tracking uses cookies. But what about the apps on your phone? Apps can't read each other's cookies—they're sandboxed for security. So how do advertisers track you across apps? The answer is a special identifier built into your device's operating system: the Google Advertising ID (GAID) on Android and the Identifier for Advertisers (IDFA) on Apple devices.",
-      howItWorksTitle: "How Mobile Advertising IDs Work",
-      howItWorksParagraph: "When you installed your phone's operating system, it generated a unique advertising ID—a string of letters and numbers that identifies your device. This ID is accessible to every app you install, and it's designed specifically to enable advertising and tracking. Here's what this enables:",
+      sectionTitle: "Mobilās un konta izsekošanas izpratne",
+      introTitle: "Identifikatori, kas seko jums caur katru lietotni",
+      introParagraph: "Vietņu izsekošana izmanto sīkdatnes. Bet kā ir ar lietotnēm jūsu telefonā? Lietotnes nevar lasīt cita citas sīkdatnes — drošības dēļ tās ir izolētas. Tātad kā reklāmdevēji izseko jūs starp lietotnēm? Atbilde ir īpašs identifikators, kas iebūvēts ierīces operētājsistēmā: Google Advertising ID (GAID) Android ierīcēs un Identifier for Advertisers (IDFA) Apple ierīcēs.",
+      howItWorksTitle: "Kā darbojas mobilie reklāmas ID",
+      howItWorksParagraph: "Kad instalējāt sava telefona operētājsistēmu, tā izveidoja unikālu reklāmas ID — burtu un ciparu virkni, kas identificē jūsu ierīci. Šim ID var piekļūt katra lietotne, ko instalējat, un tas ir speciāli paredzēts reklāmai un izsekošanai. Lūk, ko tas ļauj:",
       howItWorksList: [
-        "You search for flights in one app → You see hotel ads in a completely different app",
-        "You browse products in a shopping app → You see ads for those products in your social media apps",
-        "You play a free game → The game shares your activity with ad networks tied to your advertising ID",
-        "Your location data, app usage patterns, and behavioral profile are all linked to this single identifier"
+        "Jūs meklējat lidojumus vienā lietotnē → jūs redzat viesnīcu reklāmas pavisam citā lietotnē",
+        "Jūs pārlūkojat produktus iepirkšanās lietotnē → jūs redzat šo produktu reklāmas sociālo tīklu lietotnēs",
+        "Jūs spēlējat bezmaksas spēli → spēle kopīgo jūsu aktivitāti ar reklāmu tīkliem, kas piesaistīti jūsu reklāmas ID",
+        "Jūsu atrašanās vietas dati, lietotņu lietošanas paradumi un uzvedības profils ir sasaistīti ar šo vienoto identifikatoru"
       ],
-      scaleTitle: "The Scale of Mobile Tracking",
-      scaleParagraph: "Unlike cookies, your advertising ID follows you across your entire app ecosystem—games, social media, news apps, utilities, everything. Because it's persistent, companies can build a comprehensive profile of everything you do on your phone over months or years. Data brokers and ad networks use these identifiers to track your physical location across time, build behavioral profiles based on app usage, connect your app activity to your web browsing through cross-device tracking, and sell this data to advertisers, analytics companies, and increasingly, to anyone willing to pay.",
-      attTitle: "Apple's App Tracking Transparency Changed the Game",
-      attParagraph1: "In 2021, Apple introduced App Tracking Transparency (ATT), which requires apps to ask permission before accessing your IDFA. You've probably seen the popup: \"Allow this app to track your activity across other companies' apps and websites?\" This was significant: before ATT, apps accessed your IDFA automatically without asking.",
-      attParagraph2: "After ATT, users had to explicitly opt in. Current statistics show that globally, about 50% of users now consent to tracking—meaning 50% decline. This single change cost the advertising industry billions of dollars in lost targeting capability. Google is following suit, planning to replace the GAID with more privacy-preserving alternatives.",
-      activityPreviewTitle: "What You'll Check in This Activity",
+      scaleTitle: "Mobilās izsekošanas mērogs",
+      scaleParagraph: "Atšķirībā no sīkdatnēm, jūsu reklāmas ID seko jums visā lietotņu ekosistēmā — spēlēs, sociālajos tīklos, ziņu lietotnēs, utilītprogrammās, visur. Tā kā tas ir noturīgs, uzņēmumi var veidot visaptverošu profilu par visu, ko darāt savā telefonā, mēnešiem vai pat gadiem. Datu brokeri un reklāmu tīkli izmanto šos identifikatorus, lai izsekotu jūsu fizisko atrašanās vietu laika gaitā, veidotu uzvedības profilus pēc lietotņu lietošanas, sasaistītu lietotņu aktivitāti ar jūsu tīmekļa pārlūkošanu, izmantojot starpierīču izsekošanu, un pārdotu šos datus reklāmdevējiem, analītikas uzņēmumiem un arvien biežāk — ikvienam, kurš gatavs maksāt.",
+      attTitle: "Apple App Tracking Transparency mainīja spēles noteikumus",
+      attParagraph1: "2021. gadā Apple ieviesa App Tracking Transparency (ATT), kas pieprasa lietotnēm lūgt atļauju pirms piekļuves jūsu IDFA. Jūs droši vien esat redzējis uznirstošo logu: \"Atļaut šai lietotnei izsekot jūsu aktivitāti citās uzņēmumu lietotnēs un vietnēs?\" Tas bija nozīmīgi: pirms ATT lietotnes piekļuva jūsu IDFA automātiski, neprasot atļauju.",
+      attParagraph2: "Pēc ATT lietotājiem ir skaidri jāpiekrīt. Ziņotās piekrišanas likmes ļoti atšķiras atkarībā no mērījumu metodes, lietotņu kategorijas un ģeogrāfijas. Piemēram, AppsFlyer 2024. gada 1. ceturksnī ziņoja par globālu piekrišanas līmeni ap 50%, bet Singular 2025. gada 4. ceturksnī ziņoja par daudz zemāku piekrišanu pirmajā lietotnes atvēršanā. Tāpēc jebkuru vienu skaitli uztveriet kā kontekstam specifisku. Google ir paziņojis, ka Privacy Sandbox uz Android mērķis ir darboties bez starp‑lietotņu identifikatoriem, piemēram, reklāmas ID.",
+      activityPreviewTitle: "Ko jūs pārbaudīsiet šajā aktivitātē",
       activityPreviewList: [
-        "Google Ad Personalization: Whether Google builds a profile of your interests across all Google services",
-        "Apple Advertising: Whether Apple uses your data for targeted ads within their ecosystem",
-        "Android Advertising ID: You can reset (give yourself a new ID) or delete it entirely",
-        "iOS App Tracking Transparency: Whether apps can request to track you at all"
+        "Google reklāmu personalizācija: vai Google veido jūsu interešu profilu visos Google pakalpojumos",
+        "Apple Advertising: vai Apple izmanto jūsu datus mērķētām reklāmām savā ekosistēmā",
+        "Android reklāmas ID: jūs varat to atiestatīt (izveidot jaunu ID) vai pilnībā dzēst",
+        "iOS App Tracking Transparency: vai lietotnes vispār drīkst lūgt izsekot jūs"
       ],
-      activityPreviewConclusion: "Many people discover that ad personalization has been on by default for years, building a detailed profile they never knew existed."
+      activityPreviewConclusion: "Daudzi atklāj, ka reklāmu personalizācija gadiem bija ieslēgta pēc noklusējuma, veidojot detalizētu profilu, par kuru viņi nemaz nezināja.",
+      sourcesTitle: "Avoti",
+      sources: [
+        {
+          label: "AppsFlyer (2024) — ATT piekrišanas rādītāji (2024. gada 1. ceturksnis)",
+          url: "https://www.appsflyer.com/resources/reports/app-tracking-transparency-opt-in-rate/",
+        },
+        {
+          label: "Singular (2025) — Q4 2025 ieskati (ATT piekrišana pirmajā atvēršanā)",
+          url: "https://www.singular.net/blog/singular-q4-2025-insights/",
+        },
+        {
+          label: "Google Android Developers Blog (2022) — Privacy Sandbox uz Android",
+          url: "https://android-developers.googleblog.com/2022/02/introducing-privacy-sandbox-android.html",
+        },
+      ],
     },
     externalTools: "Ārējie rīki",
     recordSettings: "Ierakstiet savus iestatījumus",
@@ -1321,39 +1643,49 @@ const lv: Translations = {
     title: "Tīrīšanas sprints",
     concept: "Tagad ir laiks rīkoties. Dzēsiet izsekošanas datus un pēc izvēles iespējojiet privātuma aizsardzību.",
     whyItMatters: "Sīkdatņu un vietnes datu dzēšana noņem esošos izsekotājus. Trešo pušu sīkdatņu bloķēšana novērš daudzus nākotnes izsekošanas mēģinājumus. Tie ir ātri ieguvumi, kas nekavējoties uzlabo jūsu privātumu.",
-    // TODO: Translate educational content to Latvian
     educationalContent: {
-      sectionTitle: "Why Digital Hygiene Matters",
-      breachesTitle: "The 1.7 Billion Reasons to Practice Good Digital Hygiene",
-      breachesParagraph1: "In 2024 alone, 1.7 billion people had their personal data compromised in data breaches. The largest single breach—at National Public Data—exposed the personal information of approximately 2.9 billion records, including Social Security numbers, addresses, and dates of birth of citizens across the US, Canada, and the UK.",
-      breachesParagraph2: "Here's what makes this particularly sobering: the Ticketmaster, Advance Auto Parts, Change Healthcare, and AT&T breaches—which together exposed over 1.24 billion records—all happened because hackers gained access using compromised credentials for accounts that did not have multi-factor authentication enabled. These were preventable.",
-      cookiesTitle: "Why Cookies Matter for Your Security",
-      cookiesParagraph: "Cookies aren't just about ads—they're also how websites remember that you're logged in. When you visit your email or bank and don't have to re-enter your password, a cookie is what proves to the site that you've already authenticated. This is convenient, but it has implications:",
+      sectionTitle: "Kāpēc digitālā higiēna ir svarīga",
+      breachesTitle: "Kāpēc datu noplūdes turpinās",
+      breachesParagraph1: "Verizon 2024. gada Data Breach Investigations Report (DBIR) rāda, ka cilvēciskais faktors iesaistīts ap 68% noplūdēs, un nozagtas piekļuves dati joprojām ir viens no biežākajiem sākotnējās piekļuves veidiem (ap 31% Verizon 10 gadu analīzē).",
+      breachesParagraph2: "Tāpēc paroļu higiēna un daudzfaktoru autentifikācija ir īpaši svarīga. Tās nepasargā no visa, bet samazina kontu pārņemšanas un uzbrukumu ar nozagtām parolēm risku.",
+      cookiesTitle: "Kāpēc sīkdatnes ir svarīgas jūsu drošībai",
+      cookiesParagraph: "Sīkdatnes nav tikai par reklāmām — tās arī ļauj vietnēm atcerēties, ka esat pieteicies. Kad apmeklējat e‑pastu vai banku un nav jāievada parole, sīkdatne ir tas, kas pierāda vietnei, ka jau esat autentificējies. Tas ir ērti, taču tam ir sekas:",
       cookiesList: [
-        "If someone accesses your browser, they access your logged-in accounts",
-        "Session hijacking: If an attacker captures your cookies (through malware, insecure WiFi, or a compromised website), they can impersonate you without knowing your password",
-        "Long-lived sessions: Some cookies persist for months or years, meaning a single compromise has a long window of exposure"
+        "Ja kāds piekļūst jūsu pārlūkprogrammai, viņš piekļūst arī jūsu pieteiktajiem kontiem",
+        "Sesijas nolaupīšana: ja uzbrucējs iegūst jūsu sīkdatnes (caur ļaunprogrammatūru, nedrošu Wi‑Fi vai kompromitētu vietni), viņš var izlikties par jums, nezinot paroli",
+        "Ilgdzīvojošas sesijas: dažas sīkdatnes glabājas mēnešiem vai gadiem, tāpēc viena noplūde nozīmē ilgu riska periodu"
       ],
-      blockingTitle: "Third-Party Cookie Blocking: The Single Most Impactful Setting",
-      blockingParagraph1: "If there's one privacy setting that delivers the most protection for the least inconvenience, it's blocking third-party cookies. First-party cookies come from the site you're visiting (they're necessary for logging in and using the site). Third-party cookies come from external domains and are used almost exclusively for cross-site tracking.",
-      blockingParagraph2: "Modern browsers handle this differently:",
+      blockingTitle: "Trešo pušu sīkdatņu bloķēšana: vienīgais iestatījums ar lielāko ietekmi",
+      blockingParagraph1: "Ja ir viens privātuma iestatījums, kas dod vislielāko aizsardzību ar vismazākajām neērtībām, tā ir trešo pušu sīkdatņu bloķēšana. Pirmās puses sīkdatnes nāk no vietnes, kuru apmeklējat (tās ir nepieciešamas pieteikšanās un vietnes lietošanai). Trešo pušu sīkdatnes nāk no ārējiem domēniem un gandrīz tikai tiek izmantotas starpvietņu izsekošanai.",
+      blockingParagraph2: "Mūsdienu pārlūkprogrammas ar to rīkojas atšķirīgi:",
       blockingBrowsers: [
-        "Firefox: Uses \"Total Cookie Protection\" to isolate third-party cookies per site",
-        "Safari: Blocks third-party cookies by default through \"Prevent Cross-Site Tracking\"",
-        "Chrome: Still allows third-party cookies by default (Google reversed plans to phase them out)",
-        "Enabling this setting breaks cross-site tracking without affecting your ability to use websites normally"
+        "Firefox: izmanto \"Total Cookie Protection\", lai izolētu trešo pušu sīkdatnes katrai vietnei atsevišķi",
+        "Safari: pēc noklusējuma bloķē trešo pušu sīkdatnes ar \"Prevent Cross-Site Tracking\"",
+        "Chrome: joprojām pēc noklusējuma atļauj trešo pušu sīkdatnes (Google atteicās no plāniem tās pakāpeniski izbeigt)",
+        "Šī iestatījuma ieslēgšana pārtrauc starpvietņu izsekošanu, neietekmējot jūsu iespēju normāli lietot vietnes"
       ],
-      hibpTitle: "Have I Been Pwned: The Reality Check",
-      hibpParagraph1: "The optional activity in this step—checking Have I Been Pwned—is a moment of truth for most people. This service, run by security researcher Troy Hunt, aggregates data from 936 known breaches containing over 17 billion compromised account records.",
-      hibpParagraph2: "When you enter your email address, it checks whether that email appeared in any known data breach. For most people who've had an email address for more than a few years, the answer is yes—often in multiple breaches. This is why password hygiene matters: unique passwords for every account, ideally managed by a password manager, and multi-factor authentication wherever it's available.",
-      activityPreviewTitle: "What You're About to Do",
+      hibpTitle: "Have I Been Pwned: realitātes pārbaude",
+      hibpParagraph1: "Pēc izvēles veicamā aktivitāte šajā solī — Have I Been Pwned pārbaude — lielākajai daļai cilvēku ir patiesības brīdis. 2026. gada janvārī HIBP uzskaitīja 941 pārkāptu vietni un ap 17,4 miljardus kompromitētu kontu. Šie kopskaiti mainās, pievienojot jaunas noplūdes.",
+      hibpParagraph2: "Kad ievadāt savu e‑pasta adresi, tas pārbauda, vai šis e‑pasts ir parādījies kādā zināmā datu noplūdē. Lielākajai daļai cilvēku, kuriem e‑pasta adrese ir bijusi vairāk nekā dažus gadus, atbilde ir \"jā\" — bieži vien vairākās noplūdēs. Tāpēc parolēs higiēna ir svarīga: unikālas paroles katram kontam, vēlams paroļu pārvaldniekā, un daudzfaktoru autentifikācija, kur vien iespējams.",
+      activityPreviewTitle: "Ko jūs tūlīt darīsiet",
       activityPreviewList: [
-        "Clear cookies and site data: Remove existing trackers and force fresh authentication",
-        "Block third-party cookies: Prevent future cross-site tracking",
-        "Check for breach exposure: See if your credentials have been compromised",
-        "Plan password hygiene actions: Update compromised passwords, enable MFA"
+        "Notīrīt sīkdatnes un vietnes datus: noņemt esošos izsekotājus un piespiest jaunu autentifikāciju",
+        "Bloķēt trešo pušu sīkdatnes: novērst turpmāku starpvietņu izsekošanu",
+        "Pārbaudīt datu noplūdi: noskaidrot, vai jūsu piekļuves dati ir kompromitēti",
+        "Plānot paroļu higiēnas darbības: atjaunināt kompromitētās paroles, ieslēgt MFA"
       ],
-      activityPreviewConclusion: "By the time you complete this step, you'll have taken concrete actions that meaningfully reduce your tracking exposure and improve your account security. These aren't theoretical benefits—they're immediate, measurable improvements to your digital privacy."
+      activityPreviewConclusion: "Līdz brīdim, kad pabeigsiet šo soli, jūs būsiet veicis konkrētas darbības, kas būtiski samazina izsekošanu un uzlabo kontu drošību. Tie nav teorētiski ieguvumi — tās ir tūlītējas, izmērāmas digitālā privātuma uzlabojums.",
+      sourcesTitle: "Avoti",
+      sources: [
+        {
+          label: "Verizon 2024 Data Breach Investigations Report (DBIR) — galvenie secinājumi",
+          url: "https://www.verizon.com/about/news/2024-data-breach-investigations-report",
+        },
+        {
+          label: "Have I Been Pwned — Pwned websites statistika",
+          url: "https://haveibeenpwned.com/PwnedWebsites",
+        },
+      ],
     },
     browserInstructions: "Pārlūkprogrammas instrukcijas priekš",
     breachExposure: "Datu noplūdes pārbaude",
@@ -1377,7 +1709,7 @@ const lv: Translations = {
     fingerprinting2: "Palaidiet testu un atzīmējiet, vai jūsu pārlūkprogrammas pirkstu nospiedums ir unikāls",
     fingerprinting3: "Pārbaudiet savu izsekošanas aizsardzības līmeni un ierakstiet rezultātus zemāk",
     accountDevice1: "Pārbaudiet savus Google reklāmu iestatījumus un atzīmējiet, vai personalizētās reklāmas ir ieslēgtas vai izslēgtas",
-    accountDevice2: "Pārbaudiet Apple/Android reklāmu iestatījumus savā ierīcē (ja piemērojams)",
+    accountDevice2: "Pārbaudiet Apple/Android reklāmu iestatījumus jebkurās izmantotajās ierīcēs (ja neattiecas, izvēlieties N/P)",
     accountDevice3: "Ierakstiet savus pašreizējos iestatījumus zemāk - vēlāk tos varat mainīt, ja vēlaties",
     cleanup1: "Dzēsiet savas sīkdatnes un vietnes datus, izmantojot sniegtos pārlūkprogrammas norādījumus",
     cleanup2: "Iespējojiet trešo pušu sīkdatņu bloķēšanu savos pārlūkprogrammas iestatījumos",
@@ -1482,6 +1814,9 @@ const lv: Translations = {
     radarView: "Radara skats",
     scoreComparison: "Punktu salīdzinājums",
     privacyScore: "Privātuma rezultāts",
+    legendGood: "Labi (100)",
+    legendWarning: "Brīdinājums (60)",
+    legendCritical: "Kritiski (25)",
   },
   metrics: {
     publicExposureLabel: "Publiskā atpazīstamība",
@@ -1501,6 +1836,8 @@ const lv: Translations = {
     valuePartial: "Daļēji",
     valueNotYet: "Vēl nav",
     valueNA: "Nav pieejams",
+    valueNotAnswered: "Nav atbildēts",
+    valueSkipped: "Izlaists",
     exposureGood: "Lieliski! Jūsu personīgā informācija netika viegli atrasta meklēšanas rezultātos.",
     exposureWarning: "Daļa personīgās informācijas ir redzama. Apsveriet iespēju pieprasīt noņemšanu no meklētājprogrammām.",
     exposureCritical: "Jūsu personīgā informācija ir atklāta. Rīkojieties, lai to noņemtu no datu brokeriem un meklēšanas rezultātiem.",
@@ -1513,10 +1850,13 @@ const lv: Translations = {
     fingerprintUnknown: "Palaidiet EFF testu, lai pārbaudītu sava pārlūka pirkstu nospiedumu.",
     adsGood: "Esat atspējojis reklāmu personalizāciju savos kontos.",
     adsWarning: "Daļa reklāmu personalizācijas joprojām ir aktīva. Apsveriet atspējošanu konta iestatījumos.",
+    adsUnknown: "Pārskatiet konta un ierīces reklāmu iestatījumus, lai redzētu, kas ir ieslēgts.",
     adsCritical: "Reklāmu personalizācija ir aktīva. Jūsu aktivitāte tiek izmantota reklāmu mērķēšanai.",
     cleanupGood: "Esat notīrījis sīkfailus un iespējojis trešo pušu sīkfailu bloķēšanu. Tas liecina par samazinātu izsekošanas noturību.",
     cleanupWarning: "Esat veicis dažas tīrīšanas darbības. Apsveriet gan sīkfailu dzēšanu, gan bloķēšanu labākai aizsardzībai.",
+    cleanupUnknown: "Pabeidziet tīrīšanas soli, lai redzētu higiēnas statusu.",
     cleanupCritical: "Higiēnas darbības, piemēram, sīkfailu dzēšana un trešo pušu sīkfailu bloķēšana, palīdz samazināt izsekošanas noturību.",
+    skippedExplanation: "Jūs izlaidāt šo soli, tāpēc rezultāts netiek rādīts.",
   },
   chartCategories: {
     publicExposure: "Publiskā atpazīstamība",
@@ -1524,6 +1864,27 @@ const lv: Translations = {
     fingerprint: "Pirkstu nospiedums",
     adSettings: "Reklāmu iestatījumi",
     cleanup: "Tīrīšana",
+  },
+  deviceNames: {
+    desktop: "Darbvirsma",
+    mobile: "Mobilā ierīce",
+    unknown: "Nezināms",
+  },
+  osNames: {
+    windows: "Windows",
+    mac: "macOS",
+    linux: "Linux",
+    ios: "iOS",
+    android: "Android",
+    unknown: "Nezināms",
+  },
+  browserOptions: {
+    chrome: "Chrome",
+    edge: "Edge",
+    firefox: "Firefox",
+    safari: "Safari",
+    other: "Cits",
+    unknown: "Nezināms",
   },
   browserNames: {
     chrome: "Chrome",
@@ -1554,6 +1915,8 @@ const ru: Translations = {
     yes: "Да",
     no: "Нет",
     unsure: "Не уверен",
+    unknown: "Неизвестно",
+    skipped: "Пропущено",
     viewReportCard: "Просмотреть отчёт",
     stepNumber: "Шаг {step}",
     commonPitfalls: "Частые ошибки",
@@ -1566,6 +1929,24 @@ const ru: Translations = {
     switchTheme: "Сменить тему",
     darkMode: "Тёмный режим",
     lightMode: "Светлый режим",
+    decrease: "Уменьшить",
+    increase: "Увеличить",
+    close: "Закрыть",
+    previousSlide: "Предыдущий слайд",
+    nextSlide: "Следующий слайд",
+    toggleSidebar: "Переключить боковую панель",
+    sidebarTitle: "Боковая панель",
+    sidebarDescription: "Отображает мобильную боковую панель.",
+    breadcrumbMore: "Ещё",
+    breadcrumbLabel: "Навигационная цепочка",
+  },
+  pagination: {
+    ariaLabel: "Пагинация",
+    previous: "Назад",
+    next: "Вперёд",
+    more: "Ещё страницы",
+    previousAria: "Перейти на предыдущую страницу",
+    nextAria: "Перейти на следующую страницу",
   },
   welcome: {
     title: "Мастер аудита цифрового следа",
@@ -1616,7 +1997,7 @@ const ru: Translations = {
     optionDemoLearn: "Как работает процесс на примерных данных",
     optionDemoBestFor: "Для обучения, групповых тренингов или общих компьютеров",
     privacyProtectedTitle: "Ваша конфиденциальность защищена",
-    privacyProtectedIntro: "Это инструмент самопроверки. У нас нет серверов, аккаунтов и отслеживания.",
+    privacyProtectedIntro: "Это инструмент самопроверки. Мы не используем аккаунты и не отслеживаем вас.",
     privacyBullet1Title: "Ничего не покидает ваш браузер",
     privacyBullet1Desc: "Все ваши ответы хранятся только в локальном хранилище браузера на этом устройстве",
     privacyBullet2Title: "Данные не передаются",
@@ -1655,12 +2036,37 @@ const ru: Translations = {
     cleanupCompleted: "Очистка завершена",
     realityCheck: "Проверка реальности",
   },
+  facilitatorDashboard: {
+    title: "Панель фасилитатора",
+    subtitle: "Анонимные агрегированные показатели по всем лабораторным сессиям",
+    loading: "Загрузка метрик панели...",
+    loadError: "Не удалось загрузить метрики панели.",
+    retry: "Повторить",
+    liveUpdates: "Живые обновления",
+    refresh: "Обновить",
+    totalSessions: "Всего сессий",
+    completed: "Завершено",
+    completionRate: "Процент завершения",
+    avgTrackersFound: "Среднее число найденных трекеров",
+    avgPrivacyScores: "Средние оценки конфиденциальности",
+    deviceBreakdown: "Распределение устройств",
+    noDeviceData: "Данных по устройствам пока нет",
+    sessionsOverTime: "Сессии по времени (последние 14 дней)",
+    noSessionData: "Данных о сессиях пока нет. Начните несколько аудитов, чтобы увидеть тенденции.",
+    privacyNotice: "Все показатели анонимизированы. Личные идентификаторы не собираются и не хранятся.",
+  },
+  notFound: {
+    title: "404 Страница не найдена",
+    description: "Вы забыли добавить страницу в роутер?",
+  },
   panic: {
     buttonLabel: "Удалить мои данные лаборатории",
     title: "Удалить все данные лаборатории?",
     description:
       "Это безвозвратно удалит весь ваш прогресс аудита и записанные данные с этого устройства. Вы начнёте заново с нового аудита. Это действие нельзя отменить.",
     confirmButton: "Да, удалить всё",
+    toastTitle: "Данные удалены",
+    toastDescription: "Все ваши лабораторные данные удалены с этого устройства.",
   },
   sessionRecovery: {
     title: "Найдена незавершённая сессия",
@@ -1670,6 +2076,7 @@ const ru: Translations = {
     lastStep: "Последний шаг:",
     resumeButton: "Возобновить сессию",
     startFreshButton: "Начать заново",
+    unknownStep: "Неизвестный шаг",
   },
   fictional: {
     bannerTitle: "Режим вымышленной персоны",
@@ -1677,6 +2084,17 @@ const ru: Translations = {
     tryLiveTools: "Всё равно попробовать реальные инструменты",
     switchToReal: "Переключиться на Мой след",
     switchConfirmation: "Переключиться на режим 'Мой след'? Это удалит текущие демо-данные.",
+  },
+  toolFallback: {
+    title: "Инструмент не загружается?",
+    description: "Некоторые сети или инструменты конфиденциальности могут блокировать эти внешние инструменты. Попробуйте:",
+    suggestions: [
+      "Попробуйте другой сайт или категорию инструмента",
+      "Попробуйте использовать мобильный телефон с мобильной передачей данных (обходит корпоративную сеть)",
+      "Продолжайте в режиме вымышленной персоны, чтобы изучить концепции без живых инструментов",
+    ],
+    confirmSwitch: "Переключиться в режим вымышленной персоны? Будут использованы демо-данные.",
+    switchButton: "Использовать вымышленный режим",
   },
   progress: {
     stepOf: "Шаг {current} из {total}",
@@ -1689,9 +2107,9 @@ const ru: Translations = {
     whyItMatters: "Брокеры данных и сайты поиска людей собирают публичные записи, социальные сети и другие источники. Даже без вашего ведома ваша контактная информация может быть видна любому, кто пользуется поисковой системой.",
     educationalContent: {
       sectionTitle: "Понимание публичной доступности",
-      industryTitle: "Индустрия стоимостью $323 миллиарда, торгующая вашей личностью",
+      industryTitle: "Экосистема брокеров данных за публичной доступностью",
       industryParagraph1: "Каждый раз, когда вы заполняли форму, регистрировались для голосования, покупали дом или просто существовали как гражданин, вы создавали точки данных. Чего вы, возможно, не знаете — это то, что огромная индустрия построила себя вокруг сбора, упаковки и продажи этой информации о вас.",
-      industryParagraph2: "Индустрия брокеров данных оценивается в $323 миллиарда в 2024 году и, по прогнозам, почти удвоится до $697 миллиардов к 2034 году. Эти компании не просто имеют файл на вас — они хранят в среднем 1500 точек данных на человека. Один из крупнейших брокеров, Acxiom, хранит более 2,5 миллиарда записей потребителей по всему миру. Брокеры данных торгуют информацией о более чем 80% американских потребителей.",
+      industryParagraph2: "Отчёт Федеральной торговой комиссии США (FTC) за 2014 год иллюстрирует масштаб: крупные брокеры данных хранили сотни миллиардов точек данных, а в одном примере — более 1,1 млрд уникальных элементов идентичности и 1,4 млрд потребительских транзакций. В том же отчёте упоминается брокер, заявивший охват более 80% адресов электронной почты потребителей США. Это исторические, самоотчётные примеры, а не полный учёт, но они показывают масштаб экосистемы.",
       dataSourcesTitle: "Откуда берутся ваши данные?",
       dataSourcesParagraph: "Сайты поиска людей, такие как Spokeo, Whitepages и BeenVerified, не создают информацию о вас — они агрегируют её из источников, о которых вы и не подозревали:",
       dataSourcesList: [
@@ -1712,7 +2130,14 @@ const ru: Translations = {
         "Владение недвижимостью и её оценочную стоимость",
         "Судебные записи и правовую историю"
       ],
-      activityPreview: "Упражнение, которое вы сейчас выполните, покажет вам точно, что можно обнаружить о вас. Для многих людей это открытие глаз — не потому, что они сделали что-то неправильно, а потому, что они не представляли, сколько их жизни каталогизировано и выставлено на продажу."
+      activityPreview: "Упражнение, которое вы сейчас выполните, покажет вам точно, что можно обнаружить о вас. Для многих людей это открытие глаз — не потому, что они сделали что-то неправильно, а потому, что они не представляли, сколько их жизни каталогизировано и выставлено на продажу.",
+      sourcesTitle: "Источники",
+      sources: [
+        {
+          label: "FTC США (2014) — Data Brokers: A Call for Transparency and Accountability",
+          url: "https://www.ftc.gov/system/files/documents/reports/data-brokers-call-transparency-accountability-report-federal-trade-commission-may-2014/140527databrokerreport.pdf",
+        },
+      ],
     },
     externalTools: "Внешние инструменты",
     recordFindings: "Запишите свои находки",
@@ -1730,7 +2155,7 @@ const ru: Translations = {
       sectionTitle: "Понимание веб-отслеживания",
       introTitle: "Что происходит в первую секунду посещения сайта",
       introParagraph1: "Когда вы нажимаете на ссылку для посещения сайта, нечто невидимое происходит ещё до того, как страница закончит загрузку. Выполняются скрипты, открываются соединения с десятками сторонних серверов, и данные о вас начинают течь в разных направлениях. Это происходит так быстро, что вы никогда не заметите — но это происходит почти на каждом сайте, который вы посещаете.",
-      introParagraph2: "Исследования показывают, что 90% сайтов включают хотя бы один отслеживающий скрипт, а средний сайт имеет 48 трекеров. Социальные сети — худшие нарушители, в среднем 28 трекеров на сайт — а в некоторых регионах, как Гонконг, это число достигает 169 трекеров на одном сайте социальной сети. Трекеры Google присутствуют на 74% всего веб-трафика, Facebook составляет ещё 11%. Типичный пользователь сталкивается примерно с 177 разными трекерами каждую неделю.",
+      introParagraph2: "Крупномасштабные измерения показывают, что отслеживание широко распространено. В отчёте HTTP Archive Web Almanac 2025 говорится, что примерно 75% страниц содержат хотя бы один трекер, а трекеры Google присутствуют примерно на 61% страниц для настольных устройств (трекеры Facebook — около 22%). Точные цифры зависят от категории сайта и региона, но общая картина стабильна: большинство страниц загружает стороннее отслеживание.",
       trackingTypesTitle: "Семь типов отслеживания, которые вы обнаружите",
       trackingTypesIntro: "Инструмент, который вы собираетесь использовать (Blacklight, созданный The Markup), покажет, что на самом деле происходит за кулисами:",
       trackingTypes: {
@@ -1750,7 +2175,14 @@ const ru: Translations = {
         "Постоянство профиля: поведенческие профили, построенные на данных отслеживания, сохраняются годами и продаются между компаниями",
         "Риск безопасности: каждая компания, хранящая данные о вас — потенциальная цель для утечки"
       ],
-      activityPreview: "Упражнение, которое вы сейчас выполните, позволит вам просканировать сайт, который вы реально посещаете, и увидеть точно, какое отслеживание происходит. Многие люди шокированы количеством и типами трекеров на их любимых сайтах."
+      activityPreview: "Упражнение, которое вы сейчас выполните, позволит вам просканировать сайт, который вы реально посещаете, и увидеть точно, какое отслеживание происходит. Многие люди шокированы количеством и типами трекеров на их любимых сайтах.",
+      sourcesTitle: "Источники",
+      sources: [
+        {
+          label: "HTTP Archive Web Almanac 2025 — Privacy (распространённость трекеров)",
+          url: "https://almanac.httparchive.org/en/2025/privacy",
+        },
+      ],
     },
     externalTool: "Внешний инструмент",
     blacklightTip: "Совет: Попробуйте сканировать новостной или интернет-магазин, который вы часто посещаете. Избегайте чувствительных сайтов, таких как медицинские порталы или банки.",
@@ -1774,7 +2206,7 @@ const ru: Translations = {
     educationalContent: {
       sectionTitle: "Понимание отпечатков браузера",
       introTitle: "Метод отслеживания, который нельзя заблокировать очисткой куки",
-      introParagraph: "Вы, вероятно, слышали, что очистка куки помогает защитить вашу конфиденциальность. И это так — для одного типа отслеживания. Но есть другой метод, который вообще не требует хранения чего-либо на вашем устройстве. Это называется отпечаток браузера, и исследования показывают, что он может уникально идентифицировать 83-90% браузеров.",
+      introParagraph: "Вы, вероятно, слышали, что очистка куки помогает защитить вашу конфиденциальность. И это так — для одного типа отслеживания. Но есть другой метод, который вообще не требует хранения чего-либо на вашем устройстве. Это называется отпечаток браузера. Классические исследования вроде EFF Panopticlick показали, что большинство браузеров уникально идентифицируемы, и EFF отмечает, что и сегодня большинство браузеров сохраняют уникальный отпечаток даже без куки. Уровни уникальности меняются по мере появления защит, но отпечатки остаются распространённой техникой отслеживания.",
       howItWorksTitle: "Как ваш браузер выдаёт вашу личность",
       howItWorksParagraph: "Отпечаток браузера работает путём сбора десятков мелких деталей о вашем устройстве и браузере, которые вместе создают уникальную подпись. Подумайте об этом так: любая отдельная характеристика может быть общей, но конкретная комбинация 20 или 30 характеристик вместе, вероятно, уникальна для вас. Вот что собирается:",
       attributesList: [
@@ -1787,12 +2219,23 @@ const ru: Translations = {
         "Аудио-отпечатки: похожая техника с использованием обработки звука",
         "Canvas-отпечатки: рисование невидимого 2D-изображения для идентификации различий рендеринга"
       ],
-      statisticsTitle: "Цифры впечатляют",
-      statisticsParagraph: "Electronic Frontier Foundation (EFF) продемонстрировала, что распределение отпечатков имеет как минимум 18,1 бит энтропии, что означает, что у среднего пользователя только 1 шанс из 286 777 совпасть отпечатком с другим пользователем. Исследование AmIUnique 2016 года показало, что 89,4% отпечатков уникальны. Даже более консервативное исследование 2018 года показало, что 33,6% отпечатков полностью уникальны, а на настольных компьютерах уровень уникальности остаётся очень высоким.",
+      statisticsTitle: "Почему отпечатки часто уникальны",
+      statisticsParagraph: "Проект EFF Panopticlick и последующие материалы объясняют, что сочетание множества атрибутов (шрифты, размер экрана, оборудование и т. д.) может создавать отпечаток, который часто достаточно уникален, чтобы отслеживать пользователя между сайтами. Защита от отпечатков может снизить уникальность, но результаты различаются в зависимости от браузера и настроек.",
       privateBrowsingTitle: "Почему приватный просмотр здесь не помогает",
       privateBrowsingParagraph1: "Когда вы открываете окно инкогнито или приватного просмотра, ваш браузер не сохраняет куки или историю. Но он не меняет разрешение экрана, шрифты, видеокарту или часовой пояс. Ваш отпечаток в приватном режиме часто идентичен отпечатку в обычном режиме — что означает, что сайты всё ещё могут вас узнать.",
       privateBrowsingParagraph2: "Некоторые браузеры, ориентированные на конфиденциальность, такие как Firefox и Brave, внедрили защиту от отпечатков, которая либо блокирует определённые методы сбора, либо намеренно предоставляет общие ответы.",
-      activityPreview: "Тест, который вы сейчас запустите, покажет: (1) является ли отпечаток вашего браузера уникальным (что означает, что вас можно идентифицировать), (2) насколько сильна ваша защита от отслеживания, и (3) какие конкретные характеристики делают вас наиболее идентифицируемым. Для многих людей открытие того, что их браузер так же уникален, как отпечаток пальца — даже без куки — становится сигналом о том, насколько изощрённым стало современное отслеживание."
+      activityPreview: "Тест, который вы сейчас запустите, покажет: (1) является ли отпечаток вашего браузера уникальным (что означает, что вас можно идентифицировать), (2) насколько сильна ваша защита от отслеживания, и (3) какие конкретные характеристики делают вас наиболее идентифицируемым. Для многих людей открытие того, что их браузер так же уникален, как отпечаток пальца — даже без куки — становится сигналом о том, насколько изощрённым стало современное отслеживание.",
+      sourcesTitle: "Источники",
+      sources: [
+        {
+          label: "EFF — Panopticlick (исследование отпечатков браузера)",
+          url: "https://www.eff.org/press/releases/eff-launches-panopticlick-unique-fingerprint-every-browser",
+        },
+        {
+          label: "EFF Surveillance Self-Defense — What is fingerprinting? (обзор 2024)",
+          url: "https://ssd.eff.org/module/what-fingerprinting",
+        },
+      ],
     },
     externalTools: "Внешние инструменты",
     whatToLookFor: "На что обратить внимание",
@@ -1822,7 +2265,7 @@ const ru: Translations = {
       scaleParagraph: "В отличие от куки, ваш рекламный ID следует за вами по всей экосистеме приложений — игры, социальные сети, новостные приложения, утилиты, всё. Поскольку он постоянен, компании могут строить всеобъемлющий профиль всего, что вы делаете на телефоне в течение месяцев или лет. Брокеры данных и рекламные сети используют эти идентификаторы для отслеживания вашего физического местоположения во времени, построения поведенческих профилей на основе использования приложений, связывания активности приложений с веб-сёрфингом через кросс-девайсное отслеживание и продажи этих данных рекламодателям, аналитическим компаниям и, всё чаще, любому, кто готов платить.",
       attTitle: "App Tracking Transparency от Apple изменила игру",
       attParagraph1: "В 2021 году Apple представила App Tracking Transparency (ATT), которая требует от приложений спрашивать разрешение перед доступом к вашему IDFA. Вы, вероятно, видели всплывающее окно: «Разрешить этому приложению отслеживать вашу активность в приложениях и на сайтах других компаний?» Это было значимо: до ATT приложения получали доступ к вашему IDFA автоматически без запроса.",
-      attParagraph2: "После ATT пользователи должны были явно согласиться. Текущая статистика показывает, что глобально около 50% пользователей теперь соглашаются на отслеживание — это означает, что 50% отказываются. Это единственное изменение стоило рекламной индустрии миллиардов долларов потерянных возможностей таргетирования. Google следует этому примеру, планируя заменить GAID более приватными альтернативами.",
+      attParagraph2: "После ATT пользователи должны явно согласиться. Сообщаемые уровни согласия сильно различаются в зависимости от метода измерения, категории приложений и географии. Например, AppsFlyer сообщил о глобальном уровне согласия около 50% в 1 квартале 2024 года, а Singular сообщил о существенно более низком уровне согласия при первом запуске приложения в 4 квартале 2025 года. Любую отдельную цифру следует рассматривать как контекстную. Google заявил, что Privacy Sandbox на Android стремится работать без межприложных идентификаторов вроде рекламного ID.",
       activityPreviewTitle: "Что вы проверите в этом упражнении",
       activityPreviewList: [
         "Персонализация рекламы Google: строит ли Google профиль ваших интересов по всем сервисам Google",
@@ -1830,7 +2273,22 @@ const ru: Translations = {
         "Рекламный ID Android: вы можете сбросить (получить новый ID) или удалить его полностью",
         "iOS App Tracking Transparency: могут ли приложения вообще запрашивать отслеживание"
       ],
-      activityPreviewConclusion: "Многие люди обнаруживают, что персонализация рекламы была включена по умолчанию годами, создавая детальный профиль, о существовании которого они не знали."
+      activityPreviewConclusion: "Многие люди обнаруживают, что персонализация рекламы была включена по умолчанию годами, создавая детальный профиль, о существовании которого они не знали.",
+      sourcesTitle: "Источники",
+      sources: [
+        {
+          label: "AppsFlyer (2024) — отчёт по ATT (1 квартал 2024)",
+          url: "https://www.appsflyer.com/resources/reports/app-tracking-transparency-opt-in-rate/",
+        },
+        {
+          label: "Singular (2025) — Q4 2025 Insights (ATT при первом запуске)",
+          url: "https://www.singular.net/blog/singular-q4-2025-insights/",
+        },
+        {
+          label: "Google Android Developers Blog (2022) — Privacy Sandbox на Android",
+          url: "https://android-developers.googleblog.com/2022/02/introducing-privacy-sandbox-android.html",
+        },
+      ],
     },
     externalTools: "Внешние инструменты",
     recordSettings: "Запишите свои настройки",
@@ -1846,9 +2304,9 @@ const ru: Translations = {
     whyItMatters: "Очистка куки и данных сайтов удаляет существующие трекеры. Блокировка сторонних куки предотвращает многие будущие попытки отслеживания. Это быстрые победы, которые немедленно улучшают вашу конфиденциальность.",
     educationalContent: {
       sectionTitle: "Почему цифровая гигиена важна",
-      breachesTitle: "1,7 миллиарда причин практиковать хорошую цифровую гигиену",
-      breachesParagraph1: "Только в 2024 году 1,7 миллиарда человек имели свои персональные данные скомпрометированными в утечках данных. Крупнейшая единичная утечка — в National Public Data — раскрыла персональную информацию примерно 2,9 миллиарда записей, включая номера социального страхования, адреса и даты рождения граждан США, Канады и Великобритании.",
-      breachesParagraph2: "Вот что делает это особенно отрезвляющим: утечки Ticketmaster, Advance Auto Parts, Change Healthcare и AT&T — которые вместе раскрыли более 1,24 миллиарда записей — все произошли потому, что хакеры получили доступ, используя скомпрометированные учётные данные для аккаунтов, на которых не была включена многофакторная аутентификация. Это было предотвратимо.",
+      breachesTitle: "Почему утечки продолжаются",
+      breachesParagraph1: "Отчёт Verizon 2024 Data Breach Investigations Report (DBIR) показывает, что человеческий фактор задействован примерно в 68% утечек, а украденные учётные данные остаются одним из самых распространённых способов проникновения (около 31% в 10‑летнем анализе Verizon).",
+      breachesParagraph2: "Это делает гигиену паролей и многофакторную аутентификацию особенно важными. Они не предотвращают все утечки, но снижают риск захвата аккаунтов и атак с подбором украденных учётных данных.",
       cookiesTitle: "Почему куки важны для вашей безопасности",
       cookiesParagraph: "Куки — это не только о рекламе, они также являются способом, которым сайты помнят, что вы залогинены. Когда вы посещаете почту или банк и вам не нужно повторно вводить пароль, куки — это то, что доказывает сайту, что вы уже аутентифицировались. Это удобно, но имеет последствия:",
       cookiesList: [
@@ -1866,7 +2324,7 @@ const ru: Translations = {
         "Включение этой настройки ломает межсайтовое отслеживание, не влияя на вашу способность использовать сайты нормально"
       ],
       hibpTitle: "Have I Been Pwned: проверка реальности",
-      hibpParagraph1: "Необязательное упражнение на этом этапе — проверка Have I Been Pwned — это момент истины для большинства людей. Этот сервис, управляемый исследователем безопасности Троем Хантом, агрегирует данные из 936 известных утечек, содержащих более 17 миллиардов скомпрометированных записей аккаунтов.",
+      hibpParagraph1: "Необязательное упражнение на этом этапе — проверка Have I Been Pwned — это момент истины для большинства людей. По состоянию на январь 2026 года HIBP перечисляет 941 скомпрометированный сайт и около 17,4 млрд взломанных аккаунтов. Эти показатели меняются по мере добавления новых утечек.",
       hibpParagraph2: "Когда вы вводите свой email, он проверяет, появлялся ли этот email в какой-либо известной утечке данных. Для большинства людей, у которых email был более нескольких лет, ответ — да, часто в нескольких утечках. Вот почему гигиена паролей важна: уникальные пароли для каждого аккаунта, в идеале управляемые менеджером паролей, и многофакторная аутентификация везде, где она доступна.",
       activityPreviewTitle: "Что вы сейчас сделаете",
       activityPreviewList: [
@@ -1875,7 +2333,18 @@ const ru: Translations = {
         "Проверить подверженность утечкам: узнать, были ли ваши учётные данные скомпрометированы",
         "Спланировать действия по гигиене паролей: обновить скомпрометированные пароли, включить MFA"
       ],
-      activityPreviewConclusion: "К тому времени, когда вы завершите этот этап, вы предпримете конкретные действия, которые значимо уменьшат вашу подверженность отслеживанию и улучшат безопасность аккаунтов. Это не теоретические преимущества — это немедленные, измеримые улучшения вашей цифровой конфиденциальности."
+      activityPreviewConclusion: "К тому времени, когда вы завершите этот этап, вы предпримете конкретные действия, которые значимо уменьшат вашу подверженность отслеживанию и улучшат безопасность аккаунтов. Это не теоретические преимущества — это немедленные, измеримые улучшения вашей цифровой конфиденциальности.",
+      sourcesTitle: "Источники",
+      sources: [
+        {
+          label: "Verizon 2024 Data Breach Investigations Report (DBIR) — ключевые выводы",
+          url: "https://www.verizon.com/about/news/2024-data-breach-investigations-report",
+        },
+        {
+          label: "Have I Been Pwned — статистика Pwned websites",
+          url: "https://haveibeenpwned.com/PwnedWebsites",
+        },
+      ],
     },
     browserInstructions: "Инструкции для браузера",
     breachExposure: "Проверка утечек данных",
@@ -1899,7 +2368,7 @@ const ru: Translations = {
     fingerprinting2: "Запустите тест и отметьте, уникален ли отпечаток вашего браузера",
     fingerprinting3: "Проверьте уровень защиты от отслеживания и запишите результаты ниже",
     accountDevice1: "Проверьте настройки рекламы Google и отметьте, включена или выключена персонализированная реклама",
-    accountDevice2: "Проверьте настройки рекламы Apple/Android на вашем устройстве (если применимо)",
+    accountDevice2: "Проверьте настройки рекламы Apple/Android на любых устройствах, которыми вы пользуетесь (если не относится, выберите Н/П)",
     accountDevice3: "Запишите свои текущие настройки ниже - вы можете изменить их позже, если захотите",
     cleanup1: "Очистите куки и данные сайтов, используя предоставленные инструкции для браузера",
     cleanup2: "Включите блокировку сторонних куки в настройках браузера",
@@ -2004,6 +2473,9 @@ const ru: Translations = {
     radarView: "Радарный вид",
     scoreComparison: "Сравнение баллов",
     privacyScore: "Оценка приватности",
+    legendGood: "Хорошо (100)",
+    legendWarning: "Предупреждение (60)",
+    legendCritical: "Критично (25)",
   },
   metrics: {
     publicExposureLabel: "Публичная видимость",
@@ -2023,6 +2495,8 @@ const ru: Translations = {
     valuePartial: "Частично",
     valueNotYet: "Ещё нет",
     valueNA: "Н/Д",
+    valueNotAnswered: "Нет ответа",
+    valueSkipped: "Пропущено",
     exposureGood: "Отлично! Ваша личная информация не была легко найдена в результатах поиска.",
     exposureWarning: "Часть личной информации видна. Рассмотрите возможность запроса на удаление из поисковых систем.",
     exposureCritical: "Ваша личная информация открыта. Примите меры для удаления её из баз данных и результатов поиска.",
@@ -2035,10 +2509,13 @@ const ru: Translations = {
     fingerprintUnknown: "Запустите тест EFF, чтобы проверить отпечаток вашего браузера.",
     adsGood: "Вы отключили персонализацию рекламы в своих аккаунтах.",
     adsWarning: "Часть персонализации рекламы всё ещё активна. Рассмотрите отключение в настройках аккаунта.",
+    adsUnknown: "Проверьте настройки рекламы в аккаунтах и на устройствах, чтобы увидеть, что включено.",
     adsCritical: "Персонализация рекламы активна. Ваша активность используется для таргетирования рекламы.",
     cleanupGood: "Вы очистили cookies и включили блокировку сторонних cookies. Это говорит о сниженной устойчивости отслеживания.",
     cleanupWarning: "Вы выполнили некоторые действия по очистке. Рассмотрите и очистку cookies, и блокировку для лучшей защиты.",
+    cleanupUnknown: "Завершите шаг очистки, чтобы увидеть статус гигиены.",
     cleanupCritical: "Гигиенические действия, такие как очистка cookies и блокировка сторонних cookies, помогают снизить устойчивость отслеживания.",
+    skippedExplanation: "Вы пропустили этот шаг, поэтому оценка не показана.",
   },
   chartCategories: {
     publicExposure: "Публичная видимость",
@@ -2046,6 +2523,27 @@ const ru: Translations = {
     fingerprint: "Отпечаток",
     adSettings: "Настройки рекламы",
     cleanup: "Очистка",
+  },
+  deviceNames: {
+    desktop: "Настольный компьютер",
+    mobile: "Мобильное устройство",
+    unknown: "Неизвестно",
+  },
+  osNames: {
+    windows: "Windows",
+    mac: "macOS",
+    linux: "Linux",
+    ios: "iOS",
+    android: "Android",
+    unknown: "Неизвестно",
+  },
+  browserOptions: {
+    chrome: "Chrome",
+    edge: "Edge",
+    firefox: "Firefox",
+    safari: "Safari",
+    other: "Другое",
+    unknown: "Неизвестно",
   },
   browserNames: {
     chrome: "Chrome",

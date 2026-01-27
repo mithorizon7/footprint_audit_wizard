@@ -12,10 +12,11 @@ import {
 import { useWizard } from "@/context/WizardContext";
 import { useI18n } from "@/context/I18nContext";
 import { STEP_INFO } from "@shared/schema";
+import { formatRelativeTime } from "@/lib/formatters";
 
 export function SessionRecoveryDialog() {
   const { data, resetWizard, goToStep } = useWizard();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
 
@@ -34,19 +35,17 @@ export function SessionRecoveryDialog() {
   }, [data.startedAt, data.completedAt, data.currentStep, checked]);
 
   const getTimeElapsed = () => {
-    if (!data.startedAt) return "Unknown";
+    if (!data.startedAt) return t.common.unknown;
     const startTime = new Date(data.startedAt).getTime();
-    const elapsed = Math.floor((Date.now() - startTime) / 60000);
-    if (elapsed < 60) return `${elapsed} minutes ago`;
-    const hours = Math.floor(elapsed / 60);
-    if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-    const days = Math.floor(hours / 24);
-    return `${days} day${days > 1 ? "s" : ""} ago`;
+    const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+    return formatRelativeTime(-elapsedSeconds, locale);
   };
 
   const getCurrentStepName = () => {
     const stepInfo = STEP_INFO[data.currentStep];
-    return stepInfo?.name || "Unknown Step";
+    if (!stepInfo) return t.sessionRecovery.unknownStep;
+    const stepKey = stepInfo.key as keyof typeof t.steps;
+    return t.steps[stepKey] || t.sessionRecovery.unknownStep;
   };
 
   const handleResume = () => {

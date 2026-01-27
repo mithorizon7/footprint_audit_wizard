@@ -26,8 +26,8 @@ export function PanicButton() {
     resetWizard();
     setOpen(false);
     toast({
-      title: "Data cleared",
-      description: "All your lab data has been removed from this device.",
+      title: t.panic.toastTitle,
+      description: t.panic.toastDescription,
     });
   };
 

@@ -6,6 +6,7 @@ import {
 import { AlertTriangle, ChevronDown, Smartphone, FlaskConical, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWizard } from "@/context/WizardContext";
+import { useI18n } from "@/context/I18nContext";
 import { useState } from "react";
 
 interface ToolFallbackBlockProps {
@@ -15,17 +16,14 @@ interface ToolFallbackBlockProps {
 export function ToolFallbackBlock({ suggestions }: ToolFallbackBlockProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { setMode, isFictional } = useWizard();
+  const { t } = useI18n();
 
-  const defaultSuggestions = [
-    "Try a different website or tool category",
-    "Try using your mobile phone with cellular data (bypasses corporate network)",
-    "Continue with Fictional mode to learn the concepts without live tools",
-  ];
+  const defaultSuggestions = t.toolFallback.suggestions;
 
   const items = suggestions || defaultSuggestions;
 
   const handleSwitchToFictional = () => {
-    if (window.confirm("Switch to Fictional Persona mode? This will use demo data instead.")) {
+    if (window.confirm(t.toolFallback.confirmSwitch)) {
       setMode("fictional");
     }
   };
@@ -41,7 +39,7 @@ export function ToolFallbackBlock({ suggestions }: ToolFallbackBlockProps) {
         >
           <span className="flex items-center gap-2 text-sm">
             <AlertTriangle className="w-4 h-4" />
-            Tool not loading?
+            {t.toolFallback.title}
           </span>
           <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
         </Button>
@@ -49,7 +47,7 @@ export function ToolFallbackBlock({ suggestions }: ToolFallbackBlockProps) {
       <CollapsibleContent className="mt-2">
         <div className="rounded-md bg-muted/50 p-4 space-y-3">
           <p className="text-sm text-muted-foreground">
-            Some networks or privacy tools may block these external tools. Try:
+            {t.toolFallback.description}
           </p>
           <ul className="space-y-2">
             {items.map((item, index) => (
@@ -71,7 +69,7 @@ export function ToolFallbackBlock({ suggestions }: ToolFallbackBlockProps) {
               data-testid="button-switch-fictional"
             >
               <FlaskConical className="w-4 h-4 mr-2" />
-              Use Fictional Mode
+              {t.toolFallback.switchButton}
             </Button>
           )}
         </div>

@@ -11,7 +11,7 @@ import { Trash2, FileText, ShieldCheck, ShieldAlert } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AlertBox } from "@/components/wizard/AlertBox";
 import { Badge } from "@/components/ui/badge";
-import type { YesNo, YesNoUnsure, CleanupAction } from "@shared/schema";
+import type { YesNo, CookieBlocking, CleanupAction } from "@shared/schema";
 
 export default function Cleanup() {
   const { data, updateResults, completeAudit, isFictional, tryLiveTools } = useWizard();
@@ -146,13 +146,14 @@ export default function Cleanup() {
 
           <RadioPills
             value={results.thirdPartyCookiesBlockedOrLimited}
-            onChange={(v: YesNoUnsure) =>
+            onChange={(v: CookieBlocking) =>
               updateResults("cleanup", { thirdPartyCookiesBlockedOrLimited: v })
             }
             options={[
               { value: "yes", label: t.common.yes },
               { value: "no", label: t.common.no },
-              { value: "unsure", label: t.cleanupActions.alreadyBlocked },
+              { value: "already_blocked", label: t.cleanupActions.alreadyBlocked },
+              { value: "unsure", label: t.common.unsure },
             ]}
             label={t.cleanup.cookiesBlockedQuestion}
             testId="input-cookies-blocked"

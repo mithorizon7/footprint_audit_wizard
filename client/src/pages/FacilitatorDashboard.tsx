@@ -27,6 +27,7 @@ import {
   Line,
 } from "recharts";
 import { Link } from "wouter";
+import { useI18n } from "@/context/I18nContext";
 
 interface AggregateMetrics {
   totalSessions: number;
@@ -51,6 +52,7 @@ const CHART_COLORS = [
 ];
 
 export default function FacilitatorDashboard() {
+  const { t, formatNum } = useI18n();
   const { data: metrics, isLoading, error, refetch } = useQuery<AggregateMetrics>({
     queryKey: ["/api/facilitator/metrics"],
     refetchInterval: 30000,
@@ -59,10 +61,10 @@ export default function FacilitatorDashboard() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="text-center space-y-4">
-          <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
-          <p className="text-muted-foreground">Loading dashboard metrics...</p>
-        </div>
+          <div className="text-center space-y-4">
+            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
+            <p className="text-muted-foreground">{t.facilitatorDashboard.loading}</p>
+          </div>
       </div>
     );
   }
@@ -72,10 +74,10 @@ export default function FacilitatorDashboard() {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Card className="max-w-md">
           <CardContent className="p-6 text-center space-y-4">
-            <p className="text-muted-foreground">Failed to load dashboard metrics.</p>
+            <p className="text-muted-foreground">{t.facilitatorDashboard.loadError}</p>
             <Button onClick={() => refetch()}>
               <RefreshCw className="w-4 h-4 mr-2" />
-              Retry
+              {t.facilitatorDashboard.retry}
             </Button>
           </CardContent>
         </Card>
@@ -84,10 +86,10 @@ export default function FacilitatorDashboard() {
   }
 
   const scoreData = [
-    { name: "Public Exposure", score: metrics?.avgPublicExposureScore ?? 0 },
-    { name: "Trackers", score: metrics?.avgTrackerScore ?? 0 },
-    { name: "Fingerprinting", score: metrics?.avgFingerprintScore ?? 0 },
-    { name: "Ad Settings", score: metrics?.avgAdSettingsScore ?? 0 },
+    { name: t.chartCategories.publicExposure, score: metrics?.avgPublicExposureScore ?? 0 },
+    { name: t.chartCategories.trackers, score: metrics?.avgTrackerScore ?? 0 },
+    { name: t.chartCategories.fingerprint, score: metrics?.avgFingerprintScore ?? 0 },
+    { name: t.chartCategories.adSettings, score: metrics?.avgAdSettingsScore ?? 0 },
   ];
 
   const getDeviceIcon = (type: string) => {
@@ -98,6 +100,19 @@ export default function FacilitatorDashboard() {
         return <Smartphone className="w-4 h-4" />;
       default:
         return <HelpCircle className="w-4 h-4" />;
+    }
+  };
+
+  const getDeviceLabel = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "desktop":
+        return t.deviceNames.desktop;
+      case "mobile":
+        return t.deviceNames.mobile;
+      case "unknown":
+        return t.deviceNames.unknown;
+      default:
+        return t.common.unknown;
     }
   };
 
@@ -113,17 +128,17 @@ export default function FacilitatorDashboard() {
             </Link>
             <div>
               <h1 className="text-3xl font-bold font-serif text-foreground">
-                Facilitator Dashboard
+                {t.facilitatorDashboard.title}
               </h1>
               <p className="text-sm text-muted-foreground">
-                Anonymized aggregate metrics from all lab sessions
+                {t.facilitatorDashboard.subtitle}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="secondary">
               <Activity className="w-3 h-3 mr-1" />
-              Live Updates
+              {t.facilitatorDashboard.liveUpdates}
             </Badge>
             <Button
               variant="outline"
@@ -132,7 +147,7 @@ export default function FacilitatorDashboard() {
               data-testid="button-refresh"
             >
               <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
+              {t.facilitatorDashboard.refresh}
             </Button>
           </div>
         </div>
@@ -142,9 +157,9 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Sessions</p>
+                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.totalSessions}</p>
                   <p className="text-3xl font-bold text-foreground">
-                    {metrics?.totalSessions ?? 0}
+                    {formatNum(metrics?.totalSessions ?? 0)}
                   </p>
                 </div>
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -158,9 +173,9 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Completed</p>
+                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.completed}</p>
                   <p className="text-3xl font-bold text-foreground">
-                    {metrics?.completedSessions ?? 0}
+                    {formatNum(metrics?.completedSessions ?? 0)}
                   </p>
                 </div>
                 <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
@@ -174,9 +189,9 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Completion Rate</p>
+                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.completionRate}</p>
                   <p className="text-3xl font-bold text-foreground">
-                    {metrics?.completionRate ?? 0}%
+                    {formatNum(metrics?.completionRate ?? 0)}%
                   </p>
                 </div>
                 <div className="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center">
@@ -190,9 +205,11 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Avg Trackers Found</p>
+                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.avgTrackersFound}</p>
                   <p className="text-3xl font-bold text-foreground">
-                    {metrics?.avgTrackerCount ?? "N/A"}
+                    {metrics?.avgTrackerCount === null || metrics?.avgTrackerCount === undefined
+                      ? t.metrics.valueNA
+                      : formatNum(metrics.avgTrackerCount)}
                   </p>
                 </div>
                 <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center">
@@ -206,7 +223,7 @@ export default function FacilitatorDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <Card data-testid="chart-avg-scores">
             <CardHeader>
-              <CardTitle className="text-lg font-serif">Average Privacy Scores</CardTitle>
+              <CardTitle className="text-lg font-serif">{t.facilitatorDashboard.avgPrivacyScores}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-64">
@@ -230,7 +247,7 @@ export default function FacilitatorDashboard() {
 
           <Card data-testid="chart-device-breakdown">
             <CardHeader>
-              <CardTitle className="text-lg font-serif">Device Breakdown</CardTitle>
+              <CardTitle className="text-lg font-serif">{t.facilitatorDashboard.deviceBreakdown}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-64 flex items-center">
@@ -268,15 +285,17 @@ export default function FacilitatorDashboard() {
                           />
                           <span className="flex items-center gap-1">
                             {getDeviceIcon(item.deviceType)}
-                            {item.deviceType}
+                            {getDeviceLabel(item.deviceType)}
                           </span>
-                          <span className="text-muted-foreground ml-auto">{item.count}</span>
+                          <span className="text-muted-foreground ml-auto">{formatNum(item.count)}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 ) : (
-                  <p className="text-muted-foreground text-center w-full">No device data yet</p>
+                  <p className="text-muted-foreground text-center w-full">
+                    {t.facilitatorDashboard.noDeviceData}
+                  </p>
                 )}
               </div>
             </CardContent>
@@ -285,7 +304,7 @@ export default function FacilitatorDashboard() {
 
         <Card data-testid="chart-sessions-over-time">
           <CardHeader>
-            <CardTitle className="text-lg font-serif">Sessions Over Time (Last 14 Days)</CardTitle>
+            <CardTitle className="text-lg font-serif">{t.facilitatorDashboard.sessionsOverTime}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -312,7 +331,7 @@ export default function FacilitatorDashboard() {
                 </ResponsiveContainer>
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
-                  No session data yet. Start some audits to see trends.
+                  {t.facilitatorDashboard.noSessionData}
                 </div>
               )}
             </div>
@@ -320,9 +339,7 @@ export default function FacilitatorDashboard() {
         </Card>
 
         <div className="mt-8 text-center text-xs text-muted-foreground">
-          <p>
-            All metrics are anonymized. No personal identifiers are collected or stored.
-          </p>
+          <p>{t.facilitatorDashboard.privacyNotice}</p>
         </div>
       </div>
     </div>

@@ -253,17 +253,17 @@ export default function Welcome() {
                 <SelectContent>
                   <SelectItem value="desktop">
                     <span className="flex items-center gap-2">
-                      <Monitor className="w-4 h-4" /> Desktop
+                      <Monitor className="w-4 h-4" /> {t.deviceNames.desktop}
                     </span>
                   </SelectItem>
                   <SelectItem value="mobile">
                     <span className="flex items-center gap-2">
-                      <Smartphone className="w-4 h-4" /> Mobile
+                      <Smartphone className="w-4 h-4" /> {t.deviceNames.mobile}
                     </span>
                   </SelectItem>
                   <SelectItem value="unknown">
                     <span className="flex items-center gap-2">
-                      <HelpCircle className="w-4 h-4" /> Unknown
+                      <HelpCircle className="w-4 h-4" /> {t.deviceNames.unknown}
                     </span>
                   </SelectItem>
                 </SelectContent>
@@ -277,12 +277,12 @@ export default function Welcome() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="windows">Windows</SelectItem>
-                  <SelectItem value="mac">macOS</SelectItem>
-                  <SelectItem value="linux">Linux</SelectItem>
-                  <SelectItem value="ios">iOS</SelectItem>
-                  <SelectItem value="android">Android</SelectItem>
-                  <SelectItem value="unknown">Unknown</SelectItem>
+                  <SelectItem value="windows">{t.osNames.windows}</SelectItem>
+                  <SelectItem value="mac">{t.osNames.mac}</SelectItem>
+                  <SelectItem value="linux">{t.osNames.linux}</SelectItem>
+                  <SelectItem value="ios">{t.osNames.ios}</SelectItem>
+                  <SelectItem value="android">{t.osNames.android}</SelectItem>
+                  <SelectItem value="unknown">{t.osNames.unknown}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -297,12 +297,12 @@ export default function Welcome() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="chrome">Chrome</SelectItem>
-                  <SelectItem value="edge">Edge</SelectItem>
-                  <SelectItem value="firefox">Firefox</SelectItem>
-                  <SelectItem value="safari">Safari</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                  <SelectItem value="unknown">Unknown</SelectItem>
+                  <SelectItem value="chrome">{t.browserOptions.chrome}</SelectItem>
+                  <SelectItem value="edge">{t.browserOptions.edge}</SelectItem>
+                  <SelectItem value="firefox">{t.browserOptions.firefox}</SelectItem>
+                  <SelectItem value="safari">{t.browserOptions.safari}</SelectItem>
+                  <SelectItem value="other">{t.browserOptions.other}</SelectItem>
+                  <SelectItem value="unknown">{t.browserOptions.unknown}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -325,7 +325,7 @@ export default function Welcome() {
             className="text-xs text-muted-foreground underline hover:text-foreground transition-colors"
             data-testid="link-facilitator-dashboard"
           >
-            Facilitator Dashboard
+            {t.facilitatorDashboard.title}
           </a>
         </div>
       </div>

@@ -32,6 +32,7 @@ export const osSchema = z.enum(["windows", "mac", "linux", "ios", "android", "un
 export const browserSchema = z.enum(["chrome", "edge", "firefox", "safari", "other", "unknown"]);
 export const yesNoUnsureSchema = z.enum(["yes", "no", "unsure"]);
 export const yesNoSchema = z.enum(["yes", "no"]);
+export const cookieBlockingSchema = z.enum(["yes", "no", "unsure", "already_blocked"]);
 export const siteCategorySchema = z.enum(["news", "shopping", "health", "social", "other", "unknown"]);
 export const trackingProtectionSchema = z.enum(["strong", "partial", "weak", "unsure"]);
 export const adSettingSchema = z.enum(["on", "off", "unsure", "not_used", "not_applicable"]);
@@ -72,7 +73,7 @@ export const accountDeviceSchema = z.object({
 
 export const cleanupSchema = z.object({
   cookiesCleared: yesNoSchema.default("no"),
-  thirdPartyCookiesBlockedOrLimited: yesNoUnsureSchema.default("unsure"),
+  thirdPartyCookiesBlockedOrLimited: cookieBlockingSchema.default("unsure"),
   passwordHygieneActionTaken: cleanupActionSchema.default("later"),
 });
 
@@ -108,6 +109,7 @@ export type OS = z.infer<typeof osSchema>;
 export type Browser = z.infer<typeof browserSchema>;
 export type YesNoUnsure = z.infer<typeof yesNoUnsureSchema>;
 export type YesNo = z.infer<typeof yesNoSchema>;
+export type CookieBlocking = z.infer<typeof cookieBlockingSchema>;
 export type SiteCategory = z.infer<typeof siteCategorySchema>;
 export type TrackingProtection = z.infer<typeof trackingProtectionSchema>;
 export type AdSetting = z.infer<typeof adSettingSchema>;

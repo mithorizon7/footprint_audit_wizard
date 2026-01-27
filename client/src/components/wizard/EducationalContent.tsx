@@ -79,6 +79,40 @@ export function BulletList({ items }: BulletListProps) {
   );
 }
 
+interface SourceLink {
+  label: string;
+  url: string;
+}
+
+interface SourcesListProps {
+  title: string;
+  sources: SourceLink[];
+}
+
+export function SourcesList({ title, sources }: SourcesListProps) {
+  if (!sources.length) return null;
+
+  return (
+    <div className="pt-2">
+      <SectionTitle>{title}</SectionTitle>
+      <ul className="list-disc list-outside ml-5 space-y-2">
+        {sources.map((source) => (
+          <li key={source.url}>
+            <a
+              href={source.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              {source.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 interface HighlightBoxProps {
   children: React.ReactNode;
 }
@@ -119,6 +153,8 @@ interface PublicExposureEducationalProps {
     meaningParagraph: string;
     meaningList: string[];
     activityPreview: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -141,6 +177,8 @@ export function PublicExposureEducational({ content }: PublicExposureEducational
       <HighlightBox>
         <Paragraph>{content.activityPreview}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -166,6 +204,8 @@ interface TrackersEducationalProps {
     beyondAdsParagraph: string;
     beyondAdsList: string[];
     activityPreview: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -204,6 +244,8 @@ export function TrackersEducational({ content }: TrackersEducationalProps) {
       <HighlightBox>
         <Paragraph>{content.activityPreview}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -222,6 +264,8 @@ interface FingerprintingEducationalProps {
     privateBrowsingParagraph1: string;
     privateBrowsingParagraph2: string;
     activityPreview: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -245,6 +289,8 @@ export function FingerprintingEducational({ content }: FingerprintingEducational
       <HighlightBox>
         <Paragraph>{content.activityPreview}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -265,6 +311,8 @@ interface AccountDeviceEducationalProps {
     activityPreviewTitle: string;
     activityPreviewList: string[];
     activityPreviewConclusion: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -291,6 +339,8 @@ export function AccountDeviceEducational({ content }: AccountDeviceEducationalPr
       <HighlightBox>
         <Paragraph>{content.activityPreviewConclusion}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -314,6 +364,8 @@ interface CleanupEducationalProps {
     activityPreviewTitle: string;
     activityPreviewList: string[];
     activityPreviewConclusion: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -343,6 +395,8 @@ export function CleanupEducational({ content }: CleanupEducationalProps) {
       <HighlightBox>
         <Paragraph>{content.activityPreviewConclusion}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }

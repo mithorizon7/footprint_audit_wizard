@@ -113,6 +113,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
           ...prev.results,
           [section]: { ...prev.results[section], ...updates },
         },
+        skippedSteps: prev.skippedSteps.filter((step) => step !== prev.currentStep),
       }));
     },
     []
@@ -121,14 +122,24 @@ export function WizardProvider({ children }: { children: ReactNode }) {
   const goToStep = useCallback((step: number) => {
     const maxStep = STEP_INFO.length - 1;
     const clampedStep = Math.max(0, Math.min(step, maxStep));
-    setData((prev) => ({ ...prev, currentStep: clampedStep }));
+    setData((prev) => ({
+      ...prev,
+      currentStep: clampedStep,
+      completedAt:
+        clampedStep === maxStep ? prev.completedAt ?? new Date().toISOString() : prev.completedAt,
+    }));
   }, []);
 
   const nextStep = useCallback(() => {
-    setData((prev) => ({
-      ...prev,
-      currentStep: Math.min(prev.currentStep + 1, STEP_INFO.length - 1),
-    }));
+    setData((prev) => {
+      const maxStep = STEP_INFO.length - 1;
+      const next = Math.min(prev.currentStep + 1, maxStep);
+      return {
+        ...prev,
+        currentStep: next,
+        completedAt: next === maxStep ? prev.completedAt ?? new Date().toISOString() : prev.completedAt,
+      };
+    });
   }, []);
 
   const prevStep = useCallback(() => {
@@ -143,10 +154,13 @@ export function WizardProvider({ children }: { children: ReactNode }) {
       const newSkippedSteps = prev.skippedSteps.includes(prev.currentStep)
         ? prev.skippedSteps
         : [...prev.skippedSteps, prev.currentStep];
+      const maxStep = STEP_INFO.length - 1;
+      const next = Math.min(prev.currentStep + 1, maxStep);
       return {
         ...prev,
         skippedSteps: newSkippedSteps,
-        currentStep: Math.min(prev.currentStep + 1, STEP_INFO.length - 1),
+        currentStep: next,
+        completedAt: next === maxStep ? prev.completedAt ?? new Date().toISOString() : prev.completedAt,
       };
     });
   }, []);
@@ -176,9 +190,18 @@ export function WizardProvider({ children }: { children: ReactNode }) {
       startedAt: new Date().toISOString(),
       currentStep: 1,
       device: {
-        type: detectedDevice.type as "desktop" | "mobile" | "unknown",
-        os: detectedDevice.os as DeviceInfo["os"],
-        browser: detectedDevice.browser as DeviceInfo["browser"],
+        type:
+          prev.device.type !== "unknown"
+            ? prev.device.type
+            : (detectedDevice.type as "desktop" | "mobile" | "unknown"),
+        os:
+          prev.device.os !== "unknown"
+            ? prev.device.os
+            : (detectedDevice.os as DeviceInfo["os"]),
+        browser:
+          prev.device.browser !== "unknown"
+            ? prev.device.browser
+            : (detectedDevice.browser as DeviceInfo["browser"]),
       },
     }));
   }, []);

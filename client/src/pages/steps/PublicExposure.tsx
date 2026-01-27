@@ -82,6 +82,7 @@ export default function PublicExposure() {
             max={5}
             label={t.publicExposure.searchPagesQuestion}
             helperText={t.publicExposure.searchPagesHelper}
+            showPlusAtMax
             testId="input-search-pages"
           />
 
