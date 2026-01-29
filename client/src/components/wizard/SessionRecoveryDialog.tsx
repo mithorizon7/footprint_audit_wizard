@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { AlertTriangle, Clock, RotateCcw, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { AlertTriangle, Clock, RotateCcw, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,11 +8,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { STEP_INFO } from "@shared/schema";
-import { formatRelativeTime } from "@/lib/formatters";
+} from '@/components/ui/dialog';
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { STEP_INFO } from '@shared/schema';
+import { formatRelativeTime } from '@/lib/formatters';
 
 export function SessionRecoveryDialog() {
   const { data, resetWizard, goToStep } = useWizard();
@@ -22,11 +22,9 @@ export function SessionRecoveryDialog() {
 
   useEffect(() => {
     if (checked) return;
-    
+
     const hasIncompleteSession =
-      data.startedAt !== null &&
-      data.completedAt === null &&
-      data.currentStep > 0;
+      data.startedAt !== null && data.completedAt === null && data.currentStep > 0;
 
     if (hasIncompleteSession) {
       setOpen(true);
@@ -71,17 +69,19 @@ export function SessionRecoveryDialog() {
             <DialogTitle className="text-xl">{t.sessionRecovery.title}</DialogTitle>
           </div>
           <DialogDescription className="text-left space-y-3">
-            <p>
-              {t.sessionRecovery.description}
-            </p>
+            <p>{t.sessionRecovery.description}</p>
             <div className="bg-muted rounded-md p-3 space-y-2">
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4 text-muted-foreground" />
-                <span>{t.sessionRecovery.started} {getTimeElapsed()}</span>
+                <span>
+                  {t.sessionRecovery.started} {getTimeElapsed()}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <RotateCcw className="w-4 h-4 text-muted-foreground" />
-                <span>{t.sessionRecovery.lastStep} {getCurrentStepName()}</span>
+                <span>
+                  {t.sessionRecovery.lastStep} {getCurrentStepName()}
+                </span>
               </div>
             </div>
           </DialogDescription>

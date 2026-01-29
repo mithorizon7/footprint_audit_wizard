@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { ClipboardList } from "lucide-react";
+import { cn } from '@/lib/utils';
+import { ClipboardList } from 'lucide-react';
 
 interface InstructionBlockProps {
   title: string;
@@ -9,7 +9,7 @@ interface InstructionBlockProps {
 
 export function InstructionBlock({ title, instructions, className }: InstructionBlockProps) {
   return (
-    <div className={cn("bg-muted/50 rounded-md p-4 space-y-3", className)}>
+    <div className={cn('bg-muted/50 rounded-md p-4 space-y-3', className)}>
       <div className="flex items-center gap-2">
         <ClipboardList className="w-4 h-4 text-primary" />
         <h4 className="text-sm font-medium text-foreground">{title}</h4>

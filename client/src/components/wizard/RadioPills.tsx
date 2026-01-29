@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface RadioPillsProps<T extends string> {
   value: T;
@@ -29,11 +29,11 @@ export function RadioPills<T extends string>({
             aria-checked={value === option.value}
             onClick={() => onChange(option.value)}
             className={cn(
-              "px-4 py-2 rounded-md text-sm font-medium transition-all",
-              "border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+              'px-4 py-2 rounded-md text-sm font-medium transition-all',
+              'border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
               value === option.value
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-background text-foreground border-border hover-elevate"
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'bg-background text-foreground border-border hover-elevate',
             )}
             data-testid={`${testId}-${option.value}`}
           >

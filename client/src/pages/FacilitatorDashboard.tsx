@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useQuery } from '@tanstack/react-query';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Users,
   CheckCircle2,
@@ -12,7 +12,7 @@ import {
   HelpCircle,
   ArrowLeft,
   RefreshCw,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   BarChart,
   Bar,
@@ -25,9 +25,9 @@ import {
   Cell,
   LineChart,
   Line,
-} from "recharts";
-import { Link } from "wouter";
-import { useI18n } from "@/context/I18nContext";
+} from 'recharts';
+import { Link } from 'wouter';
+import { useI18n } from '@/context/I18nContext';
 
 interface AggregateMetrics {
   totalSessions: number;
@@ -44,27 +44,32 @@ interface AggregateMetrics {
 }
 
 const CHART_COLORS = [
-  "hsl(var(--primary))",
-  "hsl(142, 71%, 45%)",
-  "hsl(38, 92%, 50%)",
-  "hsl(0, 84%, 60%)",
-  "hsl(215, 14%, 65%)",
+  'hsl(var(--primary))',
+  'hsl(142, 71%, 45%)',
+  'hsl(38, 92%, 50%)',
+  'hsl(0, 84%, 60%)',
+  'hsl(215, 14%, 65%)',
 ];
 
 export default function FacilitatorDashboard() {
   const { t, formatNum } = useI18n();
-  const { data: metrics, isLoading, error, refetch } = useQuery<AggregateMetrics>({
-    queryKey: ["/api/facilitator/metrics"],
+  const {
+    data: metrics,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery<AggregateMetrics>({
+    queryKey: ['/api/facilitator/metrics'],
     refetchInterval: 30000,
   });
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-          <div className="text-center space-y-4">
-            <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
-            <p className="text-muted-foreground">{t.facilitatorDashboard.loading}</p>
-          </div>
+        <div className="text-center space-y-4">
+          <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
+          <p className="text-muted-foreground">{t.facilitatorDashboard.loading}</p>
+        </div>
       </div>
     );
   }
@@ -94,9 +99,9 @@ export default function FacilitatorDashboard() {
 
   const getDeviceIcon = (type: string) => {
     switch (type.toLowerCase()) {
-      case "desktop":
+      case 'desktop':
         return <Monitor className="w-4 h-4" />;
-      case "mobile":
+      case 'mobile':
         return <Smartphone className="w-4 h-4" />;
       default:
         return <HelpCircle className="w-4 h-4" />;
@@ -105,11 +110,11 @@ export default function FacilitatorDashboard() {
 
   const getDeviceLabel = (type: string) => {
     switch (type.toLowerCase()) {
-      case "desktop":
+      case 'desktop':
         return t.deviceNames.desktop;
-      case "mobile":
+      case 'mobile':
         return t.deviceNames.mobile;
-      case "unknown":
+      case 'unknown':
         return t.deviceNames.unknown;
       default:
         return t.common.unknown;
@@ -130,9 +135,7 @@ export default function FacilitatorDashboard() {
               <h1 className="text-3xl font-bold font-serif text-foreground">
                 {t.facilitatorDashboard.title}
               </h1>
-              <p className="text-sm text-muted-foreground">
-                {t.facilitatorDashboard.subtitle}
-              </p>
+              <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.subtitle}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -157,7 +160,9 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.totalSessions}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t.facilitatorDashboard.totalSessions}
+                  </p>
                   <p className="text-3xl font-bold text-foreground">
                     {formatNum(metrics?.totalSessions ?? 0)}
                   </p>
@@ -173,7 +178,9 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.completed}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t.facilitatorDashboard.completed}
+                  </p>
                   <p className="text-3xl font-bold text-foreground">
                     {formatNum(metrics?.completedSessions ?? 0)}
                   </p>
@@ -189,7 +196,9 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.completionRate}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t.facilitatorDashboard.completionRate}
+                  </p>
                   <p className="text-3xl font-bold text-foreground">
                     {formatNum(metrics?.completionRate ?? 0)}%
                   </p>
@@ -205,7 +214,9 @@ export default function FacilitatorDashboard() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">{t.facilitatorDashboard.avgTrackersFound}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t.facilitatorDashboard.avgTrackersFound}
+                  </p>
                   <p className="text-3xl font-bold text-foreground">
                     {metrics?.avgTrackerCount === null || metrics?.avgTrackerCount === undefined
                       ? t.metrics.valueNA
@@ -223,7 +234,9 @@ export default function FacilitatorDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <Card data-testid="chart-avg-scores">
             <CardHeader>
-              <CardTitle className="text-lg font-serif">{t.facilitatorDashboard.avgPrivacyScores}</CardTitle>
+              <CardTitle className="text-lg font-serif">
+                {t.facilitatorDashboard.avgPrivacyScores}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-64">
@@ -233,9 +246,9 @@ export default function FacilitatorDashboard() {
                     <YAxis domain={[0, 100]} tick={{ fontSize: 10 }} />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "hsl(var(--card))",
-                        border: "1px solid hsl(var(--border))",
-                        borderRadius: "6px",
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '6px',
                       }}
                     />
                     <Bar dataKey="score" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
@@ -247,7 +260,9 @@ export default function FacilitatorDashboard() {
 
           <Card data-testid="chart-device-breakdown">
             <CardHeader>
-              <CardTitle className="text-lg font-serif">{t.facilitatorDashboard.deviceBreakdown}</CardTitle>
+              <CardTitle className="text-lg font-serif">
+                {t.facilitatorDashboard.deviceBreakdown}
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-64 flex items-center">
@@ -287,7 +302,9 @@ export default function FacilitatorDashboard() {
                             {getDeviceIcon(item.deviceType)}
                             {getDeviceLabel(item.deviceType)}
                           </span>
-                          <span className="text-muted-foreground ml-auto">{formatNum(item.count)}</span>
+                          <span className="text-muted-foreground ml-auto">
+                            {formatNum(item.count)}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -304,7 +321,9 @@ export default function FacilitatorDashboard() {
 
         <Card data-testid="chart-sessions-over-time">
           <CardHeader>
-            <CardTitle className="text-lg font-serif">{t.facilitatorDashboard.sessionsOverTime}</CardTitle>
+            <CardTitle className="text-lg font-serif">
+              {t.facilitatorDashboard.sessionsOverTime}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -315,9 +334,9 @@ export default function FacilitatorDashboard() {
                     <YAxis tick={{ fontSize: 10 }} />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: "hsl(var(--card))",
-                        border: "1px solid hsl(var(--border))",
-                        borderRadius: "6px",
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '6px',
                       }}
                     />
                     <Line
@@ -325,7 +344,7 @@ export default function FacilitatorDashboard() {
                       dataKey="count"
                       stroke="hsl(var(--primary))"
                       strokeWidth={2}
-                      dot={{ fill: "hsl(var(--primary))" }}
+                      dot={{ fill: 'hsl(var(--primary))' }}
                     />
                   </LineChart>
                 </ResponsiveContainer>

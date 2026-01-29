@@ -1,7 +1,7 @@
-import { Minus, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { useI18n } from "@/context/I18nContext";
+import { Minus, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useI18n } from '@/context/I18nContext';
 
 interface NumberStepperProps {
   value: number | null;
@@ -46,7 +46,7 @@ export function NumberStepper({
 
   const shouldShowPlus = showPlusAtMax ?? max > 5;
   const displayValue =
-    value === null ? emptyLabel ?? "-" : value === max && shouldShowPlus ? `${max}+` : value;
+    value === null ? (emptyLabel ?? '-') : value === max && shouldShowPlus ? `${max}+` : value;
 
   return (
     <div className="space-y-2">
@@ -65,8 +65,8 @@ export function NumberStepper({
         </Button>
         <div
           className={cn(
-            "flex items-center justify-center w-16 h-12 rounded-md",
-            "bg-muted text-foreground font-semibold text-xl"
+            'flex items-center justify-center w-16 h-12 rounded-md',
+            'bg-muted text-foreground font-semibold text-xl',
           )}
           data-testid={testId}
           aria-live="polite"

@@ -1,17 +1,31 @@
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Shield, User, FlaskConical, Monitor, Smartphone, HelpCircle, Clock, CheckCircle, ExternalLink, Lock, Lightbulb, Key, Database, Trash2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import type { Mode, DeviceType, OS, Browser } from "@shared/schema";
+} from '@/components/ui/select';
+import {
+  Shield,
+  User,
+  FlaskConical,
+  Monitor,
+  Smartphone,
+  HelpCircle,
+  Clock,
+  ExternalLink,
+  Lock,
+  Lightbulb,
+  Key,
+  Database,
+  Trash2,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { Mode, DeviceType, OS, Browser } from '@shared/schema';
 
 export default function Welcome() {
   const { data, setMode, setDevice, startAudit, mode } = useWizard();
@@ -28,9 +42,7 @@ export default function Welcome() {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
             <Shield className="w-10 h-10 text-primary" />
           </div>
-          <h1 className="text-4xl font-bold font-serif text-foreground">
-            {t.welcome.title}
-          </h1>
+          <h1 className="text-4xl font-bold font-serif text-foreground">{t.welcome.title}</h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
             {t.welcome.subtitle}
           </p>
@@ -52,8 +64,10 @@ export default function Welcome() {
         {/* Understanding Your Options - Comparison Table */}
         <Card className="p-0">
           <CardContent className="p-6 space-y-4">
-            <h2 className="font-semibold text-foreground text-lg">{t.welcome.understandingOptionsTitle}</h2>
-            
+            <h2 className="font-semibold text-foreground text-lg">
+              {t.welcome.understandingOptionsTitle}
+            </h2>
+
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -75,22 +89,30 @@ export default function Welcome() {
                 </thead>
                 <tbody>
                   <tr className="border-b">
-                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableStarting}</td>
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">
+                      {t.welcome.optionTableStarting}
+                    </td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfStarting}</td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoStarting}</td>
                   </tr>
                   <tr className="border-b">
-                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableTools}</td>
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">
+                      {t.welcome.optionTableTools}
+                    </td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfTools}</td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoTools}</td>
                   </tr>
                   <tr className="border-b">
-                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableLearn}</td>
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">
+                      {t.welcome.optionTableLearn}
+                    </td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfLearn}</td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoLearn}</td>
                   </tr>
                   <tr>
-                    <td className="py-3 pr-4 font-medium text-muted-foreground">{t.welcome.optionTableBestFor}</td>
+                    <td className="py-3 pr-4 font-medium text-muted-foreground">
+                      {t.welcome.optionTableBestFor}
+                    </td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfBestFor}</td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoBestFor}</td>
                   </tr>
@@ -107,40 +129,58 @@ export default function Welcome() {
               <Shield className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-emerald-800 dark:text-emerald-200">{t.welcome.privacyProtectedTitle}</h3>
+              <h3 className="font-semibold text-emerald-800 dark:text-emerald-200">
+                {t.welcome.privacyProtectedTitle}
+              </h3>
               <p className="text-sm text-emerald-700 dark:text-emerald-300">
                 {t.welcome.privacyProtectedIntro}
               </p>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex items-start gap-2">
               <Lock className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
               <div>
-                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet1Title}</p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet1Desc}</p>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                  {t.welcome.privacyBullet1Title}
+                </p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">
+                  {t.welcome.privacyBullet1Desc}
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-2">
               <Database className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
               <div>
-                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet2Title}</p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet2Desc}</p>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                  {t.welcome.privacyBullet2Title}
+                </p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">
+                  {t.welcome.privacyBullet2Desc}
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-2">
               <Trash2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
               <div>
-                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet3Title}</p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet3Desc}</p>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                  {t.welcome.privacyBullet3Title}
+                </p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">
+                  {t.welcome.privacyBullet3Desc}
+                </p>
               </div>
             </div>
             <div className="flex items-start gap-2">
               <ExternalLink className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
               <div>
-                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">{t.welcome.privacyBullet4Title}</p>
-                <p className="text-xs text-emerald-700 dark:text-emerald-300">{t.welcome.privacyBullet4Desc}</p>
+                <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                  {t.welcome.privacyBullet4Title}
+                </p>
+                <p className="text-xs text-emerald-700 dark:text-emerald-300">
+                  {t.welcome.privacyBullet4Desc}
+                </p>
               </div>
             </div>
           </div>
@@ -179,18 +219,18 @@ export default function Welcome() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Card
               className={cn(
-                "cursor-pointer transition-all p-0 hover-elevate",
-                mode === "self" && "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                'cursor-pointer transition-all p-0 hover-elevate',
+                mode === 'self' && 'ring-2 ring-primary ring-offset-2 ring-offset-background',
               )}
-              onClick={() => handleModeChange("self")}
+              onClick={() => handleModeChange('self')}
               data-testid="mode-self"
             >
               <CardContent className="p-5">
                 <div className="flex items-start gap-4">
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center shrink-0",
-                      mode === "self" ? "bg-primary text-primary-foreground" : "bg-muted"
+                      'w-10 h-10 rounded-full flex items-center justify-center shrink-0',
+                      mode === 'self' ? 'bg-primary text-primary-foreground' : 'bg-muted',
                     )}
                   >
                     <User className="w-5 h-5" />
@@ -207,18 +247,18 @@ export default function Welcome() {
 
             <Card
               className={cn(
-                "cursor-pointer transition-all p-0 hover-elevate",
-                mode === "fictional" && "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                'cursor-pointer transition-all p-0 hover-elevate',
+                mode === 'fictional' && 'ring-2 ring-primary ring-offset-2 ring-offset-background',
               )}
-              onClick={() => handleModeChange("fictional")}
+              onClick={() => handleModeChange('fictional')}
               data-testid="mode-fictional"
             >
               <CardContent className="p-5">
                 <div className="flex items-start gap-4">
                   <div
                     className={cn(
-                      "w-10 h-10 rounded-full flex items-center justify-center shrink-0",
-                      mode === "fictional" ? "bg-primary text-primary-foreground" : "bg-muted"
+                      'w-10 h-10 rounded-full flex items-center justify-center shrink-0',
+                      mode === 'fictional' ? 'bg-primary text-primary-foreground' : 'bg-muted',
                     )}
                   >
                     <FlaskConical className="w-5 h-5" />
@@ -235,10 +275,21 @@ export default function Welcome() {
           </div>
         </div>
 
+        <div className="max-w-2xl mx-auto">
+          <div className="rounded-lg border border-border bg-muted/30 p-4">
+            <h3 className="text-sm font-semibold text-foreground mb-2">
+              {t.welcome.beforeYouStartSummaryTitle}
+            </h3>
+            <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+              <li>{t.welcome.beforeYouStartSummaryDo}</li>
+              <li>{t.welcome.beforeYouStartSummaryNeed}</li>
+              <li>{t.welcome.beforeYouStartSummarySafety}</li>
+            </ul>
+          </div>
+        </div>
+
         <div className="space-y-4 max-w-md mx-auto">
-          <p className="text-xs text-center text-muted-foreground">
-            {t.welcome.optionalHelp}
-          </p>
+          <p className="text-xs text-center text-muted-foreground">{t.welcome.optionalHelp}</p>
 
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">

@@ -28,6 +28,7 @@ The key insight is that none of this data was necessarily "leaked"—much of it 
 #### What This Means for You
 
 When a stranger, a potential employer, an ex-partner, or a scammer searches your name, they can potentially find:
+
 - Your current and previous addresses
 - Phone numbers (including ones you thought were private)
 - Email addresses
@@ -148,6 +149,7 @@ The answer is a special identifier built into your device's operating system: th
 When you installed your phone's operating system, it generated a unique advertising ID—a string of letters and numbers that identifies your device. This ID is accessible to every app you install, and it's designed specifically to enable advertising and tracking.
 
 Here's what this enables:
+
 - You search for flights in one app → You see hotel ads in a completely different app
 - You browse products in a shopping app → You see ads for those products in your social media apps
 - You play a free game → The game shares your activity with ad networks tied to your advertising ID
@@ -158,6 +160,7 @@ Here's what this enables:
 #### The Scale of Mobile Tracking
 
 Data brokers and ad networks use these identifiers to:
+
 - Track your physical location across time (via apps with location permission)
 - Build behavioral profiles based on app usage
 - Connect your app activity to your web browsing (through cross-device tracking)
@@ -176,6 +179,7 @@ This was significant: **before ATT, apps accessed your IDFA automatically withou
 #### What You'll Check in This Activity
 
 The settings you're about to review control:
+
 1. **Google Ad Personalization**: Whether Google builds a profile of your interests across all Google services and the millions of sites that use Google ads
 2. **Apple Advertising**: Whether Apple uses your data for targeted ads within their ecosystem
 3. **Android Advertising ID**: You can reset (give yourself a new ID, breaking the link to your past) or delete it entirely
@@ -200,6 +204,7 @@ Here's what makes this particularly sobering: the Ticketmaster, Advance Auto Par
 Cookies aren't just about ads—they're also how websites remember that you're logged in. When you visit your email or bank and don't have to re-enter your password, a cookie is what proves to the site that you've already authenticated.
 
 This is convenient, but it has implications:
+
 - **If someone accesses your browser, they access your logged-in accounts**
 - **Session hijacking**: If an attacker captures your cookies (through malware, insecure WiFi, or a compromised website), they can impersonate you without knowing your password
 - **Long-lived sessions**: Some cookies persist for months or years, meaning a single compromise has a long window of exposure
@@ -213,6 +218,7 @@ If there's one privacy setting that delivers the most protection for the least i
 Remember: first-party cookies come from the site you're visiting (they're necessary for logging in and using the site). Third-party cookies come from external domains and are used almost exclusively for cross-site tracking.
 
 Modern browsers handle this differently:
+
 - **Firefox**: Uses "Total Cookie Protection" to isolate third-party cookies per site
 - **Safari**: Blocks third-party cookies by default through "Prevent Cross-Site Tracking"
 - **Chrome**: Still allows third-party cookies by default (Google reversed plans to phase them out)
@@ -231,6 +237,7 @@ This isn't meant to scare you, but to inform you. If your email appeared in a br
 #### What You're About to Do
 
 This final activity brings together everything you've learned:
+
 1. **Clear cookies and site data**: Remove existing trackers and force fresh authentication
 2. **Block third-party cookies**: Prevent future cross-site tracking
 3. **Check for breach exposure**: See if your credentials have been compromised
@@ -249,6 +256,7 @@ This educational content should appear at the **beginning of each step**, after 
 ### Suggested UI Treatment
 
 Consider implementing this content as:
+
 1. An expandable/collapsible section (so users can skip to activities if they want)
 2. A "Learn First" tab alongside an "Activity" tab
 3. Simply as paragraphs that flow into the activity section
@@ -256,6 +264,7 @@ Consider implementing this content as:
 ### Citations Format
 
 Where statistics are referenced, the original research and sources include:
+
 - Market.us and Grand View Research (data broker market statistics)
 - VPNcentral (data broker industry statistics)
 - NordVPN research (website tracker statistics)

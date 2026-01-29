@@ -11,12 +11,14 @@ A guided 60-minute digital privacy self-assessment lab for workforce adults. Thi
 ## Architecture
 
 ### Frontend (React + TypeScript)
+
 - **Wizard Flow**: 7 steps (Welcome, Public Exposure, Trackers, Fingerprinting, Account/Device, Cleanup, Report Card)
 - **State Management**: React Context API (`WizardContext`) for wizard state
 - **Storage**: localStorage only - no backend persistence required
 - **Styling**: Tailwind CSS with Roboto/Roboto Slab fonts
 
 ### Backend (Express)
+
 - Minimal - serves static assets only
 - No API routes needed (all data stays client-side)
 - No database required
@@ -85,7 +87,7 @@ interface WizardData {
 
 - **Timer System**: 60-minute countdown with per-step target times, elapsed time tracking, and session persistence in localStorage
 - **Progress Tracking**: Visual progress bar with step indicators, current step highlighting, and time remaining display
-- **Two Modes**: 
+- **Two Modes**:
   - "My Footprint" - Real self-audit
   - "Fictional Persona" - Prefilled demo data with "Try live tools anyway" toggle
 - **Skip Functionality**: Skip any step; skipped steps appear in dedicated Report Card section with educational context
@@ -104,15 +106,18 @@ interface WizardData {
 ## Internationalization (i18n)
 
 ### Architecture
+
 - **ICU MessageFormat**: Uses `intl-messageformat` for pluralization and complex messages
 - **Bundled Locales**: All translations bundled in `client/src/lib/i18n.ts`
 - **Fallback Chain**: User preference → Browser locale → Latvian (lv) → English (en)
 - **Dev Mode**: Missing keys display as `[MISSING: key.path]` in red
 
 ### Key Naming Conventions
+
 Follow the pattern: `namespace.screen.element.state`
 
 Examples:
+
 - `common.next` - Common UI elements
 - `welcome.title` - Welcome page title
 - `publicExposure.searchPagesQuestion` - Step-specific question
@@ -121,6 +126,7 @@ Examples:
 - `cleanupActions.yes` - Cleanup action option
 
 ### Namespaces
+
 - `common` - Shared UI elements (buttons, actions)
 - `accessibility` - Aria labels, screen reader text
 - `welcome`, `steps`, `report`, `panic` - Page/section content
@@ -130,6 +136,7 @@ Examples:
 - `siteCategories`, `trackingProtection`, `adSettings`, `androidActions`, `iosAtt`, `cleanupActions` - Option labels
 
 ### Validation Scripts
+
 ```bash
 # Validate ICU syntax and check for missing keys
 npx tsx scripts/i18n-validate.ts
@@ -142,6 +149,7 @@ npx tsx scripts/i18n-render-sweep.ts
 ```
 
 ### Adding New Translations
+
 1. Add key to `Translations` interface in `client/src/lib/i18n.ts`
 2. Add English translation to `const en`
 3. Add Latvian translation to `const lv`

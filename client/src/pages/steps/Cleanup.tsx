@@ -1,17 +1,16 @@
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { StepCard } from "@/components/wizard/StepCard";
-import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
-import { InstructionBlock } from "@/components/wizard/InstructionBlock";
-import { RadioPills } from "@/components/wizard/RadioPills";
-import { StepNavigation } from "@/components/wizard/StepNavigation";
-import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
-import { CleanupEducational } from "@/components/wizard/EducationalContent";
-import { Trash2, FileText, ShieldCheck, ShieldAlert } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { AlertBox } from "@/components/wizard/AlertBox";
-import { Badge } from "@/components/ui/badge";
-import type { YesNo, CookieBlocking, CleanupAction } from "@shared/schema";
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { StepCard } from '@/components/wizard/StepCard';
+import { ExternalLinkCard } from '@/components/wizard/ExternalLinkCard';
+import { InstructionBlock } from '@/components/wizard/InstructionBlock';
+import { RadioPills } from '@/components/wizard/RadioPills';
+import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { CleanupEducational } from '@/components/wizard/EducationalContent';
+import { Trash2, FileText, ShieldCheck, ShieldAlert } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { AlertBox } from '@/components/wizard/AlertBox';
+import { Badge } from '@/components/ui/badge';
+import type { YesNo, CookieBlocking, CleanupAction } from '@shared/schema';
 
 export default function Cleanup() {
   const { data, updateResults, completeAudit, isFictional, tryLiveTools } = useWizard();
@@ -22,28 +21,31 @@ export default function Cleanup() {
 
   const BROWSER_URLS = {
     chrome: {
-      clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-      blockUrl: "https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cblock-third-party-cookies",
+      clearUrl: 'https://support.google.com/accounts/answer/32050?hl=en',
+      blockUrl:
+        'https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&hl=en#zippy=%2Cblock-third-party-cookies',
     },
     edge: {
-      clearUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
-      blockUrl: "https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d",
+      clearUrl:
+        'https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d',
+      blockUrl:
+        'https://support.microsoft.com/en-us/windows/manage-cookies-in-microsoft-edge-view-allow-block-delete-and-use-168dab11-0753-043d-7c16-ede5947fc64d',
     },
     firefox: {
-      clearUrl: "https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox",
-      blockUrl: "https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop",
+      clearUrl: 'https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox',
+      blockUrl: 'https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop',
     },
     safari: {
-      clearUrl: "https://support.apple.com/en-us/105082",
-      blockUrl: "https://support.apple.com/en-us/105082",
+      clearUrl: 'https://support.apple.com/en-us/105082',
+      blockUrl: 'https://support.apple.com/en-us/105082',
     },
     other: {
-      clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-      blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+      clearUrl: 'https://support.google.com/accounts/answer/32050?hl=en',
+      blockUrl: 'https://support.google.com/accounts/answer/32050?hl=en',
     },
     unknown: {
-      clearUrl: "https://support.google.com/accounts/answer/32050?hl=en",
-      blockUrl: "https://support.google.com/accounts/answer/32050?hl=en",
+      clearUrl: 'https://support.google.com/accounts/answer/32050?hl=en',
+      blockUrl: 'https://support.google.com/accounts/answer/32050?hl=en',
     },
   };
 
@@ -60,6 +62,7 @@ export default function Cleanup() {
         stepNumber={5}
         title={t.cleanup.title}
         concept={t.cleanup.concept}
+        outcomePreview={t.cleanup.outcomePreview}
         whyItMatters={t.cleanup.whyItMatters}
         pitfalls={t.cleanup.pitfalls}
       >
@@ -67,11 +70,7 @@ export default function Cleanup() {
 
         <InstructionBlock
           title={t.instructions.whatToDo}
-          instructions={[
-            t.instructions.cleanup1,
-            t.instructions.cleanup2,
-            t.instructions.cleanup3,
-          ]}
+          instructions={[t.instructions.cleanup1, t.instructions.cleanup2, t.instructions.cleanup3]}
         />
 
         <AlertBox severity="warning" className="mb-6">
@@ -100,7 +99,6 @@ export default function Cleanup() {
                   testId="link-block-cookies"
                 />
               </div>
-              <ToolFallbackBlock />
             </div>
 
             <Separator className="my-8" />
@@ -110,11 +108,11 @@ export default function Cleanup() {
                 <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
                   {t.cleanup.breachExposure}
                 </h3>
-                <Badge variant="outline" className="text-xs">{t.badges.optional}</Badge>
+                <Badge variant="outline" className="text-xs">
+                  {t.badges.optional}
+                </Badge>
               </div>
-              <p className="text-sm text-muted-foreground">
-                {t.cleanup.breachExposureDesc}
-              </p>
+              <p className="text-sm text-muted-foreground">{t.cleanup.breachExposureDesc}</p>
               <ExternalLinkCard
                 title={t.externalTools.hibpTitle}
                 description={t.externalTools.hibpDesc}
@@ -136,10 +134,10 @@ export default function Cleanup() {
 
           <RadioPills
             value={results.cookiesCleared}
-            onChange={(v: YesNo) => updateResults("cleanup", { cookiesCleared: v })}
+            onChange={(v: YesNo) => updateResults('cleanup', { cookiesCleared: v })}
             options={[
-              { value: "yes", label: t.cleanupActions.yes },
-              { value: "no", label: t.cleanupActions.no },
+              { value: 'yes', label: t.cleanupActions.yes },
+              { value: 'no', label: t.cleanupActions.no },
             ]}
             label={t.cleanup.cookiesClearedQuestion}
             testId="input-cookies-cleared"
@@ -148,13 +146,13 @@ export default function Cleanup() {
           <RadioPills
             value={results.thirdPartyCookiesBlockedOrLimited}
             onChange={(v: CookieBlocking) =>
-              updateResults("cleanup", { thirdPartyCookiesBlockedOrLimited: v })
+              updateResults('cleanup', { thirdPartyCookiesBlockedOrLimited: v })
             }
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "already_blocked", label: t.cleanupActions.alreadyBlocked },
-              { value: "unsure", label: t.common.unsure },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'already_blocked', label: t.cleanupActions.alreadyBlocked },
+              { value: 'unsure', label: t.common.unsure },
             ]}
             label={t.cleanup.cookiesBlockedQuestion}
             testId="input-cookies-blocked"
@@ -163,12 +161,12 @@ export default function Cleanup() {
           <RadioPills
             value={results.passwordHygieneActionTaken}
             onChange={(v: CleanupAction) =>
-              updateResults("cleanup", { passwordHygieneActionTaken: v })
+              updateResults('cleanup', { passwordHygieneActionTaken: v })
             }
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "later", label: t.cleanupActions.later },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'later', label: t.cleanupActions.later },
             ]}
             label={t.cleanup.passwordHygieneQuestion}
             helperText={t.cleanup.passwordHygieneHelper}

@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
-import { useI18n } from "@/context/I18nContext";
+import { Card, CardContent } from '@/components/ui/card';
+import { AlertCircle } from 'lucide-react';
+import { useI18n } from '@/context/I18nContext';
 
 export default function NotFound() {
   const { t } = useI18n();
@@ -14,9 +14,7 @@ export default function NotFound() {
             <h1 className="text-2xl font-bold text-gray-900">{t.notFound.title}</h1>
           </div>
 
-          <p className="mt-4 text-sm text-gray-600">
-            {t.notFound.description}
-          </p>
+          <p className="mt-4 text-sm text-gray-600">{t.notFound.description}</p>
         </CardContent>
       </Card>
     </div>

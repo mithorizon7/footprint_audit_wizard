@@ -1,13 +1,13 @@
-import { Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Globe } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useI18n } from "@/context/I18nContext";
-import { SUPPORTED_LOCALES, type Locale } from "@/lib/i18n";
+} from '@/components/ui/dropdown-menu';
+import { useI18n } from '@/context/I18nContext';
+import { SUPPORTED_LOCALES, type Locale } from '@/lib/i18n';
 
 export function LanguageSelector() {
   const { locale, setLocale, t } = useI18n();
@@ -29,7 +29,7 @@ export function LanguageSelector() {
           <DropdownMenuItem
             key={lang.code}
             onClick={() => setLocale(lang.code as Locale)}
-            className={locale === lang.code ? "bg-accent" : ""}
+            className={locale === lang.code ? 'bg-accent' : ''}
             data-testid={`language-${lang.code}`}
           >
             <span>{lang.nativeName}</span>

@@ -1,25 +1,25 @@
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { StepCard } from "@/components/wizard/StepCard";
-import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
-import { InstructionBlock } from "@/components/wizard/InstructionBlock";
-import { RadioPills } from "@/components/wizard/RadioPills";
-import { StepNavigation } from "@/components/wizard/StepNavigation";
-import { AccountDeviceEducational } from "@/components/wizard/EducationalContent";
-import { Settings, FileText } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { SiGoogle, SiApple, SiAndroid } from "react-icons/si";
-import type { AdSetting, AndroidAdIdAction, IosATT, MobilePlatformSelection } from "@shared/schema";
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { StepCard } from '@/components/wizard/StepCard';
+import { ExternalLinkCard } from '@/components/wizard/ExternalLinkCard';
+import { InstructionBlock } from '@/components/wizard/InstructionBlock';
+import { RadioPills } from '@/components/wizard/RadioPills';
+import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { AccountDeviceEducational } from '@/components/wizard/EducationalContent';
+import { Settings, FileText } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import { SiGoogle, SiApple, SiAndroid } from 'react-icons/si';
+import type { AdSetting, AndroidAdIdAction, IosATT, MobilePlatformSelection } from '@shared/schema';
 
 export default function AccountDevice() {
   const { data, updateResults, isFictional, tryLiveTools, setDevice } = useWizard();
   const { t } = useI18n();
   const results = data.results.accountDevice;
-  const mobileSelection = data.device.mobilePlatformSelection ?? "unsure";
+  const mobileSelection = data.device.mobilePlatformSelection ?? 'unsure';
   const showApple =
-    mobileSelection === "ios" || mobileSelection === "both" || mobileSelection === "unsure";
+    mobileSelection === 'ios' || mobileSelection === 'both' || mobileSelection === 'unsure';
   const showAndroid =
-    mobileSelection === "android" || mobileSelection === "both" || mobileSelection === "unsure";
+    mobileSelection === 'android' || mobileSelection === 'both' || mobileSelection === 'unsure';
   const showExternalLinks = !isFictional || tryLiveTools;
 
   return (
@@ -28,6 +28,7 @@ export default function AccountDevice() {
         stepNumber={4}
         title={t.accountDevice.title}
         concept={t.accountDevice.concept}
+        outcomePreview={t.accountDevice.outcomePreview}
         whyItMatters={t.accountDevice.whyItMatters}
         pitfalls={t.accountDevice.pitfalls}
       >
@@ -48,11 +49,11 @@ export default function AccountDevice() {
           label={t.accountDevice.deviceSelectionTitle}
           helperText={t.accountDevice.deviceSelectionHelper}
           options={[
-            { value: "ios", label: t.osNames.ios },
-            { value: "android", label: t.osNames.android },
-            { value: "both", label: t.accountDevice.deviceSelectionOptionBoth },
-            { value: "none", label: t.accountDevice.deviceSelectionOptionNone },
-            { value: "unsure", label: t.common.unsure },
+            { value: 'ios', label: t.osNames.ios },
+            { value: 'android', label: t.osNames.android },
+            { value: 'both', label: t.accountDevice.deviceSelectionOptionBoth },
+            { value: 'none', label: t.accountDevice.deviceSelectionOptionNone },
+            { value: 'unsure', label: t.common.unsure },
           ]}
           testId="device-selection"
         />
@@ -114,12 +115,14 @@ export default function AccountDevice() {
 
           <RadioPills
             value={results.googlePersonalizedAds}
-            onChange={(v: AdSetting) => updateResults("accountDevice", { googlePersonalizedAds: v })}
+            onChange={(v: AdSetting) =>
+              updateResults('accountDevice', { googlePersonalizedAds: v })
+            }
             options={[
-              { value: "on", label: t.adSettings.on },
-              { value: "off", label: t.adSettings.off },
-              { value: "unsure", label: t.common.unsure },
-              { value: "not_used", label: t.adSettings.notUsed },
+              { value: 'on', label: t.adSettings.on },
+              { value: 'off', label: t.adSettings.off },
+              { value: 'unsure', label: t.common.unsure },
+              { value: 'not_used', label: t.adSettings.notUsed },
             ]}
             label={t.accountDevice.googleAdsQuestion}
             testId="input-google-ads"
@@ -129,13 +132,13 @@ export default function AccountDevice() {
             <RadioPills
               value={results.applePersonalizedAds}
               onChange={(v: AdSetting) =>
-                updateResults("accountDevice", { applePersonalizedAds: v })
+                updateResults('accountDevice', { applePersonalizedAds: v })
               }
               options={[
-                { value: "on", label: t.adSettings.on },
-                { value: "off", label: t.adSettings.off },
-                { value: "unsure", label: t.common.unsure },
-                { value: "not_applicable", label: t.adSettings.notApplicable },
+                { value: 'on', label: t.adSettings.on },
+                { value: 'off', label: t.adSettings.off },
+                { value: 'unsure', label: t.common.unsure },
+                { value: 'not_applicable', label: t.adSettings.notApplicable },
               ]}
               label={t.accountDevice.appleAdsQuestion}
               testId="input-apple-ads"
@@ -146,13 +149,13 @@ export default function AccountDevice() {
             <RadioPills
               value={results.androidAdvertisingIdAction}
               onChange={(v: AndroidAdIdAction) =>
-                updateResults("accountDevice", { androidAdvertisingIdAction: v })
+                updateResults('accountDevice', { androidAdvertisingIdAction: v })
               }
               options={[
-                { value: "reset", label: t.androidActions.reset },
-                { value: "deleted", label: t.androidActions.deleted },
-                { value: "none", label: t.androidActions.none },
-                { value: "not_applicable", label: t.adSettings.notApplicable },
+                { value: 'reset', label: t.androidActions.reset },
+                { value: 'deleted', label: t.androidActions.deleted },
+                { value: 'none', label: t.androidActions.none },
+                { value: 'not_applicable', label: t.adSettings.notApplicable },
               ]}
               label={t.accountDevice.androidIdQuestion}
               testId="input-android-ad-id"
@@ -162,12 +165,12 @@ export default function AccountDevice() {
           {showApple && (
             <RadioPills
               value={results.iosATTSetting}
-              onChange={(v: IosATT) => updateResults("accountDevice", { iosATTSetting: v })}
+              onChange={(v: IosATT) => updateResults('accountDevice', { iosATTSetting: v })}
               options={[
-                { value: "allow_apps_to_request", label: t.iosAtt.allowApps },
-                { value: "blocked", label: t.iosAtt.blocked },
-                { value: "unsure", label: t.common.unsure },
-                { value: "not_applicable", label: t.adSettings.notApplicable },
+                { value: 'allow_apps_to_request', label: t.iosAtt.allowApps },
+                { value: 'blocked', label: t.iosAtt.blocked },
+                { value: 'unsure', label: t.common.unsure },
+                { value: 'not_applicable', label: t.adSettings.notApplicable },
               ]}
               label={t.accountDevice.iosAttQuestion}
               helperText={t.accountDevice.iosAttHelper}

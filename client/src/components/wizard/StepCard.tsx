@@ -1,20 +1,23 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { AlertBox } from "./AlertBox";
-import { Lightbulb } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useI18n } from "@/context/I18nContext";
+} from '@/components/ui/accordion';
+import { AlertBox } from './AlertBox';
+import { CheckCircle2, Clock, Lightbulb } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useI18n } from '@/context/I18nContext';
+import { useWizard } from '@/context/WizardContext';
+import { STEP_INFO } from '@shared/schema';
 
 interface StepCardProps {
   stepNumber: number;
   title: string;
   concept: string;
+  outcomePreview?: string;
   whyItMatters?: string;
   pitfalls?: string[];
   children: React.ReactNode;
@@ -25,15 +28,29 @@ export function StepCard({
   stepNumber,
   title,
   concept,
+  outcomePreview,
   whyItMatters,
   pitfalls,
   children,
   className,
 }: StepCardProps) {
-  const { t, format } = useI18n();
+  const { t, format, plural } = useI18n();
+  const { data, elapsedSeconds, currentStep } = useWizard();
+  const stepInfo = STEP_INFO[stepNumber];
+  const estimatedMinutes = stepInfo?.duration;
+  const expectedElapsedSeconds =
+    STEP_INFO.slice(1, Math.min(currentStep + 1, STEP_INFO.length)).reduce(
+      (sum, step) => sum + step.duration,
+      0,
+    ) * 60;
+  const showOnTrack =
+    !!data.startedAt &&
+    !data.completedAt &&
+    currentStep === stepNumber &&
+    elapsedSeconds <= expectedElapsedSeconds;
 
   return (
-    <Card className={cn("w-full", className)}>
+    <Card className={cn('w-full', className)}>
       <CardHeader className="space-y-4">
         <div className="flex items-start gap-3 flex-wrap">
           <Badge variant="secondary" className="shrink-0" data-testid={`badge-step-${stepNumber}`}>
@@ -42,6 +59,23 @@ export function StepCard({
           <CardTitle className="text-2xl font-serif">{title}</CardTitle>
         </div>
         <p className="text-lg text-muted-foreground leading-relaxed">{concept}</p>
+        {outcomePreview && <p className="text-sm text-muted-foreground">{outcomePreview}</p>}
+        {estimatedMinutes !== undefined && (
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+            <span className="inline-flex items-center gap-2">
+              <Clock className="w-4 h-4" />
+              {format(t.common.estimatedTime, {
+                minutes: plural('minutes', { count: estimatedMinutes }),
+              })}
+            </span>
+            {showOnTrack && (
+              <span className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
+                <CheckCircle2 className="w-4 h-4" />
+                {t.common.onTrack}
+              </span>
+            )}
+          </div>
+        )}
 
         {whyItMatters && (
           <AlertBox severity="info">

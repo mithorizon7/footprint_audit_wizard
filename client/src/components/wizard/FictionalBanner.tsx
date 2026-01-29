@@ -1,8 +1,8 @@
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { FlaskConical, ExternalLink } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { FlaskConical, ExternalLink } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 
 export function FictionalBanner() {
   const { isFictional, tryLiveTools, setTryLiveTools, setMode, currentStep } = useWizard();
@@ -12,7 +12,7 @@ export function FictionalBanner() {
 
   const handleSwitchToReal = () => {
     if (window.confirm(t.fictional.switchConfirmation)) {
-      setMode("self");
+      setMode('self');
     }
   };
 

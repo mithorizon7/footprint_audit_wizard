@@ -1,12 +1,12 @@
-import { db, hasDatabase } from "./db";
-import { auditSessions, type InsertAuditSession, type AuditSession } from "@shared/schema";
-import { eq, sql, count, avg, desc } from "drizzle-orm";
+import { db, hasDatabase } from './db';
+import { auditSessions, type InsertAuditSession, type AuditSession } from '@shared/schema';
+import { eq, sql, count, avg, desc } from 'drizzle-orm';
 
 export interface IStorage {
   createAuditSession(session: InsertAuditSession): Promise<AuditSession>;
   updateAuditSession(
     sessionId: string,
-    updates: Partial<InsertAuditSession>
+    updates: Partial<InsertAuditSession>,
   ): Promise<AuditSession | null>;
   getAuditSessionBySessionId(sessionId: string): Promise<AuditSession | null>;
   getAggregateMetrics(): Promise<{
@@ -27,7 +27,7 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   async createAuditSession(session: InsertAuditSession): Promise<AuditSession> {
     if (!db) {
-      throw new Error("Database not configured");
+      throw new Error('Database not configured');
     }
     const [result] = await db.insert(auditSessions).values(session).returning();
     return result;
@@ -35,10 +35,10 @@ export class DatabaseStorage implements IStorage {
 
   async updateAuditSession(
     sessionId: string,
-    updates: Partial<InsertAuditSession>
+    updates: Partial<InsertAuditSession>,
   ): Promise<AuditSession | null> {
     if (!db) {
-      throw new Error("Database not configured");
+      throw new Error('Database not configured');
     }
     const [result] = await db
       .update(auditSessions)
@@ -50,7 +50,7 @@ export class DatabaseStorage implements IStorage {
 
   async getAuditSessionBySessionId(sessionId: string): Promise<AuditSession | null> {
     if (!db) {
-      throw new Error("Database not configured");
+      throw new Error('Database not configured');
     }
     const [result] = await db
       .select()
@@ -61,13 +61,13 @@ export class DatabaseStorage implements IStorage {
 
   async getAggregateMetrics() {
     if (!db) {
-      throw new Error("Database not configured");
+      throw new Error('Database not configured');
     }
     const [totals] = await db
       .select({
         totalSessions: count(),
         completedSessions: sql<number>`SUM(CASE WHEN completed = 1 THEN 1 ELSE 0 END)`.as(
-          "completed_count"
+          'completed_count',
         ),
         avgPublicExposureScore: avg(auditSessions.publicExposureScore),
         avgTrackerScore: avg(auditSessions.trackerScore),
@@ -95,7 +95,7 @@ export class DatabaseStorage implements IStorage {
 
     const recentSessions = await db
       .select({
-        date: sql<string>`DATE(created_at)`.as("date"),
+        date: sql<string>`DATE(created_at)`.as('date'),
         count: count(),
       })
       .from(auditSessions)
@@ -113,24 +113,20 @@ export class DatabaseStorage implements IStorage {
       avgPublicExposureScore: totals?.avgPublicExposureScore
         ? Math.round(Number(totals.avgPublicExposureScore))
         : null,
-      avgTrackerScore: totals?.avgTrackerScore
-        ? Math.round(Number(totals.avgTrackerScore))
-        : null,
+      avgTrackerScore: totals?.avgTrackerScore ? Math.round(Number(totals.avgTrackerScore)) : null,
       avgFingerprintScore: totals?.avgFingerprintScore
         ? Math.round(Number(totals.avgFingerprintScore))
         : null,
       avgAdSettingsScore: totals?.avgAdSettingsScore
         ? Math.round(Number(totals.avgAdSettingsScore))
         : null,
-      avgTrackerCount: totals?.avgTrackerCount
-        ? Math.round(Number(totals.avgTrackerCount))
-        : null,
+      avgTrackerCount: totals?.avgTrackerCount ? Math.round(Number(totals.avgTrackerCount)) : null,
       deviceBreakdown: deviceBreakdown.map((d: { deviceType: string | null; count: number }) => ({
-        deviceType: d.deviceType || "unknown",
+        deviceType: d.deviceType || 'unknown',
         count: d.count,
       })),
       browserBreakdown: browserBreakdown.map((b: { browser: string | null; count: number }) => ({
-        browser: b.browser || "unknown",
+        browser: b.browser || 'unknown',
         count: b.count,
       })),
       recentSessions: recentSessions.map((r: { date: string; count: number }) => ({
@@ -169,7 +165,7 @@ class MemoryStorage implements IStorage {
 
   async updateAuditSession(
     sessionId: string,
-    updates: Partial<InsertAuditSession>
+    updates: Partial<InsertAuditSession>,
   ): Promise<AuditSession | null> {
     const sessionIndex = this.sessions.findIndex((s) => s.sessionId === sessionId);
     if (sessionIndex === -1) return null;
@@ -193,7 +189,7 @@ class MemoryStorage implements IStorage {
     const completedSessions = this.sessions.filter((s) => s.completed === 1).length;
 
     const avgValue = (values: Array<number | null | undefined>) => {
-      const filtered = values.filter((v): v is number => typeof v === "number");
+      const filtered = values.filter((v): v is number => typeof v === 'number');
       if (filtered.length === 0) return null;
       const sum = filtered.reduce((acc, v) => acc + v, 0);
       return Math.round(sum / filtered.length);
@@ -204,10 +200,10 @@ class MemoryStorage implements IStorage {
     const recentCounts = new Map<string, number>();
 
     this.sessions.forEach((session) => {
-      const deviceType = session.deviceType || "unknown";
+      const deviceType = session.deviceType || 'unknown';
       deviceCounts.set(deviceType, (deviceCounts.get(deviceType) ?? 0) + 1);
 
-      const browser = session.browser || "unknown";
+      const browser = session.browser || 'unknown';
       browserCounts.set(browser, (browserCounts.get(browser) ?? 0) + 1);
 
       const dateKey = session.createdAt.toISOString().slice(0, 10);

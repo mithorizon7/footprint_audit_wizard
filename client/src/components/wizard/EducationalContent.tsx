@@ -1,25 +1,7 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-
-interface EducationalSectionProps {
-  title: string;
-  children: React.ReactNode;
-}
-
-function EducationalSection({ title, children }: EducationalSectionProps) {
-  return (
-    <div className="mb-6">
-      <h4 className="text-base font-semibold text-foreground mb-3">{title}</h4>
-      {children}
-    </div>
-  );
-}
+import { useState } from 'react';
+import { ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface EducationalContentProps {
   sectionTitle: string;
@@ -44,9 +26,7 @@ export function EducationalContent({
           >
             <div className="flex items-center gap-3">
               <BookOpen className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium text-foreground">
-                {sectionTitle}
-              </span>
+              <span className="text-sm font-medium text-foreground">{sectionTitle}</span>
             </div>
             {isOpen ? (
               <ChevronUp className="w-4 h-4 text-muted-foreground" />
@@ -118,11 +98,7 @@ interface HighlightBoxProps {
 }
 
 export function HighlightBox({ children }: HighlightBoxProps) {
-  return (
-    <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
-      {children}
-    </div>
-  );
+  return <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">{children}</div>;
 }
 
 export function Paragraph({ children }: { children: React.ReactNode }) {
@@ -130,11 +106,7 @@ export function Paragraph({ children }: { children: React.ReactNode }) {
 }
 
 export function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h4 className="text-base font-semibold text-foreground mt-6 mb-3">
-      {children}
-    </h4>
-  );
+  return <h4 className="text-base font-semibold text-foreground mt-6 mb-3">{children}</h4>;
 }
 
 // Step-specific educational content components
@@ -231,7 +203,9 @@ export function TrackersEducational({ content }: TrackersEducationalProps) {
       <div className="space-y-4 mt-4">
         {trackingTypesList.map((type, index) => (
           <div key={index} className="border-l-2 border-muted-foreground/20 pl-4">
-            <p className="font-medium text-foreground">{index + 1}. {type.title}</p>
+            <p className="font-medium text-foreground">
+              {index + 1}. {type.title}
+            </p>
             <p className="text-sm text-muted-foreground mt-1">{type.description}</p>
           </div>
         ))}

@@ -1,11 +1,11 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import {
   type Locale,
   type Translations,
   getTranslations,
   getLocaleFromStorage,
   saveLocaleToStorage,
-} from "@/lib/i18n";
+} from '@/lib/i18n';
 import {
   formatMessage,
   formatNumber,
@@ -14,7 +14,7 @@ import {
   formatDuration,
   formatPlural,
   type PluralMessageKey,
-} from "@/lib/formatters";
+} from '@/lib/formatters';
 
 const isDev = import.meta.env.DEV;
 
@@ -32,10 +32,7 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | null>(null);
 
-function createMissingKeyProxy<T extends object>(
-  translations: T,
-  path: string = ""
-): T {
+function createMissingKeyProxy<T extends object>(translations: T, path: string = ''): T {
   if (!isDev) {
     return translations;
   }
@@ -50,7 +47,7 @@ function createMissingKeyProxy<T extends object>(
         return `[MISSING: ${currentPath}]`;
       }
 
-      if (typeof value === "object" && value !== null) {
+      if (typeof value === 'object' && value !== null) {
         return createMissingKeyProxy(value as object, currentPath);
       }
 
@@ -61,8 +58,8 @@ function createMissingKeyProxy<T extends object>(
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => getLocaleFromStorage());
-  const [translations, setTranslations] = useState<Translations>(() => 
-    createMissingKeyProxy(getTranslations(locale))
+  const [translations, setTranslations] = useState<Translations>(() =>
+    createMissingKeyProxy(getTranslations(locale)),
   );
 
   useEffect(() => {
@@ -84,17 +81,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     return formatNumber(value, locale);
   };
 
-  const formatDateLocale = (
-    date: Date | string | number,
-    options?: Intl.DateTimeFormatOptions
-  ) => {
+  const formatDateLocale = (date: Date | string | number, options?: Intl.DateTimeFormatOptions) => {
     return formatDate(date, locale, options);
   };
 
-  const formatTimeLocale = (
-    date: Date | string | number,
-    options?: Intl.DateTimeFormatOptions
-  ) => {
+  const formatTimeLocale = (date: Date | string | number, options?: Intl.DateTimeFormatOptions) => {
     return formatTime(date, locale, options);
   };
 
@@ -128,7 +119,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 export function useI18n() {
   const context = useContext(I18nContext);
   if (!context) {
-    throw new Error("useI18n must be used within an I18nProvider");
+    throw new Error('useI18n must be used within an I18nProvider');
   }
   return context;
 }

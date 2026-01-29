@@ -1,14 +1,11 @@
-import fs from "node:fs";
-import path from "node:path";
-import ts from "typescript";
+import fs from 'node:fs';
+import path from 'node:path';
+import ts from 'typescript';
 
-const ROOTS = [
-  path.resolve("client/src/pages"),
-  path.resolve("client/src/components/wizard"),
-];
+const ROOTS = [path.resolve('client/src')];
 
 const LETTER_REGEX = /\p{L}/u;
-const ATTR_NAMES = new Set(["aria-label", "title", "placeholder", "alt", "label"]);
+const ATTR_NAMES = new Set(['aria-label', 'title', 'placeholder', 'alt', 'label']);
 
 const collectFiles = (dir) => {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -17,7 +14,7 @@ const collectFiles = (dir) => {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       files.push(...collectFiles(fullPath));
-    } else if (entry.isFile() && fullPath.endsWith(".tsx")) {
+    } else if (entry.isFile() && fullPath.endsWith('.tsx')) {
       files.push(fullPath);
     }
   }
@@ -25,17 +22,23 @@ const collectFiles = (dir) => {
 };
 
 const shouldIgnoreLine = (lines, lineNumber) => {
-  const line = lines[lineNumber] ?? "";
-  const prevLine = lines[lineNumber - 1] ?? "";
-  return line.includes("i18n-ignore") || prevLine.includes("i18n-ignore");
+  const line = lines[lineNumber] ?? '';
+  const prevLine = lines[lineNumber - 1] ?? '';
+  return line.includes('i18n-ignore') || prevLine.includes('i18n-ignore');
 };
 
 const report = [];
 const files = ROOTS.flatMap((root) => (fs.existsSync(root) ? collectFiles(root) : []));
 
 for (const file of files) {
-  const content = fs.readFileSync(file, "utf8");
-  const sourceFile = ts.createSourceFile(file, content, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const content = fs.readFileSync(file, 'utf8');
+  const sourceFile = ts.createSourceFile(
+    file,
+    content,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX,
+  );
   const lines = content.split(/\r?\n/);
 
   const addIssue = (node, text) => {
@@ -50,7 +53,7 @@ for (const file of files) {
   };
 
   const checkText = (node, text) => {
-    const trimmed = text.replace(/\s+/g, " ").trim();
+    const trimmed = text.replace(/\s+/g, ' ').trim();
     if (!trimmed) return;
     if (!LETTER_REGEX.test(trimmed)) return;
     addIssue(node, trimmed);
@@ -88,11 +91,11 @@ for (const file of files) {
 }
 
 if (report.length > 0) {
-  console.error("i18n lint found hard-coded strings:");
+  console.error('i18n lint found hard-coded strings:');
   for (const issue of report) {
     console.error(`- ${issue.file}:${issue.line}:${issue.col} -> "${issue.text}"`);
   }
   process.exit(1);
 }
 
-console.log("i18n lint passed.");
+console.log('i18n lint passed.');
