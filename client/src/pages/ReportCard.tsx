@@ -1,18 +1,30 @@
-import { useRef } from "react";
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import type { Translations } from "@/lib/i18n";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { useRef } from 'react';
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import type { Translations } from '@/lib/i18n';
+import {
+  type ScoreLevel,
+  displayValue,
+  formatMappedValue,
+  getAdSettingsLevel,
+  getCleanupLevel,
+  getFingerprintLevel,
+  getPublicExposureLevel,
+  getTrackerLevel,
+  scoreFor,
+} from '@/lib/reportUtils';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { Tooltip as UiTooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
+} from '@/components/ui/accordion';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Download,
   Printer,
@@ -29,9 +41,9 @@ import {
   SkipForward,
   ExternalLink,
   Trash2,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { STEP_INFO } from "@shared/schema";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { STEP_INFO } from '@shared/schema';
 import {
   RadarChart,
   PolarGrid,
@@ -44,10 +56,9 @@ import {
   XAxis,
   YAxis,
   Cell,
-  Tooltip,
-} from "recharts";
-
-type ScoreLevel = "good" | "warning" | "critical" | "unknown";
+  Tooltip as RechartsTooltip,
+  type TooltipProps,
+} from 'recharts';
 
 interface MetricTile {
   icon: typeof Shield;
@@ -55,33 +66,60 @@ interface MetricTile {
   value: string | number;
   level: ScoreLevel;
   explanation: string;
+  status: 'skipped' | 'not_answered' | null;
 }
 
 interface StepLinkDef {
-  titleKey: keyof Translations["externalTools"];
-  descKey: keyof Translations["externalTools"];
+  titleKey: keyof Translations['externalTools'];
+  descKey: keyof Translations['externalTools'];
   url: string;
 }
 
 const STEP_LINK_DEFS: Record<number, StepLinkDef[]> = {
   1: [
-    { titleKey: "googleResultsTitle", descKey: "googleResultsDesc", url: "https://myactivity.google.com/results-about-you" },
-    { titleKey: "findContactTitle", descKey: "findContactDesc", url: "https://support.google.com/websearch/answer/12719076?hl=en" },
-    { titleKey: "requestRemovalTitle", descKey: "requestRemovalDesc", url: "https://support.google.com/websearch/answer/9673730?hl=en" },
+    {
+      titleKey: 'googleResultsTitle',
+      descKey: 'googleResultsDesc',
+      url: 'https://myactivity.google.com/results-about-you',
+    },
+    {
+      titleKey: 'findContactTitle',
+      descKey: 'findContactDesc',
+      url: 'https://support.google.com/websearch/answer/12719076?hl=en',
+    },
+    {
+      titleKey: 'requestRemovalTitle',
+      descKey: 'requestRemovalDesc',
+      url: 'https://support.google.com/websearch/answer/9673730?hl=en',
+    },
   ],
   2: [
-    { titleKey: "blacklightTitle", descKey: "blacklightDesc", url: "https://themarkup.org/blacklight" },
+    {
+      titleKey: 'blacklightTitle',
+      descKey: 'blacklightDesc',
+      url: 'https://themarkup.org/blacklight',
+    },
   ],
   3: [
-    { titleKey: "effCoverTracksTitle", descKey: "effCoverTracksDesc", url: "https://coveryourtracks.eff.org/" },
-    { titleKey: "effExplainerTitle", descKey: "effExplainerDesc", url: "https://www.eff.org/pages/cover-your-tracks" },
+    {
+      titleKey: 'effCoverTracksTitle',
+      descKey: 'effCoverTracksDesc',
+      url: 'https://coveryourtracks.eff.org/',
+    },
+    {
+      titleKey: 'effExplainerTitle',
+      descKey: 'effExplainerDesc',
+      url: 'https://www.eff.org/pages/cover-your-tracks',
+    },
   ],
   4: [
-    { titleKey: "googleAdSettingsTitle", descKey: "googleAdSettingsDesc", url: "https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en" },
+    {
+      titleKey: 'googleAdSettingsTitle',
+      descKey: 'googleAdSettingsDesc',
+      url: 'https://support.google.com/My-Ad-Center-Help/answer/12155656?hl=en',
+    },
   ],
-  5: [
-    { titleKey: "hibpTitle", descKey: "hibpDesc", url: "https://haveibeenpwned.com/" },
-  ],
+  5: [{ titleKey: 'hibpTitle', descKey: 'hibpDesc', url: 'https://haveibeenpwned.com/' }],
 };
 
 export default function ReportCard() {
@@ -90,110 +128,135 @@ export default function ReportCard() {
   const reportRef = useRef<HTMLDivElement>(null);
   const results = data.results;
 
-  const getPublicExposureLevel = (): ScoreLevel => {
-    const pages = results.publicExposure.searchResultPagesWithPersonalInfo;
-    if (pages === 0 && results.publicExposure.peopleSearchSitesFound === "no") return "good";
-    if (pages <= 2) return "warning";
-    return "critical";
-  };
+  const isStepSkipped = (step: number) => skippedSteps.includes(step);
 
-  const getTrackerLevel = (): ScoreLevel => {
-    const count = results.trackers.trackerCount ?? 0;
-    if (count === 0) return "unknown";
-    if (count <= 10) return "good";
-    if (count <= 30) return "warning";
-    return "critical";
-  };
+  const publicSkipped = isStepSkipped(1);
+  const trackersSkipped = isStepSkipped(2);
+  const fingerprintSkipped = isStepSkipped(3);
+  const accountSkipped = isStepSkipped(4);
+  const cleanupSkipped = isStepSkipped(5);
 
-  const getFingerprintLevel = (): ScoreLevel => {
-    if (results.fingerprinting.browserUnique === "no") return "good";
-    if (results.fingerprinting.browserUnique === "yes") return "critical";
-    return "unknown";
-  };
+  const publicLevel = getPublicExposureLevel(results, publicSkipped);
+  const trackersLevel = getTrackerLevel(results, trackersSkipped);
+  const fingerprintLevel = getFingerprintLevel(results, fingerprintSkipped);
+  const adSettingsLevel = getAdSettingsLevel(results, accountSkipped);
+  const cleanupLevel = getCleanupLevel(results, cleanupSkipped);
 
-  const getAdSettingsLevel = (): ScoreLevel => {
-    const googleOff = results.accountDevice.googlePersonalizedAds === "off";
-    const appleOff =
-      results.accountDevice.applePersonalizedAds === "off" ||
-      results.accountDevice.applePersonalizedAds === "not_applicable";
-    if (googleOff && appleOff) return "good";
-    if (googleOff || appleOff) return "warning";
-    return "critical";
-  };
-
-  const getCleanupLevel = (): ScoreLevel => {
-    const cookiesCleared = results.cleanup.cookiesCleared === "yes";
-    const cookiesBlocked = results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes";
-    if (cookiesCleared && cookiesBlocked) return "good";
-    if (cookiesCleared || cookiesBlocked) return "warning";
-    return "critical";
+  const getMetricStatus = (level: ScoreLevel, skipped: boolean) => {
+    if (skipped) return 'skipped';
+    if (level === 'unknown') return 'not_answered';
+    return null;
   };
 
   const getExposureValue = () => {
+    if (publicSkipped) return t.metrics.valueNA;
     const pages = results.publicExposure.searchResultPagesWithPersonalInfo;
     if (pages === 0) return t.metrics.valueLow;
-    return format(t.metrics.valuePages, { count: pages });
+    return formatPageCount(pages);
   };
 
   const getTrackerValue = () => {
+    if (trackersSkipped) return t.metrics.valueNA;
+    if (trackersLevel === 'unknown') return t.metrics.valueNotAnswered;
     const count = results.trackers.trackerCount;
-    if (count === null || count === undefined) return t.metrics.valueNA;
+    if (count === null || count === undefined) return t.metrics.valueNotAnswered;
     return formatNum(count);
   };
 
   const getFingerprintValue = () => {
-    if (results.fingerprinting.browserUnique === "yes") return t.metrics.valueUnique;
-    if (results.fingerprinting.browserUnique === "no") return t.metrics.valueNotUnique;
+    if (fingerprintSkipped) return t.metrics.valueNA;
+    if (fingerprintLevel === 'unknown') return t.metrics.valueNotAnswered;
+    if (results.fingerprinting.browserUnique === 'yes') return t.metrics.valueUnique;
+    if (results.fingerprinting.browserUnique === 'no') return t.metrics.valueNotUnique;
     return t.metrics.valueUnknown;
   };
 
   const getAdSettingsValue = () => {
-    if (results.accountDevice.googlePersonalizedAds === "off") return t.metrics.valueLimited;
-    if (results.accountDevice.googlePersonalizedAds === "on") return t.metrics.valueActive;
+    if (accountSkipped) return t.metrics.valueNA;
+    if (adSettingsLevel === 'unknown') return t.metrics.valueNotAnswered;
+
+    const values = [
+      results.accountDevice.googlePersonalizedAds,
+      results.accountDevice.applePersonalizedAds,
+      results.accountDevice.androidAdvertisingIdAction,
+      results.accountDevice.iosATTSetting,
+    ];
+
+    const hasActive =
+      results.accountDevice.googlePersonalizedAds === 'on' ||
+      results.accountDevice.applePersonalizedAds === 'on' ||
+      results.accountDevice.androidAdvertisingIdAction === 'none' ||
+      results.accountDevice.iosATTSetting === 'allow_apps_to_request';
+
+    const hasLimited =
+      results.accountDevice.googlePersonalizedAds === 'off' ||
+      results.accountDevice.googlePersonalizedAds === 'not_used' ||
+      results.accountDevice.applePersonalizedAds === 'off' ||
+      results.accountDevice.androidAdvertisingIdAction === 'deleted' ||
+      results.accountDevice.androidAdvertisingIdAction === 'reset' ||
+      results.accountDevice.iosATTSetting === 'blocked';
+
+    const allUnknownOrNA = values.every(
+      (value) => value === 'unsure' || value === 'not_applicable',
+    );
+
+    if (allUnknownOrNA) return t.metrics.valueNotAnswered;
+    if (hasActive) return t.metrics.valueActive;
+    if (hasLimited) return t.metrics.valueLimited;
     return t.metrics.valueCheckSettings;
   };
 
   const getCleanupValue = () => {
-    const cookiesCleared = results.cleanup.cookiesCleared === "yes";
-    const cookiesBlocked = results.cleanup.thirdPartyCookiesBlockedOrLimited === "yes";
+    if (cleanupSkipped) return t.metrics.valueNA;
+    const cookiesCleared = results.cleanup.cookiesCleared === 'yes';
+    const cookiesBlocked =
+      results.cleanup.thirdPartyCookiesBlockedOrLimited === 'yes' ||
+      results.cleanup.thirdPartyCookiesBlockedOrLimited === 'already_blocked';
     if (cookiesCleared && cookiesBlocked) return t.metrics.valueDone;
     if (cookiesCleared || cookiesBlocked) return t.metrics.valuePartial;
     return t.metrics.valueNotYet;
   };
 
   const getExposureExplanation = () => {
-    const level = getPublicExposureLevel();
-    if (level === "good") return t.metrics.exposureGood;
-    if (level === "warning") return t.metrics.exposureWarning;
+    if (publicSkipped) return t.metrics.skippedExplanation;
+    const level = publicLevel;
+    if (level === 'good') return t.metrics.exposureGood;
+    if (level === 'warning') return t.metrics.exposureWarning;
     return t.metrics.exposureCritical;
   };
 
   const getTrackerExplanation = () => {
-    const level = getTrackerLevel();
-    if (level === "good") return t.metrics.trackingGood;
-    if (level === "warning") return t.metrics.trackingWarning;
-    if (level === "critical") return t.metrics.trackingCritical;
+    if (trackersSkipped) return t.metrics.skippedExplanation;
+    const level = trackersLevel;
+    if (level === 'good') return t.metrics.trackingGood;
+    if (level === 'warning') return t.metrics.trackingWarning;
+    if (level === 'critical') return t.metrics.trackingCritical;
     return t.metrics.trackingUnknown;
   };
 
   const getFingerprintExplanation = () => {
-    const level = getFingerprintLevel();
-    if (level === "good") return t.metrics.fingerprintGood;
-    if (level === "critical") return t.metrics.fingerprintCritical;
+    if (fingerprintSkipped) return t.metrics.skippedExplanation;
+    const level = fingerprintLevel;
+    if (level === 'good') return t.metrics.fingerprintGood;
+    if (level === 'critical') return t.metrics.fingerprintCritical;
     return t.metrics.fingerprintUnknown;
   };
 
   const getAdSettingsExplanation = () => {
-    const level = getAdSettingsLevel();
-    if (level === "good") return t.metrics.adsGood;
-    if (level === "warning") return t.metrics.adsWarning;
+    if (accountSkipped) return t.metrics.skippedExplanation;
+    const level = adSettingsLevel;
+    if (level === 'good') return t.metrics.adsGood;
+    if (level === 'warning') return t.metrics.adsWarning;
+    if (level === 'unknown') return t.metrics.adsUnknown;
     return t.metrics.adsCritical;
   };
 
   const getCleanupExplanation = () => {
-    const level = getCleanupLevel();
-    if (level === "good") return t.metrics.cleanupGood;
-    if (level === "warning") return t.metrics.cleanupWarning;
+    if (cleanupSkipped) return t.metrics.skippedExplanation;
+    const level = cleanupLevel;
+    if (level === 'good') return t.metrics.cleanupGood;
+    if (level === 'warning') return t.metrics.cleanupWarning;
+    if (level === 'unknown') return t.metrics.cleanupUnknown;
     return t.metrics.cleanupCritical;
   };
 
@@ -202,36 +265,41 @@ export default function ReportCard() {
       icon: Shield,
       label: t.metrics.publicExposureLabel,
       value: getExposureValue(),
-      level: getPublicExposureLevel(),
+      level: publicLevel,
       explanation: getExposureExplanation(),
+      status: getMetricStatus(publicLevel, publicSkipped),
     },
     {
       icon: Eye,
       label: t.metrics.trackingIntensityLabel,
       value: getTrackerValue(),
-      level: getTrackerLevel(),
+      level: trackersLevel,
       explanation: getTrackerExplanation(),
+      status: getMetricStatus(trackersLevel, trackersSkipped),
     },
     {
       icon: Fingerprint,
       label: t.metrics.fingerprintLabel,
       value: getFingerprintValue(),
-      level: getFingerprintLevel(),
+      level: fingerprintLevel,
       explanation: getFingerprintExplanation(),
+      status: getMetricStatus(fingerprintLevel, fingerprintSkipped),
     },
     {
       icon: Settings,
       label: t.metrics.adSettingsLabel,
       value: getAdSettingsValue(),
-      level: getAdSettingsLevel(),
+      level: adSettingsLevel,
       explanation: getAdSettingsExplanation(),
+      status: getMetricStatus(adSettingsLevel, accountSkipped),
     },
     {
       icon: Trash2,
       label: t.metrics.cleanupLabel,
       value: getCleanupValue(),
-      level: getCleanupLevel(),
+      level: cleanupLevel,
       explanation: getCleanupExplanation(),
+      status: getMetricStatus(cleanupLevel, cleanupSkipped),
     },
   ];
 
@@ -240,7 +308,7 @@ export default function ReportCard() {
     if (stepKey && t.steps[stepKey]) {
       return t.steps[stepKey];
     }
-    return STEP_INFO[step]?.name ?? `Step ${step}`;
+    return format(t.common.stepNumber, { step });
   };
 
   const getSkippedStepInfo = () => {
@@ -269,35 +337,42 @@ export default function ReportCard() {
       actions.push(format(t.nextActions.skippedStep, { stepName: name }));
     });
 
-    if (getPublicExposureLevel() !== "good" && !skippedSteps.includes(1)) {
+    if (publicLevel !== 'good' && !skippedSteps.includes(1)) {
       actions.push(t.nextActions.requestGoogleRemoval);
     }
 
-    if (results.publicExposure.peopleSearchSitesFound === "yes") {
+    if (results.publicExposure.peopleSearchSitesFound === 'yes' && !skippedSteps.includes(1)) {
       actions.push(t.nextActions.optOutPeopleSearch);
     }
 
-    if ((getTrackerLevel() === "critical" || getTrackerLevel() === "warning") && !skippedSteps.includes(2)) {
+    if (
+      (trackersLevel === 'critical' || trackersLevel === 'warning') &&
+      !skippedSteps.includes(2)
+    ) {
       actions.push(t.nextActions.installContentBlocker);
     }
 
-    if (getFingerprintLevel() === "critical" && !skippedSteps.includes(3)) {
+    if (fingerprintLevel === 'critical' && !skippedSteps.includes(3)) {
       actions.push(t.nextActions.fingerprintingRisk);
     }
 
-    if (results.accountDevice.googlePersonalizedAds === "on" && !skippedSteps.includes(4)) {
+    if (results.accountDevice.googlePersonalizedAds === 'on' && !skippedSteps.includes(4)) {
       actions.push(t.nextActions.turnOffGoogleAds);
     }
 
-    if (results.cleanup.cookiesCleared === "no" && !skippedSteps.includes(5)) {
+    if (results.cleanup.cookiesCleared === 'no' && !skippedSteps.includes(5)) {
       actions.push(t.nextActions.clearCookies);
     }
 
-    if (results.cleanup.thirdPartyCookiesBlockedOrLimited === "no" && !skippedSteps.includes(5)) {
+    if (results.cleanup.thirdPartyCookiesBlockedOrLimited === 'no' && !skippedSteps.includes(5)) {
       actions.push(t.nextActions.enableCookieBlocking);
     }
 
-    if (results.cleanup.passwordHygieneActionTaken === "later" || results.cleanup.passwordHygieneActionTaken === "no") {
+    if (
+      (results.cleanup.passwordHygieneActionTaken === 'later' ||
+        results.cleanup.passwordHygieneActionTaken === 'no') &&
+      !skippedSteps.includes(5)
+    ) {
       actions.push(t.nextActions.checkHibp);
     }
 
@@ -308,43 +383,30 @@ export default function ReportCard() {
     return actions.slice(0, 7);
   };
 
-  const levelToScore = (level: ScoreLevel): number => {
-    switch (level) {
-      case "good":
-        return 100;
-      case "warning":
-        return 60;
-      case "critical":
-        return 25;
-      default:
-        return 50;
-    }
-  };
-
   const chartData = [
     {
       category: t.chartCategories.publicExposure,
-      score: levelToScore(getPublicExposureLevel()),
+      score: scoreFor(publicLevel, publicSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.trackers,
-      score: levelToScore(getTrackerLevel()),
+      score: scoreFor(trackersLevel, trackersSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.fingerprint,
-      score: levelToScore(getFingerprintLevel()),
+      score: scoreFor(fingerprintLevel, fingerprintSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.adSettings,
-      score: levelToScore(getAdSettingsLevel()),
+      score: scoreFor(adSettingsLevel, accountSkipped),
       fullMark: 100,
     },
     {
       category: t.chartCategories.cleanup,
-      score: levelToScore(getCleanupLevel()),
+      score: scoreFor(cleanupLevel, cleanupSkipped),
       fullMark: 100,
     },
   ];
@@ -352,41 +414,50 @@ export default function ReportCard() {
   const barChartData = [
     {
       name: t.chartCategories.publicExposure,
-      score: levelToScore(getPublicExposureLevel()),
-      level: getPublicExposureLevel(),
+      score: scoreFor(publicLevel, publicSkipped),
+      level: publicLevel,
+      skipped: publicSkipped,
     },
     {
       name: t.chartCategories.trackers,
-      score: levelToScore(getTrackerLevel()),
-      level: getTrackerLevel(),
+      score: scoreFor(trackersLevel, trackersSkipped),
+      level: trackersLevel,
+      skipped: trackersSkipped,
     },
     {
       name: t.chartCategories.fingerprint,
-      score: levelToScore(getFingerprintLevel()),
-      level: getFingerprintLevel(),
+      score: scoreFor(fingerprintLevel, fingerprintSkipped),
+      level: fingerprintLevel,
+      skipped: fingerprintSkipped,
     },
     {
       name: t.chartCategories.adSettings,
-      score: levelToScore(getAdSettingsLevel()),
-      level: getAdSettingsLevel(),
+      score: scoreFor(adSettingsLevel, accountSkipped),
+      level: adSettingsLevel,
+      skipped: accountSkipped,
     },
     {
       name: t.chartCategories.cleanup,
-      score: levelToScore(getCleanupLevel()),
-      level: getCleanupLevel(),
+      score: scoreFor(cleanupLevel, cleanupSkipped),
+      level: cleanupLevel,
+      skipped: cleanupSkipped,
     },
   ];
 
+  const naCategories = barChartData
+    .filter((entry) => entry.score === null)
+    .map((entry) => entry.name);
+
   const getBarColor = (level: ScoreLevel) => {
     switch (level) {
-      case "good":
-        return "hsl(142, 71%, 45%)";
-      case "warning":
-        return "hsl(38, 92%, 50%)";
-      case "critical":
-        return "hsl(0, 84%, 60%)";
+      case 'good':
+        return 'hsl(142, 71%, 45%)';
+      case 'warning':
+        return 'hsl(38, 92%, 50%)';
+      case 'critical':
+        return 'hsl(0, 84%, 60%)';
       default:
-        return "hsl(215, 14%, 65%)";
+        return 'hsl(215, 14%, 65%)';
     }
   };
 
@@ -396,11 +467,12 @@ export default function ReportCard() {
 
   const handleDownload = () => {
     const jsonString = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonString], { type: "application/json" });
+    const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
-    a.download = `footprint-audit-${new Date().toISOString().split("T")[0]}.json`;
+    const dateStamp = new Date().toISOString().split('T')[0];
+    a.download = format(t.report.downloadFilename, { date: dateStamp });
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -409,11 +481,11 @@ export default function ReportCard() {
 
   const getLevelIcon = (level: ScoreLevel) => {
     switch (level) {
-      case "good":
+      case 'good':
         return <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400" />;
-      case "warning":
+      case 'warning':
         return <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />;
-      case "critical":
+      case 'critical':
         return <XCircle className="w-5 h-5 text-red-600 dark:text-red-400" />;
       default:
         return <HelpCircle className="w-5 h-5 text-muted-foreground" />;
@@ -422,16 +494,98 @@ export default function ReportCard() {
 
   const getLevelBg = (level: ScoreLevel) => {
     switch (level) {
-      case "good":
-        return "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800";
-      case "warning":
-        return "bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800";
-      case "critical":
-        return "bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800";
+      case 'good':
+        return 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800';
+      case 'warning':
+        return 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800';
+      case 'critical':
+        return 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800';
       default:
-        return "bg-muted border-border";
+        return 'bg-muted border-border';
     }
   };
+
+  const formatPageCount = (count: number) =>
+    count >= 5 ? `${count}+` : format(t.metrics.valuePages, { count });
+
+  const displayValueNA = (skipped: boolean, value: string) =>
+    displayValue(skipped, value, t.metrics.valueNA);
+
+  const tooltipFormatter: TooltipProps<number | string, string>['formatter'] = (value) => {
+    if (value === null || value === undefined) return t.metrics.valueNA;
+    if (Array.isArray(value)) return value.join(', ');
+    return value;
+  };
+
+  const yesNoMap = {
+    yes: t.common.yes,
+    no: t.common.no,
+  };
+
+  const yesNoUnsureMap = {
+    yes: t.common.yes,
+    no: t.common.no,
+    unsure: t.common.unsure,
+  };
+
+  const googleRemovalMap = {
+    yes: t.common.yes,
+    no: t.common.no,
+    not_applicable: t.adSettings.notApplicable,
+  };
+
+  const siteCategoryMap = {
+    news: t.siteCategories.news,
+    shopping: t.siteCategories.shopping,
+    social: t.siteCategories.social,
+    health: t.siteCategories.health,
+    other: t.siteCategories.other,
+    unknown: t.common.unsure,
+  };
+
+  const trackingProtectionMap = {
+    strong: t.trackingProtection.strong,
+    partial: t.trackingProtection.partial,
+    weak: t.trackingProtection.weak,
+    unsure: t.common.unsure,
+  };
+
+  const adSettingMap = {
+    on: t.adSettings.on,
+    off: t.adSettings.off,
+    unsure: t.common.unsure,
+    not_used: t.adSettings.notUsed,
+    not_applicable: t.adSettings.notApplicable,
+  };
+
+  const androidActionMap = {
+    reset: t.androidActions.reset,
+    deleted: t.androidActions.deleted,
+    none: t.androidActions.none,
+    not_applicable: t.adSettings.notApplicable,
+    unsure: t.common.unsure,
+  };
+
+  const iosAttMap = {
+    allow_apps_to_request: t.iosAtt.allowApps,
+    blocked: t.iosAtt.blocked,
+    not_applicable: t.adSettings.notApplicable,
+    unsure: t.common.unsure,
+  };
+
+  const cookieBlockingMap = {
+    yes: t.common.yes,
+    no: t.common.no,
+    unsure: t.common.unsure,
+    already_blocked: t.cleanupActions.alreadyBlocked,
+  };
+
+  const passwordHygieneMap = {
+    yes: t.common.yes,
+    no: t.common.no,
+    later: t.cleanupActions.later,
+  };
+  const summaryPrefix = t.report.summaryPrefix;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
@@ -441,16 +595,20 @@ export default function ReportCard() {
             <Sparkles className="w-3 h-3 mr-1" />
             {t.report.auditComplete}
           </Badge>
-          <h1 className="text-4xl font-bold font-serif text-foreground print:text-2xl">{t.report.title}</h1>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-            {t.report.subtitle}
-          </p>
+          <h1 className="text-4xl font-bold font-serif text-foreground print:text-2xl">
+            {t.report.title}
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto">{t.report.subtitle}</p>
           <p className="text-xs text-muted-foreground hidden print:block">
-            {t.printInfo.generated}: {formatDateLocale(new Date())} | {t.printInfo.dataStoredLocally}
+            {t.printInfo.generated}: {formatDateLocale(new Date())} |{' '}
+            {t.printInfo.dataStoredLocally}
           </p>
         </div>
 
-        <div className="rounded-md bg-muted/50 p-4 text-sm text-muted-foreground space-y-2 print:bg-transparent print:border print:border-border" data-testid="report-disclaimer">
+        <div
+          className="rounded-md bg-muted/50 p-4 text-sm text-muted-foreground space-y-2 print:bg-transparent print:border print:border-border"
+          data-testid="report-disclaimer"
+        >
           <p className="font-medium text-foreground">{t.report.realityCheck}</p>
           <ul className="list-disc list-inside space-y-1 text-xs">
             <li>{t.realityCheckItems.snapshot}</li>
@@ -467,14 +625,31 @@ export default function ReportCard() {
           {metrics.map((metric) => (
             <Card
               key={metric.label}
-              className={cn("border", getLevelBg(metric.level))}
-              data-testid={`metric-${metric.label.toLowerCase().replace(/\s+/g, "-")}`}
+              className={cn('border', getLevelBg(metric.level))}
+              data-testid={`metric-${metric.label.toLowerCase().replace(/\s+/g, '-')}`}
             >
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0">{getLevelIcon(metric.level)}</div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-muted-foreground">{metric.label}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm font-medium text-muted-foreground">{metric.label}</p>
+                      {metric.status && (
+                        <UiTooltip>
+                          <TooltipTrigger asChild>
+                            <Badge
+                              variant="outline"
+                              className="border-dashed text-xs text-muted-foreground"
+                            >
+                              {metric.status === 'skipped'
+                                ? t.metrics.statusSkipped
+                                : t.metrics.statusNotAnswered}
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent>{t.metrics.statusTooltipNA}</TooltipContent>
+                        </UiTooltip>
+                      )}
+                    </div>
                     <p className="text-2xl font-bold text-foreground mt-1">{metric.value}</p>
                     <p className="text-sm text-muted-foreground mt-2">{metric.explanation}</p>
                   </div>
@@ -491,18 +666,20 @@ export default function ReportCard() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="h-64">
-                <p className="text-sm text-muted-foreground mb-2 text-center">{t.charts.radarView}</p>
+                <p className="text-sm text-muted-foreground mb-2 text-center">
+                  {t.charts.radarView}
+                </p>
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="70%" data={chartData}>
                     <PolarGrid stroke="hsl(var(--border))" />
                     <PolarAngleAxis
                       dataKey="category"
-                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
                     />
                     <PolarRadiusAxis
                       angle={30}
                       domain={[0, 100]}
-                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 10 }}
+                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
                     />
                     <Radar
                       name={t.charts.privacyScore}
@@ -515,23 +692,26 @@ export default function ReportCard() {
                 </ResponsiveContainer>
               </div>
               <div className="h-64">
-                <p className="text-sm text-muted-foreground mb-2 text-center">{t.charts.scoreComparison}</p>
+                <p className="text-sm text-muted-foreground mb-2 text-center">
+                  {t.charts.scoreComparison}
+                </p>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={barChartData} layout="vertical">
                     <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10 }} />
                     <YAxis
                       type="category"
                       dataKey="name"
-                      tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }}
+                      tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
                       width={70}
                     />
-                    <Tooltip
+                    <RechartsTooltip
                       contentStyle={{
-                        backgroundColor: "hsl(var(--card))",
-                        border: "1px solid hsl(var(--border))",
-                        borderRadius: "6px",
+                        backgroundColor: 'hsl(var(--card))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '6px',
                       }}
-                      labelStyle={{ color: "hsl(var(--foreground))" }}
+                      labelStyle={{ color: 'hsl(var(--foreground))' }}
+                      formatter={tooltipFormatter}
                     />
                     <Bar dataKey="score" radius={[0, 4, 4, 0]}>
                       {barChartData.map((entry, index) => (
@@ -545,44 +725,97 @@ export default function ReportCard() {
             <div className="flex items-center justify-center gap-6 mt-4 text-xs">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-green-500" />
-                <span className="text-muted-foreground">Good (100)</span>
+                <span className="text-muted-foreground">{t.charts.legendGood}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-amber-500" />
-                <span className="text-muted-foreground">Warning (60)</span>
+                <span className="text-muted-foreground">{t.charts.legendWarning}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-red-500" />
-                <span className="text-muted-foreground">Critical (25)</span>
+                <span className="text-muted-foreground">{t.charts.legendCritical}</span>
               </div>
             </div>
+            {naCategories.length > 0 && (
+              <div className="mt-3 text-xs text-muted-foreground space-y-2">
+                <div className="flex items-center justify-center gap-2">
+                  <Badge variant="outline" className="border-dashed text-xs text-muted-foreground">
+                    {t.metrics.statusNA}
+                  </Badge>
+                  <span>{t.metrics.statusTooltipNA}</span>
+                </div>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {naCategories.map((name) => (
+                    <Badge key={name} variant="secondary" className="text-xs">
+                      {name}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl font-serif">What This Means</CardTitle>
+            <CardTitle className="text-xl font-serif">{t.report.whatThisMeans}</CardTitle>
           </CardHeader>
           <CardContent>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="public">
                 <AccordionTrigger>{t.report.publicExposureDetails}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
-                  <p>
-                    You found <strong>{results.publicExposure.searchResultPagesWithPersonalInfo}</strong>{" "}
-                    page(s) with personal info.
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">{summaryPrefix}</span>{' '}
+                    {getExposureExplanation()}
                   </p>
                   <p>
-                    People-search sites found:{" "}
-                    <strong>{results.publicExposure.peopleSearchSitesFound}</strong>
+                    {t.publicExposure.searchPagesQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        publicSkipped,
+                        formatPageCount(results.publicExposure.searchResultPagesWithPersonalInfo),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Google Results About You visited:{" "}
-                    <strong>{results.publicExposure.googleResultsAboutYouVisited}</strong>
+                    {t.publicExposure.peopleSearchQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        publicSkipped,
+                        formatMappedValue(
+                          results.publicExposure.peopleSearchSitesFound,
+                          yesNoUnsureMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Removal requested:{" "}
-                    <strong>{results.publicExposure.googleRemovalRequested}</strong>
+                    {t.publicExposure.googleVisitedQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        publicSkipped,
+                        formatMappedValue(
+                          results.publicExposure.googleResultsAboutYouVisited,
+                          yesNoMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
+                  </p>
+                  <p>
+                    {t.publicExposure.removalRequestedQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        publicSkipped,
+                        formatMappedValue(
+                          results.publicExposure.googleRemovalRequested,
+                          googleRemovalMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -590,23 +823,86 @@ export default function ReportCard() {
               <AccordionItem value="trackers">
                 <AccordionTrigger>{t.report.trackerAnalysis}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
-                  <p>
-                    Blacklight scan run: <strong>{results.trackers.blacklightRun}</strong>
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">{summaryPrefix}</span>{' '}
+                    {getTrackerExplanation()}
                   </p>
                   <p>
-                    Site category: <strong>{results.trackers.siteCategoryScanned}</strong>
+                    {t.trackers.blacklightRunQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        trackersSkipped,
+                        formatMappedValue(
+                          results.trackers.blacklightRun,
+                          yesNoMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Trackers detected: <strong>{results.trackers.trackerCount ?? "N/A"}</strong>
+                    {t.trackers.siteCategoryQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        trackersSkipped,
+                        formatMappedValue(
+                          results.trackers.siteCategoryScanned,
+                          siteCategoryMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Session recording: <strong>{results.trackers.sessionRecordingFlagged}</strong>
+                    {t.trackers.trackerCountQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        trackersSkipped,
+                        results.trackers.trackerCount === null ||
+                          results.trackers.trackerCount === undefined
+                          ? t.metrics.valueNotAnswered
+                          : formatNum(results.trackers.trackerCount),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Key logging: <strong>{results.trackers.keyLoggingFlagged}</strong>
+                    {t.trackers.sessionRecordingQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        trackersSkipped,
+                        formatMappedValue(
+                          results.trackers.sessionRecordingFlagged,
+                          yesNoUnsureMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Fingerprinting: <strong>{results.trackers.fingerprintingFlagged}</strong>
+                    {t.trackers.keyLoggingQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        trackersSkipped,
+                        formatMappedValue(
+                          results.trackers.keyLoggingFlagged,
+                          yesNoUnsureMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
+                  </p>
+                  <p>
+                    {t.trackers.fingerprintingQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        trackersSkipped,
+                        formatMappedValue(
+                          results.trackers.fingerprintingFlagged,
+                          yesNoUnsureMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -614,15 +910,48 @@ export default function ReportCard() {
               <AccordionItem value="fingerprint">
                 <AccordionTrigger>{t.report.fingerprintDetails}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
-                  <p>
-                    EFF test completed: <strong>{results.fingerprinting.effTestRun}</strong>
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">{summaryPrefix}</span>{' '}
+                    {getFingerprintExplanation()}
                   </p>
                   <p>
-                    Browser unique: <strong>{results.fingerprinting.browserUnique}</strong>
+                    {t.fingerprinting.effRunQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        fingerprintSkipped,
+                        formatMappedValue(
+                          results.fingerprinting.effTestRun,
+                          yesNoMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Tracking protection:{" "}
-                    <strong>{results.fingerprinting.trackingProtection}</strong>
+                    {t.fingerprinting.browserUniqueQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        fingerprintSkipped,
+                        formatMappedValue(
+                          results.fingerprinting.browserUnique,
+                          yesNoUnsureMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
+                  </p>
+                  <p>
+                    {t.fingerprinting.trackingProtectionQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        fingerprintSkipped,
+                        formatMappedValue(
+                          results.fingerprinting.trackingProtection,
+                          trackingProtectionMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -630,21 +959,61 @@ export default function ReportCard() {
               <AccordionItem value="account">
                 <AccordionTrigger>{t.report.accountSettings}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
-                  <p>
-                    Google personalized ads:{" "}
-                    <strong>{results.accountDevice.googlePersonalizedAds}</strong>
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">{summaryPrefix}</span>{' '}
+                    {getAdSettingsExplanation()}
                   </p>
                   <p>
-                    Apple personalized ads:{" "}
-                    <strong>{results.accountDevice.applePersonalizedAds}</strong>
+                    {t.accountDevice.googleAdsQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        accountSkipped,
+                        formatMappedValue(
+                          results.accountDevice.googlePersonalizedAds,
+                          adSettingMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Android advertising ID action:{" "}
-                    <strong>{results.accountDevice.androidAdvertisingIdAction}</strong>
+                    {t.accountDevice.appleAdsQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        accountSkipped,
+                        formatMappedValue(
+                          results.accountDevice.applePersonalizedAds,
+                          adSettingMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    iOS App Tracking Transparency:{" "}
-                    <strong>{results.accountDevice.iosATTSetting}</strong>
+                    {t.accountDevice.androidIdQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        accountSkipped,
+                        formatMappedValue(
+                          results.accountDevice.androidAdvertisingIdAction,
+                          androidActionMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
+                  </p>
+                  <p>
+                    {t.accountDevice.iosAttQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        accountSkipped,
+                        formatMappedValue(
+                          results.accountDevice.iosATTSetting,
+                          iosAttMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -652,16 +1021,48 @@ export default function ReportCard() {
               <AccordionItem value="cleanup">
                 <AccordionTrigger>{t.report.cleanupActions}</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-2">
-                  <p>
-                    Cookies cleared: <strong>{results.cleanup.cookiesCleared}</strong>
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium text-foreground">{summaryPrefix}</span>{' '}
+                    {getCleanupExplanation()}
                   </p>
                   <p>
-                    Third-party cookies blocked:{" "}
-                    <strong>{results.cleanup.thirdPartyCookiesBlockedOrLimited}</strong>
+                    {t.cleanup.cookiesClearedQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        cleanupSkipped,
+                        formatMappedValue(
+                          results.cleanup.cookiesCleared,
+                          yesNoMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                   <p>
-                    Password hygiene action:{" "}
-                    <strong>{results.cleanup.passwordHygieneActionTaken}</strong>
+                    {t.cleanup.cookiesBlockedQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        cleanupSkipped,
+                        formatMappedValue(
+                          results.cleanup.thirdPartyCookiesBlockedOrLimited,
+                          cookieBlockingMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
+                  </p>
+                  <p>
+                    {t.cleanup.passwordHygieneQuestion}:{' '}
+                    <strong>
+                      {displayValueNA(
+                        cleanupSkipped,
+                        formatMappedValue(
+                          results.cleanup.passwordHygieneActionTaken,
+                          passwordHygieneMap,
+                          t.metrics.valueNotAnswered,
+                        ),
+                      )}
+                    </strong>
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -670,7 +1071,10 @@ export default function ReportCard() {
         </Card>
 
         {skippedSteps.length > 0 && (
-          <Card className="border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20" data-testid="card-skipped-items">
+          <Card
+            className="border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20"
+            data-testid="card-skipped-items"
+          >
             <CardHeader>
               <CardTitle className="text-xl font-serif flex items-center gap-2">
                 <SkipForward className="w-5 h-5 text-amber-600 dark:text-amber-400" />
@@ -678,12 +1082,13 @@ export default function ReportCard() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                {t.skippedSections.description}
-              </p>
+              <p className="text-sm text-muted-foreground mb-4">{t.skippedSections.description}</p>
               <div className="space-y-4">
                 {getSkippedStepInfo().map(({ step, name, links }) => (
-                  <div key={step} className="border-b border-amber-200/50 dark:border-amber-800/50 pb-3 last:border-0 last:pb-0">
+                  <div
+                    key={step}
+                    className="border-b border-amber-200/50 dark:border-amber-800/50 pb-3 last:border-0 last:pb-0"
+                  >
                     <p className="font-medium text-foreground mb-2">{name}</p>
                     {links.length > 0 && (
                       <div className="flex flex-wrap gap-2">
@@ -694,7 +1099,7 @@ export default function ReportCard() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-                            data-testid={`link-skipped-${step}-${link.name.toLowerCase().replace(/\s+/g, "-")}`}
+                            data-testid={`link-skipped-${step}-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
                           >
                             <ExternalLink className="w-3 h-3" />
                             {link.name}
@@ -731,6 +1136,8 @@ export default function ReportCard() {
         </Card>
 
         <Separator />
+
+        <p className="text-sm text-muted-foreground text-center">{t.report.saveExportCallout}</p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button variant="outline" onClick={handlePrint} data-testid="button-print">

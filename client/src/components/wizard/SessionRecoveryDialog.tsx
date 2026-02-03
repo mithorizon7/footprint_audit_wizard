@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { AlertTriangle, Clock, RotateCcw, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { AlertTriangle, Clock, RotateCcw, Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -8,24 +8,23 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { STEP_INFO } from "@shared/schema";
+} from '@/components/ui/dialog';
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { STEP_INFO } from '@shared/schema';
+import { formatRelativeTime } from '@/lib/formatters';
 
 export function SessionRecoveryDialog() {
   const { data, resetWizard, goToStep } = useWizard();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (checked) return;
-    
+
     const hasIncompleteSession =
-      data.startedAt !== null &&
-      data.completedAt === null &&
-      data.currentStep > 0;
+      data.startedAt !== null && data.completedAt === null && data.currentStep > 0;
 
     if (hasIncompleteSession) {
       setOpen(true);
@@ -34,19 +33,17 @@ export function SessionRecoveryDialog() {
   }, [data.startedAt, data.completedAt, data.currentStep, checked]);
 
   const getTimeElapsed = () => {
-    if (!data.startedAt) return "Unknown";
+    if (!data.startedAt) return t.common.unknown;
     const startTime = new Date(data.startedAt).getTime();
-    const elapsed = Math.floor((Date.now() - startTime) / 60000);
-    if (elapsed < 60) return `${elapsed} minutes ago`;
-    const hours = Math.floor(elapsed / 60);
-    if (hours < 24) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-    const days = Math.floor(hours / 24);
-    return `${days} day${days > 1 ? "s" : ""} ago`;
+    const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+    return formatRelativeTime(-elapsedSeconds, locale);
   };
 
   const getCurrentStepName = () => {
     const stepInfo = STEP_INFO[data.currentStep];
-    return stepInfo?.name || "Unknown Step";
+    if (!stepInfo) return t.sessionRecovery.unknownStep;
+    const stepKey = stepInfo.key as keyof typeof t.steps;
+    return t.steps[stepKey] || t.sessionRecovery.unknownStep;
   };
 
   const handleResume = () => {
@@ -72,17 +69,19 @@ export function SessionRecoveryDialog() {
             <DialogTitle className="text-xl">{t.sessionRecovery.title}</DialogTitle>
           </div>
           <DialogDescription className="text-left space-y-3">
-            <p>
-              {t.sessionRecovery.description}
-            </p>
+            <p>{t.sessionRecovery.description}</p>
             <div className="bg-muted rounded-md p-3 space-y-2">
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4 text-muted-foreground" />
-                <span>{t.sessionRecovery.started} {getTimeElapsed()}</span>
+                <span>
+                  {t.sessionRecovery.started} {getTimeElapsed()}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <RotateCcw className="w-4 h-4 text-muted-foreground" />
-                <span>{t.sessionRecovery.lastStep} {getCurrentStepName()}</span>
+                <span>
+                  {t.sessionRecovery.lastStep} {getCurrentStepName()}
+                </span>
               </div>
             </div>
           </DialogDescription>

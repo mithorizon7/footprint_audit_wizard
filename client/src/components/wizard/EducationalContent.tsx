@@ -1,25 +1,7 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-
-interface EducationalSectionProps {
-  title: string;
-  children: React.ReactNode;
-}
-
-function EducationalSection({ title, children }: EducationalSectionProps) {
-  return (
-    <div className="mb-6">
-      <h4 className="text-base font-semibold text-foreground mb-3">{title}</h4>
-      {children}
-    </div>
-  );
-}
+import { useState } from 'react';
+import { ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 interface EducationalContentProps {
   sectionTitle: string;
@@ -44,9 +26,7 @@ export function EducationalContent({
           >
             <div className="flex items-center gap-3">
               <BookOpen className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium text-foreground">
-                {sectionTitle}
-              </span>
+              <span className="text-sm font-medium text-foreground">{sectionTitle}</span>
             </div>
             {isOpen ? (
               <ChevronUp className="w-4 h-4 text-muted-foreground" />
@@ -79,16 +59,46 @@ export function BulletList({ items }: BulletListProps) {
   );
 }
 
+interface SourceLink {
+  label: string;
+  url: string;
+}
+
+interface SourcesListProps {
+  title: string;
+  sources: SourceLink[];
+}
+
+export function SourcesList({ title, sources }: SourcesListProps) {
+  if (!sources.length) return null;
+
+  return (
+    <div className="pt-2">
+      <SectionTitle>{title}</SectionTitle>
+      <ul className="list-disc list-outside ml-5 space-y-2">
+        {sources.map((source) => (
+          <li key={source.url}>
+            <a
+              href={source.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              {source.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 interface HighlightBoxProps {
   children: React.ReactNode;
 }
 
 export function HighlightBox({ children }: HighlightBoxProps) {
-  return (
-    <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
-      {children}
-    </div>
-  );
+  return <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">{children}</div>;
 }
 
 export function Paragraph({ children }: { children: React.ReactNode }) {
@@ -96,11 +106,7 @@ export function Paragraph({ children }: { children: React.ReactNode }) {
 }
 
 export function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h4 className="text-base font-semibold text-foreground mt-6 mb-3">
-      {children}
-    </h4>
-  );
+  return <h4 className="text-base font-semibold text-foreground mt-6 mb-3">{children}</h4>;
 }
 
 // Step-specific educational content components
@@ -119,6 +125,8 @@ interface PublicExposureEducationalProps {
     meaningParagraph: string;
     meaningList: string[];
     activityPreview: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -141,6 +149,8 @@ export function PublicExposureEducational({ content }: PublicExposureEducational
       <HighlightBox>
         <Paragraph>{content.activityPreview}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -166,6 +176,8 @@ interface TrackersEducationalProps {
     beyondAdsParagraph: string;
     beyondAdsList: string[];
     activityPreview: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -191,7 +203,9 @@ export function TrackersEducational({ content }: TrackersEducationalProps) {
       <div className="space-y-4 mt-4">
         {trackingTypesList.map((type, index) => (
           <div key={index} className="border-l-2 border-muted-foreground/20 pl-4">
-            <p className="font-medium text-foreground">{index + 1}. {type.title}</p>
+            <p className="font-medium text-foreground">
+              {index + 1}. {type.title}
+            </p>
             <p className="text-sm text-muted-foreground mt-1">{type.description}</p>
           </div>
         ))}
@@ -204,6 +218,8 @@ export function TrackersEducational({ content }: TrackersEducationalProps) {
       <HighlightBox>
         <Paragraph>{content.activityPreview}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -222,6 +238,8 @@ interface FingerprintingEducationalProps {
     privateBrowsingParagraph1: string;
     privateBrowsingParagraph2: string;
     activityPreview: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -245,6 +263,8 @@ export function FingerprintingEducational({ content }: FingerprintingEducational
       <HighlightBox>
         <Paragraph>{content.activityPreview}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -265,6 +285,8 @@ interface AccountDeviceEducationalProps {
     activityPreviewTitle: string;
     activityPreviewList: string[];
     activityPreviewConclusion: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -291,6 +313,8 @@ export function AccountDeviceEducational({ content }: AccountDeviceEducationalPr
       <HighlightBox>
         <Paragraph>{content.activityPreviewConclusion}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }
@@ -314,6 +338,8 @@ interface CleanupEducationalProps {
     activityPreviewTitle: string;
     activityPreviewList: string[];
     activityPreviewConclusion: string;
+    sourcesTitle: string;
+    sources: SourceLink[];
   };
 }
 
@@ -343,6 +369,8 @@ export function CleanupEducational({ content }: CleanupEducationalProps) {
       <HighlightBox>
         <Paragraph>{content.activityPreviewConclusion}</Paragraph>
       </HighlightBox>
+
+      <SourcesList title={content.sourcesTitle} sources={content.sources} />
     </EducationalContent>
   );
 }

@@ -1,15 +1,15 @@
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { StepCard } from "@/components/wizard/StepCard";
-import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
-import { InstructionBlock } from "@/components/wizard/InstructionBlock";
-import { NumberStepper } from "@/components/wizard/NumberStepper";
-import { RadioPills } from "@/components/wizard/RadioPills";
-import { StepNavigation } from "@/components/wizard/StepNavigation";
-import { PublicExposureEducational } from "@/components/wizard/EducationalContent";
-import { Search, FileText, Shield } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import type { YesNoUnsure, YesNo } from "@shared/schema";
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { StepCard } from '@/components/wizard/StepCard';
+import { ExternalLinkCard } from '@/components/wizard/ExternalLinkCard';
+import { InstructionBlock } from '@/components/wizard/InstructionBlock';
+import { NumberStepper } from '@/components/wizard/NumberStepper';
+import { RadioPills } from '@/components/wizard/RadioPills';
+import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { PublicExposureEducational } from '@/components/wizard/EducationalContent';
+import { Search, FileText, Shield } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import type { YesNoUnsure, YesNo } from '@shared/schema';
 
 export default function PublicExposure() {
   const { data, updateResults, isFictional, tryLiveTools } = useWizard();
@@ -23,7 +23,9 @@ export default function PublicExposure() {
         stepNumber={1}
         title={t.publicExposure.title}
         concept={t.publicExposure.concept}
+        outcomePreview={t.publicExposure.outcomePreview}
         whyItMatters={t.publicExposure.whyItMatters}
+        pitfalls={t.publicExposure.pitfalls}
       >
         <PublicExposureEducational content={t.publicExposure.educationalContent} />
 
@@ -77,21 +79,26 @@ export default function PublicExposure() {
 
           <NumberStepper
             value={results.searchResultPagesWithPersonalInfo}
-            onChange={(v) => updateResults("publicExposure", { searchResultPagesWithPersonalInfo: v })}
+            onChange={(v) =>
+              updateResults('publicExposure', { searchResultPagesWithPersonalInfo: v })
+            }
             min={0}
             max={5}
             label={t.publicExposure.searchPagesQuestion}
             helperText={t.publicExposure.searchPagesHelper}
+            showPlusAtMax
             testId="input-search-pages"
           />
 
           <RadioPills
             value={results.peopleSearchSitesFound}
-            onChange={(v: YesNoUnsure) => updateResults("publicExposure", { peopleSearchSitesFound: v })}
+            onChange={(v: YesNoUnsure) =>
+              updateResults('publicExposure', { peopleSearchSitesFound: v })
+            }
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "unsure", label: t.common.unsure },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'unsure', label: t.common.unsure },
             ]}
             label={t.publicExposure.peopleSearchQuestion}
             testId="input-people-search"
@@ -99,10 +106,12 @@ export default function PublicExposure() {
 
           <RadioPills
             value={results.googleResultsAboutYouVisited}
-            onChange={(v: YesNo) => updateResults("publicExposure", { googleResultsAboutYouVisited: v })}
+            onChange={(v: YesNo) =>
+              updateResults('publicExposure', { googleResultsAboutYouVisited: v })
+            }
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
             ]}
             label={t.publicExposure.googleVisitedQuestion}
             testId="input-google-visited"
@@ -111,14 +120,14 @@ export default function PublicExposure() {
           <RadioPills
             value={results.googleRemovalRequested}
             onChange={(v) =>
-              updateResults("publicExposure", {
-                googleRemovalRequested: v as "yes" | "no" | "not_applicable",
+              updateResults('publicExposure', {
+                googleRemovalRequested: v as 'yes' | 'no' | 'not_applicable',
               })
             }
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "not_applicable", label: t.adSettings.notApplicable },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'not_applicable', label: t.adSettings.notApplicable },
             ]}
             label={t.publicExposure.removalRequestedQuestion}
             testId="input-removal-requested"

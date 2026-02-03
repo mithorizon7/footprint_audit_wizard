@@ -1,4 +1,4 @@
-import { createContext, useContext, useCallback, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useCallback, useState, useEffect, type ReactNode } from 'react';
 import {
   WizardData,
   WizardResults,
@@ -7,14 +7,14 @@ import {
   TOTAL_DURATION_MINUTES,
   type Mode,
   type DeviceInfo,
-} from "@shared/schema";
+} from '@shared/schema';
 import {
   getWizardData,
   saveWizardData,
   clearWizardData,
   createInitialWizardData,
   detectDevice,
-} from "@/lib/wizardStorage";
+} from '@/lib/wizardStorage';
 
 interface WizardContextType {
   data: WizardData;
@@ -30,7 +30,7 @@ interface WizardContextType {
   setDevice: (device: Partial<DeviceInfo>) => void;
   updateResults: <K extends keyof WizardResults>(
     section: K,
-    updates: Partial<WizardResults[K]>
+    updates: Partial<WizardResults[K]>,
   ) => void;
   goToStep: (step: number) => void;
   nextStep: () => void;
@@ -87,13 +87,13 @@ export function WizardProvider({ children }: { children: ReactNode }) {
   }, [elapsedSeconds]);
 
   const setMode = useCallback((mode: Mode) => {
-    if (mode === "fictional") {
+    if (mode === 'fictional') {
       setData({ ...FICTIONAL_DATA, currentStep: 0, startedAt: null, completedAt: null });
     } else {
       setData((prev) => ({
         ...createInitialWizardData(),
         device: prev.device,
-        mode: "self",
+        mode: 'self',
       }));
     }
   }, []);
@@ -113,22 +113,34 @@ export function WizardProvider({ children }: { children: ReactNode }) {
           ...prev.results,
           [section]: { ...prev.results[section], ...updates },
         },
+        skippedSteps: prev.skippedSteps.filter((step) => step !== prev.currentStep),
       }));
     },
-    []
+    [],
   );
 
   const goToStep = useCallback((step: number) => {
     const maxStep = STEP_INFO.length - 1;
     const clampedStep = Math.max(0, Math.min(step, maxStep));
-    setData((prev) => ({ ...prev, currentStep: clampedStep }));
+    setData((prev) => ({
+      ...prev,
+      currentStep: clampedStep,
+      completedAt:
+        clampedStep === maxStep ? (prev.completedAt ?? new Date().toISOString()) : prev.completedAt,
+    }));
   }, []);
 
   const nextStep = useCallback(() => {
-    setData((prev) => ({
-      ...prev,
-      currentStep: Math.min(prev.currentStep + 1, STEP_INFO.length - 1),
-    }));
+    setData((prev) => {
+      const maxStep = STEP_INFO.length - 1;
+      const next = Math.min(prev.currentStep + 1, maxStep);
+      return {
+        ...prev,
+        currentStep: next,
+        completedAt:
+          next === maxStep ? (prev.completedAt ?? new Date().toISOString()) : prev.completedAt,
+      };
+    });
   }, []);
 
   const prevStep = useCallback(() => {
@@ -143,10 +155,14 @@ export function WizardProvider({ children }: { children: ReactNode }) {
       const newSkippedSteps = prev.skippedSteps.includes(prev.currentStep)
         ? prev.skippedSteps
         : [...prev.skippedSteps, prev.currentStep];
+      const maxStep = STEP_INFO.length - 1;
+      const next = Math.min(prev.currentStep + 1, maxStep);
       return {
         ...prev,
         skippedSteps: newSkippedSteps,
-        currentStep: Math.min(prev.currentStep + 1, STEP_INFO.length - 1),
+        currentStep: next,
+        completedAt:
+          next === maxStep ? (prev.completedAt ?? new Date().toISOString()) : prev.completedAt,
       };
     });
   }, []);
@@ -157,7 +173,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
 
   const isStepSkipped = useCallback(
     (step: number) => data.skippedSteps.includes(step),
-    [data.skippedSteps]
+    [data.skippedSteps],
   );
 
   const currentStepTargetMinutes = STEP_INFO[data.currentStep]?.duration ?? 10;
@@ -176,9 +192,16 @@ export function WizardProvider({ children }: { children: ReactNode }) {
       startedAt: new Date().toISOString(),
       currentStep: 1,
       device: {
-        type: detectedDevice.type as "desktop" | "mobile" | "unknown",
-        os: detectedDevice.os as DeviceInfo["os"],
-        browser: detectedDevice.browser as DeviceInfo["browser"],
+        type:
+          prev.device.type !== 'unknown'
+            ? prev.device.type
+            : (detectedDevice.type as 'desktop' | 'mobile' | 'unknown'),
+        os: prev.device.os !== 'unknown' ? prev.device.os : (detectedDevice.os as DeviceInfo['os']),
+        browser:
+          prev.device.browser !== 'unknown'
+            ? prev.device.browser
+            : (detectedDevice.browser as DeviceInfo['browser']),
+        mobilePlatformSelection: prev.device.mobilePlatformSelection ?? 'unsure',
       },
     }));
   }, []);
@@ -197,7 +220,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
         data,
         mode: data.mode,
         currentStep: data.currentStep,
-        isFictional: data.mode === "fictional",
+        isFictional: data.mode === 'fictional',
         timeRemaining,
         elapsedSeconds,
         currentStepTargetMinutes,
@@ -225,7 +248,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
 export function useWizard() {
   const context = useContext(WizardContext);
   if (!context) {
-    throw new Error("useWizard must be used within a WizardProvider");
+    throw new Error('useWizard must be used within a WizardProvider');
   }
   return context;
 }

@@ -1,16 +1,15 @@
-import { useWizard } from "@/context/WizardContext";
-import { useI18n } from "@/context/I18nContext";
-import { StepCard } from "@/components/wizard/StepCard";
-import { ExternalLinkCard } from "@/components/wizard/ExternalLinkCard";
-import { InstructionBlock } from "@/components/wizard/InstructionBlock";
-import { NumberStepper } from "@/components/wizard/NumberStepper";
-import { RadioPills } from "@/components/wizard/RadioPills";
-import { StepNavigation } from "@/components/wizard/StepNavigation";
-import { ToolFallbackBlock } from "@/components/wizard/ToolFallbackBlock";
-import { TrackersEducational } from "@/components/wizard/EducationalContent";
-import { Eye, FileText } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import type { YesNo, YesNoUnsure, SiteCategory } from "@shared/schema";
+import { useWizard } from '@/context/WizardContext';
+import { useI18n } from '@/context/I18nContext';
+import { StepCard } from '@/components/wizard/StepCard';
+import { ExternalLinkCard } from '@/components/wizard/ExternalLinkCard';
+import { InstructionBlock } from '@/components/wizard/InstructionBlock';
+import { NumberStepper } from '@/components/wizard/NumberStepper';
+import { RadioPills } from '@/components/wizard/RadioPills';
+import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { TrackersEducational } from '@/components/wizard/EducationalContent';
+import { Eye, FileText } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
+import type { YesNo, YesNoUnsure, SiteCategory } from '@shared/schema';
 
 export default function Trackers() {
   const { data, updateResults, isFictional, tryLiveTools } = useWizard();
@@ -24,7 +23,9 @@ export default function Trackers() {
         stepNumber={2}
         title={t.trackers.title}
         concept={t.trackers.concept}
+        outcomePreview={t.trackers.outcomePreview}
         whyItMatters={t.trackers.whyItMatters}
+        pitfalls={t.trackers.pitfalls}
       >
         <TrackersEducational content={t.trackers.educationalContent} />
 
@@ -49,10 +50,7 @@ export default function Trackers() {
               icon={<Eye className="w-5 h-5" />}
               testId="link-blacklight"
             />
-            <p className="text-sm text-muted-foreground">
-              {t.trackers.blacklightTip}
-            </p>
-            <ToolFallbackBlock />
+            <p className="text-sm text-muted-foreground">{t.trackers.blacklightTip}</p>
           </div>
         )}
 
@@ -66,10 +64,10 @@ export default function Trackers() {
 
           <RadioPills
             value={results.blacklightRun}
-            onChange={(v: YesNo) => updateResults("trackers", { blacklightRun: v })}
+            onChange={(v: YesNo) => updateResults('trackers', { blacklightRun: v })}
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
             ]}
             label={t.trackers.blacklightRunQuestion}
             testId="input-blacklight-run"
@@ -77,35 +75,39 @@ export default function Trackers() {
 
           <RadioPills
             value={results.siteCategoryScanned}
-            onChange={(v: SiteCategory) => updateResults("trackers", { siteCategoryScanned: v })}
+            onChange={(v: SiteCategory) => updateResults('trackers', { siteCategoryScanned: v })}
             options={[
-              { value: "news", label: t.siteCategories.news },
-              { value: "shopping", label: t.siteCategories.shopping },
-              { value: "social", label: t.siteCategories.social },
-              { value: "health", label: t.siteCategories.health },
-              { value: "other", label: t.siteCategories.other },
+              { value: 'news', label: t.siteCategories.news },
+              { value: 'shopping', label: t.siteCategories.shopping },
+              { value: 'social', label: t.siteCategories.social },
+              { value: 'health', label: t.siteCategories.health },
+              { value: 'other', label: t.siteCategories.other },
             ]}
             label={t.trackers.siteCategoryQuestion}
             testId="input-site-category"
           />
 
           <NumberStepper
-            value={results.trackerCount ?? 0}
-            onChange={(v) => updateResults("trackers", { trackerCount: v })}
+            value={results.trackerCount}
+            onChange={(v) => updateResults('trackers', { trackerCount: v })}
             min={0}
             max={100}
             label={t.trackers.trackerCountQuestion}
             helperText={t.trackers.trackerCountHelper}
+            emptyLabel={t.metrics.valueNotAnswered}
+            showPlusAtMax={false}
             testId="input-tracker-count"
           />
 
           <RadioPills
             value={results.thirdPartyCookiesFlagged}
-            onChange={(v: YesNoUnsure) => updateResults("trackers", { thirdPartyCookiesFlagged: v })}
+            onChange={(v: YesNoUnsure) =>
+              updateResults('trackers', { thirdPartyCookiesFlagged: v })
+            }
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "unsure", label: t.common.unsure },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'unsure', label: t.common.unsure },
             ]}
             label={t.trackers.cookiesFlaggedQuestion}
             testId="input-cookies-flagged"
@@ -113,11 +115,11 @@ export default function Trackers() {
 
           <RadioPills
             value={results.sessionRecordingFlagged}
-            onChange={(v: YesNoUnsure) => updateResults("trackers", { sessionRecordingFlagged: v })}
+            onChange={(v: YesNoUnsure) => updateResults('trackers', { sessionRecordingFlagged: v })}
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "unsure", label: t.common.unsure },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'unsure', label: t.common.unsure },
             ]}
             label={t.trackers.sessionRecordingQuestion}
             helperText={t.trackers.sessionRecordingHelper}
@@ -126,11 +128,11 @@ export default function Trackers() {
 
           <RadioPills
             value={results.keyLoggingFlagged}
-            onChange={(v: YesNoUnsure) => updateResults("trackers", { keyLoggingFlagged: v })}
+            onChange={(v: YesNoUnsure) => updateResults('trackers', { keyLoggingFlagged: v })}
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "unsure", label: t.common.unsure },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'unsure', label: t.common.unsure },
             ]}
             label={t.trackers.keyLoggingQuestion}
             helperText={t.trackers.keyLoggingHelper}
@@ -139,11 +141,11 @@ export default function Trackers() {
 
           <RadioPills
             value={results.fingerprintingFlagged}
-            onChange={(v: YesNoUnsure) => updateResults("trackers", { fingerprintingFlagged: v })}
+            onChange={(v: YesNoUnsure) => updateResults('trackers', { fingerprintingFlagged: v })}
             options={[
-              { value: "yes", label: t.common.yes },
-              { value: "no", label: t.common.no },
-              { value: "unsure", label: t.common.unsure },
+              { value: 'yes', label: t.common.yes },
+              { value: 'no', label: t.common.no },
+              { value: 'unsure', label: t.common.unsure },
             ]}
             label={t.trackers.fingerprintingQuestion}
             helperText={t.trackers.fingerprintingHelper}

@@ -1,14 +1,17 @@
-import { Minus, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Minus, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useI18n } from '@/context/I18nContext';
 
 interface NumberStepperProps {
-  value: number;
+  value: number | null;
   onChange: (value: number) => void;
   min?: number;
   max?: number;
   label: string;
   helperText?: string;
+  emptyLabel?: string;
+  showPlusAtMax?: boolean;
   testId?: string;
 }
 
@@ -19,19 +22,31 @@ export function NumberStepper({
   max = 100,
   label,
   helperText,
+  emptyLabel,
+  showPlusAtMax,
   testId,
 }: NumberStepperProps) {
+  const { t } = useI18n();
   const handleDecrement = () => {
+    if (value === null) return;
     if (value > min) {
       onChange(value - 1);
     }
   };
 
   const handleIncrement = () => {
+    if (value === null) {
+      onChange(min);
+      return;
+    }
     if (value < max) {
       onChange(value + 1);
     }
   };
+
+  const shouldShowPlus = showPlusAtMax ?? max > 5;
+  const displayValue =
+    value === null ? (emptyLabel ?? '-') : value === max && shouldShowPlus ? `${max}+` : value;
 
   return (
     <div className="space-y-2">
@@ -42,30 +57,30 @@ export function NumberStepper({
           variant="outline"
           size="icon"
           onClick={handleDecrement}
-          disabled={value <= min}
+          disabled={value === null || value <= min}
           data-testid={`${testId}-decrement`}
-          aria-label="Decrease"
+          aria-label={t.accessibility.decrease}
         >
           <Minus className="w-4 h-4" />
         </Button>
         <div
           className={cn(
-            "flex items-center justify-center w-16 h-12 rounded-md",
-            "bg-muted text-foreground font-semibold text-xl"
+            'flex items-center justify-center w-16 h-12 rounded-md',
+            'bg-muted text-foreground font-semibold text-xl',
           )}
           data-testid={testId}
           aria-live="polite"
         >
-          {value === max && max > 5 ? `${max}+` : value}
+          {displayValue}
         </div>
         <Button
           type="button"
           variant="outline"
           size="icon"
           onClick={handleIncrement}
-          disabled={value >= max}
+          disabled={value !== null && value >= max}
           data-testid={`${testId}-increment`}
-          aria-label="Increase"
+          aria-label={t.accessibility.increase}
         >
           <Plus className="w-4 h-4" />
         </Button>
