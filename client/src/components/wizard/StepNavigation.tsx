@@ -29,7 +29,7 @@ export function StepNavigation({
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 mt-8 border-t border-dashed border-border/70">
       <div className="flex items-center gap-2">
-        {showPrevious && currentStep > 1 && (
+        {showPrevious && currentStep > 0 && (
           <Button variant="ghost" onClick={prevStep} data-testid="button-previous">
             <ChevronLeft className="w-4 h-4 mr-1" />
             {t.common.back}

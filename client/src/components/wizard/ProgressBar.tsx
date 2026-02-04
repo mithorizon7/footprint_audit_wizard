@@ -1,21 +1,19 @@
-import { STEP_INFO, TOTAL_DURATION_MINUTES } from '@shared/schema';
+import { STEP_INFO } from '@shared/schema';
 import { useWizard } from '@/context/WizardContext';
 import { useI18n } from '@/context/I18nContext';
-import { Check, Clock, Target, SkipForward } from 'lucide-react';
+import { Check, Target, SkipForward } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 
 export function ProgressBar() {
-  const { currentStep, elapsedSeconds, currentStepTargetMinutes, data, isStepSkipped } =
-    useWizard();
+  const { currentStep, currentStepTargetMinutes, data, isStepSkipped, goToStep } = useWizard();
   const { t, plural } = useI18n();
   const isStarted = !!data.startedAt;
   const isCompleted = !!data.completedAt;
 
-  const formatTimeDisplay = (totalSeconds: number) => {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return { minutes, seconds: seconds.toString().padStart(2, '0') };
+  const handleStepSelect = (stepIndex: number) => {
+    if (stepIndex === currentStep) return;
+    goToStep(stepIndex);
   };
 
   const getStepName = (stepKey: string): string => {
@@ -31,7 +29,6 @@ export function ProgressBar() {
     return stepNames[stepKey] || stepKey;
   };
 
-  const remainingSeconds = Math.max(0, TOTAL_DURATION_MINUTES * 60 - elapsedSeconds);
   const progressPercent = Math.min(100, (currentStep / (STEP_INFO.length - 1)) * 100);
 
   return (
@@ -51,22 +48,11 @@ export function ProgressBar() {
           </div>
 
           {isStarted && !isCompleted && (
-            <div className="flex items-center gap-4 text-sm shrink-0">
-              <div className="hidden sm:flex items-center gap-1.5 text-muted-foreground">
-                <Target className="w-3.5 h-3.5" />
-                <span data-testid="step-target">
-                  {plural('targetMinutes', { count: currentStepTargetMinutes })}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 text-foreground font-medium">
-                <Clock className="w-3.5 h-3.5" />
-                <span data-testid="time-remaining">
-                  {(() => {
-                    const { minutes, seconds } = formatTimeDisplay(remainingSeconds);
-                    return plural('timeLeft', { minutes, seconds });
-                  })()}
-                </span>
-              </div>
+            <div className="hidden sm:flex items-center gap-1.5 text-muted-foreground text-sm shrink-0">
+              <Target className="w-3.5 h-3.5" />
+              <span data-testid="step-target">
+                {plural('targetMinutes', { count: currentStepTargetMinutes })}
+              </span>
             </div>
           )}
         </div>
@@ -80,7 +66,8 @@ export function ProgressBar() {
 
             return (
               <div key={step.id} className="flex items-center">
-                <div
+                <button
+                  type="button"
                   className={cn(
                     'relative flex items-center justify-center w-9 h-9 rounded-full text-xs font-semibold tracking-[0.12em] transition-all duration-300 border border-border/70 bg-card/70',
                     isCompletedStep &&
@@ -92,6 +79,8 @@ export function ProgressBar() {
                     isCurrent &&
                       'bg-primary text-primary-foreground border-primary/40 ring-2 ring-primary/30 ring-offset-2 ring-offset-background',
                     isUpcoming && 'bg-muted/60 text-muted-foreground',
+                    !isCurrent &&
+                      'cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-16px_rgba(15,23,42,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                   )}
                   data-testid={`step-indicator-${step.id}`}
                   title={
@@ -99,6 +88,9 @@ export function ProgressBar() {
                       ? `${getStepName(step.key)} (${t.common.skip})`
                       : getStepName(step.key)
                   }
+                  aria-label={getStepName(step.key)}
+                  aria-current={isCurrent ? 'step' : undefined}
+                  onClick={() => handleStepSelect(index)}
                 >
                   {isCompletedStep ? (
                     wasSkipped ? (
@@ -109,7 +101,7 @@ export function ProgressBar() {
                   ) : (
                     step.id
                   )}
-                </div>
+                </button>
                 {index < STEP_INFO.length - 1 && (
                   <div
                     className={cn(
