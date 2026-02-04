@@ -45,7 +45,9 @@ export default function AccountDevice() {
 
         <RadioPills
           value={mobileSelection}
-          onChange={(value: MobilePlatformSelection) => setDevice({ mobilePlatformSelection: value })}
+          onChange={(value: MobilePlatformSelection) =>
+            setDevice({ mobilePlatformSelection: value })
+          }
           label={t.accountDevice.deviceSelectionTitle}
           helperText={t.accountDevice.deviceSelectionHelper}
           options={[
