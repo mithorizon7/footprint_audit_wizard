@@ -6,9 +6,9 @@ export default {
   theme: {
     extend: {
       borderRadius: {
-        lg: '.5625rem' /* 9px */,
-        md: '.375rem' /* 6px */,
-        sm: '.1875rem' /* 3px */,
+        lg: '1rem' /* 16px */,
+        md: '.75rem' /* 12px */,
+        sm: '.5rem' /* 8px */,
       },
       colors: {
         // Flat / base colors (regular buttons)
@@ -83,9 +83,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Roboto', 'var(--font-sans)', 'sans-serif'],
-        serif: ['Roboto Slab', 'var(--font-serif)', 'serif'],
-        mono: ['var(--font-mono)'],
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       keyframes: {
         'accordion-down': {

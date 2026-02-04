@@ -46,7 +46,7 @@ function WizardContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-transparent text-foreground">
       {currentStep > 0 && (
         <>
           <FictionalBanner />
@@ -54,17 +54,19 @@ function WizardContent() {
         </>
       )}
 
-      <div className="fixed top-4 right-4 z-50 no-print flex items-center gap-2">
-        <LanguageSelector />
-        <ThemeToggle />
+      <div className="fixed top-4 right-4 z-50 no-print">
+        <div className="flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-2 py-1 shadow-sm backdrop-blur-md">
+          <LanguageSelector />
+          <ThemeToggle />
+        </div>
       </div>
 
       <main className="flex-1">{renderStep()}</main>
 
       <SessionRecoveryDialog />
 
-      <footer className="py-4 px-6 border-t border-border bg-background no-print">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-4 flex-wrap">
+      <footer className="py-4 px-6 border-t border-border/70 bg-card/70 backdrop-blur-md no-print">
+        <div className="max-w-5xl mx-auto flex items-center justify-between gap-4 flex-wrap">
           <p className="text-xs text-muted-foreground">{t.footer.privacyNotice}</p>
           <PanicButton />
         </div>
@@ -83,13 +85,15 @@ function WizardPage() {
 
 function FacilitatorPage() {
   return (
-    <>
-      <div className="fixed top-4 right-4 z-50 no-print flex items-center gap-2">
-        <LanguageSelector />
-        <ThemeToggle />
+    <div className="min-h-screen text-foreground">
+      <div className="fixed top-4 right-4 z-50 no-print">
+        <div className="flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-2 py-1 shadow-sm backdrop-blur-md">
+          <LanguageSelector />
+          <ThemeToggle />
+        </div>
       </div>
       <FacilitatorDashboard />
-    </>
+    </div>
   );
 }
 

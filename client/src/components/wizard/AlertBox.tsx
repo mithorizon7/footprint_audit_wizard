@@ -12,18 +12,18 @@ interface AlertBoxProps {
 
 const severityStyles: Record<AlertSeverity, { bg: string; border: string; icon: typeof Info }> = {
   info: {
-    bg: 'bg-blue-50 dark:bg-blue-950/30',
-    border: 'border-l-4 border-blue-500',
+    bg: 'bg-primary/5 dark:bg-primary/15',
+    border: 'border border-primary/20',
     icon: Info,
   },
   warning: {
-    bg: 'bg-amber-50 dark:bg-amber-950/30',
-    border: 'border-l-4 border-amber-500',
+    bg: 'bg-amber-500/10 dark:bg-amber-500/15',
+    border: 'border border-amber-500/30',
     icon: AlertTriangle,
   },
   critical: {
-    bg: 'bg-red-50 dark:bg-red-950/30',
-    border: 'border-l-4 border-red-500',
+    bg: 'bg-red-500/10 dark:bg-red-500/15',
+    border: 'border border-red-500/30',
     icon: AlertCircle,
   },
 };
@@ -33,12 +33,12 @@ export function AlertBox({ severity, title, children, className }: AlertBoxProps
   const Icon = styles.icon;
 
   return (
-    <div className={cn('p-4 rounded-r-md', styles.bg, styles.border, className)}>
+    <div className={cn('p-4 rounded-xl shadow-sm', styles.bg, styles.border, className)}>
       <div className="flex gap-3">
         <Icon
           className={cn(
             'w-5 h-5 flex-shrink-0 mt-0.5',
-            severity === 'info' && 'text-blue-600 dark:text-blue-400',
+            severity === 'info' && 'text-primary',
             severity === 'warning' && 'text-amber-600 dark:text-amber-400',
             severity === 'critical' && 'text-red-600 dark:text-red-400',
           )}
@@ -48,7 +48,7 @@ export function AlertBox({ severity, title, children, className }: AlertBoxProps
             <h5
               className={cn(
                 'font-medium mb-1',
-                severity === 'info' && 'text-blue-900 dark:text-blue-100',
+                severity === 'info' && 'text-foreground',
                 severity === 'warning' && 'text-amber-900 dark:text-amber-100',
                 severity === 'critical' && 'text-red-900 dark:text-red-100',
               )}
@@ -59,7 +59,7 @@ export function AlertBox({ severity, title, children, className }: AlertBoxProps
           <div
             className={cn(
               'text-sm',
-              severity === 'info' && 'text-blue-800 dark:text-blue-200',
+              severity === 'info' && 'text-muted-foreground',
               severity === 'warning' && 'text-amber-800 dark:text-amber-200',
               severity === 'critical' && 'text-red-800 dark:text-red-200',
             )}

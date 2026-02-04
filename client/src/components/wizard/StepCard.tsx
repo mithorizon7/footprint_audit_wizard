@@ -51,14 +51,18 @@ export function StepCard({
 
   return (
     <Card className={cn('w-full', className)}>
-      <CardHeader className="space-y-4">
+      <CardHeader className="space-y-4 pb-6 border-b border-dashed border-border/70">
         <div className="flex items-start gap-3 flex-wrap">
-          <Badge variant="secondary" className="shrink-0" data-testid={`badge-step-${stepNumber}`}>
+          <Badge
+            variant="outline"
+            className="shrink-0 bg-background/70 text-muted-foreground border-border/60 normal-case tracking-normal"
+            data-testid={`badge-step-${stepNumber}`}
+          >
             {format(t.common.stepNumber, { step: stepNumber })}
           </Badge>
-          <CardTitle className="text-2xl font-serif">{title}</CardTitle>
+          <CardTitle className="text-3xl font-serif tracking-tight">{title}</CardTitle>
         </div>
-        <p className="text-lg text-muted-foreground leading-relaxed">{concept}</p>
+        <p className="text-base text-muted-foreground leading-relaxed">{concept}</p>
         {outcomePreview && <p className="text-sm text-muted-foreground">{outcomePreview}</p>}
         {estimatedMinutes !== undefined && (
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">

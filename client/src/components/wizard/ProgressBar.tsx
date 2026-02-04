@@ -35,14 +35,17 @@ export function ProgressBar() {
   const progressPercent = Math.min(100, (currentStep / (STEP_INFO.length - 1)) * 100);
 
   return (
-    <div className="w-full bg-card border-b border-card-border sticky top-0 z-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 pr-24 sm:pr-28">
+    <div className="w-full bg-card/80 border-b border-card-border/70 backdrop-blur-md sticky top-0 z-50 shadow-[0_16px_40px_-30px_rgba(15,23,42,0.45)]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 pr-24 sm:pr-28">
         <div className="flex items-center justify-between gap-4 mb-2">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-foreground" data-testid="step-progress">
               {plural('stepOf', { current: currentStep + 1, total: STEP_INFO.length })}
             </span>
-            <Badge variant="secondary" className="text-xs">
+            <Badge
+              variant="secondary"
+              className="text-xs normal-case tracking-normal bg-secondary/80"
+            >
               {Math.round(progressPercent)}%
             </Badge>
           </div>
@@ -79,12 +82,16 @@ export function ProgressBar() {
               <div key={step.id} className="flex items-center">
                 <div
                   className={cn(
-                    'relative flex items-center justify-center w-8 h-8 rounded-full text-sm font-medium transition-all duration-300',
-                    isCompletedStep && !wasSkipped && 'bg-primary text-primary-foreground',
-                    isCompletedStep && wasSkipped && 'bg-amber-500 dark:bg-amber-600 text-white',
+                    'relative flex items-center justify-center w-9 h-9 rounded-full text-xs font-semibold tracking-[0.12em] transition-all duration-300 border border-border/70 bg-card/70',
+                    isCompletedStep &&
+                      !wasSkipped &&
+                      'bg-primary text-primary-foreground border-primary/40 shadow-[0_10px_20px_-14px_hsl(var(--primary)/0.9)]',
+                    isCompletedStep &&
+                      wasSkipped &&
+                      'bg-amber-500 dark:bg-amber-600 text-white border-amber-400/80 shadow-[0_10px_20px_-14px_rgba(251,191,36,0.8)]',
                     isCurrent &&
-                      'bg-primary text-primary-foreground ring-2 ring-primary/30 ring-offset-2 ring-offset-background',
-                    isUpcoming && 'bg-muted text-muted-foreground',
+                      'bg-primary text-primary-foreground border-primary/40 ring-2 ring-primary/30 ring-offset-2 ring-offset-background',
+                    isUpcoming && 'bg-muted/60 text-muted-foreground',
                   )}
                   data-testid={`step-indicator-${step.id}`}
                   title={
@@ -106,8 +113,8 @@ export function ProgressBar() {
                 {index < STEP_INFO.length - 1 && (
                   <div
                     className={cn(
-                      'w-6 lg:w-10 h-0.5 mx-1 transition-all duration-300',
-                      isCompletedStep ? 'bg-primary' : 'bg-muted',
+                      'w-6 lg:w-10 h-[2px] mx-1 transition-all duration-300 rounded-full',
+                      isCompletedStep ? 'bg-primary/70' : 'bg-muted/70',
                     )}
                   />
                 )}

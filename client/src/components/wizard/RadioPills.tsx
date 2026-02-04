@@ -29,11 +29,11 @@ export function RadioPills<T extends string>({
             aria-checked={value === option.value}
             onClick={() => onChange(option.value)}
             className={cn(
-              'px-4 py-2 rounded-md text-sm font-medium transition-all',
-              'border focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+              'px-5 py-2 rounded-full text-sm font-semibold transition-all',
+              'border focus:outline-none focus:ring-2 focus:ring-ring/60 focus:ring-offset-2',
               value === option.value
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'bg-background text-foreground border-border hover-elevate',
+                ? 'bg-primary text-primary-foreground border-primary/40 shadow-[0_10px_20px_-14px_hsl(var(--primary)/0.9)]'
+                : 'bg-background/70 text-foreground border-border/70 hover:bg-accent/40 hover:border-border',
             )}
             data-testid={`${testId}-${option.value}`}
           >

@@ -17,8 +17,8 @@ export function FictionalBanner() {
   };
 
   return (
-    <div className="bg-amber-100 dark:bg-amber-900/40 border-b border-amber-200 dark:border-amber-800">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
+    <div className="bg-amber-100/80 dark:bg-amber-500/10 border-b border-amber-200/80 dark:border-amber-500/30 backdrop-blur-md">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <FlaskConical className="w-4 h-4 text-amber-700 dark:text-amber-300 flex-shrink-0" />

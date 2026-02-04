@@ -36,13 +36,15 @@ export default function Welcome() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
-      <div className="w-full max-w-3xl space-y-8">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-8 py-12 sm:py-16">
+      <div className="w-full max-w-5xl space-y-10">
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 border border-primary/20 shadow-[0_18px_40px_-24px_hsl(var(--primary)/0.9)] mb-4">
             <Shield className="w-10 h-10 text-primary" />
           </div>
-          <h1 className="text-4xl font-bold font-serif text-foreground">{t.welcome.title}</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold font-serif text-foreground">
+            {t.welcome.title}
+          </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
             {t.welcome.subtitle}
           </p>
@@ -68,10 +70,10 @@ export default function Welcome() {
               {t.welcome.understandingOptionsTitle}
             </h2>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-xl border border-border/70">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b">
+                  <tr className="border-b border-border/70 bg-muted/40">
                     <th className="text-left py-2 pr-4 font-medium text-muted-foreground"></th>
                     <th className="text-left py-2 px-4 font-semibold text-foreground">
                       <div className="flex items-center gap-2">
@@ -88,21 +90,21 @@ export default function Welcome() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b">
+                  <tr className="border-b border-border/60">
                     <td className="py-3 pr-4 font-medium text-muted-foreground">
                       {t.welcome.optionTableStarting}
                     </td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfStarting}</td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoStarting}</td>
                   </tr>
-                  <tr className="border-b">
+                  <tr className="border-b border-border/60">
                     <td className="py-3 pr-4 font-medium text-muted-foreground">
                       {t.welcome.optionTableTools}
                     </td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionSelfTools}</td>
                     <td className="py-3 px-4 text-foreground">{t.welcome.optionDemoTools}</td>
                   </tr>
-                  <tr className="border-b">
+                  <tr className="border-b border-border/60">
                     <td className="py-3 pr-4 font-medium text-muted-foreground">
                       {t.welcome.optionTableLearn}
                     </td>
@@ -123,9 +125,9 @@ export default function Welcome() {
         </Card>
 
         {/* Your Privacy is Protected */}
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md p-6 space-y-4">
+        <div className="bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-200/70 dark:border-emerald-800/70 rounded-2xl p-6 space-y-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center shrink-0 shadow-sm">
               <Shield className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
@@ -219,7 +221,7 @@ export default function Welcome() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Card
               className={cn(
-                'cursor-pointer transition-all p-0 hover-elevate',
+                'cursor-pointer transition-all p-0 hover:-translate-y-0.5',
                 mode === 'self' && 'ring-2 ring-primary ring-offset-2 ring-offset-background',
               )}
               onClick={() => handleModeChange('self')}
@@ -247,7 +249,7 @@ export default function Welcome() {
 
             <Card
               className={cn(
-                'cursor-pointer transition-all p-0 hover-elevate',
+                'cursor-pointer transition-all p-0 hover:-translate-y-0.5',
                 mode === 'fictional' && 'ring-2 ring-primary ring-offset-2 ring-offset-background',
               )}
               onClick={() => handleModeChange('fictional')}
@@ -276,7 +278,7 @@ export default function Welcome() {
         </div>
 
         <div className="max-w-2xl mx-auto">
-          <div className="rounded-lg border border-border bg-muted/30 p-4">
+          <div className="rounded-2xl border border-border/70 bg-card/60 p-5 shadow-sm">
             <h3 className="text-sm font-semibold text-foreground mb-2">
               {t.welcome.beforeYouStartSummaryTitle}
             </h3>

@@ -16,7 +16,7 @@ export function LanguageSelector() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           size="icon"
           aria-label={t.accessibility.languageSelector}
           data-testid="button-language-selector"

@@ -43,7 +43,7 @@ export function ToolFallbackBlock({
         <Button
           variant="ghost"
           size="sm"
-          className="w-full justify-between text-muted-foreground hover:text-foreground p-2"
+          className="w-full justify-between text-muted-foreground hover:text-foreground p-2 bg-transparent"
           data-testid={fallbackTestId}
         >
           <span className="flex items-center gap-2 text-sm">
@@ -54,7 +54,7 @@ export function ToolFallbackBlock({
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="mt-2">
-        <div className="rounded-md bg-muted/50 p-4 space-y-3">
+        <div className="rounded-xl border border-border/70 bg-card/70 p-4 space-y-3 shadow-sm">
           <p className="text-sm text-muted-foreground">{t.toolFallback.description}</p>
           <ul className="space-y-2">
             {items.map((item, index) => (

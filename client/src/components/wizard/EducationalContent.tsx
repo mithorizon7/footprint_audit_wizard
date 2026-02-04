@@ -18,11 +18,11 @@ export function EducationalContent({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="mb-8">
-      <div className="border border-border rounded-lg bg-muted/30">
+      <div className="border border-border/70 rounded-2xl bg-card/60 shadow-sm">
         <CollapsibleTrigger asChild>
           <Button
             variant="ghost"
-            className="w-full flex items-center justify-between p-4 h-auto hover:bg-muted/50"
+            className="w-full flex items-center justify-between p-4 h-auto hover:bg-muted/40"
           >
             <div className="flex items-center gap-3">
               <BookOpen className="w-5 h-5 text-primary" />
@@ -98,7 +98,9 @@ interface HighlightBoxProps {
 }
 
 export function HighlightBox({ children }: HighlightBoxProps) {
-  return <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">{children}</div>;
+  return (
+    <div className="bg-primary/5 border border-primary/20 p-4 rounded-xl shadow-sm">{children}</div>
+  );
 }
 
 export function Paragraph({ children }: { children: React.ReactNode }) {
@@ -106,7 +108,11 @@ export function Paragraph({ children }: { children: React.ReactNode }) {
 }
 
 export function SectionTitle({ children }: { children: React.ReactNode }) {
-  return <h4 className="text-base font-semibold text-foreground mt-6 mb-3">{children}</h4>;
+  return (
+    <h4 className="text-lg font-semibold font-serif text-foreground mt-6 mb-3 tracking-tight">
+      {children}
+    </h4>
+  );
 }
 
 // Step-specific educational content components

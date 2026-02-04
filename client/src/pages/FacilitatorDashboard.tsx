@@ -65,7 +65,7 @@ export default function FacilitatorDashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen flex items-center justify-center text-foreground">
         <div className="text-center space-y-4">
           <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
           <p className="text-muted-foreground">{t.facilitatorDashboard.loading}</p>
@@ -76,7 +76,7 @@ export default function FacilitatorDashboard() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="min-h-screen flex items-center justify-center text-foreground">
         <Card className="max-w-md">
           <CardContent className="p-6 text-center space-y-4">
             <p className="text-muted-foreground">{t.facilitatorDashboard.loadError}</p>
@@ -122,7 +122,7 @@ export default function FacilitatorDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen text-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8">
         <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
           <div className="flex items-center gap-4">
@@ -139,7 +139,7 @@ export default function FacilitatorDashboard() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">
+            <Badge variant="secondary" className="normal-case tracking-normal">
               <Activity className="w-3 h-3 mr-1" />
               {t.facilitatorDashboard.liveUpdates}
             </Badge>

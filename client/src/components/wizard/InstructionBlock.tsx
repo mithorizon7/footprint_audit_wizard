@@ -9,7 +9,12 @@ interface InstructionBlockProps {
 
 export function InstructionBlock({ title, instructions, className }: InstructionBlockProps) {
   return (
-    <div className={cn('bg-muted/50 rounded-md p-4 space-y-3', className)}>
+    <div
+      className={cn(
+        'bg-card/70 rounded-xl border border-border/70 p-5 space-y-3 shadow-sm',
+        className,
+      )}
+    >
       <div className="flex items-center gap-2">
         <ClipboardList className="w-4 h-4 text-primary" />
         <h4 className="text-sm font-medium text-foreground">{title}</h4>

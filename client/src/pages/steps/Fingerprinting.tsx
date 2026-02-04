@@ -17,7 +17,7 @@ export default function FingerprintingStep() {
   const showExternalLinks = !isFictional || tryLiveTools;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
       <StepCard
         stepNumber={3}
         title={t.fingerprinting.title}

@@ -57,7 +57,7 @@ export default function Cleanup() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
       <StepCard
         stepNumber={5}
         title={t.cleanup.title}
@@ -108,7 +108,7 @@ export default function Cleanup() {
                 <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
                   {t.cleanup.breachExposure}
                 </h3>
-                <Badge variant="outline" className="text-xs">
+                <Badge variant="outline" className="text-xs normal-case tracking-normal">
                   {t.badges.optional}
                 </Badge>
               </div>

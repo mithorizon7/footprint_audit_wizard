@@ -21,10 +21,10 @@ export function ExternalLinkCard({ title, description, url, icon, testId }: Exte
 
   if (isCollapsed) {
     return (
-      <Card className="p-4 border-2 border-dashed bg-muted/30">
+      <Card className="card-plain p-4 border border-dashed border-border/70 bg-muted/40">
         <div className="flex items-start gap-4">
           {icon && (
-            <div className="flex-shrink-0 w-10 h-10 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
+            <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-muted/70 flex items-center justify-center text-muted-foreground">
               {icon}
             </div>
           )}
@@ -53,11 +53,11 @@ export function ExternalLinkCard({ title, description, url, icon, testId }: Exte
   }
 
   return (
-    <Card className="p-4 border-2 border-dashed bg-transparent">
+    <Card className="card-plain p-4 border border-dashed border-border/70 bg-card/50">
       <div className="space-y-3">
         <div className="flex items-start gap-4">
           {icon && (
-            <div className="flex-shrink-0 w-10 h-10 rounded-md bg-accent flex items-center justify-center text-accent-foreground">
+            <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-accent/70 flex items-center justify-center text-accent-foreground">
               {icon}
             </div>
           )}

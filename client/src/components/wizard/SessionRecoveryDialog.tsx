@@ -63,14 +63,14 @@ export function SessionRecoveryDialog() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-amber-100/80 dark:bg-amber-950 flex items-center justify-center border border-amber-200/70 dark:border-amber-800/70 shadow-sm">
               <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
             </div>
             <DialogTitle className="text-xl">{t.sessionRecovery.title}</DialogTitle>
           </div>
           <DialogDescription className="text-left space-y-3">
             <p>{t.sessionRecovery.description}</p>
-            <div className="bg-muted rounded-md p-3 space-y-2">
+            <div className="bg-card/70 border border-border/70 rounded-xl p-3 space-y-2 shadow-sm">
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4 text-muted-foreground" />
                 <span>

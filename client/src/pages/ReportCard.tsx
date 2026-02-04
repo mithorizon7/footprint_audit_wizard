@@ -495,13 +495,13 @@ export default function ReportCard() {
   const getLevelBg = (level: ScoreLevel) => {
     switch (level) {
       case 'good':
-        return 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800';
+        return 'bg-emerald-500/10 dark:bg-emerald-500/15 border-emerald-500/30 dark:border-emerald-500/40';
       case 'warning':
-        return 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800';
+        return 'bg-amber-500/10 dark:bg-amber-500/15 border-amber-500/30 dark:border-amber-500/40';
       case 'critical':
-        return 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800';
+        return 'bg-red-500/10 dark:bg-red-500/15 border-red-500/30 dark:border-red-500/40';
       default:
-        return 'bg-muted border-border';
+        return 'bg-card/60 border-border/70';
     }
   };
 
@@ -588,14 +588,17 @@ export default function ReportCard() {
   const summaryPrefix = t.report.summaryPrefix;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
+    <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
       <div ref={reportRef} className="space-y-8">
         <div className="text-center space-y-4">
-          <Badge variant="secondary" className="mb-2">
+          <Badge
+            variant="outline"
+            className="mb-2 bg-background/70 text-muted-foreground normal-case tracking-normal"
+          >
             <Sparkles className="w-3 h-3 mr-1" />
             {t.report.auditComplete}
           </Badge>
-          <h1 className="text-4xl font-bold font-serif text-foreground print:text-2xl">
+          <h1 className="text-4xl sm:text-5xl font-bold font-serif text-foreground print:text-2xl">
             {t.report.title}
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl mx-auto">{t.report.subtitle}</p>
@@ -606,7 +609,7 @@ export default function ReportCard() {
         </div>
 
         <div
-          className="rounded-md bg-muted/50 p-4 text-sm text-muted-foreground space-y-2 print:bg-transparent print:border print:border-border"
+          className="rounded-2xl border border-border/70 bg-card/60 p-5 text-sm text-muted-foreground space-y-2 print:bg-transparent print:border print:border-border"
           data-testid="report-disclaimer"
         >
           <p className="font-medium text-foreground">{t.report.realityCheck}</p>
@@ -625,7 +628,7 @@ export default function ReportCard() {
           {metrics.map((metric) => (
             <Card
               key={metric.label}
-              className={cn('border', getLevelBg(metric.level))}
+              className={cn('border card-plain', getLevelBg(metric.level))}
               data-testid={`metric-${metric.label.toLowerCase().replace(/\s+/g, '-')}`}
             >
               <CardContent className="p-6">
@@ -639,7 +642,7 @@ export default function ReportCard() {
                           <TooltipTrigger asChild>
                             <Badge
                               variant="outline"
-                              className="border-dashed text-xs text-muted-foreground"
+                              className="border-dashed text-xs text-muted-foreground normal-case tracking-normal"
                             >
                               {metric.status === 'skipped'
                                 ? t.metrics.statusSkipped
@@ -739,14 +742,21 @@ export default function ReportCard() {
             {naCategories.length > 0 && (
               <div className="mt-3 text-xs text-muted-foreground space-y-2">
                 <div className="flex items-center justify-center gap-2">
-                  <Badge variant="outline" className="border-dashed text-xs text-muted-foreground">
+                  <Badge
+                    variant="outline"
+                    className="border-dashed text-xs text-muted-foreground normal-case tracking-normal"
+                  >
                     {t.metrics.statusNA}
                   </Badge>
                   <span>{t.metrics.statusTooltipNA}</span>
                 </div>
                 <div className="flex flex-wrap justify-center gap-2">
                   {naCategories.map((name) => (
-                    <Badge key={name} variant="secondary" className="text-xs">
+                    <Badge
+                      key={name}
+                      variant="secondary"
+                      className="text-xs normal-case tracking-normal"
+                    >
                       {name}
                     </Badge>
                   ))}

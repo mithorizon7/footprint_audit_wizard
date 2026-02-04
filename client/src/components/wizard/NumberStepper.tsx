@@ -65,8 +65,8 @@ export function NumberStepper({
         </Button>
         <div
           className={cn(
-            'flex items-center justify-center w-16 h-12 rounded-md',
-            'bg-muted text-foreground font-semibold text-xl',
+            'flex items-center justify-center w-20 h-12 rounded-full border border-border/70',
+            'bg-card/80 text-foreground font-semibold font-mono text-xl shadow-sm',
           )}
           data-testid={testId}
           aria-live="polite"
