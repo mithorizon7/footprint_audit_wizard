@@ -43,10 +43,11 @@ export default function AccountDevice() {
           ]}
         />
 
-        {/* @ts-expect-error generic type workaround for build process */}
         <RadioPills
           value={mobileSelection}
-          onChange={(value: MobilePlatformSelection) => setDevice({ mobilePlatformSelection: value })}
+          onChange={(value: MobilePlatformSelection) =>
+            setDevice({ mobilePlatformSelection: value })
+          }
           label={t.accountDevice.deviceSelectionTitle}
           helperText={t.accountDevice.deviceSelectionHelper}
           options={[
