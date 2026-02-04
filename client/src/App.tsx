@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { queryClient } from './lib/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Switch, Route } from 'wouter';
@@ -23,6 +24,10 @@ import FacilitatorDashboard from '@/pages/FacilitatorDashboard';
 function WizardContent() {
   const { currentStep } = useWizard();
   const { t } = useI18n();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [currentStep]);
 
   const renderStep = () => {
     switch (currentStep) {

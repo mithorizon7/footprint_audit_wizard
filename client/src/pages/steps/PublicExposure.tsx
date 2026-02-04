@@ -134,7 +134,7 @@ export default function PublicExposure() {
           />
         </div>
 
-        <StepNavigation showPrevious={false} />
+        <StepNavigation />
       </StepCard>
     </div>
   );
