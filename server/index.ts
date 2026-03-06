@@ -5,6 +5,7 @@ import { createServer } from 'http';
 
 const app = express();
 const httpServer = createServer(app);
+const isProduction = process.env.NODE_ENV === 'production';
 
 declare module 'http' {
   interface IncomingMessage {
@@ -12,15 +13,36 @@ declare module 'http' {
   }
 }
 
+app.disable('x-powered-by');
+
 app.use(
   express.json({
+    limit: '32kb',
     verify: (req, _res, buf) => {
       req.rawBody = buf;
     },
   }),
 );
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false, limit: '32kb' }));
+
+app.use((req, res, next) => {
+  // Baseline hardening headers for all responses.
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  if (isProduction) {
+    res.setHeader(
+      'Content-Security-Policy',
+      "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self' data:",
+    );
+  }
+  if (req.path.startsWith('/api')) {
+    res.setHeader('Cache-Control', 'no-store');
+  }
+  next();
+});
 
 export function log(message: string, source = 'express') {
   const formattedTime = new Date().toLocaleTimeString('en-US', {
@@ -36,7 +58,7 @@ export function log(message: string, source = 'express') {
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, unknown> | undefined = undefined;
+  let capturedJsonResponse: unknown;
 
   const originalResJson = res.json;
   res.json = function (bodyJson, ...args) {
@@ -48,8 +70,12 @@ app.use((req, res, next) => {
     const duration = Date.now() - start;
     if (path.startsWith('/api')) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      if (!isProduction && capturedJsonResponse !== undefined) {
+        const serialized = JSON.stringify(capturedJsonResponse);
+        if (serialized) {
+          const preview = serialized.length > 240 ? `${serialized.slice(0, 240)}...` : serialized;
+          logLine += ` :: ${preview}`;
+        }
       }
 
       log(logLine);
@@ -62,13 +88,26 @@ app.use((req, res, next) => {
 (async () => {
   await registerRoutes(httpServer, app);
 
-  app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  app.use('/api', (_req, res) => {
+    res.status(404).json({ error: 'Not found' });
+  });
+
+  app.use((err: unknown, _req: Request, res: Response, next: NextFunction) => {
+    if (res.headersSent) {
+      next(err);
+      return;
+    }
+
     const error = err as { status?: number; statusCode?: number; message?: string };
     const status = error.status || error.statusCode || 500;
     const message = error.message || 'Internal Server Error';
+    const responseMessage = isProduction && status >= 500 ? 'Internal Server Error' : message;
 
-    res.status(status).json({ message });
-    throw err;
+    console.error('[server] request failure', {
+      status,
+      message,
+    });
+    res.status(status).json({ message: responseMessage });
   });
 
   // importantly only setup vite in development and after

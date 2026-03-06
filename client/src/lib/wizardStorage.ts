@@ -49,10 +49,10 @@ export function detectDevice(): {
 
   let os: string = 'unknown';
   if (/windows/i.test(ua)) os = 'windows';
-  else if (/macintosh|mac os/i.test(ua)) os = 'mac';
-  else if (/linux/i.test(ua) && !/android/i.test(ua)) os = 'linux';
   else if (/iphone|ipad/i.test(ua)) os = 'ios';
   else if (/android/i.test(ua)) os = 'android';
+  else if (/macintosh|mac os/i.test(ua)) os = 'mac';
+  else if (/linux/i.test(ua) && !/android/i.test(ua)) os = 'linux';
 
   let browser: string = 'unknown';
   if (/edg/i.test(ua)) browser = 'edge';

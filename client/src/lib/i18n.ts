@@ -3089,9 +3089,13 @@ export function getTranslations(locale: Locale): Translations {
 export function getLocaleFromStorage(): Locale {
   // Fallback chain: user preference → English (default)
   // Users can select other languages (Latvian, Russian) if desired
-  const stored = localStorage.getItem('footprintWizard:locale');
-  if (stored && stored in allTranslations) {
-    return stored as Locale;
+  try {
+    const stored = localStorage.getItem('footprintWizard:locale');
+    if (stored && stored in allTranslations) {
+      return stored as Locale;
+    }
+  } catch {
+    // Ignore storage read failures (privacy mode/restricted browsers).
   }
 
   // Default to English
@@ -3099,7 +3103,11 @@ export function getLocaleFromStorage(): Locale {
 }
 
 export function saveLocaleToStorage(locale: Locale): void {
-  localStorage.setItem('footprintWizard:locale', locale);
+  try {
+    localStorage.setItem('footprintWizard:locale', locale);
+  } catch {
+    // Ignore storage write failures (privacy mode/restricted browsers).
+  }
 }
 
 export const SUPPORTED_LOCALES: { code: Locale; name: string; nativeName: string }[] = [

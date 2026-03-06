@@ -1,3 +1,5 @@
+@config "../../tailwind.config.ts";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -214,11 +216,8 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(
-        1200px 600px at 8% -10%,
-        hsl(var(--primary) / 0.18),
-        transparent 60%
-      ),
+    background:
+      radial-gradient(1200px 600px at 8% -10%, hsl(var(--primary) / 0.18), transparent 60%),
       radial-gradient(900px 500px at 110% 0%, hsl(var(--accent) / 0.3), transparent 55%),
       radial-gradient(700px 600px at 50% 120%, hsl(var(--primary) / 0.12), transparent 60%);
     pointer-events: none;
@@ -229,7 +228,8 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: linear-gradient(transparent 95%, hsl(var(--border) / 0.35) 95%),
+    background-image:
+      linear-gradient(transparent 95%, hsl(var(--border) / 0.35) 95%),
       linear-gradient(90deg, transparent 95%, hsl(var(--border) / 0.35) 95%);
     background-size: 44px 44px;
     opacity: 0.12;
@@ -258,7 +258,8 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(320px 140px at 12% 0%, hsl(var(--accent) / 0.45), transparent 70%),
+    background:
+      radial-gradient(320px 140px at 12% 0%, hsl(var(--accent) / 0.45), transparent 70%),
       linear-gradient(180deg, hsl(var(--card) / 0.96), hsl(var(--card) / 0.88));
     opacity: 0.6;
     pointer-events: none;

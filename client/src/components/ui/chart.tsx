@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;
+type ChartValue = number | string | ReadonlyArray<number | string>;
+type ChartName = number | string;
 
 export type ChartConfig = {
   [k in string]: {
@@ -93,10 +95,15 @@ ${colorConfig
 };
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
+type ChartTooltipContentProps = RechartsPrimitive.TooltipContentProps<ChartValue, ChartName>;
+type ChartLegendContentProps = Pick<
+  RechartsPrimitive.DefaultLegendContentProps,
+  'payload' | 'verticalAlign'
+>;
 
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+  ChartTooltipContentProps &
     React.ComponentProps<'div'> & {
       hideLabel?: boolean;
       hideIndicator?: boolean;
@@ -124,13 +131,14 @@ const ChartTooltipContent = React.forwardRef<
     ref,
   ) => {
     const { config } = useChart();
+    const payloadItems = normalizeTooltipPayload(payload);
 
     const tooltipLabel = React.useMemo(() => {
-      if (hideLabel || !payload?.length) {
+      if (hideLabel || payloadItems.length === 0) {
         return null;
       }
 
-      const [item] = payload;
+      const [item] = payloadItems;
       const key = `${labelKey || item?.dataKey || item?.name || 'value'}`;
       const itemConfig = getPayloadConfigFromPayload(config, item, key);
       const value =
@@ -140,7 +148,9 @@ const ChartTooltipContent = React.forwardRef<
 
       if (labelFormatter) {
         return (
-          <div className={cn('font-medium', labelClassName)}>{labelFormatter(value, payload)}</div>
+          <div className={cn('font-medium', labelClassName)}>
+            {labelFormatter(value, payloadItems)}
+          </div>
         );
       }
 
@@ -149,13 +159,13 @@ const ChartTooltipContent = React.forwardRef<
       }
 
       return <div className={cn('font-medium', labelClassName)}>{value}</div>;
-    }, [label, labelFormatter, payload, hideLabel, labelClassName, config, labelKey]);
+    }, [label, labelFormatter, payloadItems, hideLabel, labelClassName, config, labelKey]);
 
-    if (!active || !payload?.length) {
+    if (!active || payloadItems.length === 0) {
       return null;
     }
 
-    const nestLabel = payload.length === 1 && indicator !== 'dot';
+    const nestLabel = payloadItems.length === 1 && indicator !== 'dot';
 
     return (
       <div
@@ -167,21 +177,22 @@ const ChartTooltipContent = React.forwardRef<
       >
         {!nestLabel ? tooltipLabel : null}
         <div className="grid gap-1.5">
-          {payload.map((item, index) => {
+          {payloadItems.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || 'value'}`;
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
-            const indicatorColor = color || item.payload.fill || item.color;
+            const indicatorColor = color || item.payload?.fill || item.color;
+            const valueText = formatChartValue(item.value);
 
             return (
               <div
-                key={item.dataKey}
+                key={String(item.dataKey ?? item.name ?? index)}
                 className={cn(
                   'flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground',
                   indicator === 'dot' && 'items-center',
                 )}
               >
                 {formatter && item?.value !== undefined && item.name ? (
-                  formatter(item.value, item.name, item, index, item.payload)
+                  formatter(item.value, item.name, item, index, payloadItems)
                 ) : (
                   <>
                     {itemConfig?.icon ? (
@@ -217,12 +228,12 @@ const ChartTooltipContent = React.forwardRef<
                       <div className="grid gap-1.5">
                         {nestLabel ? tooltipLabel : null}
                         <span className="text-muted-foreground">
-                          {itemConfig?.label || item.name}
+                          {itemConfig?.label || item.name || key}
                         </span>
                       </div>
-                      {item.value && (
+                      {valueText && (
                         <span className="font-mono font-medium tabular-nums text-foreground">
-                          {item.value.toLocaleString()}
+                          {valueText}
                         </span>
                       )}
                     </div>
@@ -242,15 +253,12 @@ const ChartLegend = RechartsPrimitive.Legend;
 
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<'div'> &
-    Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
-      hideIcon?: boolean;
-      nameKey?: string;
-    }
+  React.ComponentProps<'div'> & ChartLegendContentProps & { hideIcon?: boolean; nameKey?: string }
 >(({ className, hideIcon = false, payload, verticalAlign = 'bottom', nameKey }, ref) => {
   const { config } = useChart();
+  const payloadItems = normalizeLegendPayload(payload);
 
-  if (!payload?.length) {
+  if (payloadItems.length === 0) {
     return null;
   }
 
@@ -263,13 +271,13 @@ const ChartLegendContent = React.forwardRef<
         className,
       )}
     >
-      {payload.map((item) => {
+      {payloadItems.map((item, index) => {
         const key = `${nameKey || item.dataKey || 'value'}`;
         const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
         return (
           <div
-            key={item.value}
+            key={String(item.dataKey ?? item.value ?? index)}
             className={cn(
               'flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground',
             )}
@@ -280,11 +288,11 @@ const ChartLegendContent = React.forwardRef<
               <div
                 className="h-2 w-2 shrink-0 rounded-[2px]"
                 style={{
-                  backgroundColor: item.color,
+                  backgroundColor: item.color ?? 'currentColor',
                 }}
               />
             )}
-            {itemConfig?.label}
+            {itemConfig?.label || item.value}
           </div>
         );
       })}
@@ -317,6 +325,31 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
   }
 
   return configLabelKey in config ? config[configLabelKey] : config[key as keyof typeof config];
+}
+
+function normalizeTooltipPayload(
+  payload: ChartTooltipContentProps['payload'],
+): ReadonlyArray<RechartsPrimitive.TooltipPayloadEntry<ChartValue, ChartName>> {
+  return Array.isArray(payload) ? payload : [];
+}
+
+function normalizeLegendPayload(
+  payload: ChartLegendContentProps['payload'],
+): ReadonlyArray<RechartsPrimitive.LegendPayload> {
+  return Array.isArray(payload) ? payload : [];
+}
+
+function formatChartValue(value: unknown): string {
+  if (Array.isArray(value)) {
+    return value.join(' / ');
+  }
+  if (typeof value === 'number') {
+    return value.toLocaleString();
+  }
+  if (typeof value === 'string') {
+    return value;
+  }
+  return '';
 }
 
 export {

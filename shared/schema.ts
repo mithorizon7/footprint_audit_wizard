@@ -24,7 +24,7 @@ export const insertAuditSessionSchema = createInsertSchema(auditSessions).omit({
   createdAt: true,
 });
 
-export type InsertAuditSession = z.infer<typeof insertAuditSessionSchema>;
+export type InsertAuditSession = typeof auditSessions.$inferInsert;
 export type AuditSession = typeof auditSessions.$inferSelect;
 
 export const deviceTypeSchema = z.enum(['desktop', 'mobile', 'unknown']);

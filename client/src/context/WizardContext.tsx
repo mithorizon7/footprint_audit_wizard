@@ -86,17 +86,33 @@ export function WizardProvider({ children }: { children: ReactNode }) {
     setTimeRemaining(remainingMinutes);
   }, [elapsedSeconds]);
 
-  const setMode = useCallback((mode: Mode) => {
-    if (mode === 'fictional') {
-      setData({ ...FICTIONAL_DATA, currentStep: 0, startedAt: null, completedAt: null });
-    } else {
-      setData((prev) => ({
-        ...createInitialWizardData(),
-        device: prev.device,
-        mode: 'self',
-      }));
-    }
+  const resetTimerState = useCallback(() => {
+    setElapsedSeconds(0);
+    setTimeRemaining(TOTAL_DURATION_MINUTES);
   }, []);
+
+  const setMode = useCallback(
+    (mode: Mode) => {
+      if (mode === 'fictional') {
+        setData({
+          ...FICTIONAL_DATA,
+          currentStep: 0,
+          startedAt: null,
+          completedAt: null,
+          elapsedSeconds: 0,
+        });
+      } else {
+        setData((prev) => ({
+          ...createInitialWizardData(),
+          device: prev.device,
+          mode: 'self',
+          elapsedSeconds: 0,
+        }));
+      }
+      resetTimerState();
+    },
+    [resetTimerState],
+  );
 
   const setDevice = useCallback((device: Partial<DeviceInfo>) => {
     setData((prev) => ({
@@ -187,10 +203,13 @@ export function WizardProvider({ children }: { children: ReactNode }) {
 
   const startAudit = useCallback(() => {
     const detectedDevice = detectDevice();
+    resetTimerState();
     setData((prev) => ({
       ...prev,
       startedAt: new Date().toISOString(),
       currentStep: 1,
+      completedAt: null,
+      elapsedSeconds: 0,
       device: {
         type:
           prev.device.type !== 'unknown'
@@ -204,7 +223,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
         mobilePlatformSelection: prev.device.mobilePlatformSelection ?? 'unsure',
       },
     }));
-  }, []);
+  }, [resetTimerState]);
 
   const completeAudit = useCallback(() => {
     setData((prev) => ({
