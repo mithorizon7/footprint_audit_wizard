@@ -6,6 +6,7 @@ import { InstructionBlock } from '@/components/wizard/InstructionBlock';
 import { NumberStepper } from '@/components/wizard/NumberStepper';
 import { RadioPills } from '@/components/wizard/RadioPills';
 import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { GuidedChecklist } from '@/components/wizard/GuidedChecklist';
 import { PublicExposureEducational } from '@/components/wizard/EducationalContent';
 import { Search, FileText, Shield } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -16,6 +17,22 @@ export default function PublicExposure() {
   const { t } = useI18n();
   const results = data.results.publicExposure;
   const showExternalLinks = !isFictional || tryLiveTools;
+  const checklistItems = [
+    {
+      label: t.publicExposure.searchPagesQuestion,
+      done:
+        results.searchResultPagesWithPersonalInfo > 0 ||
+        results.peopleSearchSitesFound !== 'unsure',
+    },
+    {
+      label: t.publicExposure.peopleSearchQuestion,
+      done: results.peopleSearchSitesFound !== 'unsure',
+    },
+    {
+      label: t.publicExposure.googleVisitedQuestion,
+      done: results.googleResultsAboutYouVisited === 'yes',
+    },
+  ];
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
@@ -27,7 +44,7 @@ export default function PublicExposure() {
         whyItMatters={t.publicExposure.whyItMatters}
         pitfalls={t.publicExposure.pitfalls}
       >
-        <PublicExposureEducational content={t.publicExposure.educationalContent} />
+        <GuidedChecklist items={checklistItems} minimumCompleted={1} />
 
         <InstructionBlock
           title={t.instructions.whatToDo}
@@ -37,6 +54,8 @@ export default function PublicExposure() {
             t.instructions.publicExposure3,
           ]}
         />
+
+        <PublicExposureEducational content={t.publicExposure.educationalContent} />
 
         {showExternalLinks && (
           <div className="space-y-4">
@@ -134,7 +153,7 @@ export default function PublicExposure() {
           />
         </div>
 
-        <StepNavigation />
+        <StepNavigation guidanceItems={checklistItems} minimumCompleted={1} />
       </StepCard>
     </div>
   );

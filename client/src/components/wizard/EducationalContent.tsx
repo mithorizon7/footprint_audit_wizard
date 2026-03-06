@@ -13,7 +13,7 @@ interface EducationalContentProps {
 export function EducationalContent({
   sectionTitle,
   children,
-  defaultOpen = true,
+  defaultOpen = false,
 }: EducationalContentProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 

@@ -5,6 +5,7 @@ import { ExternalLinkCard } from '@/components/wizard/ExternalLinkCard';
 import { InstructionBlock } from '@/components/wizard/InstructionBlock';
 import { RadioPills } from '@/components/wizard/RadioPills';
 import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { GuidedChecklist } from '@/components/wizard/GuidedChecklist';
 import { AccountDeviceEducational } from '@/components/wizard/EducationalContent';
 import { Settings, FileText } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -21,6 +22,42 @@ export default function AccountDevice() {
   const showAndroid =
     mobileSelection === 'android' || mobileSelection === 'both' || mobileSelection === 'unsure';
   const showExternalLinks = !isFictional || tryLiveTools;
+  const isPlatformSelected = mobileSelection !== 'unsure';
+  const checklistItems = [
+    {
+      label: t.accountDevice.deviceSelectionTitle,
+      done: isPlatformSelected,
+    },
+    {
+      label: t.accountDevice.googleAdsQuestion,
+      done: results.googlePersonalizedAds !== 'unsure',
+    },
+    ...(showApple
+      ? [
+          {
+            label: t.accountDevice.appleAdsQuestion,
+            done:
+              results.applePersonalizedAds !== 'unsure' &&
+              results.applePersonalizedAds !== 'not_applicable',
+          },
+          {
+            label: t.accountDevice.iosAttQuestion,
+            done: results.iosATTSetting !== 'unsure' && results.iosATTSetting !== 'not_applicable',
+          },
+        ]
+      : []),
+    ...(showAndroid
+      ? [
+          {
+            label: t.accountDevice.androidIdQuestion,
+            done:
+              results.androidAdvertisingIdAction !== 'unsure' &&
+              results.androidAdvertisingIdAction !== 'not_applicable',
+          },
+        ]
+      : []),
+  ];
+  const minimumCompleted = 2;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
@@ -32,7 +69,7 @@ export default function AccountDevice() {
         whyItMatters={t.accountDevice.whyItMatters}
         pitfalls={t.accountDevice.pitfalls}
       >
-        <AccountDeviceEducational content={t.accountDevice.educationalContent} />
+        <GuidedChecklist items={checklistItems} minimumCompleted={minimumCompleted} />
 
         <InstructionBlock
           title={t.instructions.whatToDo}
@@ -42,6 +79,8 @@ export default function AccountDevice() {
             t.instructions.accountDevice3,
           ]}
         />
+
+        <AccountDeviceEducational content={t.accountDevice.educationalContent} />
 
         <RadioPills
           value={mobileSelection}
@@ -181,7 +220,7 @@ export default function AccountDevice() {
           )}
         </div>
 
-        <StepNavigation />
+        <StepNavigation guidanceItems={checklistItems} minimumCompleted={minimumCompleted} />
       </StepCard>
     </div>
   );

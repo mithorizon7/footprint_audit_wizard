@@ -6,6 +6,7 @@ import { InstructionBlock } from '@/components/wizard/InstructionBlock';
 import { NumberStepper } from '@/components/wizard/NumberStepper';
 import { RadioPills } from '@/components/wizard/RadioPills';
 import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { GuidedChecklist } from '@/components/wizard/GuidedChecklist';
 import { TrackersEducational } from '@/components/wizard/EducationalContent';
 import { Eye, FileText } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -16,6 +17,24 @@ export default function Trackers() {
   const { t } = useI18n();
   const results = data.results.trackers;
   const showExternalLinks = !isFictional || tryLiveTools;
+  const checklistItems = [
+    {
+      label: t.trackers.blacklightRunQuestion,
+      done: results.blacklightRun === 'yes',
+    },
+    {
+      label: t.trackers.siteCategoryQuestion,
+      done: results.siteCategoryScanned !== 'unknown',
+    },
+    {
+      label: t.trackers.trackerCountQuestion,
+      done: results.trackerCount !== null,
+    },
+    {
+      label: t.trackers.sessionRecordingQuestion,
+      done: results.sessionRecordingFlagged !== 'unsure',
+    },
+  ];
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
@@ -27,7 +46,7 @@ export default function Trackers() {
         whyItMatters={t.trackers.whyItMatters}
         pitfalls={t.trackers.pitfalls}
       >
-        <TrackersEducational content={t.trackers.educationalContent} />
+        <GuidedChecklist items={checklistItems} minimumCompleted={2} />
 
         <InstructionBlock
           title={t.instructions.whatToDo}
@@ -37,6 +56,8 @@ export default function Trackers() {
             t.instructions.trackers3,
           ]}
         />
+
+        <TrackersEducational content={t.trackers.educationalContent} />
 
         {showExternalLinks && (
           <div className="space-y-4">
@@ -153,7 +174,7 @@ export default function Trackers() {
           />
         </div>
 
-        <StepNavigation />
+        <StepNavigation guidanceItems={checklistItems} minimumCompleted={2} />
       </StepCard>
     </div>
   );
