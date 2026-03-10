@@ -57,8 +57,6 @@ export default function Trackers() {
           ]}
         />
 
-        <TrackersEducational content={t.trackers.educationalContent} />
-
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
@@ -173,6 +171,8 @@ export default function Trackers() {
             testId="input-fingerprinting"
           />
         </div>
+
+        <TrackersEducational content={t.trackers.educationalContent} />
 
         <StepNavigation guidanceItems={checklistItems} minimumCompleted={2} />
       </StepCard>

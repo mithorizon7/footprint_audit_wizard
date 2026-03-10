@@ -55,8 +55,6 @@ export default function PublicExposure() {
           ]}
         />
 
-        <PublicExposureEducational content={t.publicExposure.educationalContent} />
-
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
@@ -152,6 +150,8 @@ export default function PublicExposure() {
             testId="input-removal-requested"
           />
         </div>
+
+        <PublicExposureEducational content={t.publicExposure.educationalContent} />
 
         <StepNavigation guidanceItems={checklistItems} minimumCompleted={1} />
       </StepCard>

@@ -1,8 +1,9 @@
-import type { KeyboardEvent } from 'react';
+import { useEffect, useState, type KeyboardEvent } from 'react';
 import { useWizard } from '@/context/WizardContext';
 import { useI18n } from '@/context/I18nContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
@@ -32,11 +33,35 @@ import {
   Trash2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Mode, DeviceType, OS, Browser } from '@shared/schema';
+import { STEP_INFO, type Mode, type DeviceType, type OS, type Browser } from '@shared/schema';
+import { detectDevice } from '@/lib/wizardStorage';
 
 export default function Welcome() {
   const { data, setMode, setDevice, startAudit, mode } = useWizard();
-  const { t } = useI18n();
+  const { t, format, plural } = useI18n();
+  const [didAutofillDevice, setDidAutofillDevice] = useState(false);
+
+  useEffect(() => {
+    if (didAutofillDevice) return;
+
+    const hasDeviceSelection =
+      data.device.type !== 'unknown' ||
+      data.device.os !== 'unknown' ||
+      data.device.browser !== 'unknown';
+
+    if (hasDeviceSelection) {
+      setDidAutofillDevice(true);
+      return;
+    }
+
+    const detected = detectDevice();
+    setDevice({
+      type: detected.type as DeviceType,
+      os: detected.os as OS,
+      browser: detected.browser as Browser,
+    });
+    setDidAutofillDevice(true);
+  }, [data.device.browser, data.device.os, data.device.type, didAutofillDevice, setDevice]);
 
   const handleModeChange = (newMode: Mode) => {
     setMode(newMode);
@@ -49,8 +74,23 @@ export default function Welcome() {
     }
   };
 
+  const orderedSteps = STEP_INFO.slice(1);
+  const selectedModeTitle =
+    mode === 'fictional' ? t.welcome.fictionalPersona : t.welcome.myFootprint;
+  const selectedModeDescription =
+    mode === 'fictional' ? t.welcome.fictionalPersonaDesc : t.welcome.myFootprintDesc;
+  const selectedStarting =
+    mode === 'fictional' ? t.welcome.optionDemoStarting : t.welcome.optionSelfStarting;
+  const selectedBestFor =
+    mode === 'fictional' ? t.welcome.optionDemoBestFor : t.welcome.optionSelfBestFor;
+  const currentDeviceSummary = [
+    t.deviceNames[data.device.type],
+    t.osNames[data.device.os],
+    t.browserOptions[data.device.browser],
+  ].join(' • ');
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-8 py-12 sm:py-16">
+    <div className="min-h-screen flex items-start justify-center px-4 sm:px-8 py-12 sm:py-16">
       <div className="w-full max-w-5xl space-y-8">
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 border border-primary/20 shadow-[0_18px_40px_-24px_hsl(var(--primary)/0.9)] mb-4">
@@ -66,22 +106,78 @@ export default function Welcome() {
 
         <Card className="p-0">
           <CardContent className="p-6 space-y-4">
-            <h2 className="font-semibold text-foreground text-lg">{t.welcome.whatToExpect}</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {t.welcome.expectDescription}
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <div className="rounded-xl border border-border/70 bg-card/70 p-3 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground">{t.welcome.expectTime}</p>
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+              <div className="space-y-4">
+                <div>
+                  <h2 className="font-semibold text-foreground text-lg">
+                    {t.welcome.beforeYouStartSummaryTitle}
+                  </h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+                    {t.welcome.expectDescription}
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <div className="rounded-2xl border border-border/70 bg-card/70 p-4 text-sm text-muted-foreground">
+                    <div className="flex items-start gap-3">
+                      <Clock className="w-4 h-4 mt-0.5 text-primary shrink-0" />
+                      <p>{t.welcome.beforeYouStartSummaryDo}</p>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-border/70 bg-card/70 p-4 text-sm text-muted-foreground">
+                    <div className="flex items-start gap-3">
+                      <Key className="w-4 h-4 mt-0.5 text-primary shrink-0" />
+                      <p>{t.welcome.beforeYouStartSummaryNeed}</p>
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-border/70 bg-card/70 p-4 text-sm text-muted-foreground">
+                    <div className="flex items-start gap-3">
+                      <Shield className="w-4 h-4 mt-0.5 text-primary shrink-0" />
+                      <p>{t.welcome.beforeYouStartSummarySafety}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="rounded-xl border border-border/70 bg-card/70 p-3 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground">{t.welcome.expectSteps}</p>
-              </div>
-              <div className="rounded-xl border border-border/70 bg-card/70 p-3 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground">{t.welcome.expectTools}</p>
-              </div>
-              <div className="rounded-xl border border-border/70 bg-card/70 p-3 text-sm text-muted-foreground">
-                <p className="font-medium text-foreground">{t.welcome.expectPrivacy}</p>
+
+              <div className="space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary" className="normal-case tracking-normal">
+                    {t.welcome.expectTime}
+                  </Badge>
+                  <Badge variant="secondary" className="normal-case tracking-normal">
+                    {t.welcome.expectSteps}
+                  </Badge>
+                  <Badge variant="secondary" className="normal-case tracking-normal">
+                    {t.welcome.expectPrivacy}
+                  </Badge>
+                </div>
+                <div className="rounded-2xl border border-border/70 bg-card/70 p-4">
+                  <h3 className="font-medium text-foreground">{t.welcome.whatToExpect}</h3>
+                  <ol className="mt-4 space-y-3">
+                    {orderedSteps.map((step, index) => (
+                      <li
+                        key={step.id}
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-border/60 bg-background/50 px-4 py-3"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                            {index + 1}
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-foreground">
+                              {t.steps[step.key as keyof typeof t.steps]}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {format(t.common.stepNumber, { step: index + 1 })}
+                            </p>
+                          </div>
+                        </div>
+                        <span className="text-xs text-muted-foreground shrink-0">
+                          {plural('minutes', { count: step.duration })}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
               </div>
             </div>
           </CardContent>
@@ -123,6 +219,20 @@ export default function Welcome() {
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {t.welcome.myFootprintDesc}
                     </p>
+                    <div className="pt-2 space-y-1 text-xs text-muted-foreground">
+                      <p>
+                        <span className="font-medium text-foreground">
+                          {t.welcome.optionTableStarting}:
+                        </span>{' '}
+                        {t.welcome.optionSelfStarting}
+                      </p>
+                      <p>
+                        <span className="font-medium text-foreground">
+                          {t.welcome.optionTableBestFor}:
+                        </span>{' '}
+                        {t.welcome.optionSelfBestFor}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -155,6 +265,20 @@ export default function Welcome() {
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {t.welcome.fictionalPersonaDesc}
                     </p>
+                    <div className="pt-2 space-y-1 text-xs text-muted-foreground">
+                      <p>
+                        <span className="font-medium text-foreground">
+                          {t.welcome.optionTableStarting}:
+                        </span>{' '}
+                        {t.welcome.optionDemoStarting}
+                      </p>
+                      <p>
+                        <span className="font-medium text-foreground">
+                          {t.welcome.optionTableBestFor}:
+                        </span>{' '}
+                        {t.welcome.optionDemoBestFor}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -164,85 +288,139 @@ export default function Welcome() {
 
         <Card className="p-0">
           <CardContent className="p-6 space-y-4">
-            <p className="text-xs text-muted-foreground">{t.welcome.optionalHelp}</p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="space-y-2">
-                <label className="text-xs text-muted-foreground">{t.welcome.deviceLabel}</label>
-                <Select
-                  value={data.device.type}
-                  onValueChange={(v) => setDevice({ type: v as DeviceType })}
-                >
-                  <SelectTrigger data-testid="select-device-type">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="desktop">
-                      <span className="flex items-center gap-2">
-                        <Monitor className="w-4 h-4" /> {t.deviceNames.desktop}
-                      </span>
-                    </SelectItem>
-                    <SelectItem value="mobile">
-                      <span className="flex items-center gap-2">
-                        <Smartphone className="w-4 h-4" /> {t.deviceNames.mobile}
-                      </span>
-                    </SelectItem>
-                    <SelectItem value="unknown">
-                      <span className="flex items-center gap-2">
-                        <HelpCircle className="w-4 h-4" /> {t.deviceNames.unknown}
-                      </span>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <h3 className="text-lg font-semibold text-foreground">{selectedModeTitle}</h3>
+                <p className="text-sm text-muted-foreground max-w-2xl leading-relaxed">
+                  {selectedModeDescription}
+                </p>
+                <div className="space-y-1 text-sm text-muted-foreground">
+                  <p>
+                    <span className="font-medium text-foreground">
+                      {t.welcome.optionTableStarting}:
+                    </span>{' '}
+                    {selectedStarting}
+                  </p>
+                  <p>
+                    <span className="font-medium text-foreground">
+                      {t.welcome.optionTableBestFor}:
+                    </span>{' '}
+                    {selectedBestFor}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <Badge variant="outline" className="normal-case tracking-normal">
+                    {t.steps.publicExposure}
+                  </Badge>
+                  <Badge variant="outline" className="normal-case tracking-normal">
+                    {t.welcome.expectTime}
+                  </Badge>
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs text-muted-foreground">{t.welcome.osLabel}</label>
-                <Select value={data.device.os} onValueChange={(v) => setDevice({ os: v as OS })}>
-                  <SelectTrigger data-testid="select-os">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="windows">{t.osNames.windows}</SelectItem>
-                    <SelectItem value="mac">{t.osNames.mac}</SelectItem>
-                    <SelectItem value="linux">{t.osNames.linux}</SelectItem>
-                    <SelectItem value="ios">{t.osNames.ios}</SelectItem>
-                    <SelectItem value="android">{t.osNames.android}</SelectItem>
-                    <SelectItem value="unknown">{t.osNames.unknown}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs text-muted-foreground">{t.welcome.browserLabel}</label>
-                <Select
-                  value={data.device.browser}
-                  onValueChange={(v) => setDevice({ browser: v as Browser })}
-                >
-                  <SelectTrigger data-testid="select-browser">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="chrome">{t.browserOptions.chrome}</SelectItem>
-                    <SelectItem value="edge">{t.browserOptions.edge}</SelectItem>
-                    <SelectItem value="firefox">{t.browserOptions.firefox}</SelectItem>
-                    <SelectItem value="safari">{t.browserOptions.safari}</SelectItem>
-                    <SelectItem value="other">{t.browserOptions.other}</SelectItem>
-                    <SelectItem value="unknown">{t.browserOptions.unknown}</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="shrink-0">
+                <Button size="lg" onClick={startAudit} data-testid="button-begin-audit">
+                  {t.common.startAudit}
+                </Button>
               </div>
             </div>
 
-            <div className="text-center pt-2">
-              <Button size="lg" onClick={startAudit} data-testid="button-begin-audit">
-                {t.common.startAudit}
-              </Button>
-            </div>
+            <p className="text-xs text-muted-foreground max-w-2xl">{t.welcome.consent}</p>
+          </CardContent>
+        </Card>
 
-            <p className="text-xs text-center text-muted-foreground max-w-2xl mx-auto">
-              {t.welcome.consent}
-            </p>
+        <Card className="p-0">
+          <CardContent className="p-6">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="device-setup" className="border-b-0">
+                <AccordionTrigger className="py-0 text-left hover:no-underline">
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-foreground">{t.welcome.optionalHelp}</p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary" className="normal-case tracking-normal">
+                        {currentDeviceSummary}
+                      </Badge>
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="pt-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-xs text-muted-foreground">
+                        {t.welcome.deviceLabel}
+                      </label>
+                      <Select
+                        value={data.device.type}
+                        onValueChange={(v) => setDevice({ type: v as DeviceType })}
+                      >
+                        <SelectTrigger data-testid="select-device-type">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="desktop">
+                            <span className="flex items-center gap-2">
+                              <Monitor className="w-4 h-4" /> {t.deviceNames.desktop}
+                            </span>
+                          </SelectItem>
+                          <SelectItem value="mobile">
+                            <span className="flex items-center gap-2">
+                              <Smartphone className="w-4 h-4" /> {t.deviceNames.mobile}
+                            </span>
+                          </SelectItem>
+                          <SelectItem value="unknown">
+                            <span className="flex items-center gap-2">
+                              <HelpCircle className="w-4 h-4" /> {t.deviceNames.unknown}
+                            </span>
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-xs text-muted-foreground">{t.welcome.osLabel}</label>
+                      <Select
+                        value={data.device.os}
+                        onValueChange={(v) => setDevice({ os: v as OS })}
+                      >
+                        <SelectTrigger data-testid="select-os">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="windows">{t.osNames.windows}</SelectItem>
+                          <SelectItem value="mac">{t.osNames.mac}</SelectItem>
+                          <SelectItem value="linux">{t.osNames.linux}</SelectItem>
+                          <SelectItem value="ios">{t.osNames.ios}</SelectItem>
+                          <SelectItem value="android">{t.osNames.android}</SelectItem>
+                          <SelectItem value="unknown">{t.osNames.unknown}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-xs text-muted-foreground">
+                        {t.welcome.browserLabel}
+                      </label>
+                      <Select
+                        value={data.device.browser}
+                        onValueChange={(v) => setDevice({ browser: v as Browser })}
+                      >
+                        <SelectTrigger data-testid="select-browser">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="chrome">{t.browserOptions.chrome}</SelectItem>
+                          <SelectItem value="edge">{t.browserOptions.edge}</SelectItem>
+                          <SelectItem value="firefox">{t.browserOptions.firefox}</SelectItem>
+                          <SelectItem value="safari">{t.browserOptions.safari}</SelectItem>
+                          <SelectItem value="other">{t.browserOptions.other}</SelectItem>
+                          <SelectItem value="unknown">{t.browserOptions.unknown}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </CardContent>
         </Card>
 

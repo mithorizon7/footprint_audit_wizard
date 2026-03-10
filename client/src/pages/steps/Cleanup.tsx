@@ -88,8 +88,6 @@ export default function Cleanup() {
           instructions={[t.instructions.cleanup1, t.instructions.cleanup2, t.instructions.cleanup3]}
         />
 
-        <CleanupEducational content={t.cleanup.educationalContent} />
-
         <AlertBox severity="warning" className="mb-6">
           {t.cleanup.cookiesWarning}
         </AlertBox>
@@ -190,6 +188,8 @@ export default function Cleanup() {
             testId="input-password-hygiene"
           />
         </div>
+
+        <CleanupEducational content={t.cleanup.educationalContent} />
 
         <StepNavigation
           nextLabel={t.common.viewReportCard}

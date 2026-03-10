@@ -80,8 +80,6 @@ export default function AccountDevice() {
           ]}
         />
 
-        <AccountDeviceEducational content={t.accountDevice.educationalContent} />
-
         <RadioPills
           value={mobileSelection}
           onChange={(value: MobilePlatformSelection) =>
@@ -219,6 +217,8 @@ export default function AccountDevice() {
             />
           )}
         </div>
+
+        <AccountDeviceEducational content={t.accountDevice.educationalContent} />
 
         <StepNavigation guidanceItems={checklistItems} minimumCompleted={minimumCompleted} />
       </StepCard>

@@ -38,7 +38,6 @@ export function GuidedChecklist({ items, minimumCompleted, className }: GuidedCh
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
             {t.instructions.whatToDo}
           </p>
-          <p className="text-sm text-muted-foreground">{t.report.nextActions}</p>
         </div>
         <Badge variant="outline" className="text-xs normal-case tracking-normal shrink-0">
           {completed}/{target}

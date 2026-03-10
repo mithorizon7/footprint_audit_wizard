@@ -52,8 +52,6 @@ export default function FingerprintingStep() {
           ]}
         />
 
-        <FingerprintingEducational content={t.fingerprinting.educationalContent} />
-
         {showExternalLinks && (
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-foreground uppercase tracking-wide">
@@ -126,6 +124,8 @@ export default function FingerprintingStep() {
             testId="input-tracking-protection"
           />
         </div>
+
+        <FingerprintingEducational content={t.fingerprinting.educationalContent} />
 
         <StepNavigation guidanceItems={checklistItems} minimumCompleted={2} />
       </StepCard>
