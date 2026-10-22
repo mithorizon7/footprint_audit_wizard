@@ -34,6 +34,7 @@ describe('ReportCard rendering', () => {
           createElement(TooltipProvider, null, createElement(ReportCard)),
         );
         expect(html).toContain(getTranslations(language).metrics.publicExposureLabel);
+        expect(html).toContain(getTranslations(language).footer.privacyNotice);
         expect(html).not.toContain('[MISSING:');
       });
     }

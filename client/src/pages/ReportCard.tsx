@@ -619,9 +619,7 @@ export default function ReportCard() {
             <li>{t.realityCheckItems.personalization}</li>
             <li>{t.realityCheckItems.changesOverTime}</li>
           </ul>
-          <p className="text-xs mt-2 pt-2 border-t border-border/50">
-            {t.realityCheckItems.dataOnDevice}
-          </p>
+          <p className="text-xs mt-2 pt-2 border-t border-border/50">{t.footer.privacyNotice}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
