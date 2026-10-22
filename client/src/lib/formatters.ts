@@ -42,7 +42,8 @@ export function formatDate(
     day: 'numeric',
   },
 ): string {
-  const dateObj = typeof date === 'string' || typeof date === 'number' ? new Date(date) : date;
+  const dateObj = toValidDate(date);
+  if (!dateObj) return '';
   return new Intl.DateTimeFormat(localeToIntl(locale), options).format(dateObj);
 }
 
@@ -54,7 +55,8 @@ export function formatTime(
     minute: '2-digit',
   },
 ): string {
-  const dateObj = typeof date === 'string' || typeof date === 'number' ? new Date(date) : date;
+  const dateObj = toValidDate(date);
+  if (!dateObj) return '';
   return new Intl.DateTimeFormat(localeToIntl(locale), options).format(dateObj);
 }
 
@@ -93,6 +95,11 @@ function localeToIntl(locale: Locale): string {
     ru: 'ru-RU',
   };
   return localeMap[locale] || 'en-US';
+}
+
+function toValidDate(date: Date | string | number): Date | null {
+  const dateObj = typeof date === 'string' || typeof date === 'number' ? new Date(date) : date;
+  return Number.isNaN(dateObj.getTime()) ? null : dateObj;
 }
 
 export const pluralMessages = {

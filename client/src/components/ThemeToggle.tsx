@@ -7,8 +7,13 @@ export function ThemeToggle() {
   const { t } = useI18n();
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('theme');
-      if (stored === 'dark' || stored === 'light') return stored;
+      try {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark' || stored === 'light') return stored;
+      } catch {
+        // Ignore storage access failures (privacy mode/restricted browsers).
+      }
+
       if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
     }
     return 'light';
@@ -21,7 +26,11 @@ export function ThemeToggle() {
     } else {
       root.classList.remove('dark');
     }
-    localStorage.setItem('theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      // Ignore storage write failures (privacy mode/restricted browsers).
+    }
   }, [theme]);
 
   const toggleTheme = () => {

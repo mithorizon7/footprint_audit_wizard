@@ -6,7 +6,7 @@ A guided 60-minute digital privacy self-assessment lab for workforce adults. Thi
 
 **Purpose**: Educate participants about digital tracking by making the "invisible" visible and measurable, while providing practical digital hygiene actions.
 
-**Key Principle**: Self-audit only. No personal data is collected, stored, or transmitted. All wizard data stays in localStorage on the user's device.
+**Key Principle**: Self-audit only. Raw wizard answers stay in localStorage. Optional first-party analytics, disabled by default, sends summary scores, counts, step progress, locale and coarse device/browser categories to the protected facilitator reporting service. See docs/security-audit-2026-10-22.md for current deployment requirements.
 
 ## Architecture
 
@@ -19,9 +19,9 @@ A guided 60-minute digital privacy self-assessment lab for workforce adults. Thi
 
 ### Backend (Express)
 
-- Minimal - serves static assets only
-- No API routes needed (all data stays client-side)
-- No database required
+- Serves static assets and first-party analytics APIs
+- Facilitator review requires configured password/session credentials
+- Persistent analytics requires PostgreSQL; bounded in-memory storage is for development
 
 ## Project Structure
 
@@ -166,10 +166,10 @@ npx tsx scripts/i18n-render-sweep.ts
 
 ## Privacy & Safety
 
-- NO backend data collection
-- NO personal identifiers stored
+- Optional backend analytics requires learner opt-in; no names, queries or raw responses are sent
+- Random audit identifiers are stored for opted-in analytics; these are not learner accounts
 - Only coarse counts and yes/no toggles recorded
-- All data stored locally in browser
+- Raw answers remain local; clearing browser data does not delete already shared analytics
 - External links open with `target="_blank" rel="noopener noreferrer"`
 
 ## Running the Application

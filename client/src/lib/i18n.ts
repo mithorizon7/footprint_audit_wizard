@@ -153,6 +153,49 @@ export interface Translations {
     retry: string;
     liveUpdates: string;
     refresh: string;
+    loginSubtitle: string;
+    loginTitle: string;
+    passwordLabel: string;
+    invalidPassword: string;
+    loggingIn: string;
+    loginButton: string;
+    logout: string;
+    authNotConfiguredTitle: string;
+    authNotConfiguredBody: string;
+    authConfigVars: string;
+    fromDate: string;
+    toDate: string;
+    exportCsv: string;
+    totalVisitors: string;
+    auditsStarted: string;
+    medianTimeToReport: string;
+    weakReportRate: string;
+    promptedSessionRate: string;
+    funnelTitle: string;
+    dailyTrends: string;
+    stepBreakdown: string;
+    stepBreakdownHint: string;
+    viewed: string;
+    skipped: string;
+    prompted: string;
+    readyAdvanceRate: string;
+    checklistCompletion: string;
+    modeBreakdown: string;
+    localeBreakdown: string;
+    browserBreakdown: string;
+    reviewGuidanceTitle: string;
+    reviewGuidanceBody: string;
+    funnelLabels: {
+      welcome_viewed: string;
+      mode_selected: string;
+      audit_started: string;
+      publicExposure: string;
+      trackers: string;
+      fingerprinting: string;
+      accountDevice: string;
+      cleanup: string;
+      report_viewed: string;
+    };
     totalSessions: string;
     completed: string;
     completionRate: string;
@@ -477,6 +520,7 @@ export interface Translations {
     allDone: string;
   };
   footer: {
+    analyticsConsent: string;
     privacyNotice: string;
   };
   realityCheckItems: {
@@ -655,7 +699,7 @@ const en: Translations = {
     osLabel: 'OS',
     browserLabel: 'Browser',
     consent:
-      'By continuing, you acknowledge this is a self-audit tool. We do not collect or transmit any personal identifiers. All data stays on your device.',
+      'Audit answers stay on this device. Optional usage analytics is controlled by the checkbox below.',
     optionalHelp: 'Device, OS, and browser details let us show instructions that match your setup.',
     introParagraph:
       'Browsing leaves artifacts: search results with your name, third-party trackers on sites you visit, and browser settings that can identify your device. This lab measures those artifacts and links each one to a specific privacy action.',
@@ -665,10 +709,10 @@ const en: Translations = {
     expectTime: '60 minutes',
     expectSteps: '5 guided steps',
     expectTools: 'Free privacy tools',
-    expectPrivacy: '100% local data',
+    expectPrivacy: 'Local audit answers',
     privacyTitle: 'Self-Audit Only',
     privacyDescription:
-      'You will only search your own information. We do not collect or transmit personal identifiers. Everything you record stays on this device.',
+      'Search only your own information. Raw answers stay here; optional analytics sends summary scores and usage counts to this site.',
     beforeYouStart: 'Before You Start',
     prepPoint1: 'Have your passwords ready; clearing cookies signs you out of sites',
     prepPoint2: 'Use a private/incognito window on shared or managed devices',
@@ -695,14 +739,16 @@ const en: Translations = {
     optionDemoLearn: 'How the process works using sample data',
     optionDemoBestFor: 'Learning first, group training, or shared computers',
     privacyProtectedTitle: 'Your Privacy is Protected',
-    privacyProtectedIntro: 'Self-audit only. No accounts. No tracking.',
-    privacyBullet1Title: 'Nothing leaves your browser',
+    privacyProtectedIntro: 'Self-audit only. No learner accounts. Analytics is optional.',
+    privacyBullet1Title: 'Your answers stay in this browser',
     privacyBullet1Desc:
       "All your responses are stored only in this browser's local storage on this device",
-    privacyBullet2Title: 'No data transmitted',
-    privacyBullet2Desc: "We don't collect, store, or send any information you enter",
+    privacyBullet2Title: 'Optional usage analytics',
+    privacyBullet2Desc:
+      'Analytics is off by default. If enabled, this site receives summary scores and usage counts, never names or search queries.',
     privacyBullet3Title: 'You control deletion',
-    privacyBullet3Desc: 'Clear all data instantly using the reset button at any time',
+    privacyBullet3Desc:
+      'The reset button clears local audit data. It does not delete analytics already shared with the server.',
     privacyBullet4Title: 'External tools are your choice',
     privacyBullet4Desc:
       'When you click links to tools like Blacklight or EFF, those sites open in new tabs and are separate from this audit',
@@ -747,12 +793,57 @@ const en: Translations = {
   },
   facilitatorDashboard: {
     title: 'Facilitator Dashboard',
-    subtitle: 'Anonymized aggregate metrics from all lab sessions',
+    subtitle: 'Privacy-safe onboarding and audit metrics across all lab sessions',
     loading: 'Loading dashboard metrics...',
     loadError: 'Failed to load dashboard metrics.',
     retry: 'Retry',
     liveUpdates: 'Live Updates',
     refresh: 'Refresh',
+    loginSubtitle: 'Protected access for reviewing onboarding metrics',
+    loginTitle: 'Enter facilitator password',
+    passwordLabel: 'Password',
+    invalidPassword: 'Incorrect password.',
+    loggingIn: 'Signing in...',
+    loginButton: 'Sign In',
+    logout: 'Sign Out',
+    authNotConfiguredTitle: 'Facilitator access is not configured',
+    authNotConfiguredBody:
+      'Set a facilitator password and session secret before exposing this dashboard in production.',
+    authConfigVars: 'Required env vars: FACILITATOR_PASSWORD, FACILITATOR_SESSION_SECRET',
+    fromDate: 'From',
+    toDate: 'To',
+    exportCsv: 'Export CSV',
+    totalVisitors: 'Total Visitors',
+    auditsStarted: 'Audits Started',
+    medianTimeToReport: 'Median Time to Report',
+    weakReportRate: 'Weak Report Rate',
+    promptedSessionRate: 'Prompted Session Rate',
+    funnelTitle: 'Onboarding Funnel',
+    dailyTrends: 'Daily Starts, Reports, and Completions',
+    stepBreakdown: 'Step Breakdown',
+    stepBreakdownHint: 'Completion and hesitation signals',
+    viewed: 'Viewed',
+    skipped: 'Skipped',
+    prompted: 'Prompted',
+    readyAdvanceRate: 'Ready Advance Rate',
+    checklistCompletion: 'Checklist Completion',
+    modeBreakdown: 'Mode Breakdown',
+    localeBreakdown: 'Locale Breakdown',
+    browserBreakdown: 'Browser Breakdown',
+    reviewGuidanceTitle: 'How to review this dashboard',
+    reviewGuidanceBody:
+      'Watch the funnel, prompt rate, and weak-report rate first. If one step has high prompts or skips, fix that screen before adding more guidance.',
+    funnelLabels: {
+      welcome_viewed: 'Welcome',
+      mode_selected: 'Mode Chosen',
+      audit_started: 'Audit Started',
+      publicExposure: 'Public Exposure',
+      trackers: 'Trackers',
+      fingerprinting: 'Fingerprinting',
+      accountDevice: 'Account & Device',
+      cleanup: 'Cleanup',
+      report_viewed: 'Report Viewed',
+    },
     totalSessions: 'Total Sessions',
     completed: 'Completed',
     completionRate: 'Completion Rate',
@@ -762,7 +853,8 @@ const en: Translations = {
     noDeviceData: 'No device data yet',
     sessionsOverTime: 'Sessions Over Time (Last 14 Days)',
     noSessionData: 'No session data yet. Start some audits to see trends.',
-    privacyNotice: 'All metrics are anonymized. No personal identifiers are collected or stored.',
+    privacyNotice:
+      'Metrics use random audit identifiers. No names, search queries or raw answers are collected. Counts represent opted-in audits, not unique people.',
   },
   notFound: {
     title: '404 Page Not Found',
@@ -1283,8 +1375,9 @@ const en: Translations = {
       'Great job! Consider running this audit again in a few months to stay on top of your digital footprint.',
   },
   footer: {
+    analyticsConsent: 'Share optional usage analytics (off by default)',
     privacyNotice:
-      'Your data stays on this device. We never collect or transmit personal information.',
+      'Audit answers stay on this device. Optional analytics sends scores, counts, step progress, language, device and browser categories to this site.',
   },
   realityCheckItems: {
     snapshot: 'This is a snapshot, not a complete census of your digital footprint.',
@@ -1471,7 +1564,7 @@ const lv: Translations = {
     osLabel: 'OS',
     browserLabel: 'Pārlūkprogramma',
     consent:
-      'Turpinot, jūs atzīstat, ka šis ir pašnovērtējuma rīks. Mēs nevācam un nepārsūtām nekādus personīgos identifikatorus. Visi dati paliek jūsu ierīcē.',
+      'Audita atbildes paliek šajā ierīcē. Izvēles analītiku var ieslēgt ar izvēles rūtiņu zemāk.',
     optionalHelp:
       'Ierīces, OS un pārlūkprogrammas norāde ļauj parādīt instrukcijas, kas atbilst jūsu konfigurācijai.',
     introParagraph:
@@ -1482,10 +1575,10 @@ const lv: Translations = {
     expectTime: '60 minūtes',
     expectSteps: '5 vadīti soļi',
     expectTools: 'Bezmaksas privātuma rīki',
-    expectPrivacy: '100% lokāli dati',
+    expectPrivacy: 'Lokālas audita atbildes',
     privacyTitle: 'Tikai pašpārbaude',
     privacyDescription:
-      'Jūs meklēsiet tikai savu informāciju. Mēs nevācam un nepārsūtām personīgos identifikatorus. Viss, ko ierakstāt, paliek šajā ierīcē.',
+      'Meklējiet tikai savu informāciju. Atbildes paliek šeit; izvēles analītika nosūta kopsavilkuma vērtējumus un lietojuma skaitļus šai vietnei.',
     beforeYouStart: 'Pirms sākat',
     prepPoint1: 'Sagatavojiet paroles; sīkdatņu dzēšana jūs izrakstīs no vietnēm',
     prepPoint2: 'Izmantojiet privāto/inkognito logu koplietotās vai pārvaldītās ierīcēs',
@@ -1512,14 +1605,16 @@ const lv: Translations = {
     optionDemoLearn: 'Kā process darbojas, izmantojot parauga datus',
     optionDemoBestFor: 'Mācīšanās, grupu apmācības vai koplietotiem datoriem',
     privacyProtectedTitle: 'Jūsu privātums ir aizsargāts',
-    privacyProtectedIntro: 'Tikai pašpārbaude. Bez kontiem. Bez izsekošanas.',
-    privacyBullet1Title: 'Nekas neiziet ārpus jūsu pārlūkprogrammas',
+    privacyProtectedIntro: 'Tikai pašpārbaude. Bez dalībnieku kontiem. Analītika nav obligāta.',
+    privacyBullet1Title: 'Atbildes paliek jūsu pārlūkprogrammā',
     privacyBullet1Desc:
       'Visas jūsu atbildes tiek saglabātas tikai šīs pārlūkprogrammas lokālajā krātuvē šajā ierīcē',
-    privacyBullet2Title: 'Dati netiek nosūtīti',
-    privacyBullet2Desc: 'Mēs nevācam, neglabājam un nesūtām nekādu ievadīto informāciju',
+    privacyBullet2Title: 'Izvēles lietojuma analītika',
+    privacyBullet2Desc:
+      'Analītika sākotnēji ir izslēgta. Ieslēdzot tiek nosūtīti vērtējumi un lietojuma skaitļi, nevis vārdi vai meklējumi.',
     privacyBullet3Title: 'Jūs kontrolējat dzēšanu',
-    privacyBullet3Desc: 'Izdzēsiet visus datus jebkurā brīdī, izmantojot atiestatīšanas pogu',
+    privacyBullet3Desc:
+      'Atiestatīšanas poga dzēš lokālos audita datus, bet ne analītiku, kas jau nosūtīta serverim.',
     privacyBullet4Title: 'Ārējie rīki ir jūsu izvēle',
     privacyBullet4Desc:
       'Noklikšķinot uz saitēm uz rīkiem, piemēram, Blacklight vai EFF, šīs vietnes atveras jaunās cilnēs un ir neatkarīgas no šī audita',
@@ -1564,12 +1659,58 @@ const lv: Translations = {
   },
   facilitatorDashboard: {
     title: 'Facilitatora panelis',
-    subtitle: 'Anonimizēti apkopotie rādītāji no visām laboratorijas sesijām',
+    subtitle: 'Privātumu saudzējoši onboarding un audita rādītāji no visām laboratorijas sesijām',
     loading: 'Ielādē paneļa rādītājus...',
     loadError: 'Neizdevās ielādēt paneļa rādītājus.',
     retry: 'Mēģināt vēlreiz',
     liveUpdates: 'Tiešsaistes atjauninājumi',
     refresh: 'Atsvaidzināt',
+    loginSubtitle: 'Aizsargāta piekļuve onboarding rādītāju apskatei',
+    loginTitle: 'Ievadiet fasilitatora paroli',
+    passwordLabel: 'Parole',
+    invalidPassword: 'Nepareiza parole.',
+    loggingIn: 'Pierakstās...',
+    loginButton: 'Pierakstīties',
+    logout: 'Izrakstīties',
+    authNotConfiguredTitle: 'Facilitatora piekļuve nav konfigurēta',
+    authNotConfiguredBody:
+      'Pirms šī paneļa publicēšanas produkcijā iestatiet fasilitatora paroli un sesijas slepeno atslēgu.',
+    authConfigVars:
+      'Nepieciešamie vides mainīgie: FACILITATOR_PASSWORD, FACILITATOR_SESSION_SECRET',
+    fromDate: 'No',
+    toDate: 'Līdz',
+    exportCsv: 'Eksportēt CSV',
+    totalVisitors: 'Kopējie apmeklētāji',
+    auditsStarted: 'Sāktie auditi',
+    medianTimeToReport: 'Mediānais laiks līdz atskaitei',
+    weakReportRate: 'Vājas atskaites rādītājs',
+    promptedSessionRate: 'Sesiju rādītājs ar uzvednēm',
+    funnelTitle: 'Onboarding piltuve',
+    dailyTrends: 'Dienas sākumi, atskaites un pabeigšanas',
+    stepBreakdown: 'Soli pa solim sadalījums',
+    stepBreakdownHint: 'Pabeigšanas un vilcināšanās signāli',
+    viewed: 'Apskatīts',
+    skipped: 'Izlaists',
+    prompted: 'Parādīta uzvedne',
+    readyAdvanceRate: 'Gatavības pārejas rādītājs',
+    checklistCompletion: 'Kontrolsaraksta izpilde',
+    modeBreakdown: 'Režīmu sadalījums',
+    localeBreakdown: 'Valodu sadalījums',
+    browserBreakdown: 'Pārlūku sadalījums',
+    reviewGuidanceTitle: 'Kā skatīt šo paneli',
+    reviewGuidanceBody:
+      'Vispirms skatiet piltuvi, uzvedņu rādītāju un vājo atskaišu rādītāju. Ja kādam solim ir daudz uzvedņu vai izlaišanu, salabojiet šo ekrānu pirms pievienot vairāk palīdzības.',
+    funnelLabels: {
+      welcome_viewed: 'Sākums',
+      mode_selected: 'Režīms izvēlēts',
+      audit_started: 'Audits sākts',
+      publicExposure: 'Publiskā redzamība',
+      trackers: 'Izsekotāji',
+      fingerprinting: 'Pirkstu nospiedumi',
+      accountDevice: 'Konts un ierīce',
+      cleanup: 'Tīrīšana',
+      report_viewed: 'Atskaite apskatīta',
+    },
     totalSessions: 'Kopējās sesijas',
     completed: 'Pabeigts',
     completionRate: 'Pabeigšanas rādītājs',
@@ -2119,8 +2260,9 @@ const lv: Translations = {
       'Lieliski padarīts! Apsveriet iespēju veikt šo auditu vēlreiz pēc dažiem mēnešiem, lai sekotu līdzi savai digitālajai pēdai.',
   },
   footer: {
+    analyticsConsent: 'Atļaut izvēles lietojuma analītiku (sākotnēji izslēgta)',
     privacyNotice:
-      'Jūsu dati paliek šajā ierīcē. Mēs nekad neapkopojam un nepārsūtām personisko informāciju.',
+      'Audita atbildes paliek šajā ierīcē. Izvēles analītika nosūta vērtējumus, skaitļus, soļu progresu, valodu, ierīces un pārlūka kategorijas šai vietnei.',
   },
   realityCheckItems: {
     snapshot: 'Šis ir momentuzņēmums, nevis pilnīgs jūsu digitālās pēdas apskats.',
@@ -2314,7 +2456,7 @@ const ru: Translations = {
     osLabel: 'ОС',
     browserLabel: 'Браузер',
     consent:
-      'Продолжая, вы подтверждаете, что это инструмент самопроверки. Мы не собираем и не передаём никаких личных идентификаторов. Все данные остаются на вашем устройстве.',
+      'Ответы аудита остаются на устройстве. Необязательную аналитику можно включить флажком ниже.',
     optionalHelp:
       'Данные об устройстве, ОС и браузере позволяют показать инструкции, которые подходят вашей конфигурации.',
     introParagraph:
@@ -2325,10 +2467,10 @@ const ru: Translations = {
     expectTime: '60 минут',
     expectSteps: '5 этапов',
     expectTools: 'Бесплатные инструменты',
-    expectPrivacy: '100% локальные данные',
+    expectPrivacy: 'Локальные ответы аудита',
     privacyTitle: 'Только самопроверка',
     privacyDescription:
-      'Вы ищете только свою информацию. Мы не собираем и не передаем личные идентификаторы. Все записи остаются на этом устройстве.',
+      'Ищите только свою информацию. Ответы остаются здесь; необязательная аналитика отправляет сводные оценки и показатели использования на этот сайт.',
     beforeYouStart: 'Перед началом',
     prepPoint1: 'Подготовьте пароли; очистка куки выводит из аккаунтов',
     prepPoint2: 'Используйте приватное/инкогнито окно на общих или управляемых устройствах',
@@ -2355,15 +2497,17 @@ const ru: Translations = {
     optionDemoLearn: 'Как работает процесс на примерных данных',
     optionDemoBestFor: 'Для обучения, групповых тренингов или общих компьютеров',
     privacyProtectedTitle: 'Ваша конфиденциальность защищена',
-    privacyProtectedIntro: 'Только самопроверка. Без аккаунтов. Без отслеживания.',
-    privacyBullet1Title: 'Ничего не покидает ваш браузер',
+    privacyProtectedIntro:
+      'Только самопроверка. Без аккаунтов участников. Аналитика необязательна.',
+    privacyBullet1Title: 'Ответы остаются в вашем браузере',
     privacyBullet1Desc:
       'Все ваши ответы хранятся только в локальном хранилище браузера на этом устройстве',
-    privacyBullet2Title: 'Данные не передаются',
+    privacyBullet2Title: 'Необязательная аналитика использования',
     privacyBullet2Desc:
-      'Мы не собираем, не храним и не отправляем никакую введённую вами информацию',
+      'По умолчанию аналитика выключена. При включении передаются оценки и показатели использования, а не имена или поисковые запросы.',
     privacyBullet3Title: 'Вы контролируете удаление',
-    privacyBullet3Desc: 'Удалите все данные в любой момент с помощью кнопки сброса',
+    privacyBullet3Desc:
+      'Сброс удаляет локальные данные аудита, но не аналитику, уже отправленную на сервер.',
     privacyBullet4Title: 'Внешние инструменты — ваш выбор',
     privacyBullet4Desc:
       'При переходе по ссылкам на инструменты вроде Blacklight или EFF эти сайты открываются в новых вкладках и не связаны с этим аудитом',
@@ -2407,12 +2551,59 @@ const ru: Translations = {
   },
   facilitatorDashboard: {
     title: 'Панель фасилитатора',
-    subtitle: 'Анонимные агрегированные показатели по всем лабораторным сессиям',
+    subtitle:
+      'Безопасные для приватности показатели онбординга и аудита по всем лабораторным сессиям',
     loading: 'Загрузка метрик панели...',
     loadError: 'Не удалось загрузить метрики панели.',
     retry: 'Повторить',
     liveUpdates: 'Живые обновления',
     refresh: 'Обновить',
+    loginSubtitle: 'Защищённый доступ для просмотра метрик онбординга',
+    loginTitle: 'Введите пароль фасилитатора',
+    passwordLabel: 'Пароль',
+    invalidPassword: 'Неверный пароль.',
+    loggingIn: 'Вход...',
+    loginButton: 'Войти',
+    logout: 'Выйти',
+    authNotConfiguredTitle: 'Доступ фасилитатора не настроен',
+    authNotConfiguredBody:
+      'Перед публикацией этой панели в production задайте пароль фасилитатора и секрет сессии.',
+    authConfigVars:
+      'Обязательные переменные среды: FACILITATOR_PASSWORD, FACILITATOR_SESSION_SECRET',
+    fromDate: 'С',
+    toDate: 'По',
+    exportCsv: 'Экспорт CSV',
+    totalVisitors: 'Всего посетителей',
+    auditsStarted: 'Начатые аудиты',
+    medianTimeToReport: 'Медианное время до отчёта',
+    weakReportRate: 'Доля слабых отчётов',
+    promptedSessionRate: 'Доля сессий с подсказками',
+    funnelTitle: 'Воронка онбординга',
+    dailyTrends: 'Дневные старты, отчёты и завершения',
+    stepBreakdown: 'Разбивка по шагам',
+    stepBreakdownHint: 'Сигналы завершения и заминок',
+    viewed: 'Просмотрено',
+    skipped: 'Пропущено',
+    prompted: 'Подсказка показана',
+    readyAdvanceRate: 'Доля готового перехода',
+    checklistCompletion: 'Заполнение чеклиста',
+    modeBreakdown: 'Разбивка по режимам',
+    localeBreakdown: 'Разбивка по языкам',
+    browserBreakdown: 'Разбивка по браузерам',
+    reviewGuidanceTitle: 'Как смотреть на эту панель',
+    reviewGuidanceBody:
+      'Сначала смотрите на воронку, долю подсказок и долю слабых отчётов. Если на каком-то шаге много подсказок или пропусков, исправляйте этот экран до добавления новой помощи.',
+    funnelLabels: {
+      welcome_viewed: 'Старт',
+      mode_selected: 'Режим выбран',
+      audit_started: 'Аудит начат',
+      publicExposure: 'Публичная доступность',
+      trackers: 'Трекеры',
+      fingerprinting: 'Отпечатки',
+      accountDevice: 'Аккаунт и устройство',
+      cleanup: 'Очистка',
+      report_viewed: 'Отчёт просмотрен',
+    },
     totalSessions: 'Всего сессий',
     completed: 'Завершено',
     completionRate: 'Процент завершения',
@@ -2953,8 +3144,9 @@ const ru: Translations = {
       'Отличная работа! Рекомендуем провести этот аудит снова через несколько месяцев, чтобы следить за своим цифровым следом.',
   },
   footer: {
+    analyticsConsent: 'Разрешить аналитику использования (по умолчанию выключена)',
     privacyNotice:
-      'Ваши данные остаются на этом устройстве. Мы никогда не собираем и не передаём личную информацию.',
+      'Ответы аудита остаются на устройстве. Необязательная аналитика отправляет оценки, количества, прогресс шагов, язык, категории устройства и браузера на этот сайт.',
   },
   realityCheckItems: {
     snapshot: 'Это снимок, а не полная перепись вашего цифрового следа.',
@@ -3089,9 +3281,13 @@ export function getTranslations(locale: Locale): Translations {
 export function getLocaleFromStorage(): Locale {
   // Fallback chain: user preference → English (default)
   // Users can select other languages (Latvian, Russian) if desired
-  const stored = localStorage.getItem('footprintWizard:locale');
-  if (stored && stored in allTranslations) {
-    return stored as Locale;
+  try {
+    const stored = localStorage.getItem('footprintWizard:locale');
+    if (stored && stored in allTranslations) {
+      return stored as Locale;
+    }
+  } catch {
+    // Ignore storage read failures (privacy mode/restricted browsers).
   }
 
   // Default to English
@@ -3099,7 +3295,11 @@ export function getLocaleFromStorage(): Locale {
 }
 
 export function saveLocaleToStorage(locale: Locale): void {
-  localStorage.setItem('footprintWizard:locale', locale);
+  try {
+    localStorage.setItem('footprintWizard:locale', locale);
+  } catch {
+    // Ignore storage write failures (privacy mode/restricted browsers).
+  }
 }
 
 export const SUPPORTED_LOCALES: { code: Locale; name: string; nativeName: string }[] = [

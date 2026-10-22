@@ -5,6 +5,7 @@ import { ExternalLinkCard } from '@/components/wizard/ExternalLinkCard';
 import { InstructionBlock } from '@/components/wizard/InstructionBlock';
 import { RadioPills } from '@/components/wizard/RadioPills';
 import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { GuidedChecklist } from '@/components/wizard/GuidedChecklist';
 import { CleanupEducational } from '@/components/wizard/EducationalContent';
 import { Trash2, FileText, ShieldCheck, ShieldAlert } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -18,6 +19,20 @@ export default function Cleanup() {
   const results = data.results.cleanup;
   const browser = data.device.browser;
   const showExternalLinks = !isFictional || tryLiveTools;
+  const checklistItems = [
+    {
+      label: t.cleanup.cookiesClearedQuestion,
+      done: results.cookiesCleared === 'yes',
+    },
+    {
+      label: t.cleanup.cookiesBlockedQuestion,
+      done: results.thirdPartyCookiesBlockedOrLimited !== 'unsure',
+    },
+    {
+      label: t.cleanup.passwordHygieneQuestion,
+      done: results.passwordHygieneActionTaken !== 'later',
+    },
+  ];
 
   const BROWSER_URLS = {
     chrome: {
@@ -66,7 +81,7 @@ export default function Cleanup() {
         whyItMatters={t.cleanup.whyItMatters}
         pitfalls={t.cleanup.pitfalls}
       >
-        <CleanupEducational content={t.cleanup.educationalContent} />
+        <GuidedChecklist items={checklistItems} minimumCompleted={2} />
 
         <InstructionBlock
           title={t.instructions.whatToDo}
@@ -174,7 +189,15 @@ export default function Cleanup() {
           />
         </div>
 
-        <StepNavigation nextLabel={t.common.viewReportCard} onNext={handleNext} showSkip={false} />
+        <CleanupEducational content={t.cleanup.educationalContent} />
+
+        <StepNavigation
+          nextLabel={t.common.viewReportCard}
+          onNext={handleNext}
+          showSkip={false}
+          guidanceItems={checklistItems}
+          minimumCompleted={2}
+        />
       </StepCard>
     </div>
   );

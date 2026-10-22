@@ -14,6 +14,7 @@ import {
   clearWizardData,
   createInitialWizardData,
   detectDevice,
+  createSessionId,
 } from '@/lib/wizardStorage';
 
 interface WizardContextType {
@@ -51,6 +52,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
     if (stored) {
       return {
         ...stored,
+        sessionId: stored.sessionId ?? createSessionId(),
         skippedSteps: stored.skippedSteps ?? [],
         elapsedSeconds: stored.elapsedSeconds ?? 0,
         tryLiveToolsInFictional: stored.tryLiveToolsInFictional ?? false,
@@ -86,17 +88,42 @@ export function WizardProvider({ children }: { children: ReactNode }) {
     setTimeRemaining(remainingMinutes);
   }, [elapsedSeconds]);
 
-  const setMode = useCallback((mode: Mode) => {
-    if (mode === 'fictional') {
-      setData({ ...FICTIONAL_DATA, currentStep: 0, startedAt: null, completedAt: null });
-    } else {
-      setData((prev) => ({
-        ...createInitialWizardData(),
-        device: prev.device,
-        mode: 'self',
-      }));
-    }
+  const resetTimerState = useCallback(() => {
+    setElapsedSeconds(0);
+    setTimeRemaining(TOTAL_DURATION_MINUTES);
   }, []);
+
+  const setMode = useCallback(
+    (mode: Mode) => {
+      setData((prev) => {
+        const shouldReuseSessionId = prev.currentStep === 0 && !prev.startedAt;
+        const sessionId = shouldReuseSessionId
+          ? (prev.sessionId ?? createSessionId())
+          : createSessionId();
+
+        if (mode === 'fictional') {
+          return {
+            ...FICTIONAL_DATA,
+            sessionId,
+            currentStep: 0,
+            startedAt: null,
+            completedAt: null,
+            elapsedSeconds: 0,
+          };
+        }
+
+        return {
+          ...createInitialWizardData(),
+          sessionId,
+          device: prev.device,
+          mode: 'self',
+          elapsedSeconds: 0,
+        };
+      });
+      resetTimerState();
+    },
+    [resetTimerState],
+  );
 
   const setDevice = useCallback((device: Partial<DeviceInfo>) => {
     setData((prev) => ({
@@ -187,10 +214,14 @@ export function WizardProvider({ children }: { children: ReactNode }) {
 
   const startAudit = useCallback(() => {
     const detectedDevice = detectDevice();
+    resetTimerState();
     setData((prev) => ({
       ...prev,
+      sessionId: prev.sessionId ?? createSessionId(),
       startedAt: new Date().toISOString(),
       currentStep: 1,
+      completedAt: null,
+      elapsedSeconds: 0,
       device: {
         type:
           prev.device.type !== 'unknown'
@@ -204,7 +235,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
         mobilePlatformSelection: prev.device.mobilePlatformSelection ?? 'unsure',
       },
     }));
-  }, []);
+  }, [resetTimerState]);
 
   const completeAudit = useCallback(() => {
     setData((prev) => ({

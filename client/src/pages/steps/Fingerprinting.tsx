@@ -5,6 +5,7 @@ import { ExternalLinkCard } from '@/components/wizard/ExternalLinkCard';
 import { InstructionBlock } from '@/components/wizard/InstructionBlock';
 import { RadioPills } from '@/components/wizard/RadioPills';
 import { StepNavigation } from '@/components/wizard/StepNavigation';
+import { GuidedChecklist } from '@/components/wizard/GuidedChecklist';
 import { FingerprintingEducational } from '@/components/wizard/EducationalContent';
 import { Fingerprint, FileText } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -15,6 +16,20 @@ export default function FingerprintingStep() {
   const { t } = useI18n();
   const results = data.results.fingerprinting;
   const showExternalLinks = !isFictional || tryLiveTools;
+  const checklistItems = [
+    {
+      label: t.fingerprinting.effRunQuestion,
+      done: results.effTestRun === 'yes',
+    },
+    {
+      label: t.fingerprinting.browserUniqueQuestion,
+      done: results.browserUnique !== 'unsure',
+    },
+    {
+      label: t.fingerprinting.trackingProtectionQuestion,
+      done: results.trackingProtection !== 'unsure',
+    },
+  ];
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
@@ -26,7 +41,7 @@ export default function FingerprintingStep() {
         whyItMatters={t.fingerprinting.whyItMatters}
         pitfalls={t.fingerprinting.pitfalls}
       >
-        <FingerprintingEducational content={t.fingerprinting.educationalContent} />
+        <GuidedChecklist items={checklistItems} minimumCompleted={2} />
 
         <InstructionBlock
           title={t.instructions.whatToDo}
@@ -110,7 +125,9 @@ export default function FingerprintingStep() {
           />
         </div>
 
-        <StepNavigation />
+        <FingerprintingEducational content={t.fingerprinting.educationalContent} />
+
+        <StepNavigation guidanceItems={checklistItems} minimumCompleted={2} />
       </StepCard>
     </div>
   );

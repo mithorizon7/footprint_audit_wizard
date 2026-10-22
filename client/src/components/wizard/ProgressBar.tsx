@@ -10,10 +10,16 @@ export function ProgressBar() {
   const { t, plural } = useI18n();
   const isStarted = !!data.startedAt;
   const isCompleted = !!data.completedAt;
+  const visibleSteps = STEP_INFO.slice(1);
+  const currentVisibleIndex = Math.max(
+    0,
+    visibleSteps.findIndex((step) => step.id === currentStep),
+  );
+  const nextStep = visibleSteps[currentVisibleIndex + 1];
 
-  const handleStepSelect = (stepIndex: number) => {
-    if (stepIndex === currentStep) return;
-    goToStep(stepIndex);
+  const handleStepSelect = (stepId: number) => {
+    if (stepId === currentStep) return;
+    goToStep(stepId);
   };
 
   const getStepName = (stepKey: string): string => {
@@ -29,7 +35,10 @@ export function ProgressBar() {
     return stepNames[stepKey] || stepKey;
   };
 
-  const progressPercent = Math.min(100, (currentStep / (STEP_INFO.length - 1)) * 100);
+  const progressPercent =
+    visibleSteps.length > 1
+      ? Math.min(100, (currentVisibleIndex / (visibleSteps.length - 1)) * 100)
+      : 100;
 
   return (
     <div className="w-full bg-card/80 border-b border-card-border/70 backdrop-blur-md sticky top-0 z-50 shadow-[0_16px_40px_-30px_rgba(15,23,42,0.45)]">
@@ -37,7 +46,7 @@ export function ProgressBar() {
         <div className="flex items-center justify-between gap-4 mb-2">
           <div className="flex items-center gap-3">
             <span className="text-sm font-medium text-foreground" data-testid="step-progress">
-              {plural('stepOf', { current: currentStep + 1, total: STEP_INFO.length })}
+              {plural('stepOf', { current: currentVisibleIndex + 1, total: visibleSteps.length })}
             </span>
             <Badge
               variant="secondary"
@@ -58,11 +67,11 @@ export function ProgressBar() {
         </div>
 
         <div className="hidden sm:flex items-center gap-1 overflow-x-auto pb-1">
-          {STEP_INFO.map((step, index) => {
-            const isCompletedStep = index < currentStep;
-            const isCurrent = index === currentStep;
-            const isUpcoming = index > currentStep;
-            const wasSkipped = isStepSkipped(index);
+          {visibleSteps.map((step, index) => {
+            const isCompletedStep = index < currentVisibleIndex;
+            const isCurrent = index === currentVisibleIndex;
+            const isUpcoming = index > currentVisibleIndex;
+            const wasSkipped = isStepSkipped(step.id);
 
             return (
               <div key={step.id} className="flex items-center">
@@ -90,7 +99,7 @@ export function ProgressBar() {
                   }
                   aria-label={getStepName(step.key)}
                   aria-current={isCurrent ? 'step' : undefined}
-                  onClick={() => handleStepSelect(index)}
+                  onClick={() => handleStepSelect(step.id)}
                 >
                   {isCompletedStep ? (
                     wasSkipped ? (
@@ -102,7 +111,7 @@ export function ProgressBar() {
                     step.id
                   )}
                 </button>
-                {index < STEP_INFO.length - 1 && (
+                {index < visibleSteps.length - 1 && (
                   <div
                     className={cn(
                       'w-6 lg:w-10 h-[2px] mx-1 transition-all duration-300 rounded-full',
@@ -116,17 +125,17 @@ export function ProgressBar() {
         </div>
 
         <div className="sm:hidden flex gap-1 mt-1">
-          {STEP_INFO.map((step, index) => {
-            const wasSkipped = isStepSkipped(index);
+          {visibleSteps.map((step, index) => {
+            const wasSkipped = isStepSkipped(step.id);
             return (
               <div
                 key={step.id}
                 className={cn(
                   'h-1.5 rounded-full transition-all flex-1',
-                  index < currentStep && !wasSkipped && 'bg-primary',
-                  index < currentStep && wasSkipped && 'bg-amber-500',
-                  index === currentStep && 'bg-primary',
-                  index > currentStep && 'bg-muted',
+                  index < currentVisibleIndex && !wasSkipped && 'bg-primary',
+                  index < currentVisibleIndex && wasSkipped && 'bg-amber-500',
+                  index === currentVisibleIndex && 'bg-primary',
+                  index > currentVisibleIndex && 'bg-muted',
                 )}
               />
             );
@@ -135,11 +144,11 @@ export function ProgressBar() {
 
         <div className="mt-2 flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
-            {getStepName(STEP_INFO[currentStep]?.key)}
+            {getStepName(visibleSteps[currentVisibleIndex]?.key)}
           </p>
-          {isStarted && !isCompleted && (
-            <p className="text-xs text-muted-foreground sm:hidden">
-              {plural('targetMinutes', { count: currentStepTargetMinutes })}
+          {isStarted && !isCompleted && nextStep && (
+            <p className="text-xs text-muted-foreground">
+              {t.common.next}: {getStepName(nextStep.key)}
             </p>
           )}
         </div>
