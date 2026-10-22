@@ -113,9 +113,10 @@ function pastIsoDate(daysBack: number): string {
   return value.toISOString().slice(0, 10);
 }
 
-async function readJson<T>(url: string): Promise<T> {
+async function readJson<T>(url: string, onUnauthorized?: () => Promise<unknown>): Promise<T> {
   const response = await fetch(url, { credentials: 'include' });
   if (!response.ok) {
+    if (response.status === 401) await onUnauthorized?.();
     const text = (await response.text()) || response.statusText;
     throw new Error(`${response.status}: ${text}`);
   }
@@ -142,12 +143,14 @@ export default function FacilitatorDashboard() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [actionError, setActionError] = useState(false);
   const [fromDate, setFromDate] = useState(() => pastIsoDate(13));
   const [toDate, setToDate] = useState(() => todayIsoDate());
 
   const {
     data: authStatus,
     isLoading: authLoading,
+    error: authError,
     refetch: refetchAuthStatus,
   } = useQuery<FacilitatorAuthStatus>({
     queryKey: ['facilitator-auth-status'],
@@ -172,7 +175,7 @@ export default function FacilitatorDashboard() {
     refetch: refetchMetrics,
   } = useQuery<FacilitatorMetrics>({
     queryKey: ['facilitator-metrics', fromDate, toDate],
-    queryFn: () => readJson(`/api/facilitator/metrics?${metricsQueryString}`),
+    queryFn: () => readJson(`/api/facilitator/metrics?${metricsQueryString}`, refetchAuthStatus),
     enabled: metricsEnabled,
     refetchInterval: 30000,
     staleTime: 0,
@@ -186,11 +189,11 @@ export default function FacilitatorDashboard() {
     () => [
       {
         name: t.chartCategories.publicExposure,
-        score: metrics?.summary.avgPublicExposureScore ?? 0,
+        score: metrics?.summary.avgPublicExposureScore ?? null,
       },
-      { name: t.chartCategories.trackers, score: metrics?.summary.avgTrackerScore ?? 0 },
-      { name: t.chartCategories.fingerprint, score: metrics?.summary.avgFingerprintScore ?? 0 },
-      { name: t.chartCategories.adSettings, score: metrics?.summary.avgAdSettingsScore ?? 0 },
+      { name: t.chartCategories.trackers, score: metrics?.summary.avgTrackerScore ?? null },
+      { name: t.chartCategories.fingerprint, score: metrics?.summary.avgFingerprintScore ?? null },
+      { name: t.chartCategories.adSettings, score: metrics?.summary.avgAdSettingsScore ?? null },
     ],
     [
       metrics?.summary.avgAdSettingsScore,
@@ -240,9 +243,12 @@ export default function FacilitatorDashboard() {
 
   const handleLogout = async () => {
     setIsSubmitting(true);
+    setActionError(false);
     try {
       await apiRequest('POST', '/api/facilitator/logout', {});
       await refetchAuthStatus();
+    } catch {
+      setActionError(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -370,13 +376,18 @@ export default function FacilitatorDashboard() {
     );
   }
 
-  if (metricsError || !metrics) {
+  if (authError || metricsError || !metrics) {
     return (
       <div className="min-h-screen flex items-center justify-center text-foreground">
         <Card className="max-w-md">
           <CardContent className="p-6 text-center space-y-4">
             <p className="text-muted-foreground">{t.facilitatorDashboard.loadError}</p>
-            <Button onClick={() => refetchMetrics()}>
+            <Button
+              onClick={async () => {
+                await refetchAuthStatus();
+                if (metricsEnabled) await refetchMetrics();
+              }}
+            >
               <RefreshCw className="w-4 h-4 mr-2" />
               {t.facilitatorDashboard.retry}
             </Button>
@@ -389,6 +400,7 @@ export default function FacilitatorDashboard() {
   return (
     <div className="min-h-screen text-foreground">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-8">
+        {actionError && <p role="alert">{t.facilitatorDashboard.loadError}</p>}
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
             <Link href="/">
