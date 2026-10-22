@@ -142,6 +142,9 @@ export default function ReportCard() {
   const adSettingsLevel = getAdSettingsLevel(results, accountSkipped);
   const cleanupLevel = getCleanupLevel(results, cleanupSkipped);
 
+  const formatPageCount = (count: number) =>
+    count >= 5 ? `${count}+` : format(t.metrics.valuePages, { count });
+
   const getMetricStatus = (level: ScoreLevel, skipped: boolean) => {
     if (skipped) return 'skipped';
     if (level === 'unknown') return 'not_answered';
@@ -504,9 +507,6 @@ export default function ReportCard() {
         return 'bg-card/60 border-border/70';
     }
   };
-
-  const formatPageCount = (count: number) =>
-    count >= 5 ? `${count}+` : format(t.metrics.valuePages, { count });
 
   const displayValueNA = (skipped: boolean, value: string) =>
     displayValue(skipped, value, t.metrics.valueNA);
