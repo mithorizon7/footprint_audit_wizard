@@ -105,3 +105,19 @@ describe('API security boundary', () => {
     expect(status).toBe(429);
   });
 });
+
+describe('analytics persistence contract', () => {
+  it('persists events and clears stale scores consistently in both storage backends', async () => {
+    const { storage } = await import('./storage');
+    const sessionId = 'wiz_00000000000000000000000000000002';
+    await storage.upsertAuditSession({ sessionId, mode: 'self', trackerScore: 75 });
+    await storage.upsertAuditSession({ sessionId, mode: 'self', trackerScore: null });
+    expect((await storage.getAuditSessionBySessionId(sessionId))?.trackerScore).toBeNull();
+    await storage.updateAuditSession(sessionId, { publicExposureScore: 20 });
+    await storage.updateAuditSession(sessionId, { publicExposureScore: null });
+    expect((await storage.getAuditSessionBySessionId(sessionId))?.publicExposureScore).toBeNull();
+    await storage.createOnboardingEvent({ sessionId, eventName: 'report_viewed' });
+    const metrics = await storage.getFacilitatorMetrics({ from: null, to: null });
+    expect(metrics.summary.reportViews).toBeGreaterThanOrEqual(1);
+  });
+});

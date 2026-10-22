@@ -166,17 +166,17 @@ class MemoryStorage implements IStorage {
       const updated: AuditSession = {
         ...existing,
         ...session,
-        locale: session.locale ?? existing.locale,
-        deviceType: session.deviceType ?? existing.deviceType,
-        os: session.os ?? existing.os,
-        browser: session.browser ?? existing.browser,
-        publicExposureScore: session.publicExposureScore ?? existing.publicExposureScore,
-        trackerScore: session.trackerScore ?? existing.trackerScore,
-        fingerprintScore: session.fingerprintScore ?? existing.fingerprintScore,
-        adSettingsScore: session.adSettingsScore ?? existing.adSettingsScore,
-        trackerCount: session.trackerCount ?? existing.trackerCount,
-        completed: session.completed ?? existing.completed,
-        completedAt: session.completedAt ?? existing.completedAt,
+        locale: session.locale ?? null,
+        deviceType: session.deviceType ?? null,
+        os: session.os ?? null,
+        browser: session.browser ?? null,
+        publicExposureScore: session.publicExposureScore ?? null,
+        trackerScore: session.trackerScore ?? null,
+        fingerprintScore: session.fingerprintScore ?? null,
+        adSettingsScore: session.adSettingsScore ?? null,
+        trackerCount: session.trackerCount ?? null,
+        completed: session.completed ?? 0,
+        completedAt: session.completedAt ?? null,
       };
       this.sessions[existingIndex] = updated;
       return updated;
@@ -217,17 +217,6 @@ class MemoryStorage implements IStorage {
     const updated: AuditSession = {
       ...existing,
       ...updates,
-      locale: updates.locale ?? existing.locale,
-      deviceType: updates.deviceType ?? existing.deviceType,
-      os: updates.os ?? existing.os,
-      browser: updates.browser ?? existing.browser,
-      publicExposureScore: updates.publicExposureScore ?? existing.publicExposureScore,
-      trackerScore: updates.trackerScore ?? existing.trackerScore,
-      fingerprintScore: updates.fingerprintScore ?? existing.fingerprintScore,
-      adSettingsScore: updates.adSettingsScore ?? existing.adSettingsScore,
-      trackerCount: updates.trackerCount ?? existing.trackerCount,
-      completed: updates.completed ?? existing.completed,
-      completedAt: updates.completedAt ?? existing.completedAt,
     };
     this.sessions[sessionIndex] = updated;
     return updated;

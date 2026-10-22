@@ -147,6 +147,18 @@ function uniqueSessionCount(
   ).size;
 }
 
+function selectSessionEvents(events: OnboardingEvent[], latest: boolean): OnboardingEvent[] {
+  const selected = new Map<string, OnboardingEvent>();
+  for (const event of events) {
+    const previous = selected.get(event.sessionId);
+    const order = previous
+      ? event.occurredAt.getTime() - previous.occurredAt.getTime() || event.id - previous.id
+      : 0;
+    if (!previous || (latest ? order > 0 : order < 0)) selected.set(event.sessionId, event);
+  }
+  return Array.from(selected.values());
+}
+
 function buildSessionProfiles(
   sessions: AuditSession[],
   events: OnboardingEvent[],
@@ -205,6 +217,12 @@ export function buildFacilitatorMetrics(
   );
   const reportViewEvents = events.filter((event) => event.eventName === 'report_viewed');
   const reportViewIds = new Set(reportViewEvents.map((event) => event.sessionId));
+  const firstReports = selectSessionEvents(reportViewEvents, false);
+  const latestReports = selectSessionEvents(reportViewEvents, true);
+  // Resumed audits can have activity in this range without a new start event.
+  events
+    .filter((event) => !['welcome_viewed', 'mode_selected'].includes(event.eventName))
+    .forEach((event) => auditsStarted.add(event.sessionId));
   const promptedIds = new Set(
     events
       .filter((event) => event.eventName === 'next_prompt_shown')
@@ -219,17 +237,17 @@ export function buildFacilitatorMetrics(
     reportViews: reportViewIds.size,
     reportViewRate: roundPct(reportViewIds.size, auditsStarted.size),
     medianTimeToReportSec: median(
-      reportViewEvents
+      firstReports
         .map((event) => event.timeSinceStartSec)
         .filter((value): value is number => typeof value === 'number'),
     ),
     weakReportRate: roundPct(
-      reportViewEvents.filter((event) => event.weakReport === true).length,
-      reportViewEvents.length,
+      latestReports.filter((event) => event.weakReport === true).length,
+      latestReports.length,
     ),
     promptedSessionRate: roundPct(promptedIds.size, auditsStarted.size),
     avgNextActionCount: average(
-      reportViewEvents
+      latestReports
         .map((event) => event.nextActionCount)
         .filter((value): value is number => typeof value === 'number'),
     ),
@@ -261,7 +279,10 @@ export function buildFacilitatorMetrics(
   };
 
   const funnel = FUNNEL_STAGES.map((stage) => {
-    const count = uniqueSessionCount(events, stage.eventName, stage.stepKey);
+    const count =
+      stage.key === 'audit_started'
+        ? auditsStarted.size
+        : uniqueSessionCount(events, stage.eventName, stage.stepKey);
     return {
       key: stage.key,
       count,
@@ -276,12 +297,7 @@ export function buildFacilitatorMetrics(
     const completions = events.filter(
       (event) => event.eventName === 'step_completed' && event.stepKey === stepKey,
     );
-    const latestCompletionBySession = new Map<string, OnboardingEvent>();
-    completions.forEach((event) => {
-      latestCompletionBySession.set(event.sessionId, event);
-    });
-
-    const latestCompletions = Array.from(latestCompletionBySession.values());
+    const latestCompletions = selectSessionEvents(completions, true);
     const nonSkippedCompletions = latestCompletions.filter((event) => event.skipped !== true);
     const readyCompletions = nonSkippedCompletions.filter((event) => event.wasReady === true);
     const checklistCompletionPct = nonSkippedCompletions
@@ -293,7 +309,7 @@ export function buildFacilitatorMetrics(
           return null;
         }
 
-        return Math.round((completed / target) * 100);
+        return Math.min(100, Math.round((completed / target) * 100));
       })
       .filter((value): value is number => typeof value === 'number');
 

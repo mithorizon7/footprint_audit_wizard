@@ -249,6 +249,7 @@ describe('facilitatorMetrics', () => {
       completedSessions: 1,
       promptedSessions: 1,
       readyAdvanceRate: 100,
+      avgChecklistCompletionPct: 100,
     });
 
     expect(metrics.deviceBreakdown).toEqual([
@@ -265,5 +266,50 @@ describe('facilitatorMetrics', () => {
     expect(csv).toContain('summary,summary,total_visitors,2');
     expect(csv).toContain('funnel,report_viewed,count,1');
     expect(csv).toContain('device,desktop,count,1');
+  });
+
+  it('uses chronological completions even when database rows are unordered', () => {
+    const completion = events[3];
+    const later = {
+      ...completion,
+      id: 20,
+      wasReady: false,
+      completedChecklistCount: 0,
+      occurredAt: new Date('2026-03-08T16:00:00Z'),
+    };
+    const metrics = buildFacilitatorMetrics(sessions, [later, completion], {
+      from: null,
+      to: null,
+    });
+    expect(metrics.stepBreakdown[0]).toMatchObject({
+      readyAdvanceRate: 0,
+      avgChecklistCompletionPct: 0,
+    });
+  });
+
+  it('counts each report session once and separates first timing from latest quality', () => {
+    const first = events[4];
+    const later = {
+      ...first,
+      id: 30,
+      timeSinceStartSec: 5000,
+      nextActionCount: 6,
+      weakReport: true,
+      occurredAt: new Date('2026-03-08T17:00:00Z'),
+    };
+    const other = { ...first, id: 31, sessionId: 'wiz_other', timeSinceStartSec: 60 };
+    const metrics = buildFacilitatorMetrics([], [later, first, other], {
+      from: null,
+      to: null,
+    });
+    expect(metrics.summary).toMatchObject({
+      auditsStarted: 2,
+      reportViews: 2,
+      reportViewRate: 100,
+      medianTimeToReportSec: 990,
+      weakReportRate: 50,
+      avgNextActionCount: 5,
+    });
+    expect(metrics.funnel.find((stage) => stage.key === 'audit_started')?.count).toBe(2);
   });
 });

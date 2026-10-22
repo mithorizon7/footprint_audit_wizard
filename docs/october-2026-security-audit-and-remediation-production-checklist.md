@@ -107,9 +107,14 @@
 
 ## Authorized Release Continuation
 
-- [ ] Q-007 [status:in_progress] User authorized remaining project fixes, commit, push and deploy. Preserve prior work in a release commit, reconcile origin/main and validate the merged tree.
+- [x] Q-007 [status:verified] User authorized remaining project fixes, commit, push and deploy. Preserved prior work in 65e433c, reconciled origin/main in 554ad64, and validated the merged source with 32 passing tests.
 - [ ] Q-008 [status:open] Push release, run CI and publish to the identified existing production service.
 - [ ] V-009 [status:open] Verify exact released commit, database migration, runtime and live HTTP behavior.
   - Evidence: pending deployment target/access.
 
-Railway remains unauthenticated and the connected Replit account has no matching Code-Scribe or Footprint app. Requested the live URL/project while continuing repository work. System-wide device upgrades remain outside this project release.
+- [x] F-009 [status:verified] [P2] [confidence:0.99] Release review found checklist percentages exceeding 100, unordered completion rows selecting old outcomes, duplicate report views biasing averages, resumed audit denominators, and memory storage retaining explicitly cleared scores.
+  - Evidence: facilitatorMetrics.ts and storage.ts corrected; regression coverage in facilitatorMetrics.test.ts and routes.test.ts. Thirty-two tests pass, including six API/persistence tests against isolated PostgreSQL 17.9.
+- [x] V-010 [status:verified] Additive migration applied twice successfully to an isolated PostgreSQL 17.9 database; actual database-backed API/persistence tests pass. This is local validation, not production migration evidence.
+- [x] Q-009 [status:verified] Located the existing Replit app through keyword search: Footprint Audit, app 3d6b1ec9-941f-43da-b7e5-4b1202cbf354, published address https://footprintaudit.replit.app. Read-only Replit inspection confirms the matching GitHub origin and a clean worktree at 590364f; workspace runtime Node 20.20.0, database variable present, facilitator secrets and public-origin variable absent. Replit reports a failed latest publish with an earlier successful deployment still serving; serving runtime/configuration remains unverified.
+
+Railway remains unauthenticated but is not the identified release target. Replit workspace runtime and deployment synchronization are now in scope. System-wide device upgrades remain outside this project release. Telemetry retention and shared edge throttling still require an operations policy; no destructive cleanup or shared credential rotation is authorized implicitly.
