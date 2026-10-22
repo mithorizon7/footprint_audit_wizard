@@ -1385,7 +1385,7 @@ const en: Translations = {
     personalization: 'Search personalization means others may see different results for you.',
     changesOverTime: 'Your footprint changes over time as new data is collected and shared.',
     dataOnDevice:
-      'All data remains on your device. This wizard never collects, stores, or transmits personal information.',
+      'Audit answers stay on this device. Optional analytics shares summary scores and usage counts with this site, never names or search queries.',
   },
   skippedSections: {
     title: 'Skipped Sections',
@@ -1394,7 +1394,7 @@ const en: Translations = {
   },
   printInfo: {
     generated: 'Generated',
-    dataStoredLocally: 'All data stored locally only',
+    dataStoredLocally: 'Audit answers stored on this device',
   },
   charts: {
     radarView: 'Radar View',
@@ -2273,7 +2273,7 @@ const lv: Translations = {
     changesOverTime:
       'Jūsu digitālā pēda mainās laika gaitā, jo tiek apkopoti un kopīgoti jauni dati.',
     dataOnDevice:
-      'Visi dati paliek jūsu ierīcē. Šis vednis nekad neapkopo, neuzglabā un nepārsūta personisko informāciju.',
+      'Audita atbildes paliek šajā ierīcē. Izvēles analītika nosūta šai vietnei kopsavilkuma vērtējumus un lietošanas skaitu, bet ne vārdus vai meklēšanas vaicājumus.',
   },
   skippedSections: {
     title: 'Izlaistās sadaļas',
@@ -2282,7 +2282,7 @@ const lv: Translations = {
   },
   printInfo: {
     generated: 'Izveidots',
-    dataStoredLocally: 'Visi dati glabājas tikai lokāli',
+    dataStoredLocally: 'Audita atbildes glabājas šajā ierīcē',
   },
   charts: {
     radarView: 'Radara skats',
@@ -3156,7 +3156,7 @@ const ru: Translations = {
     changesOverTime:
       'Ваш цифровой след меняется со временем по мере сбора и обмена новыми данными.',
     dataOnDevice:
-      'Все данные остаются на вашем устройстве. Этот мастер никогда не собирает, не хранит и не передаёт личную информацию.',
+      'Ответы аудита остаются на этом устройстве. Необязательная аналитика передаёт этому сайту итоговые оценки и показатели использования, но не имена или поисковые запросы.',
   },
   skippedSections: {
     title: 'Пропущенные разделы',
@@ -3165,7 +3165,7 @@ const ru: Translations = {
   },
   printInfo: {
     generated: 'Создано',
-    dataStoredLocally: 'Все данные хранятся только локально',
+    dataStoredLocally: 'Ответы аудита хранятся на этом устройстве',
   },
   charts: {
     radarView: 'Радарный вид',

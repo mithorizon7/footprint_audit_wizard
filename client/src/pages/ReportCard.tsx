@@ -142,6 +142,9 @@ export default function ReportCard() {
   const adSettingsLevel = getAdSettingsLevel(results, accountSkipped);
   const cleanupLevel = getCleanupLevel(results, cleanupSkipped);
 
+  const formatPageCount = (count: number) =>
+    count >= 5 ? `${count}+` : format(t.metrics.valuePages, { count });
+
   const getMetricStatus = (level: ScoreLevel, skipped: boolean) => {
     if (skipped) return 'skipped';
     if (level === 'unknown') return 'not_answered';
@@ -505,9 +508,6 @@ export default function ReportCard() {
     }
   };
 
-  const formatPageCount = (count: number) =>
-    count >= 5 ? `${count}+` : format(t.metrics.valuePages, { count });
-
   const displayValueNA = (skipped: boolean, value: string) =>
     displayValue(skipped, value, t.metrics.valueNA);
 
@@ -619,9 +619,7 @@ export default function ReportCard() {
             <li>{t.realityCheckItems.personalization}</li>
             <li>{t.realityCheckItems.changesOverTime}</li>
           </ul>
-          <p className="text-xs mt-2 pt-2 border-t border-border/50">
-            {t.realityCheckItems.dataOnDevice}
-          </p>
+          <p className="text-xs mt-2 pt-2 border-t border-border/50">{t.footer.privacyNotice}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
