@@ -1,31 +1,77 @@
 import { z } from 'zod';
-import { pgTable, serial, varchar, integer, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, integer, timestamp, boolean, index } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 
-export const auditSessions = pgTable('audit_sessions', {
-  id: serial('id').primaryKey(),
-  sessionId: varchar('session_id', { length: 64 }).notNull().unique(),
-  mode: varchar('mode', { length: 20 }).notNull(),
-  deviceType: varchar('device_type', { length: 20 }),
-  os: varchar('os', { length: 20 }),
-  browser: varchar('browser', { length: 20 }),
-  publicExposureScore: integer('public_exposure_score'),
-  trackerScore: integer('tracker_score'),
-  fingerprintScore: integer('fingerprint_score'),
-  adSettingsScore: integer('ad_settings_score'),
-  trackerCount: integer('tracker_count'),
-  completed: integer('completed').notNull().default(0),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  completedAt: timestamp('completed_at'),
-});
+export const auditSessions = pgTable(
+  'audit_sessions',
+  {
+    id: serial('id').primaryKey(),
+    sessionId: varchar('session_id', { length: 64 }).notNull().unique(),
+    mode: varchar('mode', { length: 20 }).notNull(),
+    locale: varchar('locale', { length: 8 }),
+    deviceType: varchar('device_type', { length: 20 }),
+    os: varchar('os', { length: 20 }),
+    browser: varchar('browser', { length: 20 }),
+    publicExposureScore: integer('public_exposure_score'),
+    trackerScore: integer('tracker_score'),
+    fingerprintScore: integer('fingerprint_score'),
+    adSettingsScore: integer('ad_settings_score'),
+    trackerCount: integer('tracker_count'),
+    completed: integer('completed').notNull().default(0),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    completedAt: timestamp('completed_at'),
+  },
+  (table) => ({
+    createdAtIdx: index('audit_sessions_created_at_idx').on(table.createdAt),
+  }),
+);
 
 export const insertAuditSessionSchema = createInsertSchema(auditSessions).omit({
   id: true,
   createdAt: true,
 });
 
+export const onboardingEvents = pgTable(
+  'onboarding_events',
+  {
+    id: serial('id').primaryKey(),
+    sessionId: varchar('session_id', { length: 64 }).notNull(),
+    eventName: varchar('event_name', { length: 64 }).notNull(),
+    stepKey: varchar('step_key', { length: 32 }),
+    mode: varchar('mode', { length: 20 }),
+    locale: varchar('locale', { length: 8 }),
+    guidanceLevel: varchar('guidance_level', { length: 16 }),
+    deviceType: varchar('device_type', { length: 20 }),
+    os: varchar('os', { length: 20 }),
+    browser: varchar('browser', { length: 20 }),
+    timeSinceStartSec: integer('time_since_start_sec'),
+    completedChecklistCount: integer('completed_checklist_count'),
+    targetChecklistCount: integer('target_checklist_count'),
+    unmetItemsCount: integer('unmet_items_count'),
+    unknownAnswerCount: integer('unknown_answer_count'),
+    nextActionCount: integer('next_action_count'),
+    skippedStepCount: integer('skipped_step_count'),
+    wasReady: boolean('was_ready'),
+    weakReport: boolean('weak_report'),
+    skipped: boolean('skipped'),
+    occurredAt: timestamp('occurred_at').defaultNow().notNull(),
+  },
+  (table) => ({
+    sessionIdIdx: index('onboarding_events_session_id_idx').on(table.sessionId),
+    eventNameIdx: index('onboarding_events_event_name_idx').on(table.eventName),
+    occurredAtIdx: index('onboarding_events_occurred_at_idx').on(table.occurredAt),
+  }),
+);
+
+export const insertOnboardingEventSchema = createInsertSchema(onboardingEvents).omit({
+  id: true,
+  occurredAt: true,
+});
+
 export type InsertAuditSession = typeof auditSessions.$inferInsert;
 export type AuditSession = typeof auditSessions.$inferSelect;
+export type InsertOnboardingEvent = typeof onboardingEvents.$inferInsert;
+export type OnboardingEvent = typeof onboardingEvents.$inferSelect;
 
 export const deviceTypeSchema = z.enum(['desktop', 'mobile', 'unknown']);
 export const osSchema = z.enum(['windows', 'mac', 'linux', 'ios', 'android', 'unknown']);
@@ -59,6 +105,28 @@ export const iosATTSchema = z.enum([
 ]);
 export const cleanupActionSchema = z.enum(['yes', 'no', 'later']);
 export const modeSchema = z.enum(['self', 'fictional']);
+export const localeSchema = z.enum(['en', 'lv', 'ru']);
+export const stepKeySchema = z.enum([
+  'welcome',
+  'publicExposure',
+  'trackers',
+  'fingerprinting',
+  'accountDevice',
+  'cleanup',
+  'reportCard',
+]);
+export const onboardingEventNameSchema = z.enum([
+  'welcome_viewed',
+  'mode_selected',
+  'audit_started',
+  'step_viewed',
+  'checklist_progressed',
+  'next_prompt_shown',
+  'step_completed',
+  'report_viewed',
+  'audit_reset',
+]);
+export const guidanceLevelSchema = z.enum(['none', 'light', 'high']);
 
 export const publicExposureSchema = z.object({
   searchResultPagesWithPersonalInfo: z.number().min(0).max(5).default(0),
@@ -113,6 +181,7 @@ export const wizardResultsSchema = z.object({
 
 export const wizardDataSchema = z.object({
   version: z.literal('1.0').default('1.0'),
+  sessionId: z.string().nullable().default(null),
   mode: modeSchema.default('self'),
   device: deviceInfoSchema.default({}),
   results: wizardResultsSchema.default({}),
@@ -138,6 +207,10 @@ export type AndroidAdIdAction = z.infer<typeof androidAdIdActionSchema>;
 export type IosATT = z.infer<typeof iosATTSchema>;
 export type CleanupAction = z.infer<typeof cleanupActionSchema>;
 export type Mode = z.infer<typeof modeSchema>;
+export type Locale = z.infer<typeof localeSchema>;
+export type StepKey = z.infer<typeof stepKeySchema>;
+export type OnboardingEventName = z.infer<typeof onboardingEventNameSchema>;
+export type GuidanceLevel = z.infer<typeof guidanceLevelSchema>;
 export type PublicExposure = z.infer<typeof publicExposureSchema>;
 export type Trackers = z.infer<typeof trackersSchema>;
 export type Fingerprinting = z.infer<typeof fingerprintingSchema>;
@@ -149,6 +222,7 @@ export type WizardData = z.infer<typeof wizardDataSchema>;
 
 export const FICTIONAL_DATA: WizardData = {
   version: '1.0',
+  sessionId: null,
   mode: 'fictional',
   device: { type: 'desktop', os: 'windows', browser: 'chrome', mobilePlatformSelection: 'unsure' },
   currentStep: 0,

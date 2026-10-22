@@ -14,6 +14,7 @@ import {
   clearWizardData,
   createInitialWizardData,
   detectDevice,
+  createSessionId,
 } from '@/lib/wizardStorage';
 
 interface WizardContextType {
@@ -51,6 +52,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
     if (stored) {
       return {
         ...stored,
+        sessionId: stored.sessionId ?? createSessionId(),
         skippedSteps: stored.skippedSteps ?? [],
         elapsedSeconds: stored.elapsedSeconds ?? 0,
         tryLiveToolsInFictional: stored.tryLiveToolsInFictional ?? false,
@@ -93,22 +95,31 @@ export function WizardProvider({ children }: { children: ReactNode }) {
 
   const setMode = useCallback(
     (mode: Mode) => {
-      if (mode === 'fictional') {
-        setData({
-          ...FICTIONAL_DATA,
-          currentStep: 0,
-          startedAt: null,
-          completedAt: null,
-          elapsedSeconds: 0,
-        });
-      } else {
-        setData((prev) => ({
+      setData((prev) => {
+        const shouldReuseSessionId = prev.currentStep === 0 && !prev.startedAt;
+        const sessionId = shouldReuseSessionId
+          ? (prev.sessionId ?? createSessionId())
+          : createSessionId();
+
+        if (mode === 'fictional') {
+          return {
+            ...FICTIONAL_DATA,
+            sessionId,
+            currentStep: 0,
+            startedAt: null,
+            completedAt: null,
+            elapsedSeconds: 0,
+          };
+        }
+
+        return {
           ...createInitialWizardData(),
+          sessionId,
           device: prev.device,
           mode: 'self',
           elapsedSeconds: 0,
-        }));
-      }
+        };
+      });
       resetTimerState();
     },
     [resetTimerState],
@@ -206,6 +217,7 @@ export function WizardProvider({ children }: { children: ReactNode }) {
     resetTimerState();
     setData((prev) => ({
       ...prev,
+      sessionId: prev.sessionId ?? createSessionId(),
       startedAt: new Date().toISOString(),
       currentStep: 1,
       completedAt: null,

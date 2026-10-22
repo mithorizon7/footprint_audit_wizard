@@ -1,6 +1,7 @@
 import { useEffect, useState, type KeyboardEvent } from 'react';
 import { useWizard } from '@/context/WizardContext';
 import { useI18n } from '@/context/I18nContext';
+import { useOnboardingAnalytics } from '@/context/OnboardingAnalyticsContext';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -39,6 +40,7 @@ import { detectDevice } from '@/lib/wizardStorage';
 export default function Welcome() {
   const { data, setMode, setDevice, startAudit, mode } = useWizard();
   const { t, format, plural } = useI18n();
+  const { trackModeSelected } = useOnboardingAnalytics();
   const [didAutofillDevice, setDidAutofillDevice] = useState(false);
 
   useEffect(() => {
@@ -64,6 +66,7 @@ export default function Welcome() {
   }, [data.device.browser, data.device.os, data.device.type, didAutofillDevice, setDevice]);
 
   const handleModeChange = (newMode: Mode) => {
+    trackModeSelected(newMode);
     setMode(newMode);
   };
 

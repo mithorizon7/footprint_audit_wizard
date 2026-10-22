@@ -7,24 +7,13 @@ const app = express();
 const httpServer = createServer(app);
 const isProduction = process.env.NODE_ENV === 'production';
 
-declare module 'http' {
-  interface IncomingMessage {
-    rawBody: unknown;
-  }
-}
-
 app.disable('x-powered-by');
-
-app.use(
-  express.json({
-    limit: '32kb',
-    verify: (req, _res, buf) => {
-      req.rawBody = buf;
-    },
-  }),
-);
-
-app.use(express.urlencoded({ extended: false, limit: '32kb' }));
+// Do not trust forwarded addresses unless the deployer names the trusted proxy subnets.
+if (process.env.TRUST_PROXY)
+  app.set(
+    'trust proxy',
+    process.env.TRUST_PROXY.split(',').map((value) => value.trim()),
+  );
 
 app.use((req, res, next) => {
   // Baseline hardening headers for all responses.
@@ -33,9 +22,10 @@ app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'no-referrer');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   if (isProduction) {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000');
     res.setHeader(
       'Content-Security-Policy',
-      "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self' data:",
+      "default-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self' data:",
     );
   }
   if (req.path.startsWith('/api')) {
@@ -57,33 +47,19 @@ export function log(message: string, source = 'express') {
 
 app.use((req, res, next) => {
   const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: unknown;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
 
   res.on('finish', () => {
     const duration = Date.now() - start;
-    if (path.startsWith('/api')) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (!isProduction && capturedJsonResponse !== undefined) {
-        const serialized = JSON.stringify(capturedJsonResponse);
-        if (serialized) {
-          const preview = serialized.length > 240 ? `${serialized.slice(0, 240)}...` : serialized;
-          logLine += ` :: ${preview}`;
-        }
-      }
-
-      log(logLine);
+    if (req.path.startsWith('/api')) {
+      log(`${req.method} ${req.route?.path ?? '/api'} ${res.statusCode} in ${duration}ms`);
     }
   });
 
   next();
 });
+
+// The API accepts small JSON only; compressed bodies needlessly expose decoders.
+app.use(express.json({ limit: '32kb', inflate: false }));
 
 (async () => {
   await registerRoutes(httpServer, app);
@@ -100,7 +76,7 @@ app.use((req, res, next) => {
 
     const error = err as { status?: number; statusCode?: number; message?: string };
     const status = error.status || error.statusCode || 500;
-    const message = error.message || 'Internal Server Error';
+    const message = status >= 500 ? 'Internal Server Error' : 'Invalid request';
     const responseMessage = isProduction && status >= 500 ? 'Internal Server Error' : message;
 
     console.error('[server] request failure', {
@@ -128,8 +104,7 @@ app.use((req, res, next) => {
   httpServer.listen(
     {
       port,
-      host: '0.0.0.0',
-      reusePort: true,
+      host: process.env.HOST ?? (isProduction ? '0.0.0.0' : '127.0.0.1'),
     },
     () => {
       log(`serving on port ${port}`);

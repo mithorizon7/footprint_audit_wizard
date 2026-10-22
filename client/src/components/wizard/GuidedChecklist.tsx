@@ -1,5 +1,9 @@
+import { useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { useI18n } from '@/context/I18nContext';
+import { useWizard } from '@/context/WizardContext';
+import { useOnboardingAnalytics } from '@/context/OnboardingAnalyticsContext';
+import { getStepKeyForIndex } from '@/lib/onboardingAnalytics';
 import { cn } from '@/lib/utils';
 import { CheckCircle2, Circle } from 'lucide-react';
 
@@ -16,14 +20,31 @@ interface GuidedChecklistProps {
 
 export function GuidedChecklist({ items, minimumCompleted, className }: GuidedChecklistProps) {
   const { t } = useI18n();
-
-  if (!items.length) {
-    return null;
-  }
+  const { currentStep } = useWizard();
+  const { trackChecklistProgress } = useOnboardingAnalytics();
+  const hasItems = items.length > 0;
 
   const target = Math.max(1, Math.min(minimumCompleted ?? items.length, items.length));
   const completed = items.filter((item) => item.done).length;
   const isReady = completed >= target;
+  const unmetItemsCount = items.length - completed;
+
+  useEffect(() => {
+    if (!hasItems) {
+      return;
+    }
+
+    trackChecklistProgress({
+      stepKey: getStepKeyForIndex(currentStep),
+      completedChecklistCount: completed,
+      targetChecklistCount: target,
+      unmetItemsCount,
+    });
+  }, [completed, currentStep, hasItems, target, trackChecklistProgress, unmetItemsCount]);
+
+  if (!hasItems) {
+    return null;
+  }
 
   return (
     <div

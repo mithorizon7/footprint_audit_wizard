@@ -466,7 +466,7 @@ export default function ReportCard() {
   };
 
   const handleDownload = () => {
-    const jsonString = JSON.stringify(data, null, 2);
+    const jsonString = JSON.stringify({ ...data, sessionId: undefined }, null, 2);
     const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

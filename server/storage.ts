@@ -1,35 +1,94 @@
+import { and, eq, gte, lte } from 'drizzle-orm';
 import { db, hasDatabase } from './db';
-import { auditSessions, type InsertAuditSession, type AuditSession } from '@shared/schema';
-import { eq, sql, count, avg, desc } from 'drizzle-orm';
+import {
+  auditSessions,
+  onboardingEvents,
+  type InsertAuditSession,
+  type AuditSession,
+  type InsertOnboardingEvent,
+  type OnboardingEvent,
+} from '@shared/schema';
+import {
+  buildFacilitatorMetrics,
+  type FacilitatorDateRange,
+  type FacilitatorMetrics,
+} from './facilitatorMetrics';
 
 export interface IStorage {
-  createAuditSession(session: InsertAuditSession): Promise<AuditSession>;
+  upsertAuditSession(session: InsertAuditSession): Promise<AuditSession>;
   updateAuditSession(
     sessionId: string,
     updates: Partial<InsertAuditSession>,
   ): Promise<AuditSession | null>;
   getAuditSessionBySessionId(sessionId: string): Promise<AuditSession | null>;
-  getAggregateMetrics(): Promise<{
-    totalSessions: number;
-    completedSessions: number;
-    completionRate: number;
-    avgPublicExposureScore: number | null;
-    avgTrackerScore: number | null;
-    avgFingerprintScore: number | null;
-    avgAdSettingsScore: number | null;
-    avgTrackerCount: number | null;
-    deviceBreakdown: { deviceType: string; count: number }[];
-    browserBreakdown: { browser: string; count: number }[];
-    recentSessions: { date: string; count: number }[];
-  }>;
+  createOnboardingEvent(event: InsertOnboardingEvent): Promise<OnboardingEvent>;
+  getFacilitatorMetrics(range: FacilitatorDateRange): Promise<FacilitatorMetrics>;
+}
+
+function buildSessionWhere(range: FacilitatorDateRange) {
+  const conditions = [];
+
+  if (range.from) {
+    conditions.push(gte(auditSessions.createdAt, range.from));
+  }
+
+  if (range.to) {
+    conditions.push(lte(auditSessions.createdAt, range.to));
+  }
+
+  if (!conditions.length) {
+    return undefined;
+  }
+
+  return conditions.length === 1 ? conditions[0] : and(...conditions);
+}
+
+function buildEventWhere(range: FacilitatorDateRange) {
+  const conditions = [];
+
+  if (range.from) {
+    conditions.push(gte(onboardingEvents.occurredAt, range.from));
+  }
+
+  if (range.to) {
+    conditions.push(lte(onboardingEvents.occurredAt, range.to));
+  }
+
+  if (!conditions.length) {
+    return undefined;
+  }
+
+  return conditions.length === 1 ? conditions[0] : and(...conditions);
 }
 
 export class DatabaseStorage implements IStorage {
-  async createAuditSession(session: InsertAuditSession): Promise<AuditSession> {
+  async upsertAuditSession(session: InsertAuditSession): Promise<AuditSession> {
     if (!db) {
       throw new Error('Database not configured');
     }
-    const [result] = await db.insert(auditSessions).values(session).returning();
+
+    const [result] = await db
+      .insert(auditSessions)
+      .values(session)
+      .onConflictDoUpdate({
+        target: auditSessions.sessionId,
+        set: {
+          mode: session.mode,
+          locale: session.locale ?? null,
+          deviceType: session.deviceType ?? null,
+          os: session.os ?? null,
+          browser: session.browser ?? null,
+          publicExposureScore: session.publicExposureScore ?? null,
+          trackerScore: session.trackerScore ?? null,
+          fingerprintScore: session.fingerprintScore ?? null,
+          adSettingsScore: session.adSettingsScore ?? null,
+          trackerCount: session.trackerCount ?? null,
+          completed: session.completed ?? 0,
+          completedAt: session.completedAt ?? null,
+        },
+      })
+      .returning();
+
     return result;
   }
 
@@ -40,11 +99,13 @@ export class DatabaseStorage implements IStorage {
     if (!db) {
       throw new Error('Database not configured');
     }
+
     const [result] = await db
       .update(auditSessions)
       .set(updates)
       .where(eq(auditSessions.sessionId, sessionId))
       .returning();
+
     return result || null;
   }
 
@@ -52,101 +113,81 @@ export class DatabaseStorage implements IStorage {
     if (!db) {
       throw new Error('Database not configured');
     }
+
     const [result] = await db
       .select()
       .from(auditSessions)
       .where(eq(auditSessions.sessionId, sessionId));
+
     return result || null;
   }
 
-  async getAggregateMetrics() {
+  async createOnboardingEvent(event: InsertOnboardingEvent): Promise<OnboardingEvent> {
     if (!db) {
       throw new Error('Database not configured');
     }
-    const [totals] = await db
-      .select({
-        totalSessions: count(),
-        completedSessions: sql<number>`SUM(CASE WHEN completed = 1 THEN 1 ELSE 0 END)`.as(
-          'completed_count',
-        ),
-        avgPublicExposureScore: avg(auditSessions.publicExposureScore),
-        avgTrackerScore: avg(auditSessions.trackerScore),
-        avgFingerprintScore: avg(auditSessions.fingerprintScore),
-        avgAdSettingsScore: avg(auditSessions.adSettingsScore),
-        avgTrackerCount: avg(auditSessions.trackerCount),
-      })
-      .from(auditSessions);
 
-    const deviceBreakdown = await db
-      .select({
-        deviceType: auditSessions.deviceType,
-        count: count(),
-      })
-      .from(auditSessions)
-      .groupBy(auditSessions.deviceType);
+    const [result] = await db.insert(onboardingEvents).values(event).returning();
+    return result;
+  }
 
-    const browserBreakdown = await db
-      .select({
-        browser: auditSessions.browser,
-        count: count(),
-      })
-      .from(auditSessions)
-      .groupBy(auditSessions.browser);
+  async getFacilitatorMetrics(range: FacilitatorDateRange): Promise<FacilitatorMetrics> {
+    if (!db) {
+      throw new Error('Database not configured');
+    }
 
-    const recentSessions = await db
-      .select({
-        date: sql<string>`DATE(created_at)`.as('date'),
-        count: count(),
-      })
-      .from(auditSessions)
-      .groupBy(sql`DATE(created_at)`)
-      .orderBy(desc(sql`DATE(created_at)`))
-      .limit(14);
+    const sessionWhere = buildSessionWhere(range);
+    const eventWhere = buildEventWhere(range);
 
-    const total = totals?.totalSessions || 0;
-    const completed = Number(totals?.completedSessions) || 0;
+    const sessions = sessionWhere
+      ? await db.select().from(auditSessions).where(sessionWhere).limit(100001)
+      : await db.select().from(auditSessions).limit(100001);
+    const events = eventWhere
+      ? await db.select().from(onboardingEvents).where(eventWhere).limit(100001)
+      : await db.select().from(onboardingEvents).limit(100001);
+    if (sessions.length > 100000 || events.length > 100000)
+      throw new Error('Select a narrower reporting range');
 
-    return {
-      totalSessions: total,
-      completedSessions: completed,
-      completionRate: total > 0 ? Math.round((completed / total) * 100) : 0,
-      avgPublicExposureScore: totals?.avgPublicExposureScore
-        ? Math.round(Number(totals.avgPublicExposureScore))
-        : null,
-      avgTrackerScore: totals?.avgTrackerScore ? Math.round(Number(totals.avgTrackerScore)) : null,
-      avgFingerprintScore: totals?.avgFingerprintScore
-        ? Math.round(Number(totals.avgFingerprintScore))
-        : null,
-      avgAdSettingsScore: totals?.avgAdSettingsScore
-        ? Math.round(Number(totals.avgAdSettingsScore))
-        : null,
-      avgTrackerCount: totals?.avgTrackerCount ? Math.round(Number(totals.avgTrackerCount)) : null,
-      deviceBreakdown: deviceBreakdown.map((d: { deviceType: string | null; count: number }) => ({
-        deviceType: d.deviceType || 'unknown',
-        count: d.count,
-      })),
-      browserBreakdown: browserBreakdown.map((b: { browser: string | null; count: number }) => ({
-        browser: b.browser || 'unknown',
-        count: b.count,
-      })),
-      recentSessions: recentSessions.map((r: { date: string; count: number }) => ({
-        date: r.date,
-        count: r.count,
-      })),
-    };
+    return buildFacilitatorMetrics(sessions, events, range);
   }
 }
 
 class MemoryStorage implements IStorage {
   private sessions: AuditSession[] = [];
-  private nextId = 1;
+  private events: OnboardingEvent[] = [];
+  private nextSessionId = 1;
+  private nextEventId = 1;
 
-  async createAuditSession(session: InsertAuditSession): Promise<AuditSession> {
+  async upsertAuditSession(session: InsertAuditSession): Promise<AuditSession> {
+    const existingIndex = this.sessions.findIndex((entry) => entry.sessionId === session.sessionId);
+
+    if (existingIndex >= 0) {
+      const existing = this.sessions[existingIndex];
+      const updated: AuditSession = {
+        ...existing,
+        ...session,
+        locale: session.locale ?? existing.locale,
+        deviceType: session.deviceType ?? existing.deviceType,
+        os: session.os ?? existing.os,
+        browser: session.browser ?? existing.browser,
+        publicExposureScore: session.publicExposureScore ?? existing.publicExposureScore,
+        trackerScore: session.trackerScore ?? existing.trackerScore,
+        fingerprintScore: session.fingerprintScore ?? existing.fingerprintScore,
+        adSettingsScore: session.adSettingsScore ?? existing.adSettingsScore,
+        trackerCount: session.trackerCount ?? existing.trackerCount,
+        completed: session.completed ?? existing.completed,
+        completedAt: session.completedAt ?? existing.completedAt,
+      };
+      this.sessions[existingIndex] = updated;
+      return updated;
+    }
+
     const now = new Date();
     const record: AuditSession = {
-      id: this.nextId++,
+      id: this.nextSessionId++,
       sessionId: session.sessionId,
       mode: session.mode,
+      locale: session.locale ?? null,
       deviceType: session.deviceType ?? null,
       os: session.os ?? null,
       browser: session.browser ?? null,
@@ -159,7 +200,9 @@ class MemoryStorage implements IStorage {
       createdAt: now,
       completedAt: session.completedAt ?? null,
     };
+
     this.sessions.push(record);
+    if (this.sessions.length > 10000) this.sessions.shift();
     return record;
   }
 
@@ -167,12 +210,22 @@ class MemoryStorage implements IStorage {
     sessionId: string,
     updates: Partial<InsertAuditSession>,
   ): Promise<AuditSession | null> {
-    const sessionIndex = this.sessions.findIndex((s) => s.sessionId === sessionId);
+    const sessionIndex = this.sessions.findIndex((entry) => entry.sessionId === sessionId);
     if (sessionIndex === -1) return null;
+
     const existing = this.sessions[sessionIndex];
     const updated: AuditSession = {
       ...existing,
       ...updates,
+      locale: updates.locale ?? existing.locale,
+      deviceType: updates.deviceType ?? existing.deviceType,
+      os: updates.os ?? existing.os,
+      browser: updates.browser ?? existing.browser,
+      publicExposureScore: updates.publicExposureScore ?? existing.publicExposureScore,
+      trackerScore: updates.trackerScore ?? existing.trackerScore,
+      fingerprintScore: updates.fingerprintScore ?? existing.fingerprintScore,
+      adSettingsScore: updates.adSettingsScore ?? existing.adSettingsScore,
+      trackerCount: updates.trackerCount ?? existing.trackerCount,
       completed: updates.completed ?? existing.completed,
       completedAt: updates.completedAt ?? existing.completedAt,
     };
@@ -181,59 +234,64 @@ class MemoryStorage implements IStorage {
   }
 
   async getAuditSessionBySessionId(sessionId: string): Promise<AuditSession | null> {
-    return this.sessions.find((s) => s.sessionId === sessionId) ?? null;
+    return this.sessions.find((entry) => entry.sessionId === sessionId) ?? null;
   }
 
-  async getAggregateMetrics() {
-    const total = this.sessions.length;
-    const completedSessions = this.sessions.filter((s) => s.completed === 1).length;
-
-    const avgValue = (values: Array<number | null | undefined>) => {
-      const filtered = values.filter((v): v is number => typeof v === 'number');
-      if (filtered.length === 0) return null;
-      const sum = filtered.reduce((acc, v) => acc + v, 0);
-      return Math.round(sum / filtered.length);
+  async createOnboardingEvent(event: InsertOnboardingEvent): Promise<OnboardingEvent> {
+    const record: OnboardingEvent = {
+      id: this.nextEventId++,
+      sessionId: event.sessionId,
+      eventName: event.eventName,
+      stepKey: event.stepKey ?? null,
+      mode: event.mode ?? null,
+      locale: event.locale ?? null,
+      guidanceLevel: event.guidanceLevel ?? null,
+      deviceType: event.deviceType ?? null,
+      os: event.os ?? null,
+      browser: event.browser ?? null,
+      timeSinceStartSec: event.timeSinceStartSec ?? null,
+      completedChecklistCount: event.completedChecklistCount ?? null,
+      targetChecklistCount: event.targetChecklistCount ?? null,
+      unmetItemsCount: event.unmetItemsCount ?? null,
+      unknownAnswerCount: event.unknownAnswerCount ?? null,
+      nextActionCount: event.nextActionCount ?? null,
+      skippedStepCount: event.skippedStepCount ?? null,
+      wasReady: event.wasReady ?? null,
+      weakReport: event.weakReport ?? null,
+      skipped: event.skipped ?? null,
+      occurredAt: new Date(),
     };
+    this.events.push(record);
+    if (this.events.length > 50000) this.events.shift();
+    return record;
+  }
 
-    const deviceCounts = new Map<string, number>();
-    const browserCounts = new Map<string, number>();
-    const recentCounts = new Map<string, number>();
+  async getFacilitatorMetrics(range: FacilitatorDateRange): Promise<FacilitatorMetrics> {
+    const sessions = this.sessions.filter((session) => {
+      if (range.from && session.createdAt < range.from) {
+        return false;
+      }
 
-    this.sessions.forEach((session) => {
-      const deviceType = session.deviceType || 'unknown';
-      deviceCounts.set(deviceType, (deviceCounts.get(deviceType) ?? 0) + 1);
+      if (range.to && session.createdAt > range.to) {
+        return false;
+      }
 
-      const browser = session.browser || 'unknown';
-      browserCounts.set(browser, (browserCounts.get(browser) ?? 0) + 1);
-
-      const dateKey = session.createdAt.toISOString().slice(0, 10);
-      recentCounts.set(dateKey, (recentCounts.get(dateKey) ?? 0) + 1);
+      return true;
     });
 
-    const recentSessions = Array.from(recentCounts.entries())
-      .sort((a, b) => (a[0] < b[0] ? 1 : -1))
-      .slice(0, 14)
-      .map(([date, count]) => ({ date, count }));
+    const events = this.events.filter((event) => {
+      if (range.from && event.occurredAt < range.from) {
+        return false;
+      }
 
-    return {
-      totalSessions: total,
-      completedSessions,
-      completionRate: total > 0 ? Math.round((completedSessions / total) * 100) : 0,
-      avgPublicExposureScore: avgValue(this.sessions.map((s) => s.publicExposureScore)),
-      avgTrackerScore: avgValue(this.sessions.map((s) => s.trackerScore)),
-      avgFingerprintScore: avgValue(this.sessions.map((s) => s.fingerprintScore)),
-      avgAdSettingsScore: avgValue(this.sessions.map((s) => s.adSettingsScore)),
-      avgTrackerCount: avgValue(this.sessions.map((s) => s.trackerCount)),
-      deviceBreakdown: Array.from(deviceCounts.entries()).map(([deviceType, count]) => ({
-        deviceType,
-        count,
-      })),
-      browserBreakdown: Array.from(browserCounts.entries()).map(([browser, count]) => ({
-        browser,
-        count,
-      })),
-      recentSessions,
-    };
+      if (range.to && event.occurredAt > range.to) {
+        return false;
+      }
+
+      return true;
+    });
+
+    return buildFacilitatorMetrics(sessions, events, range);
   }
 }
 

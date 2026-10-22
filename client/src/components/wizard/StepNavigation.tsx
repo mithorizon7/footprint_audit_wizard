@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useWizard } from '@/context/WizardContext';
 import { useI18n } from '@/context/I18nContext';
+import { useOnboardingAnalytics } from '@/context/OnboardingAnalyticsContext';
+import { getStepKeyForIndex } from '@/lib/onboardingAnalytics';
 import { ChevronLeft, ChevronRight, SkipForward } from 'lucide-react';
 import type { GuidedChecklistItem } from './GuidedChecklist';
 
@@ -24,7 +26,9 @@ export function StepNavigation({
 }: StepNavigationProps) {
   const { prevStep, nextStep, skipStep, currentStep } = useWizard();
   const { t } = useI18n();
+  const { trackReadinessPrompt, trackStepCompleted } = useOnboardingAnalytics();
   const [showReadinessPrompt, setShowReadinessPrompt] = useState(false);
+  const stepKey = getStepKeyForIndex(currentStep);
 
   const target = useMemo(() => {
     if (!guidanceItems.length) return 0;
@@ -49,6 +53,27 @@ export function StepNavigation({
     }
   }, [requiresPrompt]);
 
+  useEffect(() => {
+    if (!showReadinessPrompt || !requiresPrompt) {
+      return;
+    }
+
+    trackReadinessPrompt({
+      stepKey,
+      completedChecklistCount: completed,
+      targetChecklistCount: target,
+      unmetItemsCount: unmetItems.length,
+    });
+  }, [
+    completed,
+    requiresPrompt,
+    showReadinessPrompt,
+    stepKey,
+    target,
+    trackReadinessPrompt,
+    unmetItems.length,
+  ]);
+
   const handleNext = () => {
     if (requiresPrompt && !showReadinessPrompt) {
       setShowReadinessPrompt(true);
@@ -58,7 +83,28 @@ export function StepNavigation({
     if (onNext) {
       onNext();
     }
+
+    trackStepCompleted({
+      stepKey,
+      completedChecklistCount: completed,
+      targetChecklistCount: target,
+      unmetItemsCount: unmetItems.length,
+      skipped: false,
+      wasReady: !requiresPrompt,
+    });
     nextStep();
+  };
+
+  const handleSkip = () => {
+    trackStepCompleted({
+      stepKey,
+      completedChecklistCount: completed,
+      targetChecklistCount: target,
+      unmetItemsCount: unmetItems.length,
+      skipped: true,
+      wasReady: false,
+    });
+    skipStep();
   };
 
   return (
@@ -75,7 +121,7 @@ export function StepNavigation({
 
         <div className="flex items-center gap-2">
           {showSkip && (
-            <Button variant="ghost" onClick={skipStep} data-testid="button-skip">
+            <Button variant="ghost" onClick={handleSkip} data-testid="button-skip">
               {t.common.skip}
               <SkipForward className="w-4 h-4 ml-1" />
             </Button>

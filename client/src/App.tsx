@@ -6,6 +6,10 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { WizardProvider, useWizard } from '@/context/WizardContext';
 import { I18nProvider, useI18n } from '@/context/I18nContext';
+import {
+  OnboardingAnalyticsProvider,
+  useOnboardingAnalytics,
+} from '@/context/OnboardingAnalyticsContext';
 import { ProgressBar } from '@/components/wizard/ProgressBar';
 import { FictionalBanner } from '@/components/wizard/FictionalBanner';
 import { PanicButton } from '@/components/wizard/PanicButton';
@@ -24,6 +28,7 @@ import FacilitatorDashboard from '@/pages/FacilitatorDashboard';
 function WizardContent() {
   const { currentStep } = useWizard();
   const { t } = useI18n();
+  const { enabled, setEnabled } = useOnboardingAnalytics();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -73,6 +78,14 @@ function WizardContent() {
       <footer className="py-4 px-6 border-t border-border/70 bg-card/70 backdrop-blur-md no-print">
         <div className="max-w-5xl mx-auto flex items-center justify-between gap-4 flex-wrap">
           <p className="text-xs text-muted-foreground">{t.footer.privacyNotice}</p>
+          <label className="flex items-center gap-2 text-xs">
+            <input
+              type="checkbox"
+              checked={enabled}
+              onChange={(event) => setEnabled(event.target.checked)}
+            />
+            {t.footer.analyticsConsent}
+          </label>
           <PanicButton />
         </div>
       </footer>
@@ -83,7 +96,9 @@ function WizardContent() {
 function WizardPage() {
   return (
     <WizardProvider>
-      <WizardContent />
+      <OnboardingAnalyticsProvider>
+        <WizardContent />
+      </OnboardingAnalyticsProvider>
     </WizardProvider>
   );
 }
