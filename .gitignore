@@ -1,5 +1,7 @@
 node_modules
 dist
+/generated-artifacts/
+/.cache/node-runtime/
 .DS_Store
 server/public
 vite.config.ts.*
