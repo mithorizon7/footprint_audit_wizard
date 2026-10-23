@@ -69,4 +69,25 @@
   change. Verify the actual published runtime only after a later approved
   publication.
 
-No production migration or publication was performed.
+## Publication outcome (October 23)
+
+- Published application release: `6528baf052f5845aa0e4882a63ece8b10320d386`.
+- Serving build receipt: `e36c56fb-9406-4729-b887-a42721954c26`, successful
+  at 2026-10-23 19:10:59 UTC; build metadata confirms that exact source commit.
+- URL: https://footprintaudit.replit.app.
+- The six reviewed additive operations were approved through the website's
+  schema-review flow. Production catalog inspection confirms the locale column,
+  analytics table and all four valid indexes. No existing learner data was
+  replaced or deleted.
+- Final main CI run `40008695454` passed. Live checks at 19:11 UTC confirmed
+  the validated JavaScript content, 113586-byte stylesheet, security headers,
+  request boundaries, protected reporting and successful synthetic telemetry
+  persistence. One fictional QA session is reused; no learner records were read.
+- The runtime is enforced by the checksum-pinned launcher/version guard; direct
+  production process-version telemetry was unavailable.
+- Facilitator credentials are still absent. The published dashboard is
+  deliberately unavailable until the operator enters both Replit Secrets and
+  republishes. Do not weaken the guard to bypass that setup requirement.
+
+The earlier preparation sections describe the pre-publication state; this
+outcome supersedes their pending-publication and pending-migration statements.
