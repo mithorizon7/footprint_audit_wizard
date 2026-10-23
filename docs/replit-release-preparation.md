@@ -2,13 +2,15 @@
 
 ## Reviewed release
 
-- GitHub `main`: `de2ca1cb5e0b423c96dda434f2bcdcba05e2cdc6`.
-- Includes PR 23's opt-in analytics/facilitator hardening and PR 24's localized
-  learner-report rendering fix.
-- GitHub `build-test` passed on the exact requested commit; the owner reports
-  all 41 tests and final CI passed.
-- Workspace branch `release/pr24-preparation` starts at the exact reviewed
-  source commit and adds Replit deployment/runtime configuration only.
+- Reviewed source branch:
+  `codex/security-analytics-production-release` at
+  `57f100f1037c0ecd78ac0526f7e9013a8b69395e`.
+- Includes the final Tailwind layout fix in addition to the reviewed security,
+  opt-in analytics, facilitator access, and report fixes.
+- GitHub `build-test` passed on the exact reviewed source commit; the owner
+  reports all 41 tests and final CI passed.
+- The deployment preparation branch merges this exact reviewed source without
+  independent application rewrites.
 - Original workspace commit is retained on branch `recovery/pre-pr23-590364f`.
 
 ## Runtime and deployment settings
@@ -19,11 +21,11 @@
   prioritize/check the pinned runtime and fail closed instead of using an older
   fallback.
 - Keep the original Python module available in the workspace.
-- Production `PUBLIC_ORIGIN` must equal `https://footprintaudit.replit.app`.
+- Production `PUBLIC_ORIGIN` is
+  `https://footprintaudit.replit.app`.
   Development uses request-origin validation and does not inherit that
   production-only origin value.
-- The deployed service has not been updated or runtime-verified. Do not publish
-  until the release prerequisites are satisfied.
+- The existing deployed service has not been updated or runtime-verified.
 
 ## Database recovery and migration
 
@@ -38,9 +40,10 @@
 - **Production:** Neither addition is present in the production schema. No
   production migration or production backup was performed or verified. The
   development dump is not a production backup and must not be treated as one.
-- Before a separately authorized publish, verify a recoverable production
-  backup/PITR point and review Replit's managed Publish schema diff. Permit only
-  the reviewed additive changes; never overwrite production data.
+- Production point-in-time recovery/scheduled-backup availability must be
+  confirmed in the production Database tool's Settings before Publish. Replit
+  applies managed production schema changes through Publish; do not run direct
+  production DDL or overwrite production data.
 - The isolated validation server has been shut down. No long-running migration
   or database-validation task remains.
 
@@ -53,12 +56,10 @@
   session secret of at least 32 characters (prefer 32 random bytes encoded in
   base64). Never enter them in source control or chat. Until then facilitator
   access correctly remains unavailable.
-- Prior visual verification found missing Tailwind spacing/layout utilities in
-  the reviewed CSS build. PR 24 changes report rendering, not the Tailwind
-  entrypoint; recheck the latest commit's generated styles before readiness.
-  Do not redesign the app as part of deployment preparation.
-- Existing reported validation of the reviewed source: 41 tests, passing
-  GitHub CI. Runtime-specific checks still need to verify build/start under the
-  pinned Node after the Replit settings are restored.
+- The reviewed Tailwind fix is present in the merged application source and the
+  Replit preview confirms that the learner layout styles render.
+- Recheck build/start under the pinned Node after every Replit configuration
+  change. Verify the actual published runtime only after a later approved
+  publication.
 
-No production publication was performed.
+No production migration or publication was performed.
