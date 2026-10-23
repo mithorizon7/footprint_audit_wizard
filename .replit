@@ -16,7 +16,7 @@ PORT = "5000"
 [deployment]
 deploymentTarget = "autoscale"
 run = ["bash", "script/runtime-exec.sh", "npm", "run", "start"]
-build = ["bash", "script/runtime-exec.sh", "bash", "-c", "npm ci --ignore-scripts && npm run build"]
+build = ["bash", "script/runtime-exec.sh", "bash", "-c", "npm ci --include=dev --ignore-scripts && npm run build"]
 
 [workflows]
 runButton = "Project"
