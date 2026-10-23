@@ -50,6 +50,7 @@ try {
   const styleResponse = await fetch(styleUrl);
   assert.equal(styleResponse.status, 200);
   const css = await styleResponse.text();
+  assert.ok(Buffer.byteLength(css) < 200000, 'CSS budget must exclude unrelated workspace sources');
   for (const rule of [/\.px-4\s*\{/, /\.gap-4\s*\{/, /\.max-w-5xl\s*\{/]) {
     assert.match(css, rule, 'Critical layout utilities must be generated');
   }
