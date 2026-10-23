@@ -42,6 +42,18 @@ try {
     }
   }
   assert.ok(ready, 'Production service must start');
+  const html = await (await fetch(base)).text();
+  const stylesheet = html.match(/href="([^"]+\.css)"/);
+  assert.ok(stylesheet, 'Production page must link its built stylesheet');
+  const styleUrl = new URL(stylesheet[1], base);
+  assert.equal(styleUrl.origin, base);
+  const styleResponse = await fetch(styleUrl);
+  assert.equal(styleResponse.status, 200);
+  const css = await styleResponse.text();
+  for (const rule of [/\.px-4\s*\{/, /\.gap-4\s*\{/, /\.max-w-5xl\s*\{/]) {
+    assert.match(css, rule, 'Critical layout utilities must be generated');
+  }
+  assert.match(css, /--spacing\s*:/, 'Tailwind spacing theme must be included');
   for (const [path, status] of [
     ['/', 200],
     ['/api/missing', 404],
@@ -71,7 +83,7 @@ try {
   assert.ok(!logs.includes('00000000000000000000000000000001'));
   assert.ok(!logs.includes('x'.repeat(50)));
   console.log(
-    'Production HTTP smoke passed: startup, headers, API auth, limits and log redaction.',
+    'Production HTTP smoke passed: startup, CSS layout, headers, API auth, limits and log redaction.',
   );
 } finally {
   const stopped = once(app, 'exit');

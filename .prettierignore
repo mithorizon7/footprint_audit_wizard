@@ -3,3 +3,8 @@ dist/
 coverage/
 package-lock.json
 attached_assets/
+.cache/
+.local/
+.config/
+.upm/
+generated-artifacts/
