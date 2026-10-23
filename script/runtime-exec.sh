@@ -15,6 +15,7 @@ if [[ ! -x "$runtime/bin/node" ]]; then
   staging="$(mktemp -d "$(dirname -- "$runtime")/.download.XXXXXXXX")"
   trap 'rm -rf -- "$staging"' EXIT
   curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+    --connect-timeout 10 --max-time 90 --retry 2 --retry-max-time 120 \
     "https://nodejs.org/dist/v${version}/${archive}" -o "$staging/$archive"
   printf '%s  %s\n' "$checksum" "$staging/$archive" | sha256sum --check --status
   tar -xJf "$staging/$archive" -C "$staging"

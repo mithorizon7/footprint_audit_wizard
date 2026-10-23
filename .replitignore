@@ -1,2 +1,8 @@
 /.cache/
 /generated-artifacts/
+/.security-evidence/
+/.local/
+/.git/
+/.env*
+*.pem
+*.key

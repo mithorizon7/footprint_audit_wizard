@@ -27,6 +27,11 @@ jobs:
       - name: Install
         run: npm ci --ignore-scripts
 
+      - name: Verify Pinned Hosting Runtime
+        run: |
+          bash -n script/runtime-exec.sh
+          bash script/runtime-exec.sh node --version
+
       - name: Dependency Security Audit
         run: npm audit --audit-level=high
 

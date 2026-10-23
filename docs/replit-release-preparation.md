@@ -11,6 +11,8 @@
   reports all 41 tests and final CI passed.
 - The deployment preparation branch merges this exact reviewed source without
   independent application rewrites.
+- The final release also includes the mobile practice-banner spacing correction
+  in `53b068e`.
 - Original workspace commit is retained on branch `recovery/pre-pr23-590364f`.
 
 ## Runtime and deployment settings
@@ -20,6 +22,9 @@
 - The workspace PATH, app workflow, production build, and production start
   prioritize/check the pinned runtime and fail closed instead of using an older
   fallback.
+- Production performs a clean lockfile install with lifecycle scripts disabled
+  under that runtime before building. CI separately tests the Linux runtime
+  launcher against the official checksum-pinned archive.
 - Keep the original Python module available in the workspace.
 - Production `PUBLIC_ORIGIN` is
   `https://footprintaudit.replit.app`.
@@ -37,11 +42,13 @@
 - The reviewed migration was then applied to **development** only. The
   `audit_sessions.locale` column and `onboarding_events` table are present in
   the development schema.
-- **Production:** Neither addition is present in the production schema. No
-  production migration or production backup was performed or verified. The
-  development dump is not a production backup and must not be treated as one.
-- Production point-in-time recovery/scheduled-backup availability must be
-  confirmed in the production Database tool's Settings before Publish. Replit
+- **Production before publication:** Neither addition is present in the
+  production schema. Production Database Settings was inspected on October 23
+  at 18:39 UTC: point-in-time recovery is **On, last 7 days**; scheduled backups
+  are off. The platform advertises restoration to any exact time in that window.
+  No live restoration was executed, and no separate production dump was created.
+  The development dump is not a production backup.
+- Record the pre-publish UTC time as the production recovery reference. Replit
   applies managed production schema changes through Publish; do not run direct
   production DDL or overwrite production data.
 - The isolated validation server has been shut down. No long-running migration
