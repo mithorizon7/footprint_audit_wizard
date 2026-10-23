@@ -37,13 +37,14 @@
 - The reviewed migration was then applied to **development** only. The
   `audit_sessions.locale` column and `onboarding_events` table are present in
   the development schema.
-- **Production:** Neither addition is present in the production schema. No
-  production migration or production backup was performed or verified. The
+- **Production:** Neither addition is present in the production schema. The
+  user confirmed that a recoverable production restore point is available in
+  Database Settings; it was not created or restore-tested by this agent. The
   development dump is not a production backup and must not be treated as one.
-- Production point-in-time recovery/scheduled-backup availability must be
-  confirmed in the production Database tool's Settings before Publish. Replit
-  applies managed production schema changes through Publish; do not run direct
-  production DDL or overwrite production data.
+- The reviewed production migration remains pending. Replit applies managed
+  production schema changes through Publish. Do not run direct production DDL
+  or overwrite production data; wait for the user's separate publication
+  request.
 - The isolated validation server has been shut down. No long-running migration
   or database-validation task remains.
 
